@@ -87,10 +87,12 @@ class GDDriver extends DefaultDriver
                 break;
             case 'png':
                 $args[] = 9; //(int) \floor((100 - $quality) / 11);
+
                 break;
             case 'jpg':
                 $type   = 'jpeg';
                 $args[] = $quality;
+
                 break;
             case 'webp':
             case 'avif':
@@ -101,6 +103,7 @@ class GDDriver extends DefaultDriver
                 }
 
                 $args[] = $quality;
+
                 break;
             default:
                 return null;

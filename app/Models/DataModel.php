@@ -108,7 +108,6 @@ class DataModel extends Model
         $this->zTrackFlags[$name] = $track;
 
         parent::__set($name, $value);
-
         unset($this->zTrackFlags[$name]);
 
         if (null === $track) {

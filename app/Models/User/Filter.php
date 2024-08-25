@@ -28,8 +28,7 @@ class Filter extends Action
         foreach ($order as $field => $dir) {
             if (! isset($fields[$field])) {
                 throw new InvalidArgumentException("The '{$field}' field is not found");
-            }
-            if (
+            } elseif (
                 'ASC' !== $dir
                 && 'DESC' !== $dir
             ) {

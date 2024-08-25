@@ -235,6 +235,7 @@ class Current extends Action
                     $entry  = $arr[0] . '_' . \strtoupper($arr[1]);
                     $main[] = $arr[0];
                 }
+
                 if (isset($langs[$entry])) {
                     return $langs[$entry];
                 }

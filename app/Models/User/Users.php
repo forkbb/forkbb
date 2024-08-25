@@ -40,6 +40,7 @@ class Users extends Manager
             return $this->get($id);
         } else {
             $user = $this->Load->load($id);
+
             $this->set($id, $user);
 
             return $user;
@@ -65,6 +66,7 @@ class Users extends Manager
             } else {
                 $result[$id] = null;
                 $data[]      = $id;
+
                 $this->set($id, null);
             }
         }
@@ -80,6 +82,7 @@ class Users extends Manager
         foreach ($this->Load->loadByIds($data) as $user) {
             if ($user instanceof User) {
                 $result[$user->id] = $user;
+
                 $this->set($user->id, $user);
             }
         }
@@ -99,6 +102,7 @@ class Users extends Manager
                 return $loadedUser;
             } else {
                 $this->set($user->id, $user);
+
                 return $user;
             }
         } else {
@@ -144,6 +148,7 @@ class Users extends Manager
     public function insert(User $user): int
     {
         $id = $this->Save->insert($user);
+
         $this->set($id, $user);
 
         return $id;

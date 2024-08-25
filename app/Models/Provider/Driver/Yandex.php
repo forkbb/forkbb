@@ -129,9 +129,7 @@ class Yandex extends Driver
         if (isset($this->userInfo['sex'])) {
             if ('male' === $this->userInfo['sex']) {
                 return FORK_GEN_MAN;
-            }
-
-            if ('female' === $this->userInfo['sex']) {
+            } elseif ('female' === $this->userInfo['sex']) {
                 return FORK_GEN_FEM;
             }
         }

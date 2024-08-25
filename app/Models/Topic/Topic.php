@@ -480,6 +480,7 @@ class Topic extends DataModel
             $flag           = true;
             $vars[':visit'] = $this->last_post;
         }
+
         if (
             false !== $this->hasUnread
             && $this->timeMax > $this->hasUnread

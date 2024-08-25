@@ -65,6 +65,7 @@ class Delete extends Action
                 if (! $arg->parent instanceof Forum) {
                     throw new RuntimeException('Parent unavailable');
                 }
+
                 $topics[$arg->id]          = $arg;
                 $parents[$arg->parent->id] = $arg->parent;
                 $isTopic                   = 1;

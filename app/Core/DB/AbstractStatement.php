@@ -56,9 +56,11 @@ abstract class AbstractStatement extends DBStatement
                 $this->ctorArgs = $args[1] ?? null;
             case PDO::FETCH_INTO:
                 $this->fetchArg = $args[0];
+
                 break;
             case PDO::FETCH_COLUMN:
                 $this->fetchArg = $args[0] ?? 0;
+
                 break;
         }
     }
@@ -105,6 +107,7 @@ abstract class AbstractStatement extends DBStatement
                         break;
                     case self::BOOLEAN:
                         $value = $this->convToBoolean($value);
+
                         break;
                     case self::FLOAT:
                     case self::STRING:
@@ -183,7 +186,7 @@ abstract class AbstractStatement extends DBStatement
                     $result[$key][] = $data;
                 }
 
-                    break;
+                break;
             default:
                 throw new PDOException('AbstractStatement class does not support this type for fetchAll(): ' . $this->fetchMode);
 

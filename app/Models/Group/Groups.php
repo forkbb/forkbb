@@ -79,6 +79,7 @@ class Groups extends Manager
     public function insert(Group $group): int
     {
         $id = $this->Save->insert($group);
+
         $this->set($id, $group);
 
         return $id;

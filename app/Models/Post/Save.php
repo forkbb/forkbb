@@ -94,7 +94,9 @@ class Save extends Action
             VALUES ({$set2})";
 
         $this->c->DB->exec($query, $vars);
+
         $post->id = (int) $this->c->DB->lastInsertId();
+
         $post->resModified();
 
         return $post->id;

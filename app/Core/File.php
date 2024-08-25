@@ -50,11 +50,9 @@ class File
     {
         if ($files->isBadPath($path)) {
             throw new FileException('Bad path to file');
-        }
-        if (! \is_file($path)) {
+        } elseif (! \is_file($path)) {
             throw new FileException('File not found');
-        }
-        if (! \is_readable($path)) {
+        } elseif (! \is_readable($path)) {
             throw new FileException('File can not be read');
         }
 
@@ -141,6 +139,7 @@ class File
                 return false;
             }
         }
+
         if (! \is_writable($dirname)) {
             $this->error = 'No write access for directory';
 
@@ -184,11 +183,13 @@ class File
         if (empty($info)) {
             return false;
         }
+
         if ($this->files->isBadPath($info['dirname'])) {
             $this->error = 'Bad path to file';
 
             return false;
         }
+
         if (
             ! $this->dirProc($info['dirname'])
         ) {

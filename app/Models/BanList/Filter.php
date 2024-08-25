@@ -29,14 +29,17 @@ class Filter extends Method
             if (! isset($fields[$field])) {
                 throw new InvalidArgumentException("The '{$field}' field is not found");
             }
+
             if (
                 'ASC' !== $dir
                 && 'DESC' !== $dir
             ) {
                 throw new InvalidArgumentException('The sort direction is not defined');
             }
+
             $orderBy[] = "b.{$field} {$dir}";
         }
+
         if (empty($orderBy)) {
             $orderBy = 'b.id DESC';
         } else {

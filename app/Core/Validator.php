@@ -536,15 +536,19 @@ class Validator
                     switch ($action) {
                         case 'trim':
                             $value = $this->trim($value);
+
                             break;
                         case 'lower':
                             $value = \mb_strtolower($value, 'UTF-8');
+
                             break;
                         case 'spaces':
                             $value = \preg_replace('%\s+%u', ' ', $value);
+
                             break;
                         case 'linebreaks':
                             $value = \str_replace(["\r\n", "\r"], "\n", $value);
+
                             break;
                         case 'null':
                             if ('' === $value) {
@@ -674,11 +678,13 @@ class Validator
             } elseif (isset($rules['required'])) {
                 $tmp1 = null;
                 $tmp2 = null;
+
                 $this->recArray($tmp1, $tmp2, '', $rules, $field);
             } elseif ('*' === $name) {
                 $result = []; // ???? а может там не отсутствие элемента, а не array?
             } else {
                 $value[$name] = null;
+
                 $this->recArray($value[$name], $result[$name], '', $rules, $field);
             }
         }

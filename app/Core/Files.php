@@ -1318,7 +1318,6 @@ class Files
      */
     protected function streamAction(string $url, $tmpFile): bool
     {
-
         $context = \stream_context_create(
             [
                 'http' => [

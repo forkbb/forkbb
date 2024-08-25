@@ -127,9 +127,7 @@ class Google extends Driver    // Not tested. Google banned the registration of 
         if (isset($this->userInfo['gender'])) {
             if ('male' === $this->userInfo['gender']) {
                 return FORK_GEN_MAN;
-            }
-
-            if ('female' === $this->userInfo['gender']) {
+            } elseif ('female' === $this->userInfo['gender']) {
                 return FORK_GEN_FEM;
             }
         }

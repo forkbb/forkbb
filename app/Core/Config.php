@@ -54,9 +54,11 @@ class Config
         if (! \is_file($path)) {
             throw new ForkException('Config not found');
         }
+
         if (! \is_readable($path)) {
             throw new ForkException('Config can not be read');
         }
+
         if (! \is_writable($path)) {
             throw new ForkException('Config can not be write');
         }
@@ -267,6 +269,7 @@ class Config
                     case 'NEW':
                         if (null !== $value) {
                             \preg_match('%^([^\r\n]*+)(.*)$%s', $other, $matches);
+
                             $value_after = $matches[1];
                             $other       = $matches[2];
 

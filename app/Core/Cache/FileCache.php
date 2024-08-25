@@ -144,6 +144,7 @@ class FileCache implements CacheInterface
         $this->validateIterable($keys);
 
         $result = [];
+
         foreach ($keys as $key) {
             $result[$key] = $this->get($key, $default);
         }
@@ -159,6 +160,7 @@ class FileCache implements CacheInterface
         $this->validateIterable($keys);
 
         $result = true;
+
         foreach ($values as $key => $value) {
             $result = $this->set($key, $value, $ttl) && $result;
         }
@@ -174,6 +176,7 @@ class FileCache implements CacheInterface
         $this->validateIterable($keys);
 
         $result = true;
+
         foreach ($keys as $key) {
             $result = $this->delete($key) && $result;
         }
@@ -214,9 +217,11 @@ class FileCache implements CacheInterface
         if (! \is_string($key)) {
             throw new InvalidArgumentException('Expects a string, got: ' . \gettype($key));
         }
+
         if (! \preg_match('%^[a-z0-9_\.]+$%Di', $key)) {
             throw new InvalidArgumentException('Key is not a legal value');
         }
+
         if (\str_starts_with($key, 'poll')) {
             return $this->cacheDir . "/polls/{$key}.php";
         } else {

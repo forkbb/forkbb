@@ -62,13 +62,9 @@ class Providers extends Manager
     {
         if (! isset($attrs['pr_name'])) {
             throw new RuntimeException('Provider name missing');
-        }
-
-        if (! isset($this->drivers[$attrs['pr_name']])) {
+        } elseif (! isset($this->drivers[$attrs['pr_name']])) {
             throw new RuntimeException("No driver for '{$attrs['pr_name']}' provider");
-        }
-
-        if ($this->isset($attrs['pr_name'])) {
+        } elseif ($this->isset($attrs['pr_name'])) {
             throw new RuntimeException("Driver '{$attrs['pr_name']}' already exists");
         }
 

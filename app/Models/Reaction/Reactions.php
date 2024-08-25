@@ -103,7 +103,6 @@ class Reactions extends Manager
         }
 
         $this->c->DB->exec($query, $vars);
-
         $this->recalcReactions($post);
 
         return $result;

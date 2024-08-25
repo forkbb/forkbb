@@ -129,6 +129,7 @@ class Online extends Model
 
             // пользователи онлайн и общее количество
             $this->online[$cur['user_id']] = true;
+
             ++$all;
 
             if (! $detail) {

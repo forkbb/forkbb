@@ -106,6 +106,7 @@ class Save extends Action
         }
 
         $poll->itWasModified = $modified;
+
         $poll->resModified();
 
         return $poll;

@@ -44,6 +44,7 @@ class Cookie extends Model
 
         $this->setModelAttrs($options);
         $this->init();
+
         $this->noSet = true;
     }
 

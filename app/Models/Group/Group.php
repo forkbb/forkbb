@@ -44,7 +44,8 @@ class Group extends DataModel
             FORK_GROUP_MEMBER,
         ];
 
-        return ! \in_array($this->g_id, $notDeleted, true) && $this->g_id !== $this->c->config->i_default_user_group;
+        return ! \in_array($this->g_id, $notDeleted, true)
+            && $this->g_id !== $this->c->config->i_default_user_group;
     }
 
     /**

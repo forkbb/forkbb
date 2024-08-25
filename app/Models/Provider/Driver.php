@@ -221,7 +221,6 @@ abstract class Driver extends Model
             $this->error = 'No cURL and allow_url_fopen OFF';
 
             return false;
-
         } elseif (\is_string($result)) {
             if (\str_starts_with($this->respContentType, 'application/json')) {
                 $data = \json_decode($result, true, 20);

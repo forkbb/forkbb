@@ -131,6 +131,7 @@ class Revision extends Action
             }
 
             ++$countQ;
+
             $this->question[$qid] = $questions[$qid];
             $this->type[$qid]     = $types[$qid];
 

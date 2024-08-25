@@ -50,6 +50,7 @@ class RebuildIndex extends Action
                     'first_post_id' => $row['first_post_id'],
                     'forum_id'      => $row['forum_id'],
                 ]);
+
                 $this->c->topics->set($topic->id, $topic);
             }
 

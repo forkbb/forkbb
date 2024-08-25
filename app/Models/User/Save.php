@@ -139,12 +139,15 @@ class Save extends Action
             VALUES ({$set2})";
 
         $this->c->DB->exec($query, $vars);
+
         $user->id = (int) $this->c->DB->lastInsertId();
+
         $user->resModified();
 
         if ($user->isAdmin) {
             $this->c->admins->reset();
         }
+
         if (! $user->isUnverified) {
             $this->c->stats->reset();
         }

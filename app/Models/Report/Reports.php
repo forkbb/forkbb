@@ -41,6 +41,7 @@ class Reports extends Manager
             return $this->get($id);
         } else {
             $report = $this->Load->load($id);
+
             $this->set($id, $report);
 
             return $report;
@@ -59,6 +60,7 @@ class Reports extends Manager
                 $result[] = $this->get($report->id);
             } else {
                 $result[] = $report;
+
                 $this->set($report->id, $report);
             }
         }
@@ -80,6 +82,7 @@ class Reports extends Manager
     public function insert(Report $report): int
     {
         $id = $this->Save->insert($report);
+
         $this->set($id, $report);
 
         return $id;

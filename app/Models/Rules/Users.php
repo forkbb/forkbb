@@ -43,7 +43,11 @@ class Users extends Rules
 
     protected function getbanUsers(): bool
     {
-        return $this->user->isAdmin || ($this->user->isAdmMod && 1 === $this->user->g_mod_ban_users);
+        return $this->user->isAdmin
+            || (
+                $this->user->isAdmMod
+                && 1 === $this->user->g_mod_ban_users
+            );
     }
 
     protected function getchangeGroup(): bool
@@ -95,7 +99,8 @@ class Users extends Rules
      */
     protected function getusePoll(): bool
     {
-        return ! $this->user->isGuest && 1 === $this->c->config->b_poll_enabled;
+        return ! $this->user->isGuest
+            && 1 === $this->c->config->b_poll_enabled;
     }
 
     /**
@@ -103,7 +108,8 @@ class Users extends Rules
      */
     protected function getshowPostCount(): bool
     {
-        return 1 === $this->c->config->b_show_post_count || $this->user->isAdmMod;
+        return 1 === $this->c->config->b_show_post_count
+            || $this->user->isAdmMod;
     }
 
     /**
@@ -119,7 +125,8 @@ class Users extends Rules
      */
     protected function getshowUserInfo(): bool
     {
-        return $this->user->isAdmin || 1 === $this->c->config->b_show_user_info;
+        return $this->user->isAdmin
+            || 1 === $this->c->config->b_show_user_info;
     }
 
     /**
@@ -127,7 +134,8 @@ class Users extends Rules
      */
     protected function getshowAvatar(): bool
     {
-        return 1 === $this->c->config->b_avatars && 1 === $this->user->show_avatars;
+        return 1 === $this->c->config->b_avatars
+            && 1 === $this->user->show_avatars;
     }
 
     /**
@@ -135,7 +143,8 @@ class Users extends Rules
      */
     protected function getsearchUsers(): bool
     {
-        return $this->user->isAdmin || 1 === $this->user->g_search_users;
+        return $this->user->isAdmin
+            || 1 === $this->user->g_search_users;
     }
 
     /**
@@ -143,7 +152,8 @@ class Users extends Rules
      */
     protected function getviewUsers(): bool
     {
-        return $this->user->isAdmin || 1 === $this->user->g_view_users;
+        return $this->user->isAdmin
+            || 1 === $this->user->g_view_users;
     }
 
     /**

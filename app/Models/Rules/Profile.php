@@ -49,27 +49,37 @@ class Profile extends Rules
 
     protected function geteditPass(): bool
     {
-        return $this->my || $this->admin || ($this->moderator && 1 === $this->user->g_mod_change_passwords);
+        return $this->my
+            || $this->admin
+            || (
+                $this->moderator
+                && 1 === $this->user->g_mod_change_passwords
+            );
     }
 
     protected function getsetTitle(): bool
     {
-        return $this->admin || $this->moderator || 1 === $this->user->g_set_title;
+        return $this->admin
+            || $this->moderator
+            || 1 === $this->user->g_set_title;
     }
 
     protected function getviewOEmail(): bool
     {
-        return $this->my || $this->user->isAdmMod;
+        return $this->my
+            || $this->user->isAdmMod;
     }
 
     protected function geteditEmail(): bool
     {
-        return $this->my || $this->admin;
+        return $this->my
+            || $this->admin;
     }
 
     protected function getconfirmEmail(): bool
     {
-        return $this->my && ! $this->curUser->email_confirmed;
+        return $this->my
+            && ! $this->curUser->email_confirmed;
     }
 
     protected function getsendPM(): bool
@@ -86,13 +96,20 @@ class Profile extends Rules
 
     protected function getviewLastVisit(): bool
     {
-        return $this->my || $this->user->isAdmMod;
+        return $this->my
+            || $this->user->isAdmMod;
     }
 
     protected function getbanUser(): bool
     {
         return ! $this->my
-            && ($this->admin || ($this->moderator && 1 === $this->user->g_mod_ban_users))
+            && (
+                $this->admin
+                || (
+                    $this->moderator
+                    && 1 === $this->user->g_mod_ban_users
+                )
+            )
             && ! $this->curUser->isAdmMod
             && ! $this->curUser->isGuest;
     }
@@ -124,32 +141,48 @@ class Profile extends Rules
 
     protected function getuseSignature(): bool
     {
-        return $this->curUser->g_sig_length > 0 && $this->curUser->g_sig_lines > 0;
+        return $this->curUser->g_sig_length > 0
+            && $this->curUser->g_sig_lines > 0;
     }
 
     protected function getviewWebsite(): bool
     {
-        return $this->user->isAdmMod || 1 === $this->curUser->g_post_links;
+        return $this->user->isAdmMod
+            || 1 === $this->curUser->g_post_links;
     }
 
     protected function geteditWebsite(): bool
     {
-        return $this->admin || (($this->moderator || $this->my) && 1 === $this->user->g_post_links); //????
+        return $this->admin
+            || (
+                (
+                    $this->moderator
+                    || $this->my
+                )
+                && 1 === $this->user->g_post_links
+            ); //????
     }
 
     protected function getchangeGroup(): bool
     {
-        return $this->admin || ($this->my && $this->moderator);
+        return $this->admin
+            || (
+                $this->my
+                && $this->moderator
+            );
     }
 
     protected function getconfModer(): bool
     {
-        return $this->user->isAdmin && $this->curUser->isAdmMod && ! $this->curUser->isAdmin;
+        return $this->user->isAdmin
+            && $this->curUser->isAdmMod
+            && ! $this->curUser->isAdmin;
     }
 
     protected function geteditIpCheckType(): bool
     {
-        return $this->my || $this->admin;
+        return $this->my
+            || $this->admin;
     }
 
     protected function getviewSubscription(): bool
@@ -166,25 +199,27 @@ class Profile extends Rules
 
     protected function getconfigureOAuth(): bool
     {
-        return $this->my && 1 === $this->c->config->b_oauth_allow;
+        return $this->my
+            && 1 === $this->c->config->b_oauth_allow;
     }
 
     protected function getconfigureSearch(): bool
     {
-        return $this->my && 1 === $this->curUser->g_search;
+        return $this->my
+            && 1 === $this->curUser->g_search;
     }
 
     protected function geteditAboutMe(): bool
     {
         return (
-                $this->my 
+                $this->my
                 && 1 === $this->user->g_use_about_me
             ) || (
                 $this->curUser->about_me_id > 0
                 && (
-                    $this->admin 
+                    $this->admin
                     || (
-                        $this->moderator 
+                        $this->moderator
                         && $this->editProfile
                     )
                 )

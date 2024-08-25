@@ -33,6 +33,7 @@ class Move extends Action
             }
 
             $post->topic_id = $toTopic->id;
+
             $this->c->posts->update($post);
         }
 

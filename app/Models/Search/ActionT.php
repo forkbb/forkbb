@@ -39,6 +39,7 @@ class ActionT extends Method
         if ($root->id) {
             $forums[] = $root->id;
         }
+
         if (empty($forums)) {
             return [];
         }

@@ -40,7 +40,6 @@ abstract class Page extends Model
     public function __construct(Container $container)
     {
         parent::__construct($container);
-
         $container->Lang->load('common');
 
         $formats                 = $container->DATE_FORMATS;
@@ -190,6 +189,7 @@ abstract class Page extends Model
                 'Latest active topics',
                 'Find latest active topics',
             ];
+
             if (! $this->user->isGuest) {
                 $sub['with-your-posts'] = [
                     $r->link(
@@ -202,6 +202,7 @@ abstract class Page extends Model
                     'Find topics with your posts',
                 ];
             }
+
             $sub['unanswered'] = [
                 $r->link(
                     'SearchAction',
@@ -229,6 +230,7 @@ abstract class Page extends Model
                     'Register',
                 ];
             }
+
             $navUser[self::FI_LOGIN] = [
                 $r->link('Login'),
                 'Login',
@@ -247,6 +249,7 @@ abstract class Page extends Model
                 if (1 !== $this->user->u_pm) {
                     $tmpPM[] = 'pmoff';
                 }
+
                 if ($this->user->u_pm_num_new > 0) {
                     $tmpPM[] = 'pmnew';
                 }
@@ -287,6 +290,7 @@ abstract class Page extends Model
                    if (empty($matches[4][$i])) {
                        $matches[4][$i] = 'extra' . $i;
                    }
+
                    if (isset($navGen[$matches[4][$i]])) {
                        $navGen[$matches[4][$i]] = [$matches[3][$i], $matches[2][$i], $matches[2][$i]];
                    } else {

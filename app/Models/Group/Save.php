@@ -57,7 +57,6 @@ class Save extends Action
             WHERE g_id=?i";
 
         $this->c->DB->exec($query, $vars);
-
         $group->resModified();
 
         // сбросить кеш для гостя

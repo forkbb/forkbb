@@ -223,11 +223,13 @@ class Lang
                         }
 
                         $curVal = [];
+
                         for ($v = 0; $v < $nplurals; ++$v) {
                             if (! isset($cur[$v][0])) {
                                 $curVal = null;
                                 break;
                             }
+
                             $curVal[$v] = $cur[$v];
                         }
 

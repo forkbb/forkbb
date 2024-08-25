@@ -72,7 +72,8 @@ class User extends DataModel
      */
     protected function getisAdmMod(): bool
     {
-        return $this->isAdmin || 1 === $this->g_moderator;
+        return $this->isAdmin
+            || 1 === $this->g_moderator;
     }
 
     /**
@@ -80,7 +81,8 @@ class User extends DataModel
      */
     protected function getisBanByName(): bool
     {
-        return ! $this->isAdmin && $this->c->bans->banFromName($this->username) > 0;
+        return ! $this->isAdmin
+            && $this->c->bans->banFromName($this->username) > 0;
     }
 
     /**

@@ -98,7 +98,9 @@ class Save extends Action
             VALUES ({$set2})";
 
         $this->c->DB->exec($query, $vars);
+
         $report->id = (int) $this->c->DB->lastInsertId();
+
         $report->resModified();
 
         if (true !== $this->c->Cache->set(self::CACHE_KEY, $report->id)) {

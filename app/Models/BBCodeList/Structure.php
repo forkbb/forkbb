@@ -163,30 +163,35 @@ class Structure extends Model
     protected function setrecursive($value): void
     {
         $value = empty($value) ? null : true;
+
         $this->setModelAttr('recursive', $value);
     }
 
     protected function settext_only($value): void
     {
         $value = empty($value) ? null : true;
+
         $this->setModelAttr('text_only', $value);
     }
 
     protected function settags_only($value): void
     {
         $value = empty($value) ? null : true;
+
         $this->setModelAttr('tags_only', $value);
     }
 
     protected function setpre($value): void
     {
         $value = empty($value) ? null : true;
+
         $this->setModelAttr('pre', $value);
     }
 
     protected function setsingle($value): void
     {
         $value = empty($value) ? null : true;
+
         $this->setModelAttr('single', $value);
     }
 
@@ -206,12 +211,14 @@ class Structure extends Model
     protected function setauto($value): void
     {
         $value = ! empty($value);
+
         $this->setModelAttr('auto', $value);
     }
 
     protected function setself_nesting($value): void
     {
         $value = (int) $value < 1 ? false : (int) $value;
+
         $this->setModelAttr('self_nesting', $value);
     }
 
@@ -547,9 +554,11 @@ class Structure extends Model
         if (0 !== $round) {
             return '\'(\' != \')\'.';
         }
+
         if (0 !== $square) {
             return '\'[\' != \']\'.';
         }
+
         if (0 !== $curly) {
             return '\'{\' != \'}\'.';
         }

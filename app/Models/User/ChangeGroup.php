@@ -89,6 +89,7 @@ class ChangeGroup extends Action
         if ($adminPresent) {
             $this->c->admins->reset();
         }
+
         if ($unverPresent) {
             $this->c->stats->reset();
         }

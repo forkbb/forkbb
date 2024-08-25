@@ -135,6 +135,7 @@ class Router
         ) {
             $args['hash'] = $this->csrf->createHash($marker, $args);
         }
+
         if (
             isset($names['token'])
             && ! isset($args['token'])
@@ -336,6 +337,7 @@ class Router
             if (null === $data) {
                 throw new InvalidArgumentException("Wrong route: {$route}");
             }
+
             if (\is_array($method)) {
                 foreach ($method as $m) {
                     $this->dynamic[$data[0]][$data[1]][$m] = [$handler, $data[2], $marker];
@@ -363,10 +365,12 @@ class Router
 
         $s = 1;
         $base = $parts[0];
+
         if ('/' === $parts[0]) {
             $s     = 2;
             $base .= $parts[1];
         }
+
         if (
             isset($parts[$s])
             && '/' !== $parts[$s]
@@ -444,12 +448,14 @@ class Router
                 }
             }
         }
+
         if (
             $var
             || $s
         ) {
             return null;
         }
+
         $pattern .= '$%D';
 
         return [

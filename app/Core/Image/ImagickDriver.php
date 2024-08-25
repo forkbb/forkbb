@@ -71,9 +71,11 @@ class ImagickDriver extends DefaultDriver
             switch ($type) {
                 case 'png':
                     $imagick->setImageCompressionQuality(0); // ???? пересчитать как в GD?
+
                     break;
                 default:
                     $imagick->setImageCompressionQuality($quality);
+
                     break;
             }
 

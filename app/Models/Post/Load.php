@@ -40,8 +40,7 @@ class Load extends Action
     {
         if ($id < 1) {
             throw new InvalidArgumentException('Expected a positive post id');
-        }
-        if (
+        } elseif (
             null !== $tid
             && $tid < 1
         ) {
@@ -65,15 +64,14 @@ class Load extends Action
 
         if (! $topic instanceof Topic) {
             return null;
-        }
-        if (
+        } elseif (
             null !== $tid
             && $topic->id !== $tid
         ) {
             return null;
+        } else {
+            return $post;
         }
-
-        return $post;
     }
 
     /**

@@ -98,6 +98,7 @@ class Posts extends Manager
     public function insert(Post $post): int
     {
         $id = $this->Save->insert($post);
+
         $this->set($id, $post);
 
         return $id;

@@ -53,7 +53,6 @@ class Log implements LoggerInterface
             && \method_exists($message, '__toString')
         ) {
             $message = (string) $message;
-
         } elseif (! \is_string($message)) {
             throw new InvalidArgumentException('Expected string in message');
         }
@@ -207,6 +206,7 @@ class Log implements LoggerInterface
     protected function interpolate(string $message, array $context): string
     {
         $replace = [];
+
         foreach ($context as $key => $val) {
             // check that the value can be cast to string
             if (

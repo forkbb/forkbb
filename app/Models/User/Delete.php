@@ -83,6 +83,7 @@ class Delete extends Action
                 'id'              => FORK_SFID,
                 'parent_forum_id' => 0,
             ]);
+
             $this->c->forums->set(FORK_SFID, $forum);
 
             $posts = $this->c->posts->loadByIds($pids);
@@ -92,7 +93,6 @@ class Delete extends Action
 
         foreach ($users as $user) {
             $this->c->Online->delete($user);
-
             $user->deleteAvatar();
 
             // имя и email удаляемого пользователя в бан

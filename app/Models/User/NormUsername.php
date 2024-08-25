@@ -6337,6 +6337,7 @@ class NormUsername extends Action
     public function normUsername(string $str): string
     {
         $str = \strtr($str, $this->confusables);
+
         return \preg_replace('%[^\p{L}\p{N}]+%u', '', $str);
     }
 }

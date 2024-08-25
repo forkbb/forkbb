@@ -42,8 +42,8 @@ class UpdateUsername extends Action
         foreach ($forums as $forum) {
             if ($user->isModerator($forum)) {
                 $isMod = true;
-                $forum->modAdd($user); // переименование модератора
 
+                $forum->modAdd($user); // переименование модератора
                 $this->manager->update($forum);
             }
         }

@@ -110,7 +110,9 @@ class Save extends Action
             VALUES (' . \implode(', ', $set2) . ')';
 
         $this->c->DB->exec($query, $vars);
+
         $forum->id = (int) $this->c->DB->lastInsertId();
+
         $forum->resModified();
 
         return $forum->id;
