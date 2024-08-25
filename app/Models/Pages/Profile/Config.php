@@ -57,8 +57,8 @@ class Config extends Profile
                         'string:trim',
                         'in' => DateTimeZone::listIdentifiers(),
                     ],
-                    'time_format'   => 'required|integer|in:' . \implode(',', \array_keys($this->c->TIME_FORMATS)),
-                    'date_format'   => 'required|integer|in:' . \implode(',', \array_keys($this->c->DATE_FORMATS)),
+                    'time_format'   => 'required|integer|in:1,2,3,4',
+                    'date_format'   => 'required|integer|in:1,2,3,4',
                     'page_scroll'   => 'required|integer|in:-2,-1,0,1,2',
                     'show_smilies'  => 'required|integer|in:0,1',
                     'show_sig'      => 'required|integer|in:0,1',
@@ -168,22 +168,15 @@ class Config extends Profile
         $langs  = $this->c->Func->getNameLangs();
         $styles = $this->c->Func->getStyles();
         $timeFormat = [];
-        foreach ($this->c->TIME_FORMATS as $key => $value) {
-            $timeFormat[$key] = dt(\time(), false, null, $value, true, true)
-                . (
-                    $key > 1
-                    ? ''
-                    : ' (' . __('Default for language') . ')'
-                );
+
+        foreach ([1, 2, 3, 4] as $key) {
+            $timeFormat[$key] = dt(\time(), 0, $key, true);
         }
+
         $dateFormat = [];
-        foreach ($this->c->DATE_FORMATS as $key => $value) {
-            $dateFormat[$key] = dt(\time(), true, $value, null, false, true)
-                . (
-                    $key > 1
-                    ? ''
-                    : ' (' . __('Default for language') . ')'
-                );
+
+        foreach ([1, 2, 3, 4] as $key) {
+            $dateFormat[$key] = dt(\time(), $key, 0, true);
         }
 
         $form['sets']['essentials'] = [

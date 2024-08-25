@@ -93,7 +93,7 @@
               <li class="f-admin-note" title="{{ __('Admin note') }}">{{ $post->user->admin_note }}</li>
             @endif
             @if (! $post->user->isGuest )
-              <li class="f-registered"><span class="f-psfont">{!! __(['Registered: %s', dt($post->user->registered, true)]) !!}</span></li>
+              <li class="f-registered"><span class="f-psfont">{!! __(['Registered: %s', dt($post->user->registered, null, 0)]) !!}</span></li>
             @endif
             @if ($post->user->location)
               <li class="f-location"><span class="f-psfont">{!! __(['From %s', $post->user->censorLocation]) !!}</span></li>

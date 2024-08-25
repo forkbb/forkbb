@@ -58,8 +58,6 @@ return [
         'algo' => 'sha1',
         'salt' => '_SALT_FOR_HMAC_',
     ],
-    'DATE_FORMATS' => ['Y-m-d', 'd M Y', 'Y-m-d', 'Y-d-m', 'd-m-Y', 'm-d-Y', 'M j Y', 'jS M Y'],
-    'TIME_FORMATS' => ['H:i:s', 'H:i', 'H:i:s', 'H:i', 'g:i:s a', 'g:i a'],
     'FRIENDLY_URL' => [
         'lowercase' => true,
         'translit'  => true, // 'Any-Latin;Latin-ASCII;',

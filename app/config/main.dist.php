@@ -72,8 +72,6 @@ return [
             'Feature-Policy'          => 'accelerometer \'none\';ambient-light-sensor \'none\';autoplay \'none\';battery \'none\';camera \'none\';document-domain \'self\';fullscreen \'self\';geolocation \'none\';gyroscope \'none\';magnetometer \'none\';microphone \'none\';midi \'none\';payment \'none\';picture-in-picture \'none\';sync-xhr \'self\';usb \'none\'',
         ],
     ],
-    'DATE_FORMATS' => ['Y-m-d', 'd M Y', 'Y-m-d', 'Y-d-m', 'd-m-Y', 'm-d-Y', 'M j Y', 'jS M Y'],
-    'TIME_FORMATS' => ['H:i:s', 'H:i', 'H:i:s', 'H:i', 'g:i:s a', 'g:i a'],
     'FRIENDLY_URL' => [
         'lowercase' => true,
         'translit'  => true, // 'Any-Latin;Latin-ASCII;',

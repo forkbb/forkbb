@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '8.0.0';
     const REV_MIN_FOR_UPDATE         = 53;
-    const LATEST_REV_WITH_DB_CHANGES = 82;
+    const LATEST_REV_WITH_DB_CHANGES = 83;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
     const CONFIG_FILE                = 'main.php';
@@ -1290,6 +1290,21 @@ class Update extends Admin
         $config->i_about_me_topic_id = $topicId;
 
         $config->save();
+
+        return null;
+    }
+
+    /**
+     * rev.82 to rev.83
+     */
+    protected function stageNumber82(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->delete('DATE_FORMATS');
+        $coreConfig->delete('TIME_FORMATS');
+
+        $coreConfig->save();
 
         return null;
     }

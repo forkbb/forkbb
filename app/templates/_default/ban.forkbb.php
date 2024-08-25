@@ -13,7 +13,7 @@
       <p>{!! __('You are banned') !!}</p>
 @endif
 @if ($p->ban['expire'])
-      <p>{!! __(['The ban expires %s', dt($p->ban['expire'], true)]) !!}</p>
+      <p>{!! __(['The ban expires %s', dt($p->ban['expire'], null, 0)]) !!}</p>
 @endif
 @if ($p->ban['message'])
       <p>{!! __('Ban message for you') !!}</p>

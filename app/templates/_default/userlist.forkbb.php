@@ -98,7 +98,7 @@
         @if ($p->userRules->showPostCount)
             <span class="f-cell f-cnumposts">{!! __(['<b>%s</b><small> post,</small>', $user->num_posts, num($user->num_posts)]) !!}</span>
         @endif
-            <span class="f-cell f-cdatereg">{!! __(['<small>registered: </small><b>%s</b>', dt($user->registered, true)]) !!}</span>
+            <span class="f-cell f-cdatereg">{!! __(['<small>registered: </small><b>%s</b>', dt($user->registered, null, 0)]) !!}</span>
           </li>
     @endforeach
         </ol>

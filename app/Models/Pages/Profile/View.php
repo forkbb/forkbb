@@ -288,13 +288,13 @@ class View extends Profile
         $fields['registered'] = [
             'class'   => ['pline'],
             'type'    => 'str',
-            'value'   => dt($this->curUser->registered, true),
+            'value'   => dt($this->curUser->registered, null, 0),
             'caption' => 'Registered info',
         ];
         $fields['lastpost'] = [
             'class'   => ['pline'],
             'type'    => 'str',
-            'value'   => dt($this->curUser->last_post, true),
+            'value'   => dt($this->curUser->last_post, null, 0),
             'caption' => 'Last post info',
         ];
 
@@ -412,7 +412,7 @@ class View extends Profile
                 'type'    => 'str',
                 'value'   => $this->rules->my
                     ? dt($this->curUser->last_visit)
-                    : dt($this->curUser->currentVisit, true),
+                    : dt($this->curUser->currentVisit, null, 0),
                 'caption' => 'Last visit info',
             ];
         }

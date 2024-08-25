@@ -42,16 +42,6 @@ abstract class Page extends Model
         parent::__construct($container);
         $container->Lang->load('common');
 
-        $formats                 = $container->DATE_FORMATS;
-        $formats[0]              = __($formats[0]);
-        $formats[1]              = __($formats[1]);
-        $container->DATE_FORMATS = $formats;
-
-        $formats                 = $container->TIME_FORMATS;
-        $formats[0]              = __($formats[0]);
-        $formats[1]              = __($formats[1]);
-        $container->TIME_FORMATS = $formats;
-
         $this->identifier   = 'unknown';      # string|array Идентификатор(ы) для установки классов элемента #fork
         $this->fIndex       = self::FI_INDEX; # string       Указатель на активный пункт навигации
         $this->httpStatus   = 200;            # int          HTTP статус ответа для данной страницы

@@ -172,8 +172,8 @@ class Users extends Manager
         $set = [
             'id'          => 0,
             'group_id'    => FORK_GROUP_GUEST,
-            'time_format' => 0,
-            'date_format' => 0,
+            'time_format' => 1,
+            'date_format' => 1,
         ] + $attrs;
 
         if (isset($this->c->config->a_guest_set)) {

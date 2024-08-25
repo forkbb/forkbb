@@ -44,9 +44,11 @@ class Current extends Action
         $cookie->setUser($user);
 
         if ($user->isGuest) {
-            $user->__isBot    = $this->isBot($user->userAgent);
-            $user->__timezone = $this->c->config->o_default_timezone;
-            $user->__language = 1 === $this->c->config->b_default_lang_auto ? $this->getLangFromHTTP() : $this->c->config->o_default_lang;
+            $user->__isBot       = $this->isBot($user->userAgent);
+            $user->__timezone    = $this->c->config->o_default_timezone;
+            $user->__language    = 1 === $this->c->config->b_default_lang_auto ? $this->getLangFromHTTP() : $this->c->config->o_default_lang;
+            $user->__date_format = 1;
+            $user->__time_format = 1;
         } else {
             $user->__isBot = false;
             // Special case: We've timed out, but no other user has browsed the forums since we timed out

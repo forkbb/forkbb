@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB;
 
 use ForkBB\Core\Container;
+use IntlDateFormatter;
 use InvalidArgumentException;
 
 /**
@@ -19,7 +20,7 @@ use InvalidArgumentException;
 function _init(Container $c): void
 {
     __([$c]);
-    dt(0, true, '', '', true, true, $c);
+    dt(0, null, null, false, $c);
 }
 
 /**
@@ -89,52 +90,42 @@ function num(mixed $number, int $decimals = 0): string
 /**
  * Возвращает дату/время в формате текущего пользователя
  */
-function dt(int $arg, bool $dateOnly = false, ?string $dateFormat = null, ?string $timeFormat = null, bool $timeOnly = false, bool $noText = false, ?Container $container = null): string
+function dt(int $arg, ?int $dateType = null, ?int $timeType = null, bool $noText = false, ?Container $container = null): string
 {
-    static $c, $offset;
+    static $c, $idfs = [],
+        $types = [
+            0 => IntlDateFormatter::NONE,
+            1 => IntlDateFormatter::SHORT,
+            2 => IntlDateFormatter::MEDIUM,
+            3 => IntlDateFormatter::LONG,
+            4 => IntlDateFormatter::FULL,
+        ],
+        $typesR = [
+            0 => IntlDateFormatter::NONE,
+            1 => IntlDateFormatter::RELATIVE_SHORT,
+            2 => IntlDateFormatter::RELATIVE_MEDIUM,
+            3 => IntlDateFormatter::RELATIVE_LONG,
+            4 => IntlDateFormatter::RELATIVE_FULL,
+        ];
 
-    if (null !== $container) {
-        $c = $container;
+    if (0 === $arg) {
+        if (null !== $container) {
+            $c = $container;
+        }
 
-        return '';
-    }
-
-    if (empty($arg)) {
         return __('Never');
     }
 
-    if (null === $offset) {
-        $offset = $c->Func->offset();
+    $dateType ??= \min(4, \max(1, $c->user->date_format));
+    $timeType ??= \min(4, \max(1, $c->user->time_format));
+
+    $key = "i,{$noText},{$dateType},{$timeType}";
+
+    if (! isset($idfs[$key])) {
+        $idfs[$key] = new IntlDateFormatter(__('lang_identifier'), $noText ? $types[$dateType] : $typesR[$dateType] , $types[$timeType], $c->user->timezone);
     }
 
-    $arg += $offset;
-
-    if (null === $dateFormat) {
-        $dateFormat = $c->DATE_FORMATS[$c->user->date_format];
-    }
-    if (null === $timeFormat) {
-        $timeFormat = $c->TIME_FORMATS[$c->user->time_format];
-    }
-
-    $date = \gmdate($dateFormat, $arg);
-
-    if (! $noText) {
-        $now = \time() + $offset;
-
-        if ($date == \gmdate($dateFormat, $now)) {
-            $date = __('Today');
-        } elseif ($date == \gmdate($dateFormat, $now - 86400)) {
-            $date = __('Yesterday');
-        }
-    }
-
-    if ($dateOnly) {
-        return $date;
-    } elseif ($timeOnly) {
-        return \gmdate($timeFormat, $arg);
-    } else {
-        return $date . ' ' . \gmdate($timeFormat, $arg);
-    }
+    return $idfs[$key]->format($arg);
 }
 
 /**
