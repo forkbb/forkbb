@@ -1207,6 +1207,7 @@ class Install extends Admin
                 'time_format'      => ['TINYINT(1)', false, 1],
                 'date_format'      => ['TINYINT(1)', false, 1],
                 'language'         => ['VARCHAR(25)', false, ''],
+                'locale'           => ['VARCHAR(20)', false, 'en'],
                 'style'            => ['VARCHAR(25)', false, ''],
                 'num_posts'        => ['INT(10) UNSIGNED', false, 0],
                 'num_topics'       => ['INT(10) UNSIGNED', false, 0],

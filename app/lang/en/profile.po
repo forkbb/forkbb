@@ -422,3 +422,9 @@ msgstr "Change &apos;About me&apos;"
 
 msgid "Other"
 msgstr "Other"
+
+msgid "Locale"
+msgstr "Locale"
+
+msgid "Locale info"
+msgstr "Affects time and date formats. Dependent on language."

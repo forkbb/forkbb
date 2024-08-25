@@ -422,3 +422,9 @@ msgstr "Изменение поля &apos;Обо мне&apos;"
 
 msgid "Other"
 msgstr "Другое"
+
+msgid "Locale"
+msgstr "Локаль"
+
+msgid "Locale info"
+msgstr "Влияет на форматы времени и даты. Зависит от языка."

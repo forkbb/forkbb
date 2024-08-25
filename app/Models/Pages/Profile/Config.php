@@ -57,6 +57,11 @@ class Config extends Profile
                         'string:trim',
                         'in' => DateTimeZone::listIdentifiers(),
                     ],
+                    'locale'      => [
+                        'required',
+                        'string:trim',
+                        'in' => \array_keys($this->createLocaleOptions()),
+                    ],
                     'time_format'   => 'required|integer|in:1,2,3,4',
                     'date_format'   => 'required|integer|in:1,2,3,4',
                     'page_scroll'   => 'required|integer|in:-2,-1,0,1,2',
@@ -78,6 +83,7 @@ class Config extends Profile
                     'language'      => 'Language',
                     'style'         => 'Style',
                     'timezone'      => 'Time zone',
+                    'locale'        => 'Locale',
                     'time_format'   => 'Time format',
                     'date_format'   => 'Date format',
                     'page_scroll'   => 'Page scroll label',
@@ -146,6 +152,26 @@ class Config extends Profile
     }
 
     /**
+     * Возвращает список локалей из текущего языка
+     */
+    protected function createLocaleOptions(): array
+    {
+        $locales = include $this->c->DIR_CONFIG . '/locales.php';
+        $result  = [];
+        $keys    = \explode('|', __('lang_locales'));
+
+        \array_unshift($keys, $this->curUser->locale);
+
+        foreach ($keys as $key) {
+            if (isset($locales[$key])) {
+                $result[$key] = $locales[$key];
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Создает массив данных для формы
      */
     protected function form(array $args): array
@@ -200,6 +226,13 @@ class Config extends Profile
                     'options' => $this->createTimeZoneOptions(),
                     'value'   => $this->curUser->timezone,
                     'caption' => 'Time zone',
+                ],
+                'locale' => [
+                    'type'    => 'select',
+                    'options' => $this->createLocaleOptions(),
+                    'value'   => $this->curUser->locale,
+                    'caption' => 'Locale',
+                    'help'    => 'Locale info',
                 ],
                 'time_format' => [
                     'type'    => 'select',

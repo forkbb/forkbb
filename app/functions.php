@@ -122,7 +122,7 @@ function dt(int $arg, ?int $dateType = null, ?int $timeType = null, bool $noText
     $key = "i,{$noText},{$dateType},{$timeType}";
 
     if (! isset($idfs[$key])) {
-        $idfs[$key] = new IntlDateFormatter(__('lang_identifier'), $noText ? $types[$dateType] : $typesR[$dateType] , $types[$timeType], $c->user->timezone);
+        $idfs[$key] = new IntlDateFormatter($c->user->locale /* __('lang_identifier') */, $noText ? $types[$dateType] : $typesR[$dateType] , $types[$timeType], $c->user->timezone);
     }
 
     return $idfs[$key]->format($arg);

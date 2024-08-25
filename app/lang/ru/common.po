@@ -24,6 +24,9 @@ msgstr ","
 msgid "lang_thousands_sep"
 msgstr " "
 
+msgid "lang_locales"
+msgstr "ru|ru_BY|ru_KG|ru_KZ|ru_MD|ru_RU|ru_UA"
+
 msgid "Cancel"
 msgstr "Отменить"
 

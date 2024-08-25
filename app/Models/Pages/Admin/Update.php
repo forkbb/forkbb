@@ -1306,6 +1306,8 @@ class Update extends Admin
 
         $coreConfig->save();
 
+        $this->c->DB->addField('::users', 'locale', 'VARCHAR(20)', false, 'en', null, 'language');
+
         return null;
     }
 }
