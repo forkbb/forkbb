@@ -367,6 +367,10 @@ class Validator
                 list($type, $message) = $message;
             }
 
+            if (\is_array($attr)) {
+                $attr = \implode(',', $attr);
+            }
+
             $this->errors[$type][] = \is_array($message)
                 ? $message
                 : [$message, [':alias' => __($alias), ':attr' => $attr]];
