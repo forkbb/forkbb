@@ -15,6 +15,7 @@ use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
 use ForkBB\Models\Pages\TimeZoneTrait;
 use DateTimeZone;
+// use IntlDateFormatter;
 use ResourceBundle;
 use function \ForkBB\{__, dt};
 
@@ -163,10 +164,12 @@ class Config extends Profile
         $keys       = \explode('|', __('lang_locales'));
 
         \array_unshift($keys, $this->curUser->locale);
+        \array_push($keys, 'en_001');
 
         foreach ($keys as $key) {
             if (isset($curLocales[$key], $allLocales[$key])) {
-                $result[$key] = $allLocales[$key];
+//                $dt           = (new IntlDateFormatter($key, IntlDateFormatter::LONG, IntlDateFormatter::LONG, $this->curUser->timezone))->format(\time());
+                $result[$key] = $allLocales[$key]; // . " [{$dt}]";
             }
         }
 
