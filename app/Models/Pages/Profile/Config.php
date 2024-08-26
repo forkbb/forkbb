@@ -15,6 +15,7 @@ use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
 use ForkBB\Models\Pages\TimeZoneTrait;
 use DateTimeZone;
+use ResourceBundle;
 use function \ForkBB\{__, dt};
 
 class Config extends Profile
@@ -60,7 +61,7 @@ class Config extends Profile
                     'locale'      => [
                         'required',
                         'string:trim',
-                        'in' => \array_keys($this->createLocaleOptions()),
+                        'in' => \array_keys($this->localeOptions),
                     ],
                     'time_format'   => 'required|integer|in:1,2,3,4',
                     'date_format'   => 'required|integer|in:1,2,3,4',
@@ -154,17 +155,18 @@ class Config extends Profile
     /**
      * Возвращает список локалей из текущего языка
      */
-    protected function createLocaleOptions(): array
+    protected function getlocaleOptions(): array
     {
-        $locales = include $this->c->DIR_CONFIG . '/locales.php';
-        $result  = [];
-        $keys    = \explode('|', __('lang_locales'));
+        $curLocales = \array_flip(ResourceBundle::getLocales(''));
+        $allLocales = include $this->c->DIR_CONFIG . '/locales.php';
+        $result     = [];
+        $keys       = \explode('|', __('lang_locales'));
 
         \array_unshift($keys, $this->curUser->locale);
 
         foreach ($keys as $key) {
-            if (isset($locales[$key])) {
-                $result[$key] = $locales[$key];
+            if (isset($curLocales[$key], $allLocales[$key])) {
+                $result[$key] = $allLocales[$key];
             }
         }
 
@@ -229,7 +231,7 @@ class Config extends Profile
                 ],
                 'locale' => [
                     'type'    => 'select',
-                    'options' => $this->createLocaleOptions(),
+                    'options' => $this->localeOptions,
                     'value'   => $this->curUser->locale,
                     'caption' => 'Locale',
                     'help'    => 'Locale info',
