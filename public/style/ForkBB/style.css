@@ -2973,6 +2973,15 @@ body,
   #fork .f-fs-data-edit dd {
     width: 67%;
   }
+
+  #fork .f-main-profile .f-yc-select,
+  #fork .f-main-profile .f-yc-number,
+  #fork .f-main-profile .f-yc-text,
+  #fork .f-main-profile .f-yc-file,
+  #fork .f-main-profile .f-yc-password {
+    padding-top: 0.5rem;
+    line-height: 1.25rem;
+  }
 }
 
 /***********************/
