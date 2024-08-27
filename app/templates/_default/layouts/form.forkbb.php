@@ -30,10 +30,10 @@
             </div>
                     @break
                 @default
-            <dl id="id-dl-{{ $cur['id'] or $key }}" @if ($cur['class']) @class([[$cur['class'], 'f-field-']]) @endif>
+            <dl id="id-dl-{{ $cur['id'] or $key }}" @class([[$cur['type'], 'f-ft-'], [$cur['class'] ?? null, 'f-field-']])>
               <dt>
                     @if ($cur['caption'])
-                <label class="f-ycaption @if ($cur['required']) f-req @endif" @if (false === \strpos('.radio.yield.str.btn.link.label.include.', ".{$cur['type']}.")) for="id-{{ $key }}" @endif>{!! __($cur['caption']) !!}</label>
+                <label class="f-ycaption f-yc-{{ $cur['type'] }} @if ($cur['required']) f-req @endif" @if (false === \strpos('.radio.yield.str.btn.link.label.include.', ".{$cur['type']}.")) for="id-{{ $key }}" @endif>{!! __($cur['caption']) !!}</label>
                     @endif
               </dt>
               <dd>
