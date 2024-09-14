@@ -22,12 +22,11 @@ class Current extends Action
      */
     public function current(): User
     {
-        $ip     = $this->getIp();
-        $cookie = $this->c->Cookie;
-        $user   = $this->load((int) $cookie->uId, $ip);
+        $ip   = \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: '0.0.0.0';
+        $user = $this->load((int) $this->c->Cookie->uId, $ip);
 
         if (! $user->isGuest) {
-            if (! $cookie->verifyUser($user)) {
+            if (! $this->c->Cookie->verifyUser($user)) {
                 $user = $this->load(0, $ip);
             } elseif ($user->ip_check_type > 0) {
                 $hexIp = \bin2hex(\inet_pton($ip));
@@ -39,9 +38,9 @@ class Current extends Action
         }
 
         $user->__ip        = $ip;
-        $user->__userAgent = $this->getUserAgent();
+        $user->__userAgent = \trim($this->c->Secury->replInvalidChars($_SERVER['HTTP_USER_AGENT'] ?? ''));
 
-        $cookie->setUser($user);
+        $this->c->Cookie->setUser($user);
 
         if ($user->isGuest) {
             $user->__isBot       = $this->isBot($user->userAgent);
@@ -100,23 +99,7 @@ class Current extends Action
         }
     }
 
-    /**
-     * Возврат ip пользователя
-     */
-    protected function getIp(): string
-    {
-        return \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: '0.0.0.0';
-    }
-
-    /**
-     * Возврат юзер агента браузера пользователя
-     */
-    protected function getUserAgent(): string
-    {
-        return \trim($this->c->Secury->replInvalidChars($_SERVER['HTTP_USER_AGENT'] ?? ''));
-    }
-
-    protected string $defRegex = '%(?:^|[ ()])\b([\w .-]*{}[\w/.!-]*)%i';
+    protected string $defRegex     = '%(?:^|[ ()])\b([\w .-]*{}[\w/.!-]*)%i';
     protected array $botSearchList = [
         'bot'        => ['%(?<!cu)bot(?!tle)%'],
         'crawl'      => [''],
@@ -136,6 +119,14 @@ class Current extends Action
             empty($_SERVER['HTTP_ACCEPT'])
             || empty($_SERVER['HTTP_ACCEPT_ENCODING'])
             || empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])
+            || (
+                ':' === $this->c->BASE_URL[5]
+                && (
+                    empty($_SERVER['HTTP_SEC_FETCH_DEST'])
+                    || empty($_SERVER['HTTP_SEC_FETCH_MODE'])
+                    || empty($_SERVER['HTTP_SEC_FETCH_SITE'])
+                )
+            )
             || (
                 isset($_SERVER['HTTP_REFERER'][0])
                 && ! \str_starts_with($_SERVER['HTTP_REFERER'], 'https://')
