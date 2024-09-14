@@ -112,7 +112,11 @@
         @if ($post->id === $p->model->solution)
           <span class="f-post-solution-info" title="{{! __(['This is solution. %1$s (%2$s)', $p->model->solution_wa, dt($p->model->solution_time)]) !}}"><span>{!! __('Solution') !!}</span></span>
         @endif
+        @if ($p->user->isBot)
+          <span class="f-post-number"><span>#{{ $post->postNumber }}</span></span>
+        @else
           <span class="f-post-number"><a href="{{ $post->link }}" rel="bookmark">#{{ $post->postNumber }}</a></span>
+        @endif
         </header>
         <address class="f-post-user">
           <div class="f-post-usticky">

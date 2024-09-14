@@ -180,7 +180,11 @@
             @endif
             </div>
             <div class="f-cell f-clast">
+            @if ($p->user->isBot)
+              <span class="f-cltopic">{!! __(['Last post <span>%2$s</span>', '', dt($topic->last_post)]) !!}</span>
+            @else
               <span class="f-cltopic">{!! __(['Last post <a href="%1$s">%2$s</a>', $topic->linkLast, dt($topic->last_post)]) !!}</span>
+            @endif
               <span class="f-clposter">{!! __(['by %s', $topic->last_poster]) !!}</span>
             </div>
           </li>

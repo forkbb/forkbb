@@ -39,6 +39,9 @@ msgstr "Topic №%s was not found in the database"
 msgid "Last post <a href=\"%1$s\">%2$s</a>"
 msgstr "<small>Last post </small><a href=\"%1$s\">%2$s</a>"
 
+msgid "Last post <span>%2$s</span>"
+msgstr "<small>Last post </small><span>%2$s</span>"
+
 msgid "Subscribe forum"
 msgstr "Receive email notification of new topics"
 

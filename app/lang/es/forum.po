@@ -39,6 +39,9 @@ msgstr "El tema №%s no se encontró en la base de datos"
 msgid "Last post <a href=\"%1$s\">%2$s</a>"
 msgstr "<small>Último mensaje </small><a href=\"%1$s\">%2$s</a>"
 
+msgid "Last post <span>%2$s</span>"
+msgstr "<small>Último mensaje </small><span>%2$s</span>"
+
 msgid "Subscribe forum"
 msgstr "Recibir notificación por correo electrónico de nuevos temas."
 

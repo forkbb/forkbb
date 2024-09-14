@@ -39,6 +39,9 @@ msgstr "Тема №%s не найдена в базе данных"
 msgid "Last post <a href=\"%1$s\">%2$s</a>"
 msgstr "<small>Последнее сообщение </small><a href=\"%1$s\">%2$s</a>"
 
+msgid "Last post <span>%2$s</span>"
+msgstr "<small>Последнее сообщение </small><span>%2$s</span>"
+
 msgid "Subscribe forum"
 msgstr "Получать уведомления о новых темах по электронной почте"
 
