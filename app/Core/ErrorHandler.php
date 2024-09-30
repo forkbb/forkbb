@@ -50,7 +50,7 @@ class ErrorHandler
         \E_USER_ERROR        => ['E_USER_ERROR',           'error'],
         \E_USER_WARNING      => ['E_USER_WARNING',       'warning'],
         \E_USER_NOTICE       => ['E_USER_NOTICE',         'notice'],
-        \E_STRICT            => ['E_STRICT',               'error'],
+//        \E_STRICT            => ['E_STRICT',               'error'],
         \E_RECOVERABLE_ERROR => ['E_RECOVERABLE_ERROR',    'error'],
         \E_DEPRECATED        => ['E_DEPRECATED',         'warning'],
         \E_USER_DEPRECATED   => ['E_USER_DEPRECATED',    'warning'],
