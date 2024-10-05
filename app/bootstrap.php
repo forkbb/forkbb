@@ -112,4 +112,4 @@ if (
     $tpl   = \str_replace('<!-- debuginfo -->', $debug, $tpl);
 }
 
-exit($tpl);
+exit($tpl ?? 0);
