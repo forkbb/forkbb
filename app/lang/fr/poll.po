@@ -1,0 +1,106 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+
+msgid "Poll legend"
+msgstr "Sondage"
+
+msgid "Include poll"
+msgstr "Inclure un sondage"
+
+msgid "Hide poll results up to %s voters"
+msgstr "Cacher le résultat du vote jusqu&#8217à %s votes"
+
+msgid "Question text label"
+msgstr "Question"
+
+msgid "Answer type label"
+msgstr "Nombre de réponses"
+
+msgid "Answer type help"
+msgstr "Nombre aximum de réponses pour le vote."
+
+msgid "Answer %s label"
+msgstr "Réponse %s"
+
+msgid "Question number %s is preceded by an empty question"
+msgstr "Question numéro %s est précédée par une question vide."
+
+msgid "For question number %s, the structure of answers is broken"
+msgstr "Pour la question numéro %s, la structure des réponses est invalide."
+
+msgid "Answer number %1$s is preceded by an empty answer (question number %2$s)"
+msgstr "La réponse %1$s est précédée par une réponse vide (question numéro %2$s)."
+
+msgid "For question number %s, there is no value for the maximum number of answers for voting"
+msgstr "Pour la question numéro %s, il n&#8217y a pas de valeur pour le maximum de réponse."
+
+msgid "For question number %s, the maximum number of answers for voting more answers"
+msgstr "Pour la question numéro %s, Le nombre maximum de réponses ."
+
+msgid "Requires at least two answers per question (%s)"
+msgstr "Requiert au moins deux réponses par question (%s)."
+
+msgid "The poll structure is broken"
+msgstr "La structure du sondage est invalide"
+
+msgid "Question %s legend"
+msgstr "Question %s"
+
+msgid "You can choose up to %s answers"
+msgstr "Vous pouvez choisir jusqu&#8217à %s réponses."
+
+msgid "In total voted: %s"
+msgstr "Votes total: %s"
+
+msgid "Poll duration label"
+msgstr "Durée"
+
+msgid "Poll duration help"
+msgstr "Durée du sondage (en jours). 0 pour désactiver."
+
+msgid "(%1$s [%2$s%%])"
+msgstr "(%1$s [%2$s%%])"
+
+msgid "Poll results are hidden from the guests"
+msgstr "Les résultats du sondage sont cachés aux invités."
+
+msgid "This poll is closed"
+msgstr "Ce sondage est fermé."
+
+msgid "Poll results are hidden up to %s voters"
+msgstr "Les résultat du sondages sont cachés jusqu&#8217à %s votants."
+
+msgid "You voted"
+msgstr "Vous avez votés."
+
+msgid "Guest cannot vote"
+msgstr "Les invités ne peuvent participer."
+
+msgid "Poll status is undefined"
+msgstr "Le status du sondage est indéfini."
+
+msgid "Vote"
+msgstr "Vote"
+
+msgid "You cannot vote on this poll"
+msgstr "vous ne pouvez pas voter ici."
+
+msgid "No vote on question %s"
+msgstr "Pas de vote sur la question %s."
+
+msgid "The selected answer is not present in question %s"
+msgstr "La réponse séléctionnée nest pas présente sur la question %s."
+
+msgid "Too many answers selected in question %s"
+msgstr "Trop de réponses séléctionnées pour la question %s."

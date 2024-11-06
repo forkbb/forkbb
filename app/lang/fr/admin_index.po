@@ -1,0 +1,115 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+
+msgid "Not available"
+msgstr "Non disponible"
+
+msgid "Forum admin head"
+msgstr "Administration du forum"
+
+msgid "NA"
+msgstr "N/A"
+
+msgid "Welcome to admin"
+msgstr "Bienvenue sur le panneau d&#8217administration ForkBB. Vous pouvez depuis ici controler des aspect vitaux du forum. En fonction de si vous êtes administrateur ou un modérateur vous pouvez:"
+
+msgid "Welcome 1"
+msgstr "Organiser les catégories et les discussions."
+
+msgid "Welcome 2"
+msgstr "Changer les options et préférences du forum."
+
+msgid "Welcome 3"
+msgstr "Controler les permissions des utilisateurs et invités."
+
+msgid "Welcome 4"
+msgstr "Voir les statistiques IP par utilisateur."
+
+msgid "Welcome 5"
+msgstr "Bannir des utilisateurs."
+
+msgid "Welcome 6"
+msgstr "Censurer des mots."
+
+msgid "Welcome 7"
+msgstr "Régler les promotions de groupes et d&#8217utilisateur."
+
+msgid "Welcome 8"
+msgstr "Elaguer les vieilles discussions."
+
+msgid "Welcome 9"
+msgstr "Gérer les signalements."
+
+msgid "About head"
+msgstr "A propos de ForkBB"
+
+msgid "ForkBB version label"
+msgstr "Revision"
+
+msgid "ForkBB version data"
+msgstr "%s"
+
+msgid "Server statistics label"
+msgstr "Statistiques serveur"
+
+msgid "View server statistics"
+msgstr "Voir les statistiques serveur"
+
+msgid "Support label"
+msgstr "Support"
+
+msgid "PHPinfo disabled message"
+msgstr "La fonction PHP phpinfo() a été désactivée sur ce serveur."
+
+msgid "Server statistics head"
+msgstr "Statistiques serveur"
+
+msgid "Server load label"
+msgstr "Charge du serveur"
+
+msgid "Server load data"
+msgstr "%1$s - %2$s visiteur(s) en ligne"
+
+msgid "Environment label"
+msgstr "Environement"
+
+msgid "Environment data OS"
+msgstr "Système d&#8217exploitation: %s"
+
+msgid "Show info"
+msgstr "Montrer les infos"
+
+msgid "Environment data version"
+msgstr "PHP: %s"
+
+msgid "Environment data acc"
+msgstr "Accelerateur:"
+
+msgid "Database label"
+msgstr "Base de données"
+
+msgid "Database data tables"
+msgstr "Tables: %s"
+
+msgid "Database data rows"
+msgstr "Lignes: %s"
+
+msgid "Database data size"
+msgstr "Taille: %s"
+
+msgid "Other"
+msgstr "Autre:"
+
+msgid "Community"
+msgstr "Communautée"

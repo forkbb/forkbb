@@ -1,0 +1,127 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+
+msgid "OAuth authorization disabled"
+msgstr "OAuth authorisation <a href=\"%s\">disabled</a>."
+
+msgid "Providers"
+msgstr "Fournisseurs"
+
+msgid "Provider label"
+msgstr "Fournisseur"
+
+msgid "Position label"
+msgstr "Position"
+
+msgid "Allow label"
+msgstr "Autoriser"
+
+msgid "Providers updated redirect"
+msgstr "Table des fournisseurs mis à jour."
+
+msgid "Provider updated redirect"
+msgstr "Données fournisseur mis à jour."
+
+msgid "github"
+msgstr "GitHub"
+
+msgid "yandex"
+msgstr "Yandex"
+
+msgid "google"
+msgstr "Google"
+
+msgid "Callback label"
+msgstr "Callback URI"
+
+msgid "Callback help"
+msgstr "The URI that the user is returned to after they have granted or denied access to the application (corresponds to the redirect_uri of the OAuth protocol). It must be specified when registering your application on the provider's server."
+
+msgid "ID label"
+msgstr "Identité Client(ID)"
+
+msgid "ID help"
+msgstr "Identifiant que vous avez auprès du serveur fournisseur."
+
+msgid "Secret label"
+msgstr "Client secret"
+
+msgid "Secret help"
+msgstr "Le mot de passe (secret) que vous utilisez pour vous enregistrer sur le serveur du fournisseur."
+
+msgid "Change data help"
+msgstr "Cochez cette case si vous voulez changer les données"
+
+msgid "Sign in with %s"
+msgstr "Connecté en tant que %s"
+
+msgid "Sign up with %s"
+msgstr "Enregistré en tant que %s"
+
+msgid "From %s"
+msgstr "%s"
+
+msgid "Provider response error: %s"
+msgstr "Echec.<br>Réponse du fournisseur: %s."
+
+msgid "State error"
+msgstr "Erreur dans les paramètres."
+
+msgid "Token error: %s"
+msgstr "Echec de la recupération d&#8217un jeton d&#8217accès: %s."
+
+msgid "cURL disabled"
+msgstr "L&#8217extension cURL est désactivée dans PHP et allow_url_fopen est sur OFF."
+
+msgid "cURL error"
+msgstr "Erreur cURL."
+
+msgid "User error"
+msgstr "Echec de la récupération des données utilisateur."
+
+msgid "No new regs"
+msgstr "Ce forum n&#8217accepte pas de nouveaux enregistrements."
+
+msgid "Email message"
+msgstr "This email received from %s appartient à un utilisateur enregistré.<br>Peut être êtes vous enregistré via un autre fournisseur ou erreur identifiant + mot de passe?"
+
+msgid "Already linked to you"
+msgstr "Ce compte est déjà lié à votre utilisateur."
+
+msgid "Already linked to another"
+msgstr "Ce compte est déjà lié à un autre utilisateur."
+
+msgid "Email registered by another"
+msgstr "Cet adresse email recue de %s est enregistré par un autre utilisateur."
+
+msgid "Account linked"
+msgstr "Compte lié."
+
+msgid "Identifier label"
+msgstr "Identifiant"
+
+msgid "Email label"
+msgstr "Email"
+
+msgid "Verified label"
+msgstr "Email verifié"
+
+msgid "Account removed"
+msgstr "Compte retiré."
+
+msgid "First time Register?"
+msgstr "Vous êtes ici pour la première fois. Voulez vous vous enregistrer?"
+
+msgid "Email banned"
+msgstr "Cette adresse email reçue de %s est bannie."

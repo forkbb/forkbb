@@ -1,0 +1,118 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+
+msgid "No subject after censoring"
+msgstr "Les discussions doivent contenir un sujet. Après application des filtres de censure, votre sujet était vide."
+
+msgid "No message after censoring"
+msgstr "Vous devez entrer un message. Après application des filtres de censure, votre message était vide."
+
+msgid "All caps subject"
+msgstr "Les sujets ne peuvent contenir uniquement des lettres capitales."
+
+msgid "All caps message"
+msgstr "Les messages ne peuvent contenir uniquement des lettres capitales."
+
+msgid "Post preview"
+msgstr "Prévisualisation du message"
+
+msgid "Post redirect"
+msgstr "Message posté."
+
+msgid "Post a reply"
+msgstr "Répondre"
+
+msgid "Post new topic"
+msgstr "Créer une nouvelle discussion"
+
+msgid "Hide smilies"
+msgstr "Ne jamais montrer les smyleys en images dans ce message"
+
+msgid "New subscribe"
+msgstr "S&#8217abonner à cette discussion"
+
+msgid "Stay subscribed"
+msgstr "Rester abonné à cette discussion"
+
+msgid "Topic review"
+msgstr "Apreçu de la discussion (dernier message en premier)"
+
+msgid "Preview"
+msgstr "Aperçu"
+
+msgid "EditPost edit"
+msgstr "Pour permettre de modifier ce message sans restrictions"
+
+msgid "Stick first post"
+msgstr "Epingler le premier message sur chaque page de la discussion"
+
+msgid "Edit post"
+msgstr "Editer le message"
+
+msgid "Edit topic"
+msgstr "Editer la discussion"
+
+msgid "Merge posts"
+msgstr "Fusionner au message précédent s&#8217il est votre"
+
+msgid "Edit redirect"
+msgstr "Message mis à jour."
+
+msgid "Stick topic"
+msgstr "Epingler la discussion"
+
+msgid "Create topic"
+msgstr "Créer une discussion"
+
+msgid "Re"
+msgstr "Re: "
+
+msgid "%1$s (%2$s max size)"
+msgstr "%1$s (%2$s taille maximum)"
+
+msgid "Attachments"
+msgstr "Pièces jointes"
+
+msgid "Change author and date"
+msgstr "Changer l&#8217auteur et la date"
+
+msgid "Change"
+msgstr "Modifier"
+
+msgid "Posted"
+msgstr "Posté"
+
+msgid "Change AnD topic"
+msgstr "Changer l&#8217auteur de la discussion et la date"
+
+msgid "Change AnD post"
+msgstr "Changer l&#8217auteur du message et la date"
+
+msgid "User %s does not exist"
+msgstr "L&#8217utilisateur '%s' n&#8217existe pas."
+
+msgid "Change redirect"
+msgstr "Modifications effectuées."
+
+msgid "All"
+msgstr "Les données de ce champs sont visibles par tous."
+
+msgid "Not guests"
+msgstr "Les données de ce champs sont visibles par tous sauf les invités."
+
+msgid "Admins and mods"
+msgstr "Le données de ce champ sont visible par les administrateurs et moodérateurs seulement."
+
+msgid "Admins only"
+msgstr "Les données de ce champ sont visibles par les administrateurs uniquement."

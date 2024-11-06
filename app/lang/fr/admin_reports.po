@@ -1,0 +1,52 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+
+msgid "Report zapped redirect"
+msgstr "Signalements marqués comme lu."
+
+msgid "New reports "
+msgstr "Nouveaux signalements"
+
+msgid "Post #%s"
+msgstr "Post #%s"
+
+msgid "Post #%s "
+msgstr "<a href=\"%6$s\">%5$s</a> » <a href=\"%4$s\">%3$s</a> » <a href=\"%2$s\">Post #%1$s</a>"
+
+msgid "Reported %s"
+msgstr "Signalé %s"
+
+msgid "Reported by"
+msgstr "Signalé par"
+
+msgid "Reason"
+msgstr "Raison"
+
+msgid "Zap"
+msgstr "Marqué comme lu"
+
+msgid "No new reports"
+msgstr "Il n&#8217y a pas de nouveaux signalements."
+
+msgid "10 last read reports"
+msgstr "10 derniers signalements lus"
+
+msgid "NA"
+msgstr "N/A"
+
+msgid "Marked as read %1$s by %2$s"
+msgstr "Marqué comme lu %1$s par %2$s"
+
+msgid "No zapped reports"
+msgstr "Il n&#8217y a pas de signalements lus."

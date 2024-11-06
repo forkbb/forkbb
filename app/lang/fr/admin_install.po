@@ -1,0 +1,262 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+
+msgid "ForkBB Installation"
+msgstr "Installation de ForkBB"
+
+msgid "Welcome"
+msgstr "Vous êtes sur le point d&#8217installer ForkBB. Pour installer ForkBB, vous devez compléter le formulaire ci-dessous. Si vous rencontrez quelque difficulté avec l&#8217installation, veuillez vous référer à la documentation."
+
+msgid "Choose install language"
+msgstr "Choisissez le langage d&#8217installation"
+
+msgid "Install language"
+msgstr "language d&#8217installation"
+
+msgid "Choose install language info"
+msgstr "Le langage utilisé pour ce script d&#8217installation. Le choix du langage par défaut pour le forum se fera ensuite."
+
+msgid "Change language"
+msgstr "Changer le language"
+
+msgid "Install"
+msgstr "Installer ForkBB rev.%s"
+
+msgid "Database setup"
+msgstr "<b>Installation de la base de données</b>"
+
+msgid "Info 1"
+msgstr "Toutes les informations nécessaires pour communiquer avec votre base de données."
+
+msgid "Database type"
+msgstr "Type de base de données"
+
+msgid "Info 2"
+msgstr "Choisier une base de données. Sont supportés SQLite, MySQL and PostgreSQL."
+
+msgid "Database server hostname"
+msgstr "Serveur hote de la base"
+
+msgid "Info 3"
+msgstr "Vous devriez pouvoir obtenir ces infos de votre hébergeur, si <code>localhost</code> ne fonctionne pas."
+
+msgid "Database name"
+msgstr "Nom de la base"
+
+msgid "Info 4"
+msgstr "Le nom de la base sur laquelle vous voulez installer ForkBB."
+
+msgid "Database username"
+msgstr "Database username"
+
+msgid "Database password"
+msgstr "Database password"
+
+msgid "Info 5"
+msgstr "Vos login et mot de passe pour se conecter à la base (ignorer dans le cas de SQLite)."
+
+msgid "Table prefix"
+msgstr "Préfixe de la table"
+
+msgid "Info 6"
+msgstr "Le préfix peut contenir les lettres a à z, nombre et tiret_souligné. Il doivent toutefois commencer par une lettre. La taille maximum est de 40 caractères."
+
+msgid "Administration setup"
+msgstr "<b>Installation de l&#8217admministration</b>"
+
+msgid "Info 7"
+msgstr "Créer le tout premier compte sur votre forum."
+
+msgid "Administrator username"
+msgstr "Pseudo de l&#8217administrateur"
+
+msgid "Info 8"
+msgstr "Le pseudo doit commencer par une lettre. Peut contenir lettres, nombres, espaces, points, tiret et souligné."
+
+msgid "Administrator passphrase"
+msgstr "Mot de passe administrateur"
+
+msgid "Info 9"
+msgstr "Le mot de passe doit faire au moins 16 caractères de long. Sensible à la casse."
+
+msgid "Administrator email"
+msgstr "Email de l'administrateur"
+
+msgid "Info 10"
+msgstr "Veuillez entrer une adresse mail valide."
+
+msgid "Installation du forum"
+msgstr "<b>Board setup</b>"
+
+msgid "Info 11"
+msgstr "Réglages de votre forum. Vous pouvez changer cela plus tard."
+
+msgid "Board title"
+msgstr "Titre du forum"
+
+msgid "Board description"
+msgstr "Description du forumn (supporte le HTML)"
+
+msgid "Base URL"
+msgstr "Adresse web de votre forum"
+
+msgid "Default language"
+msgstr "Language par défaut"
+
+msgid "Default style"
+msgstr "style par défaute"
+
+msgid "Start install"
+msgstr "Commencer l&#8217installation"
+
+msgid "You are running error"
+msgstr "Vous utilisez %1$s version %2$s. ForkBB rev.%3$s nécessite au moins %1$s %4$s pour fonctionner correctement. Vous devez mettre à jour votre installation de %1$s avant de pouvoir continuer."
+
+msgid "Alert folder %s"
+msgstr "In order for ForkBB fonctionne correctement, le dossier <em>%s</em> doit pouvoir être accéder en écriture par PHP. Utiliser chmod pour régler les permissions appropriées."
+
+msgid "No language packs"
+msgstr "Pas de packs de langue."
+
+msgid "No styles"
+msgstr "Pas de styles."
+
+msgid "No DB extensions"
+msgstr "Cet environement PHP n&#8217a aucun support que ForkBB supporte. PDO doit être activé."
+
+msgid "No access to main.dist.php"
+msgstr "Pas d'accès à main.dist.php."
+
+msgid "My ForkBB Forum"
+msgstr "Mon Forum ForkBB"
+
+msgid "Description"
+msgstr "Forum propulsé par un logiciel à code source libre - ForkBB."
+
+msgid "Wrong email"
+msgstr "L'adresse mail administrateur entrée est invalide."
+
+msgid "Table prefix error"
+msgstr "Le préfixe de table '%s' ne respecte pas le format."
+
+msgid "Prefix reserved"
+msgstr "Les préfixes 'sqlite_' et 'pg_' sont réservés. Merci de choisir un préfixe différent."
+
+msgid "Existing table error"
+msgstr "La base '%2$s' contient des tables avec le préfixe '%1$s': <b>%3$s</b>."
+
+msgid "Administrators"
+msgstr "Administrateurs"
+
+msgid "Administrator "
+msgstr "Administrateur"
+
+msgid "Moderators"
+msgstr "Modérateurs"
+
+msgid "Moderator "
+msgstr "Modérateur"
+
+msgid "Guests"
+msgstr "Invités"
+
+msgid "Guest "
+msgstr "Invités"
+
+msgid "Members"
+msgstr "Membres"
+
+msgid "New members"
+msgstr "Nouveau membres"
+
+msgid "New member"
+msgstr "Nouveau membre"
+
+msgid "Announcement "
+msgstr "Entrer votre annonce ici."
+
+msgid "Rules "
+msgstr "Entrer les règles ici"
+
+msgid "Maintenance message "
+msgstr "The forums est fermé provisoirement pour maintenance. Veuillez ré-essayer dans quelques minutes."
+
+msgid "Test post"
+msgstr "Sujet test"
+
+msgid "Test message"
+msgstr "Si vous lisez ceci, l\installation de ForkBB semble avoir fonctionné! Maintenant connectez vous et direction le panneau de controle d'administration pour configurer votre forum."
+
+msgid "Test category"
+msgstr "Catégorie de test"
+
+msgid "Test forum"
+msgstr "Forum de test"
+
+msgid "This is just a test forum"
+msgstr "Ceci est juste un forum de test"
+
+msgid "Bad database charset"
+msgstr "La base de données doit être créée avec l&#8217encodage de caractères <b>utf8mb4</b> (compare <b>utf8mb4_unicode_ci</b>)."
+
+msgid "Bad database encoding"
+msgstr "La base de données doit être crée avec l&#8217encodage de caractères <b>%s</b>."
+
+msgid "Bad database collate"
+msgstr "La base de données doit être crée avec cette collation <b>C</b> (LC_COLLATE)."
+
+msgid "Bad database ctype"
+msgstr "La base de données doit être crée avec la classification de caractères <b>C</b> (LC_CTYPE)."
+
+msgid "Cookie setup"
+msgstr "<b>Réglage du cookie</b>"
+
+msgid "Info 12"
+msgstr "Les cookies sont des fichiers dédiés au site, ils permettent de stocker des données dans le navigateur de l&#8217utilisateur,  ce qui est utilisé pour son authentification."
+
+msgid "Cookie Domain"
+msgstr "Domaine du cookie"
+
+msgid "Cookie Domain info"
+msgstr "Si vous spécifiez un (sub)domain, alors les cookies déployés par le forum seront disponibles por lui et <b>tous les sous-domaines </b>! www.example.com et example.com <b>ne sont pas le même domaine</b>. www.example.com est un sous-domaine de example.com. <b>Laisser ce champ vide</b> si le cookie est uniquement pour le domaine du forum."
+
+msgid "Cookie Path"
+msgstr "Chemin du cookie"
+
+msgid "Cookie Path info"
+msgstr "Le chemin sur le serveur sur lequel le cookie sera disponible. Si mis à <b>/</b>, le cookie sera disponible sur le domaine entier. Si mis à <b>/foo/</b>, le cookie sera uniquement disponible dans le dossier <b>/foo/</b> et tous ses sous-dossiers,  comme <b>/foo/bar/</b>."
+
+msgid "Yes "
+msgstr "Oui"
+
+msgid "No "
+msgstr "Non"
+
+msgid "Cookie Secure"
+msgstr "Cookie Secure"
+
+msgid "Cookie Secure info"
+msgstr "Indique que le cookie devrait être transmis uniquement sur une connexion sécurisées <b>HTTPS</b> avec le client. Si <b>YES</b>, le cookie sera uniquement crée si une connexion sécurisée existe.."
+
+msgid "Failed to create table"
+msgstr "La création de la table dans la base de données sélectionnée à échouée."
+
+msgid "Wrong data type for numeric fields"
+msgstr "Le pilote PDO retourne des types de données incorrectes pour les champs numérique, probablement des chaines. Pour MySQL, la raison la plus probable est que pdo_mysql extension utilise la bibliothèque libmysql et pas mysqlnd. Changez la configuration de PHP(Parmi les extensions PHP dans le panneau de commande, il peut y avoir nd_pdo_mysql, selectionner celui au lieu de pdo_mysql)."
+
+msgid "Failed to drop table"
+msgstr "Echec du vidage de la table dans la base séléctionnée."
+
+msgid "Failed to truncate table"
+msgstr "Echec du tronquage d&#8217une table dans la base séléctionnée."
