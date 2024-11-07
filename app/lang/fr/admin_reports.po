@@ -37,7 +37,7 @@ msgid "Zap"
 msgstr "Marqué comme lu"
 
 msgid "No new reports"
-msgstr "Il n&#8217y a pas de nouveaux signalements."
+msgstr "Il n’y a pas de nouveaux signalements."
 
 msgid "10 last read reports"
 msgstr "10 derniers signalements lus"
@@ -49,4 +49,4 @@ msgid "Marked as read %1$s by %2$s"
 msgstr "Marqué comme lu %1$s par %2$s"
 
 msgid "No zapped reports"
-msgstr "Il n&#8217y a pas de signalements lus."
+msgstr "Il n’y a pas de signalements lus."

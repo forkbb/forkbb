@@ -19,13 +19,13 @@ msgid "Update script is running"
 msgstr "La mise à jour est lancée."
 
 msgid "Update message"
-msgstr "Votre base de données ForkBB est dépassée et doit être mise à jour pour continuer de fonctionner. Si vous êtes l&#8217administrateur du forum, veuillez suivre les instructions suivantes pour compléter la mise à jour."
+msgstr "Votre base de données ForkBB est dépassée et doit être mise à jour pour continuer de fonctionner. Si vous êtes l’administrateur du forum, veuillez suivre les instructions suivantes pour compléter la mise à jour."
 
 msgid "Note"
 msgstr "Note:"
 
 msgid "Members message"
-msgstr "Le processus est réservé aux administrateurs. Si vous êtes un membre, pas d&#8217inquiétude : Le forum sera bientot de retour!"
+msgstr "Le processus est réservé aux administrateurs. Si vous êtes un membre, pas d’inquiétude : Le forum sera bientot de retour!"
 
 msgid "Administrator only"
 msgstr "Le processus est réservé aux administrateurs!"
@@ -34,7 +34,7 @@ msgid "Database password info"
 msgstr "Pour effectuer la mise à jour de la base, veuillez entrer le mot de passe de la base sur laquelle ForkBB a été installé. Si vous ne savez pas, ceci est sauvegardé dans la configuration du forum."
 
 msgid "Database password note"
-msgstr "Si vous utilisez SQLite (vous n&#8217avez pas de mot de passe) utilisez le nom de fichier de la base à la place. Celui doit être précisemment le nom spécifié dans les fichiers de configuration."
+msgstr "Si vous utilisez SQLite (vous n’avez pas de mot de passe) utilisez le nom de fichier de la base à la place. Celui doit être précisemment le nom spécifié dans les fichiers de configuration."
 
 msgid "Database password"
 msgstr "Mot de passe de la base"
@@ -43,7 +43,7 @@ msgid "Maintenance"
 msgstr "Maintenance"
 
 msgid "Maintenance message info"
-msgstr "Le message qui sera affiché aux utilisateurs durant le processus de maintenance. Ce texte n&#8217est pas analysé comme un message du forum et peut contenir de l&#8217HTML."
+msgstr "Le message qui sera affiché aux utilisateurs durant le processus de maintenance. Ce texte n’est pas analysé comme un message du forum et peut contenir de l’HTML."
 
 msgid "Maintenance message"
 msgstr "Message de maintenance"
@@ -55,13 +55,13 @@ msgid "Version mismatch error"
 msgstr "Les versions ne correspondent pas. La base ne semble pas utiliser un schéma de base ForkBB supporté par ce script de mise à jour."
 
 msgid "Invalid file error"
-msgstr "Nom de base de données invalide. En utilisant SQLite le nom de fichier de la base doit être entré exactement tel qu&#8217il apparait dans votre '%s'"
+msgstr "Nom de base de données invalide. En utilisant SQLite le nom de fichier de la base doit être entré exactement tel qu’il apparait dans votre '%s'"
 
 msgid "Invalid password error"
-msgstr "Mot de passe de la base de données invalide. Pour mettre à jour ForkBB vous devez entrer votre mot de passe de base de données exactement tel qu&#8217il apparait dans '%s'"
+msgstr "Mot de passe de la base de données invalide. Pour mettre à jour ForkBB vous devez entrer votre mot de passe de base de données exactement tel qu’il apparait dans '%s'"
 
 msgid "Script runs error"
-msgstr "Il semble que le script de mise à jour soit déjà activé par quelqu&#8217un d&#8217autre."
+msgstr "Il semble que le script de mise à jour soit déjà activé par quelqu’un d’autre."
 
 msgid "Start update"
 msgstr "Démarrer la mise à jour"
@@ -70,7 +70,7 @@ msgid "Successfully updated"
 msgstr "Votre base de données à été mise à jour."
 
 msgid "Unable to write update lock"
-msgstr "impossible d&#8217ecrire le verrou de mise à jour."
+msgstr "impossible d’ecrire le verrou de mise à jour."
 
 msgid "Stage %1$s (%2$s)"
 msgstr "Stage %1$s (%2$s)"
@@ -85,10 +85,10 @@ msgid "Unable to create %s table"
 msgstr "Impossible de créer la table %s ."
 
 msgid "Unable to add test_field field to %s table"
-msgstr "Impossible d&#8217ajouter le champ test_field à la table %s ."
+msgstr "Impossible d’ajouter le champ test_field à la table %s ."
 
 msgid "Unable to insert line to %s table"
-msgstr "Impossible d&#8217insérer une ligne à la table %s."
+msgstr "Impossible d’insérer une ligne à la table %s."
 
 msgid "Unable to drop test_field field from %s table"
 msgstr "Impossible de supprimer le champ test_field de la table %s."

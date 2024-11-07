@@ -13,13 +13,13 @@ msgstr ""
 "Language: fr\n"
 
 msgid "Display e-mail label"
-msgstr "Afficher l&#8217adresse mail aux autres utilisateurs"
+msgstr "Afficher l’adresse mail aux autres utilisateurs"
 
 msgid "Hide allow form label"
-msgstr "Cacher l&#8217adresse mail mais autorises l&#8217envoi de mails via le site"
+msgstr "Cacher l’adresse mail mais autorises l’envoi de mails via le site"
 
 msgid "Hide both label"
-msgstr "Cacher l&#8217adresse mail et interdire l&#8217envoi de mails via le site"
+msgstr "Cacher l’adresse mail et interdire l’envoi de mails via le site"
 
 msgid "Topics per page label"
 msgstr "Discussions par page"

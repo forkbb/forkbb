@@ -22,7 +22,7 @@ msgid "From %s"
 msgstr "<span>Localisation: </span>%s"
 
 msgid "Promote user"
-msgstr "<span>Promouvoir l&#8217utilisateur</span>"
+msgstr "<span>Promouvoir l’utilisateur</span>"
 
 msgid "Promote user title"
 msgstr "Promotion utilisateur"
@@ -108,10 +108,10 @@ msgid "Merge posts"
 msgstr "Combiner avec la précedente (si votre)"
 
 msgid "Message %s was not found in the database"
-msgstr "Le message №%s n&#8217a pas été trouvé dans la base de données"
+msgstr "Le message №%s n’a pas été trouvé dans la base de données"
 
 msgid "Admin note"
-msgstr "Note de l&#8217administration"
+msgstr "Note de l’administration"
 
 msgid "Subscribe topic"
 msgstr "Recevoir un mail de notification pour les nouveaux messages"

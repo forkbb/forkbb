@@ -88,22 +88,22 @@ msgid "Invalid action"
 msgstr "Action invalide."
 
 msgid "Redirect install"
-msgstr "L&#8217extension est installée."
+msgstr "L’extension est installée."
 
 msgid "Redirect uninstall"
-msgstr "L&#8217extension est désinstallée."
+msgstr "L’extension est désinstallée."
 
 msgid "Redirect update"
-msgstr "L&#8217extension à été mise à jour."
+msgstr "L’extension à été mise à jour."
 
 msgid "Redirect downdate"
 msgstr "La version d'\extension a été rétrogradée."
 
 msgid "Redirect enable"
-msgstr "L&#8217extension est activée."
+msgstr "L’extension est activée."
 
 msgid "Redirect disable"
-msgstr "L&#8217extension est désactivée."
+msgstr "L’extension est désactivée."
 
 msgid "Invalid template type"
 msgstr "Le type de modèle est invalide."
@@ -115,7 +115,7 @@ msgid "Template file '%s' not found"
 msgstr "Fichier de modèles '%s' non trouvé."
 
 msgid "An error occurred in updateCommon"
-msgstr "Une erreur s&#8217est produite dans updateCommon."
+msgstr "Une erreur s’est produite dans updateCommon."
 
 msgid "Empty"
 msgstr "Vide"

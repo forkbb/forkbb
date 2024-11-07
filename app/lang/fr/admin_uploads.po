@@ -31,13 +31,13 @@ msgid "Upload axis limit label"
 msgstr "Limite de taille"
 
 msgid "Upload axis limit help"
-msgstr "L&#8217image envoyée sera redimensioné si largeur ou hauteur sont plus grand que cette limite."
+msgstr "L’image envoyée sera redimensioné si largeur ou hauteur sont plus grand que cette limite."
 
 msgid "Output image types label"
-msgstr "Type de l&#8217image traitée"
+msgstr "Type de l’image traitée"
 
 msgid "Output image types help"
-msgstr "Le type de l&#8217image à sauver sur ce site, séparé par des virgules. Si une image d&#8217un autre type est chargée, elle sera convertie au premier type de cette liste."
+msgstr "Le type de l’image à sauver sur ce site, séparé par des virgules. Si une image d’un autre type est chargée, elle sera convertie au premier type de cette liste."
 
 msgid "Page %s missing"
 msgstr "Page %s manquante."

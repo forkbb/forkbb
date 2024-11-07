@@ -37,16 +37,16 @@ msgid "No confirm redirect"
 msgstr "Absence de confirmation. Operation annulée."
 
 msgid "Confirm action"
-msgstr "Confirmer l&#8217action"
+msgstr "Confirmer l’action"
 
 msgid "Forum rules"
 msgstr "Règles du forum"
 
 msgid "Redirecting to index"
-msgstr "Redirection vers la page d&#8217accueil."
+msgstr "Redirection vers la page d’accueil."
 
 msgid "Error mail"
-msgstr "Erreur lors de l&#8217envoi d&#8217email. Essayez plus tard ou contecter l&#8217administrateur du forum <a href=\"mailto:%1$s\">%1$s</a>."
+msgstr "Erreur lors de l’envoi d’email. Essayez plus tard ou contecter l’administrateur du forum <a href=\"mailto:%1$s\">%1$s</a>."
 
 msgid "Bad request"
 msgstr "Mauvaise requête. La requête contient des données invalides."
@@ -55,7 +55,7 @@ msgid "Not Found"
 msgstr "Non trouvé. Le lien est incorrect ou périmé."
 
 msgid "No permission"
-msgstr "Vous n&#8217avez pas la permission d&#8217accéder à cette page."
+msgstr "Vous n’avez pas la permission d’accéder à cette page."
 
 msgid "Bad token"
 msgstr "Erreur de jeton. Veuillez réessayer."
@@ -94,7 +94,7 @@ msgid "Never"
 msgstr "Jamais"
 
 msgid "Today"
-msgstr "Aujourd&#8217hui"
+msgstr "Aujourd’hui"
 
 msgid "Yesterday"
 msgstr "Hier"
@@ -139,7 +139,7 @@ msgid "Unread posts info"
 msgstr "Aller au premier message non lu de cette discussion"
 
 msgid "Username"
-msgstr "Nom d&#8217utilisateur"
+msgstr "Nom d’utilisateur"
 
 msgid "Passphrase"
 msgstr "Mot de passe"
@@ -236,13 +236,13 @@ msgid "Index"
 msgstr "Index"
 
 msgid "Home page"
-msgstr "Page d&#8217accueil"
+msgstr "Page d’accueil"
 
 msgid "User list"
-msgstr "liste d&#8217utilisateur"
+msgstr "liste d’utilisateur"
 
 msgid "List of users"
-msgstr "liste d&#8217utilisateur"
+msgstr "liste d’utilisateur"
 
 msgid "Rules"
 msgstr "Règles"
@@ -257,7 +257,7 @@ msgid "Search topics and posts"
 msgstr "Recherche messages et discussions"
 
 msgid "Register"
-msgstr "S&#8217enregistrer"
+msgstr "S’enregistrer"
 
 msgid "Login"
 msgstr "Entrer"
@@ -275,7 +275,7 @@ msgid "Admin"
 msgstr "Zone administrateur"
 
 msgid "Administration functions"
-msgstr "Fonctions d&#8217administration"
+msgstr "Fonctions d’administration"
 
 msgid "Title separator"
 msgstr " - "
@@ -434,7 +434,7 @@ msgid "Unsubscribe"
 msgstr "Se désabonner"
 
 msgid "Subscribe"
-msgstr "S&#8217abonner"
+msgstr "S’abonner"
 
 msgid "Post from topic %s"
 msgstr "Ce message à été déplacé de la discussion &quot;%s&quot;"
@@ -455,7 +455,7 @@ msgid "Main menu"
 msgstr "Menu principal"
 
 msgid ":like:"
-msgstr "J&#8217aime"
+msgstr "J’aime"
 
 msgid ":fire:"
 msgstr "Feu"
@@ -479,7 +479,7 @@ msgid ":angry:"
 msgstr "En colère"
 
 msgid ":dislike:"
-msgstr "N&#8217aime pas"
+msgstr "N’aime pas"
 
 msgid ":meh:"
 msgstr "Meh"

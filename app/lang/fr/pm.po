@@ -100,7 +100,7 @@ msgid "Dialogue"
 msgstr "Dialogue"
 
 msgid "Dialogue %s was not found in the database"
-msgstr "Le dialogue %s n&#8217a pas été trouvé dans la base de données."
+msgstr "Le dialogue %s n’a pas été trouvé dans la base de données."
 
 msgid "Select"
 msgstr "Séléctionner"
@@ -130,7 +130,7 @@ msgid "Target pm off"
 msgstr "Le destinataire à désactivé les messages privés."
 
 msgid "Target group pm off"
-msgstr "Le groupe de destinataires n&#8217a pas accès aux messages privés."
+msgstr "Le groupe de destinataires n’a pas accès aux messages privés."
 
 msgid "Target is full"
 msgstr "La boite de réception du destinataire est pleine."
@@ -169,10 +169,10 @@ msgid "Message by %1$s (%2$s)"
 msgstr "Message par %1$s<br>Posté %2$s"
 
 msgid "Confirm delete dialogue"
-msgstr "Confirmer l&#8217effacement du dialogue"
+msgstr "Confirmer l’effacement du dialogue"
 
 msgid "Confirm delete message"
-msgstr "Confirmer l&#8217effacement du message"
+msgstr "Confirmer l’effacement du message"
 
 msgid "Dialogue del redirect"
 msgstr "Dialogue supprimé."
@@ -196,13 +196,13 @@ msgid "Delete"
 msgstr "Effacer"
 
 msgid "No dialogs"
-msgstr "Vous n&#8217avez choisi aucune discussion à traiter."
+msgstr "Vous n’avez choisi aucune discussion à traiter."
 
 msgid "Unknown action selected"
 msgstr "Action inconnue."
 
 msgid "Dialogue %s is not yours"
-msgstr "Dialogue %s n&#8217est pas le votre."
+msgstr "Dialogue %s n’est pas le votre."
 
 msgid "InfoDeleteQ"
 msgstr "Confirmer la suppression"
@@ -226,7 +226,7 @@ msgid "Cannot be moved"
 msgstr "Autant de discussions ne peuvent être déplacées aux archives."
 
 msgid "Send dialogue"
-msgstr "Envoyer l&#8217échange"
+msgstr "Envoyer l’échange"
 
 msgid "Send dialogue to %s"
 msgstr "Envoyer cet échange à %s"
@@ -262,10 +262,10 @@ msgid "Unblock"
 msgstr "Débloquer"
 
 msgid "You block addr"
-msgstr "Il n&#8217est pas possible d&#8217envoyer de message privé. Vous avez bloqué cet utilisateur."
+msgstr "Il n’est pas possible d’envoyer de message privé. Vous avez bloqué cet utilisateur."
 
 msgid "Addr block you"
-msgstr "Il n&#8217est pas possible d&#8217envoyer de message privé. Cet utilisateur vous à bloqué."
+msgstr "Il n’est pas possible d’envoyer de message privé. Cet utilisateur vous à bloqué."
 
 msgid "Send  dialogue"
 msgstr "Envoyer la discussion"
@@ -286,34 +286,34 @@ msgid "Blocked users title"
 msgstr "Utilisateurs bloqués"
 
 msgid "No blocked users"
-msgstr "Pas d&#8217utilsateur bloqué"
+msgstr "Pas d’utilsateur bloqué"
 
 msgid "Block user title"
-msgstr "Bloquer l&#8217utilisateur"
+msgstr "Bloquer l’utilisateur"
 
 msgid "Unblock user title"
-msgstr "Débloquer l&#8217utilisateur"
+msgstr "Débloquer l’utilisateur"
 
 msgid "Block user %s crumb"
-msgstr "Bloquer l&#8217utilisateur %s"
+msgstr "Bloquer l’utilisateur %s"
 
 msgid "Unblock user %s crumb"
-msgstr "Débloquer l&#8217utilisateur %s"
+msgstr "Débloquer l’utilisateur %s"
 
 msgid "Block user %s"
-msgstr "Bloquer l&#8217utilisateur %s"
+msgstr "Bloquer l’utilisateur %s"
 
 msgid "Unblock user %s"
-msgstr "Débloquer l&#8217utilisateur %s"
+msgstr "Débloquer l’utilisateur %s"
 
 msgid "Invalid action"
 msgstr "Action invalide."
 
 msgid "User is blocked redirect"
-msgstr "L&#8217utilisateur est bloqué."
+msgstr "L’utilisateur est bloqué."
 
 msgid "User is unblocked redirect"
-msgstr "L&#8217utilisateur est débloqué."
+msgstr "L’utilisateur est débloqué."
 
 msgid "PM menu"
 msgstr "Menu messages privés"

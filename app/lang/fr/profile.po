@@ -16,13 +16,13 @@ msgid "User activity"
 msgstr "Activité utilisateur"
 
 msgid "Activate email sent"
-msgstr "Un email e été envoyé à l&#8217adresse spécifiée avec les instructions pour aciver cette adresse mail. Si celui ci ne vous arrive pas, vous pouvez contacter l&#8217administrateur <a href=\"mailto:%1$s\">%1$s</a>."
+msgstr "Un email e été envoyé à l’adresse spécifiée avec les instructions pour aciver cette adresse mail. Si celui ci ne vous arrive pas, vous pouvez contacter l’administrateur <a href=\"mailto:%1$s\">%1$s</a>."
 
 msgid "Email instructions"
-msgstr "Un email contenant un lien d&#8217activation vous sera envoyé à cette adresse. Vous devrez cliquer sur le lien contenu dans ce mail pour activer votre adresse."
+msgstr "Un email contenant un lien d’activation vous sera envoyé à cette adresse. Vous devrez cliquer sur le lien contenu dans ce mail pour activer votre adresse."
 
 msgid "Change email"
-msgstr "Changer l&#8217adresse email "
+msgstr "Changer l’adresse email "
 
 msgid "New email"
 msgstr "Nouvelle adresse email "
@@ -31,7 +31,7 @@ msgid "New or old email"
 msgstr "Nouvelle ou ancienne (pour confimationn) adresse email"
 
 msgid "Delete avatar"
-msgstr "Effacer l&#8217avatar"
+msgstr "Effacer l’avatar"
 
 msgid "Profile redirect"
 msgstr "Profil mis à jour."
@@ -55,13 +55,13 @@ msgid "Posts info"
 msgstr "Total de messages"
 
 msgid "Show posts"
-msgstr "Montrer les message de l&#8217utilisteur"
+msgstr "Montrer les message de l’utilisteur"
 
 msgid "Topics info"
 msgstr "Total de discussions"
 
 msgid "Show topics"
-msgstr "Montrer les discussions de l&#8217utilisateur"
+msgstr "Montrer les discussions de l’utilisateur"
 
 msgid "Realname"
 msgstr "Nom réel"
@@ -85,7 +85,7 @@ msgid "Leave blank"
 msgstr "Laisser vide pour utilisaer les valeurs par défaut du forum."
 
 msgid "Subscription options"
-msgstr "Options d&#8217abonnement"
+msgstr "Options d’abonnement"
 
 msgid "Notify label"
 msgstr "Notification par message"
@@ -94,10 +94,10 @@ msgid "Notify info"
 msgstr "Inclure un texte avec les nouveaux messages la notification par mail aux nouveaux messages."
 
 msgid "Auto notify label"
-msgstr "S&#8217abonner automatiquement aux discussions"
+msgstr "S’abonner automatiquement aux discussions"
 
 msgid "Auto notify info"
-msgstr "S&#8217abonner automatiquement aux discussions lesquelles vous avez posté un message."
+msgstr "S’abonner automatiquement aux discussions lesquelles vous avez posté un message."
 
 msgid "Smilies label"
 msgstr "Smileys"
@@ -139,7 +139,7 @@ msgid "Style"
 msgstr "Style"
 
 msgid "Admin note"
-msgstr "Note dS&#8217administration"
+msgstr "Note dS’administration"
 
 msgid "Admin note help"
 msgstr "Pour les administrateurs and modérateurs."
@@ -193,7 +193,7 @@ msgid "New avatar"
 msgstr "Nouvel avatar"
 
 msgid "New avatar info"
-msgstr "L&#8217avatar sera automatiquement redimmensionné en <b>%1$s</b>x<b>%2$s</b> pixels. L&#8217avatar sera supprimé si sa taille dépasse <b>%3$s</b> octets (<i>%4$s</i>) après compression."
+msgstr "L’avatar sera automatiquement redimmensionné en <b>%1$s</b>x<b>%2$s</b> pixels. L’avatar sera supprimé si sa taille dépasse <b>%3$s</b> octets (<i>%4$s</i>) après compression."
 
 msgid "IP"
 msgstr "IP"
@@ -211,13 +211,13 @@ msgid "All caps signature"
 msgstr "La signature contient uniquement des lettres capitales"
 
 msgid "To change email"
-msgstr "Changer d&#8217adresse email"
+msgstr "Changer d’adresse email"
 
 msgid "To confirm/change email"
-msgstr "Confirmer/changer l&#8217adresse email"
+msgstr "Confirmer/changer l’adresse email"
 
 msgid "Email is old redirect"
-msgstr "L&#8217adresse email n&#8217a pas été modifiée."
+msgstr "L’adresse email n’a pas été modifiée."
 
 msgid "Email changed redirect"
 msgstr "Adresse email modifiée."
@@ -313,22 +313,22 @@ msgid "Strict check"
 msgstr "Strict"
 
 msgid "IP check info"
-msgstr "<b>Strict</b> - Si votre adresse IP a changé, vous serez déconnecté;<br><b>Non strict</b> - ce forum se rappelle des 10-20 dernières adresses IP et si l&#8217actuelle n&#8217est pas dans cette liste, vous serez déconnecté;<br><b>Désactivé</b> - changer d&#8217adresse IP n&#8217aura aucun impact."
+msgstr "<b>Strict</b> - Si votre adresse IP a changé, vous serez déconnecté;<br><b>Non strict</b> - ce forum se rappelle des 10-20 dernières adresses IP et si l’actuelle n’est pas dans cette liste, vous serez déconnecté;<br><b>Désactivé</b> - changer d’adresse IP n’aura aucun impact."
 
 msgid "Total topics subscriptions"
-msgstr "Total d&#8217abonnements à des discussions"
+msgstr "Total d’abonnements à des discussions"
 
 msgid "Total forums subscriptions"
-msgstr "Total d&#8217abonnements des forums"
+msgstr "Total d’abonnements des forums"
 
 msgid "Show topics subscriptions"
-msgstr "Montrer les abonnements aux discussions de l&#8217utilisateur"
+msgstr "Montrer les abonnements aux discussions de l’utilisateur"
 
 msgid "Show forums subscriptions"
-msgstr "Montrer les abonnements de l&#8217utilisateur"
+msgstr "Montrer les abonnements de l’utilisateur"
 
 msgid "Configure OAuth"
-msgstr "Configurer l&#8217authentification OAuth"
+msgstr "Configurer l’authentification OAuth"
 
 msgid "OAuth accounts"
 msgstr "Comptes OAuth"
@@ -358,7 +358,7 @@ msgid "Confirm delete label"
 msgstr "Effacer le profil?"
 
 msgid "Confirm delete info"
-msgstr "<b>L&#8217opération est irréversible!</b>"
+msgstr "<b>L’opération est irréversible!</b>"
 
 msgid "Your deleted redirect"
 msgstr "Votre profil à été supprimé."
@@ -388,22 +388,22 @@ msgid "Page scroll label"
 msgstr "Défilements de page"
 
 msgid "Page scroll info"
-msgstr "Si activé, le script javascript défilera la page ouverte dans la fenêtre active jusqu&#8217au bloc spécifié. L&#8217operation dépend de votre navigateur et de ses réglages."
+msgstr "Si activé, le script javascript défilera la page ouverte dans la fenêtre active jusqu’au bloc spécifié. L’operation dépend de votre navigateur et de ses réglages."
 
 msgid "Not active"
 msgstr "Non actif"
 
 msgid "Past the header (smooth)"
-msgstr "Passer l&#8217entête (smooth)"
+msgstr "Passer l’entête (smooth)"
 
 msgid "Past the header and announce (smooth)"
-msgstr "Passer l&#8217entête et l&#8217annonce (smooth)"
+msgstr "Passer l’entête et l’annonce (smooth)"
 
 msgid "Past the header (no animation)"
-msgstr "Passer l&#8217entête (sans animation)"
+msgstr "Passer l’entête (sans animation)"
 
 msgid "Past the header and announce (no animation)"
-msgstr "Passer l&#8217entête et l&#8217annonce (sans animation)"
+msgstr "Passer l’entête et l’annonce (sans animation)"
 
 msgid "Recalculate posts and topics"
 msgstr "Recalculer les nombres de messages et discussions"

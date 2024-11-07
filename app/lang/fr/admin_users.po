@@ -13,28 +13,28 @@ msgstr ""
 "Language: fr\n"
 
 msgid "No users selected"
-msgstr "Pas d&#8217utilisateur séléctionné."
+msgstr "Pas d’utilisateur séléctionné."
 
 msgid "Action not available"
 msgstr "Action non disponible."
 
 msgid "You are not allowed to delete the %s"
-msgstr "Vous n&#8217êtes pas autorisé à effacer le %s."
+msgstr "Vous n’êtes pas autorisé à effacer le %s."
 
 msgid "You are not allowed to ban the %s"
-msgstr "Vous n&#8217êtes pas autorisé à bannier le %s."
+msgstr "Vous n’êtes pas autorisé à bannier le %s."
 
 msgid "You are not allowed to change group for %s"
-msgstr "Vous n&#8217êtes pas autorisé changer le groupe pour %s."
+msgstr "Vous n’êtes pas autorisé changer le groupe pour %s."
 
 msgid "No move admins message"
-msgstr "Pour des raisons de sécurité, vous n&#8217êtes pas autorisé à déplacer de multiples administrateurs dans un autre groupe. Si vous voulez déplacer ces administrateurs, vous pouvez le faire depuis leurs profils respectifs."
+msgstr "Pour des raisons de sécurité, vous n’êtes pas autorisé à déplacer de multiples administrateurs dans un autre groupe. Si vous voulez déplacer ces administrateurs, vous pouvez le faire depuis leurs profils respectifs."
 
 msgid "No delete admins message"
-msgstr "Administrateurs/moderateurs ne peuvent être effacés. Pour les effacer, vous devez d&#8217adbord les déplacer dans un autre groupe utilisateur."
+msgstr "Administrateurs/moderateurs ne peuvent être effacés. Pour les effacer, vous devez d’adbord les déplacer dans un autre groupe utilisateur."
 
 msgid "No ban admins message"
-msgstr "Administrateurs/moderateurs ne peuvent être bannis. Pour les bannir, vous devez d&#8217adbord les déplacer dans un autre groupe utilisateur."
+msgstr "Administrateurs/moderateurs ne peuvent être bannis. Pour les bannir, vous devez d’adbord les déplacer dans un autre groupe utilisateur."
 
 msgid "Change user group"
 msgstr "Changer le groupe utilisateur"
@@ -64,22 +64,22 @@ msgid "Delete posts"
 msgstr "Effacer leurs messages et sujets de discussion"
 
 msgid "Delete warning"
-msgstr "<b>Attention!</b> Utilisateurs et messages effacés ne peuvent être restaurés. Si vous ne choisissez pas d&#8217effacer les messages liés à l&#8217utlisateur, ceux ci ne seront plus effaçables que manuellement ensuite."
+msgstr "<b>Attention!</b> Utilisateurs et messages effacés ne peuvent être restaurés. Si vous ne choisissez pas d’effacer les messages liés à l’utlisateur, ceux ci ne seront plus effaçables que manuellement ensuite."
 
 msgid "Users delete redirect"
 msgstr "Utilisateurs effacés."
 
 msgid "User search head"
-msgstr "Recherche d&#8217utilisateur"
+msgstr "Recherche d’utilisateur"
 
 msgid "User search subhead"
 msgstr "Critères de recherche"
 
 msgid "User search info"
-msgstr "Recherche des utilisateurs dans la base. Vous pouvez entrer un ou plusieurs termes à recherche. Les caractères génériques asterisque (*) et point d&#8217interrogation (?) sont acceptés."
+msgstr "Recherche des utilisateurs dans la base. Vous pouvez entrer un ou plusieurs termes à recherche. Les caractères génériques asterisque (*) et point d’interrogation (?) sont acceptés."
 
 msgid "Username label"
-msgstr "Nom d&#8217utilisateur"
+msgstr "Nom d’utilisateur"
 
 msgid "E-mail address label"
 msgstr "Email"
@@ -106,7 +106,7 @@ msgid "Signature label"
 msgstr "Signature"
 
 msgid "Admin note label"
-msgstr "Note de l&#8217administration"
+msgstr "Note de l’administration"
 
 msgid "Posts label"
 msgstr "Messages"
@@ -124,7 +124,7 @@ msgid "Order by label"
 msgstr "classer par"
 
 msgid "Order by username"
-msgstr "Nom d&#8217utlisateur"
+msgstr "Nom d’utlisateur"
 
 msgid "Order by e-mail"
 msgstr "Email"
@@ -160,7 +160,7 @@ msgid "Submit search"
 msgstr "Soumettre la recherche"
 
 msgid "IP search head"
-msgstr "Recherche d&#8217IP"
+msgstr "Recherche d’IP"
 
 msgid "IP search subhead"
 msgstr "IP à rechercher"
@@ -169,13 +169,13 @@ msgid "IP address label"
 msgstr "adresse IP"
 
 msgid "Find IP address"
-msgstr "Trouver l&#8217adresse IP"
+msgstr "Trouver l’adresse IP"
 
 msgid "Results head"
 msgstr "Résultats de recherche"
 
 msgid "Results username head"
-msgstr "Nom d&#8217utilisateur"
+msgstr "Nom d’utilisateur"
 
 msgid "Results e-mail head"
 msgstr "Email"
@@ -196,16 +196,16 @@ msgid "Results last used head"
 msgstr "Dernière utilisation"
 
 msgid "Results times found head"
-msgstr "Nombre d&#8217occurences"
+msgstr "Nombre d’occurences"
 
 msgid "Results action head"
 msgstr "Action"
 
 msgid "Results find more link"
-msgstr "Trouver plus d&#8217utilisateurs pour cette IP"
+msgstr "Trouver plus d’utilisateurs pour cette IP"
 
 msgid "Results no posts found"
-msgstr "Il n&#8217y a pour l&#8217instant aucun message de cet utilisateur dans le forum."
+msgstr "Il n’y a pour l’instant aucun message de cet utilisateur dans le forum."
 
 msgid "Select"
 msgstr "Selectionner"
@@ -226,7 +226,7 @@ msgid "Change group"
 msgstr "Changer de groupe"
 
 msgid "Bad IP message"
-msgstr "L&#8217adresse IP n&#8217est pas formatée correctement."
+msgstr "L’adresse IP n’est pas formatée correctement."
 
 msgid "Results view IP link"
 msgstr "Voir les statistiques IP"
@@ -238,16 +238,16 @@ msgid "Search results legend"
 msgstr "Selectionner coment voir les résultats de recherche"
 
 msgid "No users found"
-msgstr "Pas d&#8217utilisateur correspondant à ces critères."
+msgstr "Pas d’utilisateur correspondant à ces critères."
 
 msgid "User promote redirect"
 msgstr "Utilisateur promu."
 
 msgid "You are trying to change your own group"
-msgstr "Vous êtes en train d&#8217essayer de changer votre propre groupe."
+msgstr "Vous êtes en train d’essayer de changer votre propre groupe."
 
 msgid "User is ban"
-msgstr "L&#8217utilisateur %s est banni."
+msgstr "L’utilisateur %s est banni."
 
 msgid "New user head"
 msgstr "Nouvel utilisateur"

@@ -19,7 +19,7 @@ msgid "User sort head"
 msgstr "classer les utilisateurs"
 
 msgid "User search info"
-msgstr "Utiliser le caractère générique (*) et le point d&#8217interrogation (?) pour les correspondances partielles."
+msgstr "Utiliser le caractère générique (*) et le point d’interrogation (?) pour les correspondances partielles."
 
 msgid "User group"
 msgstr "Groupe utilisateur"
@@ -39,13 +39,13 @@ msgid "<small>registered: </small><b>%s</b>"
 msgstr "<small>inscrit le: </small><b>%s</b>"
 
 msgid "No users found"
-msgstr "Pas d&#8217utilisateur trouvé correspondant à vos critères."
+msgstr "Pas d’utilisateur trouvé correspondant à vos critères."
 
 msgid "Search btn"
 msgstr "Rechercher"
 
 msgid "Sort users by"
-msgstr "Classer la liste d&#8217utilisateur par"
+msgstr "Classer la liste d’utilisateur par"
 
 msgid "Sort by name"
 msgstr "Nom"
@@ -54,7 +54,7 @@ msgid "Sort by number"
 msgstr "Nombre de messages"
 
 msgid "Sort by date"
-msgstr "Date d&#8217inscription"
+msgstr "Date d’inscription"
 
 msgid "User sort order"
 msgstr "Ordre de classement de la liste utilisateur"

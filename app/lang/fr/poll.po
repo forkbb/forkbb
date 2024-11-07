@@ -19,7 +19,7 @@ msgid "Include poll"
 msgstr "Inclure un sondage"
 
 msgid "Hide poll results up to %s voters"
-msgstr "Cacher le résultat du vote jusqu&#8217à %s votes"
+msgstr "Cacher le résultat du vote jusqu’à %s votes"
 
 msgid "Question text label"
 msgstr "Question"
@@ -43,7 +43,7 @@ msgid "Answer number %1$s is preceded by an empty answer (question number %2$s)"
 msgstr "La réponse %1$s est précédée par une réponse vide (question numéro %2$s)."
 
 msgid "For question number %s, there is no value for the maximum number of answers for voting"
-msgstr "Pour la question numéro %s, il n&#8217y a pas de valeur pour le maximum de réponse."
+msgstr "Pour la question numéro %s, il n’y a pas de valeur pour le maximum de réponse."
 
 msgid "For question number %s, the maximum number of answers for voting more answers"
 msgstr "Pour la question numéro %s, Le nombre maximum de réponses ."
@@ -58,7 +58,7 @@ msgid "Question %s legend"
 msgstr "Question %s"
 
 msgid "You can choose up to %s answers"
-msgstr "Vous pouvez choisir jusqu&#8217à %s réponses."
+msgstr "Vous pouvez choisir jusqu’à %s réponses."
 
 msgid "In total voted: %s"
 msgstr "Votes total: %s"
@@ -79,7 +79,7 @@ msgid "This poll is closed"
 msgstr "Ce sondage est fermé."
 
 msgid "Poll results are hidden up to %s voters"
-msgstr "Les résultat du sondages sont cachés jusqu&#8217à %s votants."
+msgstr "Les résultat du sondages sont cachés jusqu’à %s votants."
 
 msgid "You voted"
 msgstr "Vous avez votés."

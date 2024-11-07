@@ -16,7 +16,7 @@ msgid "User search"
 msgstr "Recherche utilisateur"
 
 msgid "Search info"
-msgstr "Pour une recherche par mot clef, entre un ou des termes à recherche. Séparer ces termes par des espaces. Utiliser AND, OR et NOT (et, ou et pas) pour affiner la recherche. Pour une recherche par auteur, entrer le nom d&#8217utilisateur de l&#8217auteur des messages que vous recherchez. Utilisez les caratères générique * pour des correpondances partielles."
+msgstr "Pour une recherche par mot clef, entre un ou des termes à recherche. Séparer ces termes par des espaces. Utiliser AND, OR et NOT (et, ou et pas) pour affiner la recherche. Pour une recherche par auteur, entrer le nom d’utilisateur de l’auteur des messages que vous recherchez. Utilisez les caratères générique * pour des correpondances partielles."
 
 msgid "Keyword search"
 msgstr "Recherche par mot(s) clef"
@@ -31,7 +31,7 @@ msgid "Search in info"
 msgstr "Choisir dans quel forum vous souhaitez chercher et si vous voulez cherchers dans les sujets de discussion, les textes de message ou les deux."
 
 msgid "Search multiple forums info"
-msgstr "Si aucun forum n&#8217est sélectionné, la recherche se fera dans tous les forums."
+msgstr "Si aucun forum n’est sélectionné, la recherche se fera dans tous les forums."
 
 msgid "Forum search"
 msgstr "Forum"
@@ -127,7 +127,7 @@ msgid "Search query: %1$s and Author: %2$s"
 msgstr "Requête: «%1$s» - Auteur: «%2$s»"
 
 msgid "No hits"
-msgstr "Votre recherche n&#8217a retournée aucun résultat."
+msgstr "Votre recherche n’a retournée aucun résultat."
 
 msgid "Too many coincidences"
 msgstr "Trop de coincidences."
@@ -160,13 +160,13 @@ msgid "Forum indent"
 msgstr "◦ ◦ "
 
 msgid "There is no word for search: '%s'"
-msgstr "Il n&#8217y a pas de mot à rechercher: '%s'"
+msgstr "Il n’y a pas de mot à rechercher: '%s'"
 
 msgid "Logical operator at the end of the search query: '%s'"
 msgstr "Opérateur logique à la fin de la requête: '%s'"
 
 msgid "The order of brackets is broken: '%s'"
-msgstr "L&#8217ordrer des parenthèses est invalide: '%s'"
+msgstr "L’ordrer des parenthèses est invalide: '%s'"
 
 msgid "Empty subquery: '%s'"
 msgstr "Sous requête vide: '%s'"
@@ -178,7 +178,7 @@ msgid "Logical operator at the beginning of the search (sub)query: '%s'"
 msgstr "Opérateur logique au début de la (sous)requête: '%s'"
 
 msgid "Logical operators follow one after another: '%s'"
-msgstr "Opérateurs logique à la suite l&#8217un de l&#8217autre: '%s'"
+msgstr "Opérateurs logique à la suite l’un de l’autre: '%s'"
 
 msgid "Set up"
 msgstr "Installation"

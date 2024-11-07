@@ -13,10 +13,10 @@ msgstr ""
 "Language: fr\n"
 
 msgid "Invalid email"
-msgstr "L&#8217adresse email entrée est invalide."
+msgstr "L’adresse email entrée est invalide."
 
 msgid "Long email"
-msgstr "L&#8217adresse email entrée est trop longue."
+msgstr "L’adresse email entrée est trop longue."
 
 msgid "Passphrase help"
 msgstr "La phrase de passe doit contenir au moins 16 caractères, avec de multiples mots séparés par des espaces (sensible à la casse)."
@@ -25,25 +25,25 @@ msgid "Pass format"
 msgstr "La phrase de passe doit contenir au moins 16 caractères, avec de multiples mots séparés par des espaces ."
 
 msgid "Login format"
-msgstr "Le nom d&#8217utilsateur doit commencer par une lettre. Peut contenir lettres, nombvres, espaces, points, tirets et tirets soulignés."
+msgstr "Le nom d’utilsateur doit commencer par une lettre. Peut contenir lettres, nombvres, espaces, points, tirets et tirets soulignés."
 
 msgid "Banned email"
-msgstr "L&#8217adresse email entrée est bannie de ce forum."
+msgstr "L’adresse email entrée est bannie de ce forum."
 
 msgid "Username censor"
-msgstr "Le nom d&#8217utilsateur que vous avez entré contient au moins un mot censuré."
+msgstr "Le nom d’utilsateur que vous avez entré contient au moins un mot censuré."
 
 msgid "Banned username"
-msgstr "Le nom d&#8217utilsateur que vous avez entré est banni de ce forum."
+msgstr "Le nom d’utilsateur que vous avez entré est banni de ce forum."
 
 msgid "Username not unique"
-msgstr "Le nom d&#8217utilsateur que vous avez entré existe déjà."
+msgstr "Le nom d’utilsateur que vous avez entré existe déjà."
 
 msgid "Dupe email"
-msgstr "Quelqu&#8217un est déjà enregistré sur ce forum avec cette adresse mail."
+msgstr "Quelqu’un est déjà enregistré sur ce forum avec cette adresse mail."
 
 msgid "Dupe email (OAuth)"
-msgstr "Quelqu&#8217un est déjà enregistré sur ce forum avec cette adresse mail (OAuth)."
+msgstr "Quelqu’un est déjà enregistré sur ce forum avec cette adresse mail (OAuth)."
 
 msgid "Account email flood"
 msgstr "Ce compte à déjà demandé une réinitialisation de phrase de passe récemment. Veuillez attendre %s minutes avant de recommencer."
@@ -55,16 +55,16 @@ msgid "Bad browser"
 msgstr "Veuillez mettre à jour votre navigateur."
 
 msgid "Username contains consecutive spaces"
-msgstr "Le nom d&#8217utilsateur contient des espaces consécutifs."
+msgstr "Le nom d’utilsateur contient des espaces consécutifs."
 
 msgid "Flood message"
-msgstr "Veuillez attendre %s secondes et essayez d&#8217envoyer à nouveau."
+msgstr "Veuillez attendre %s secondes et essayez d’envoyer à nouveau."
 
 msgid "[%1$s] tag in blacklist"
 msgstr "Marqueur [%1$s] en liste noire."
 
 msgid "[%1$s] tag not in whitelist"
-msgstr "Le marqueur[%1$s] n&#8217est pas en liste blanche."
+msgstr "Le marqueur[%1$s] n’est pas en liste blanche."
 
 msgid "[%1$s] tag can't be opened in [%2$s] tag"
 msgstr "Le marqueur [%1$s] ne peut être ouvert dans le marqueur[%2$s] ."
@@ -76,7 +76,7 @@ msgid "Found [/%1$s] tag for single [%1$s] tag"
 msgstr "Trouvé marqueur [/%1$s] pour simple marqueur [%1$s] ."
 
 msgid "No attributes in [%1$s] tag"
-msgstr "Pas d&#8217attributs dand l&#8217étiquette [%1$s]."
+msgstr "Pas d’attributs dand l’étiquette [%1$s]."
 
 msgid "Primary attribute is forbidden in [%1$s] tag"
 msgstr "Le premier attribut est interdit dans le marqueur [%1$s]."
@@ -85,7 +85,7 @@ msgid "Secondary attribute is forbidden in [%1$s] tag"
 msgstr "Le second attribut est interdit dans le marqueur [%1$s]."
 
 msgid "Attribute '%2$s' does not match pattern in [%1$s] tag"
-msgstr "L&#8217attribut '%2$s' ne correspond pas au motif du marqueur [%1$s]."
+msgstr "L’attribut '%2$s' ne correspond pas au motif du marqueur [%1$s]."
 
 msgid "[%1$s] tag contains unknown secondary attribute '%2$s'"
 msgstr "Le marqueur [%1$s] contient un second attribut inconnu '%2$s'."
@@ -103,7 +103,7 @@ msgid "All tags are empty"
 msgstr "Tous les marqueurs sont vides."
 
 msgid "The depth of the tag tree is greater than %1$s"
-msgstr "La profondeur de l&#8217arbre de marqueurs est plus grand que %1$s."
+msgstr "La profondeur de l’arbre de marqueurs est plus grand que %1$s."
 
 msgid "[%1$s] tag is enclosed in itself more than %2$s times"
 msgstr "Le marqueur [%1$s] est inclu en lui même plus que %2$s fois."
@@ -112,10 +112,10 @@ msgid "Invalid closing %1$s tag. Expected closing %2$s tag"
 msgstr "Marqueur de fermeture invalide &lt;/ %1$s &gt; tag. Attendu le marqueur &lt;/ %2$s &gt; ."
 
 msgid "%2$s attribute is not allowed in %1$s tag"
-msgstr "L&#8217attribut '%2$s' nvest pas autorisé dans le marqueur &lt; %1$s &gt; ."
+msgstr "L’attribut '%2$s' nvest pas autorisé dans le marqueur &lt; %1$s &gt; ."
 
 msgid "Attempting to insert JavaScript into %2$s attribute of %1$s tag"
-msgstr "Tentative d&#8217insérer du  JavaScript dans l&#8217attribut '%2$s' due marqueur &lt; %1$s &gt; ."
+msgstr "Tentative d’insérer du  JavaScript dans l’attribut '%2$s' due marqueur &lt; %1$s &gt; ."
 
 msgid "Invalid value for %2$s attribute [=%3$s] of %1$s tag"
 msgstr "Valeur invalide pour le '%2$s' attribut [=%3$s] du marqueur &lt; %1$s &gt; ."
@@ -184,10 +184,10 @@ msgid "The :alias not contains file"
 msgstr "Pas de fichier dans le champ :alias ."
 
 msgid "The :alias contains more than one file"
-msgstr "Le champ :alias contient plus d&#8217un fichier."
+msgstr "Le champ :alias contient plus d’un fichier."
 
 msgid "The :alias not contains image"
-msgstr "Pas d&#8217image dans le champ :alias ."
+msgstr "Pas d’image dans le champ :alias ."
 
 msgid "The :alias does not contain a date"
 msgstr "Date indéterminée dans le champ :alias ."
@@ -196,7 +196,7 @@ msgid "Too much data"
 msgstr "Trop de données"
 
 msgid "The :alias not exist"
-msgstr "Le champ :alias n&#8217existe pas."
+msgstr "Le champ :alias n’existe pas."
 
 msgid "The :alias contains a link"
 msgstr "Le champ :alias contient un lien."
@@ -205,13 +205,13 @@ msgid "The :alias is not valid email"
 msgstr "Le champ :alias contient une adresse mail invalide."
 
 msgid "The %s extension is not allowed"
-msgstr "L&#8217extension .%s n&#8217est pas autorisée."
+msgstr "L’extension .%s n’est pas autorisée."
 
 msgid "Short username"
-msgstr "Le nom d&#8217utilisateur est trop court."
+msgstr "Le nom d’utilisateur est trop court."
 
 msgid "Long username"
-msgstr "Le nom d&#8217utilisateur est trop long."
+msgstr "Le nom d’utilisateur est trop long."
 
 msgid "Invalid passphrase"
 msgstr "Phrase de passe invalide."
@@ -220,4 +220,4 @@ msgid "Javascript disabled or bot"
 msgstr "Votre navigateur nr supporte pas javascript ou vous êtes un robot :)"
 
 msgid "The :alias contains time before start of Unix"
-msgstr "Le champ :alias contient une date datant d&#8217avant l&#8217époque Unix."
+msgstr "Le champ :alias contient une date datant d’avant l’époque Unix."

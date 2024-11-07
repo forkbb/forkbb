@@ -13,13 +13,13 @@ msgstr ""
 "Language: fr\n"
 
 msgid "Sign in"
-msgstr "S&#8217authentifier"
+msgstr "S’authentifier"
 
 msgid "Account is not activated"
 msgstr "Compte non activé."
 
 msgid "Wrong user/pass"
-msgstr "Mauvais nom d&#8217utilisateur ou mot de passe. (Les deux sont sensibles à la casse)!"
+msgstr "Mauvais nom d’utilisateur ou mot de passe. (Les deux sont sensibles à la casse)!"
 
 msgid "<a href=\"%s\">Forgotten?</a>"
 msgstr "<a href=\"%s\">Oublié?</a>"
@@ -34,7 +34,7 @@ msgid "Passphrase reset"
 msgstr "Redéfinir le mot de passe"
 
 msgid "Passphrase reset info"
-msgstr "Un email vous à été envoyé à l&#8217adresse fourni avec les instructions pour changer de mot de passe."
+msgstr "Un email vous à été envoyé à l’adresse fourni avec les instructions pour changer de mot de passe."
 
 msgid "Not registered"
 msgstr "Pas encore enregistré?"
@@ -43,7 +43,7 @@ msgid "Remember me"
 msgstr "Se rappeler de moi"
 
 msgid "Forget mail"
-msgstr "Si l&#8217email spécifié dcorrespond à celui enregistré, alors un email vous sera envoyé avec les instructions pour changer de mot de passe. Si celui ci n&#8217arrive pas vous pouvez contacter l&#8217administrateur <a href=\"mailto:%1$s\">%1$s</a>."
+msgstr "Si l’email spécifié dcorrespond à celui enregistré, alors un email vous sera envoyé avec les instructions pour changer de mot de passe. Si celui ci n’arrive pas vous pouvez contacter l’administrateur <a href=\"mailto:%1$s\">%1$s</a>."
 
 msgid "Pass not match"
 msgstr "Les mots de passe ne correspondent pas."
@@ -67,4 +67,4 @@ msgid "Account activated"
 msgstr "Compte activé."
 
 msgid "Username or email"
-msgstr "Nom d&#8217utilisateur ou email"
+msgstr "Nom d’utilisateur ou email"

@@ -13,31 +13,31 @@ msgstr ""
 "Language: fr\n"
 
 msgid "No user message"
-msgstr "Aucun utilisateur enregistré sous ce nom d\'utilisateur. Si vous souhaitez ajouter un bannissement n&#8217étant pas associé à un nom d&#8217utilisateur veuillez laisser le champ du nom d&#8217utilisateur vide."
+msgstr "Aucun utilisateur enregistré sous ce nom d\'utilisateur. Si vous souhaitez ajouter un bannissement n’étant pas associé à un nom d’utilisateur veuillez laisser le champ du nom d’utilisateur vide."
 
 msgid "No user ID message"
 msgstr "Aucun utilisateur inscrit avec cet ID."
 
 msgid "User is admin message"
-msgstr "L&#8217utilisateur %s est un administrateur et ne peut être banni. Si vous souhaitez bannir un administrateur, vous devez d&#8217abord le destituer de ce rang."
+msgstr "L’utilisateur %s est un administrateur et ne peut être banni. Si vous souhaitez bannir un administrateur, vous devez d’abord le destituer de ce rang."
 
 msgid "User is mod message"
-msgstr "L&#8217utilisateur %s est un modérateur et ne peut être banni. Si vous souhaitez bannir un modérateur, vous devez d&#8217abord le destituer de ce rang."
+msgstr "L’utilisateur %s est un modérateur et ne peut être banni. Si vous souhaitez bannir un modérateur, vous devez d’abord le destituer de ce rang."
 
 msgid "User is ban"
-msgstr "L&#8217utilisateur %s est banni."
+msgstr "L’utilisateur %s est banni."
 
 msgid "Must enter message"
-msgstr "ous devez entrer, au minimum, soit un nom d&#8217utilisateur, soit une adresse IP, soit une adresse électronique."
+msgstr "ous devez entrer, au minimum, soit un nom d’utilisateur, soit une adresse IP, soit une adresse électronique."
 
 msgid "Cannot ban guest message"
-msgstr "L&#8217utilisqteur invité ne peut être banni."
+msgstr "L’utilisqteur invité ne peut être banni."
 
 msgid "Invalid IP message (%s)"
-msgstr "Vous avez entré une IP/plage d&#8217IP invalide.(%s)."
+msgstr "Vous avez entré une IP/plage d’IP invalide.(%s)."
 
 msgid "Invalid e-mail message"
-msgstr "L&#8217adresse électronique (ex. : utilisateur@domaine.com) ou le nom de domaine d&#8217adresse électronique (ex. : domaine.com) que vous avez indiqué est invalide."
+msgstr "L’adresse électronique (ex. : utilisateur@domaine.com) ou le nom de domaine d’adresse électronique (ex. : domaine.com) que vous avez indiqué est invalide."
 
 msgid "Invalid date message"
 msgstr "Vous avez entré une une date de fin invalide. Le bannissement doit être d'au moins un jour."
@@ -88,7 +88,7 @@ msgid "Order by id"
 msgstr "Tri par id"
 
 msgid "Order by username"
-msgstr "tri par nom d&#8217utilisateur"
+msgstr "tri par nom d’utilisateur"
 
 msgid "Order by ip"
 msgstr "tri par IP"
@@ -97,7 +97,7 @@ msgid "Order by e-mail"
 msgstr "tri par email"
 
 msgid "Order by expire"
-msgstr "tri par date d&#8217expiration"
+msgstr "tri par date d’expiration"
 
 msgid "Ascending"
 msgstr "Montant"
@@ -112,22 +112,22 @@ msgid "E-mail label"
 msgstr "Email"
 
 msgid "E-mail help"
-msgstr "L&#8217adresse email ou le domaine que vous vouhaitez bannir (e.g. someone@somewhere.com, somewhere.com or .com)."
+msgstr "L’adresse email ou le domaine que vous vouhaitez bannir (e.g. someone@somewhere.com, somewhere.com or .com)."
 
 msgid "IP label"
 msgstr "Ip ou plage ip"
 
 msgid "IP help"
-msgstr "L&#8217addresse IP ou plage IP que vous souhaitez bannir(e.g. 150.11.110.1 or 150.11.110). Séparer les adresse par des espaces. Si une IP est déjà entrée il s&#8217agit de la dernière adresse connue de l&#8217utilisateur."
+msgstr "L’addresse IP ou plage IP que vous souhaitez bannir(e.g. 150.11.110.1 or 150.11.110). Séparer les adresse par des espaces. Si une IP est déjà entrée il s’agit de la dernière adresse connue de l’utilisateur."
 
 msgid "Ban message label"
 msgstr "Message de bannissement"
 
 msgid "Ban message help"
-msgstr "Message qui sera affiché à l&#8217utilisateur lors de ses prochaines visites au forum."
+msgstr "Message qui sera affiché à l’utilisateur lors de ses prochaines visites au forum."
 
 msgid "Message expiry subhead"
-msgstr "Date d&#8217expiration du message"
+msgstr "Date d’expiration du message"
 
 msgid "Expire date label"
 msgstr "Date d'expiration"

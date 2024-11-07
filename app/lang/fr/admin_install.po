@@ -16,16 +16,16 @@ msgid "ForkBB Installation"
 msgstr "Installation de ForkBB"
 
 msgid "Welcome"
-msgstr "Vous êtes sur le point d&#8217installer ForkBB. Pour installer ForkBB, vous devez compléter le formulaire ci-dessous. Si vous rencontrez quelque difficulté avec l&#8217installation, veuillez vous référer à la documentation."
+msgstr "Vous êtes sur le point d’installer ForkBB. Pour installer ForkBB, vous devez compléter le formulaire ci-dessous. Si vous rencontrez quelque difficulté avec l’installation, veuillez vous référer à la documentation."
 
 msgid "Choose install language"
-msgstr "Choisissez le langage d&#8217installation"
+msgstr "Choisissez le langage d’installation"
 
 msgid "Install language"
-msgstr "language d&#8217installation"
+msgstr "language d’installation"
 
 msgid "Choose install language info"
-msgstr "Le langage utilisé pour ce script d&#8217installation. Le choix du langage par défaut pour le forum se fera ensuite."
+msgstr "Le langage utilisé pour ce script d’installation. Le choix du langage par défaut pour le forum se fera ensuite."
 
 msgid "Change language"
 msgstr "Changer le language"
@@ -73,13 +73,13 @@ msgid "Info 6"
 msgstr "Le préfix peut contenir les lettres a à z, nombre et tiret_souligné. Il doivent toutefois commencer par une lettre. La taille maximum est de 40 caractères."
 
 msgid "Administration setup"
-msgstr "<b>Installation de l&#8217admministration</b>"
+msgstr "<b>Installation de l’admministration</b>"
 
 msgid "Info 7"
 msgstr "Créer le tout premier compte sur votre forum."
 
 msgid "Administrator username"
-msgstr "Pseudo de l&#8217administrateur"
+msgstr "Pseudo de l’administrateur"
 
 msgid "Info 8"
 msgstr "Le pseudo doit commencer par une lettre. Peut contenir lettres, nombres, espaces, points, tiret et souligné."
@@ -118,7 +118,7 @@ msgid "Default style"
 msgstr "style par défaute"
 
 msgid "Start install"
-msgstr "Commencer l&#8217installation"
+msgstr "Commencer l’installation"
 
 msgid "You are running error"
 msgstr "Vous utilisez %1$s version %2$s. ForkBB rev.%3$s nécessite au moins %1$s %4$s pour fonctionner correctement. Vous devez mettre à jour votre installation de %1$s avant de pouvoir continuer."
@@ -133,7 +133,7 @@ msgid "No styles"
 msgstr "Pas de styles."
 
 msgid "No DB extensions"
-msgstr "Cet environement PHP n&#8217a aucun support que ForkBB supporte. PDO doit être activé."
+msgstr "Cet environement PHP n’a aucun support que ForkBB supporte. PDO doit être activé."
 
 msgid "No access to main.dist.php"
 msgstr "Pas d'accès à main.dist.php."
@@ -208,10 +208,10 @@ msgid "This is just a test forum"
 msgstr "Ceci est juste un forum de test"
 
 msgid "Bad database charset"
-msgstr "La base de données doit être créée avec l&#8217encodage de caractères <b>utf8mb4</b> (compare <b>utf8mb4_unicode_ci</b>)."
+msgstr "La base de données doit être créée avec l’encodage de caractères <b>utf8mb4</b> (compare <b>utf8mb4_unicode_ci</b>)."
 
 msgid "Bad database encoding"
-msgstr "La base de données doit être crée avec l&#8217encodage de caractères <b>%s</b>."
+msgstr "La base de données doit être crée avec l’encodage de caractères <b>%s</b>."
 
 msgid "Bad database collate"
 msgstr "La base de données doit être crée avec cette collation <b>C</b> (LC_COLLATE)."
@@ -223,7 +223,7 @@ msgid "Cookie setup"
 msgstr "<b>Réglage du cookie</b>"
 
 msgid "Info 12"
-msgstr "Les cookies sont des fichiers dédiés au site, ils permettent de stocker des données dans le navigateur de l&#8217utilisateur,  ce qui est utilisé pour son authentification."
+msgstr "Les cookies sont des fichiers dédiés au site, ils permettent de stocker des données dans le navigateur de l’utilisateur,  ce qui est utilisé pour son authentification."
 
 msgid "Cookie Domain"
 msgstr "Domaine du cookie"
@@ -259,4 +259,4 @@ msgid "Failed to drop table"
 msgstr "Echec du vidage de la table dans la base séléctionnée."
 
 msgid "Failed to truncate table"
-msgstr "Echec du tronquage d&#8217une table dans la base séléctionnée."
+msgstr "Echec du tronquage d’une table dans la base séléctionnée."

@@ -19,7 +19,7 @@ msgid "Mark forum read redirect"
 msgstr "Toutes les discussions du forum spécifié ont été marquées comme lues."
 
 msgid "Form email disabled"
-msgstr "L&#8217utilisateur que vous essayez de joindre a désactiver l&#8217envoi de mail  via le forum."
+msgstr "L’utilisateur que vous essayez de joindre a désactiver l’envoi de mail  via le forum."
 
 msgid "Email sent redirect"
 msgstr "Email envoyé."
@@ -28,7 +28,7 @@ msgid "Send email to %s"
 msgstr "Envoyer un email à %s"
 
 msgid "Send email title"
-msgstr "Envoyer l&#8217email"
+msgstr "Envoyer l’email"
 
 msgid "Email subject"
 msgstr "Sujet"
@@ -37,7 +37,7 @@ msgid "Email message"
 msgstr "Message"
 
 msgid "Email disclosure note"
-msgstr "Veuillez noter qu&#8217en utilisant ce formulaire, votre adresse mail sera affichée au destinataire."
+msgstr "Veuillez noter qu’en utilisant ce formulaire, votre adresse mail sera affichée au destinataire."
 
 msgid "Report redirect"
 msgstr "Message signalé."
@@ -269,10 +269,10 @@ msgid "Moderate forum"
 msgstr "Modérer le forum"
 
 msgid "When sending email there was an error"
-msgstr "Erreur lors de l&#8217envoi de mail. Veuillez reessayer ultérieurement."
+msgstr "Erreur lors de l’envoi de mail. Veuillez reessayer ultérieurement."
 
 msgid "Confirm your email address"
-msgstr "Tout d&#8217abord, veuillez <a href=\"%s\">confirmer</a> votre adresse mail."
+msgstr "Tout d’abord, veuillez <a href=\"%s\">confirmer</a> votre adresse mail."
 
 msgid "Poll cannot be attached"
 msgstr "Une discussion avec un sondage ne peut être attachée à une autre discussion."

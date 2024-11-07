@@ -13,22 +13,22 @@ msgstr ""
 "Language: fr\n"
 
 msgid "Sign up"
-msgstr "S&#8217enregistrer"
+msgstr "S’enregistrer"
 
 msgid "If no rules"
-msgstr "Suivre la règle d&#8217or."
+msgstr "Suivre la règle d’or."
 
 msgid "Bad agree"
-msgstr "Le formulaire est obsolète. Veuillez reprendre l&#8217<a href=\"%s\">enregistrement</a> à nouveau."
+msgstr "Le formulaire est obsolète. Veuillez reprendre l’<a href=\"%s\">enregistrement</a> à nouveau."
 
 msgid "Reg cancel"
-msgstr "Vous n&#8217avez pas accepter les règles du forum."
+msgstr "Vous n’avez pas accepter les règles du forum."
 
 msgid "Agree"
 msgstr "Agréer"
 
 msgid "Reg email"
-msgstr "Merci de vous être enregistré. Un mail avec un lien à cliquer pour activer votre compte a été envoyé à l&#8217adresse fournie. Si celui ci ne vous parvenait pas vous pouvez contacter l&#8217administrateur de ce forum à <a href=\"mailto:%1$s\">%1$s</a>."
+msgstr "Merci de vous être enregistré. Un mail avec un lien à cliquer pour activer votre compte a été envoyé à l’adresse fournie. Si celui ci ne vous parvenait pas vous pouvez contacter l’administrateur de ce forum à <a href=\"mailto:%1$s\">%1$s</a>."
 
 msgid "Reg complete"
 msgstr "Enregistrement finalisé. Vous pouvez accéder au forum."
@@ -40,4 +40,4 @@ msgid "Email help2"
 msgstr "Veuillez entrer une adresse mail valide. Celle ci sera utilisée pour activer votre compte sur ce forum."
 
 msgid "Error welcom mail"
-msgstr "Erreur lors de l&#8217envoi du mail. Utilisez le lien de redéfinition d&#8217un nouveau mot de passe pour activer votre compte, ou contactez l&#8217administrateur à <a href=\"mailto:%1$s\">%1$s</a>."
+msgstr "Erreur lors de l’envoi du mail. Utilisez le lien de redéfinition d’un nouveau mot de passe pour activer votre compte, ou contactez l’administrateur à <a href=\"mailto:%1$s\">%1$s</a>."

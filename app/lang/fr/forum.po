@@ -34,7 +34,7 @@ msgid "Empty forum"
 msgstr "Le forum est vide."
 
 msgid "Topic %s was not found in the database"
-msgstr "La discussion №%s n&#8217a pas été trouvée dans la base de données"
+msgstr "La discussion №%s n’a pas été trouvée dans la base de données"
 
 msgid "Last post <a href=\"%1$s\">%2$s</a>"
 msgstr "<small>Dernier message </small><a href=\"%1$s\">%2$s</a>"

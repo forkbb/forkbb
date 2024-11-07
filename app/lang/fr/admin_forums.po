@@ -88,13 +88,13 @@ msgid "Subject option DESC"
 msgstr "Sujet par ordre alphabétique inversé"
 
 msgid "Redirect label"
-msgstr "Redirection d&#8217URL"
+msgstr "Redirection d’URL"
 
 msgid "Redirect help"
 msgstr "Disponible uniquement dans un forum vide."
 
 msgid "Group permissions info"
-msgstr "Dans ce formulaire, vous pouvez accorder des permission spécifiques du forum pour chaque groupe d&#8217utilisateurs. Si vous n&#8217avez fait aucun changement aux permissions de groupe du forum, ce que vous voyez ci dessous est la configuration par défaut basée sur les réglages dans <a href=\"%1$s\">%2$s</a>. Les administrateurs ayant toujours les pleins pouvoirs, ils sont exclus. Les permissions qui diffèrent de l&#8217état d&#8217origine pour le groupe d&#8217utilisateurs sont affichées en rouge. La &quot;Read forum&quot; case à cocher sera désactivée si le groupe en question n&#8217a pas &quot;Read board&quot; permission. Pour les forum redirigés, seul la permission &quot;Read forum&quot; est modifiable."
+msgstr "Dans ce formulaire, vous pouvez accorder des permission spécifiques du forum pour chaque groupe d’utilisateurs. Si vous n’avez fait aucun changement aux permissions de groupe du forum, ce que vous voyez ci dessous est la configuration par défaut basée sur les réglages dans <a href=\"%1$s\">%2$s</a>. Les administrateurs ayant toujours les pleins pouvoirs, ils sont exclus. Les permissions qui diffèrent de l’état d’origine pour le groupe d’utilisateurs sont affichées en rouge. La &quot;Read forum&quot; case à cocher sera désactivée si le groupe en question n’a pas &quot;Read board&quot; permission. Pour les forum redirigés, seul la permission &quot;Read forum&quot; est modifiable."
 
 msgid "Read forum label"
 msgstr "lire le forum"
@@ -106,7 +106,7 @@ msgid "Post topics label"
 msgstr "Poster des sujets"
 
 msgid "Revert to default"
-msgstr "Retour à l&#8217état par défaut"
+msgstr "Retour à l’état par défaut"
 
 msgid "Parent label"
 msgstr "Parent"
@@ -136,7 +136,7 @@ msgid "<span></span>"
 msgstr "<span></span>"
 
 msgid "Friendly name label"
-msgstr "Nom de l&#8217URL"
+msgstr "Nom de l’URL"
 
 msgid "Friendly name help"
 msgstr "Un identifiant sur la base duquel les adresses de ce forum seront généréees. Peut consister en lettres latines, nombres, tiret_souligné ou tiret."
@@ -151,7 +151,7 @@ msgid "Use custom fields label"
 msgstr "Utiliser des champs modifiés"
 
 msgid "Use custom fields help"
-msgstr "Autoriser des champs modifiés à être utilisé lors de la créatonde discussions. N&#8217affecte pas les discussions existantes."
+msgstr "Autoriser des champs modifiés à être utilisé lors de la créatonde discussions. N’affecte pas les discussions existantes."
 
 msgid "Customize fields"
 msgstr "modifier les champs"

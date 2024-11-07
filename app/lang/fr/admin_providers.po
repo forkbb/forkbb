@@ -79,10 +79,10 @@ msgid "State error"
 msgstr "Erreur dans les paramètres."
 
 msgid "Token error: %s"
-msgstr "Echec de la recupération d&#8217un jeton d&#8217accès: %s."
+msgstr "Echec de la recupération d’un jeton d’accès: %s."
 
 msgid "cURL disabled"
-msgstr "L&#8217extension cURL est désactivée dans PHP et allow_url_fopen est sur OFF."
+msgstr "L’extension cURL est désactivée dans PHP et allow_url_fopen est sur OFF."
 
 msgid "cURL error"
 msgstr "Erreur cURL."
@@ -91,7 +91,7 @@ msgid "User error"
 msgstr "Echec de la récupération des données utilisateur."
 
 msgid "No new regs"
-msgstr "Ce forum n&#8217accepte pas de nouveaux enregistrements."
+msgstr "Ce forum n’accepte pas de nouveaux enregistrements."
 
 msgid "Email message"
 msgstr "This email received from %s appartient à un utilisateur enregistré.<br>Peut être êtes vous enregistré via un autre fournisseur ou erreur identifiant + mot de passe?"

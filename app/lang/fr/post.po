@@ -40,7 +40,7 @@ msgid "Hide smilies"
 msgstr "Ne jamais montrer les smyleys en images dans ce message"
 
 msgid "New subscribe"
-msgstr "S&#8217abonner à cette discussion"
+msgstr "S’abonner à cette discussion"
 
 msgid "Stay subscribed"
 msgstr "Rester abonné à cette discussion"
@@ -64,7 +64,7 @@ msgid "Edit topic"
 msgstr "Editer la discussion"
 
 msgid "Merge posts"
-msgstr "Fusionner au message précédent s&#8217il est votre"
+msgstr "Fusionner au message précédent s’il est votre"
 
 msgid "Edit redirect"
 msgstr "Message mis à jour."
@@ -85,7 +85,7 @@ msgid "Attachments"
 msgstr "Pièces jointes"
 
 msgid "Change author and date"
-msgstr "Changer l&#8217auteur et la date"
+msgstr "Changer l’auteur et la date"
 
 msgid "Change"
 msgstr "Modifier"
@@ -94,13 +94,13 @@ msgid "Posted"
 msgstr "Posté"
 
 msgid "Change AnD topic"
-msgstr "Changer l&#8217auteur de la discussion et la date"
+msgstr "Changer l’auteur de la discussion et la date"
 
 msgid "Change AnD post"
-msgstr "Changer l&#8217auteur du message et la date"
+msgstr "Changer l’auteur du message et la date"
 
 msgid "User %s does not exist"
-msgstr "L&#8217utilisateur '%s' n&#8217existe pas."
+msgstr "L’utilisateur '%s' n’existe pas."
 
 msgid "Change redirect"
 msgstr "Modifications effectuées."

@@ -13,10 +13,10 @@ msgstr ""
 "Language: fr\n"
 
 msgid "Parser settings updated redirect"
-msgstr "Réglages de l&#8217analyseur mis à jours."
+msgstr "Réglages de l’analyseur mis à jours."
 
 msgid "Parser settings head"
-msgstr "Réglages de l&#8217analyseur"
+msgstr "Réglages de l’analyseur"
 
 msgid "BBCode subhead"
 msgstr "BBCode"
@@ -205,7 +205,7 @@ msgid "Recursive label"
 msgstr "Recursif"
 
 msgid "Recursive info"
-msgstr "Ceci est du BBCode récursif. Jusqu&#8217à la fin de la récursion, l&#8217analyseur ne répond pas à un autre BBCode."
+msgstr "Ceci est du BBCode récursif. Jusqu’à la fin de la récursion, l’analyseur ne répond pas à un autre BBCode."
 
 msgid "Text only label"
 msgstr "Texte seulement"
@@ -229,7 +229,7 @@ msgid "Single label"
 msgstr "Simple"
 
 msgid "Single info"
-msgstr "Tag simple. Ce BBCode n&#8217a ni corps ni tag de fin."
+msgstr "Tag simple. Ce BBCode n’a ni corps ni tag de fin."
 
 msgid "Auto label"
 msgstr "Auto"
@@ -250,7 +250,7 @@ msgid "Allowed label"
 msgstr "Autorisé"
 
 msgid "Allowed no_attr info"
-msgstr "Autoriser l&#8217utilisation de ce BBCode sans attributs."
+msgstr "Autoriser l’utilisation de ce BBCode sans attributs."
 
 msgid "Body format label"
 msgstr "Format du corps"
@@ -262,7 +262,7 @@ msgid "Def attr subhead"
 msgstr "Réglages pour BBCode de type [%s=<i>value</i>]..."
 
 msgid "Allowed def_attr info"
-msgstr "Autoriser l&#8217usage de ce BBCode avec un attribut primaire."
+msgstr "Autoriser l’usage de ce BBCode avec un attribut primaire."
 
 msgid "Required label"
 msgstr "Requis"
@@ -280,7 +280,7 @@ msgid "Other attr subhead"
 msgstr "Réglage pour BBCode de type [%1$s %2$s=<i>value</i>]..."
 
 msgid "Allowed %s attr info"
-msgstr "Autoriser l&#8217usage de ce BBCode avec l&#8217attribut <b><code>%s</code></b> . Non - cet attribut sera effacé."
+msgstr "Autoriser l’usage de ce BBCode avec l’attribut <b><code>%s</code></b> . Non - cet attribut sera effacé."
 
 msgid "New attr subhead"
 msgstr "Nouvel attribut"
@@ -289,7 +289,7 @@ msgid "Allowed new_attr info"
 msgstr "Ajouter un nouvel attribut"
 
 msgid "Attribute name label"
-msgstr "Nouveau nom d&#8217attribut"
+msgstr "Nouveau nom d’attribut"
 
 msgid "Attribute name info"
 msgstr "Format: <code>^[a-z-]{2,15}$</code>"
@@ -301,7 +301,7 @@ msgid "PHP code error in Handler: %s"
 msgstr "Erreur PHP dans les gestionnaire: %s"
 
 msgid "PHP code error in Text handler: %s"
-msgstr "Code d&#8217erreur PHP dans le gestionnaire de texte: %s"
+msgstr "Code d’erreur PHP dans le gestionnaire de texte: %s"
 
 msgid "Recursive and Tags only are enabled at the same time"
 msgstr "Recursif and mot clé seulement sont autorisés en même temps."
@@ -313,10 +313,10 @@ msgid "Text only and Tags only are enabled at the same time"
 msgstr "Texte seulement et mot clé seulement sont activés en même temps."
 
 msgid "Attribute %1$s, %2$s - regular expression error"
-msgstr "Attribut %1$s, champ %2$s - erreur d&#8217expression régulière."
+msgstr "Attribut %1$s, champ %2$s - erreur d’expression régulière."
 
 msgid "Attribute name %s is not valid"
-msgstr "le nom d&#8217attribut %s est non valide."
+msgstr "le nom d’attribut %s est non valide."
 
 msgid "BBCode updated redirect"
 msgstr "BBCode mis à jour."

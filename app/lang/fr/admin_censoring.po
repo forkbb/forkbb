@@ -13,7 +13,7 @@ msgstr ""
 "Language: fr\n"
 
 msgid "Censoring info"
-msgstr "Ci-dessous une liste de mots et leur remplacement. Caractères génériques acceptés ( <b>*dans*</b> désignerai <b>dedans</b> aussi bien que <b>danseuse</b>). La censure affecte aussi les noms utilisateurs. Les nouveaux utilisateurs ne pourront s&#8217enregitrer avec des pseudos contenant ces mots censurés. La recherche est insensible à la casse."
+msgstr "Ci-dessous une liste de mots et leur remplacement. Caractères génériques acceptés ( <b>*dans*</b> désignerai <b>dedans</b> aussi bien que <b>danseuse</b>). La censure affecte aussi les noms utilisateurs. Les nouveaux utilisateurs ne pourront s’enregitrer avec des pseudos contenant ces mots censurés. La recherche est insensible à la casse."
 
 msgid "Censored word label"
 msgstr "Mot censuré"

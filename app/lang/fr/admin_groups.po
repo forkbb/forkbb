@@ -37,7 +37,7 @@ msgid "New group label"
 msgstr "Baser le nouveau groupe sur"
 
 msgid "New group help"
-msgstr "Sélectionner un groupe d&#8217utilisateurs duquel le nouveau groupe va hériter les permissions. La page suivante vous permettra de régler plus précisément les paramètres."
+msgstr "Sélectionner un groupe d’utilisateurs duquel le nouveau groupe va hériter les permissions. La page suivante vous permettra de régler plus précisément les paramètres."
 
 msgid "Default group subhead"
 msgstr "Définir le groupe par défaut"
@@ -46,7 +46,7 @@ msgid "Default group label"
 msgstr "Groupe par défaut"
 
 msgid "Default group help"
-msgstr "Ceci est le groupe par défaut, c&#8217est-à-dire le groupe dans lequel sont placés les utilisateurs lorsqu&#8217ils s&#8217inscrivent. Pour des raisons de sécurité, les utilisateurs ne peuvent être placés ni dans le groupe des modérateurs, ni dans celui des administrateurs par défaut."
+msgstr "Ceci est le groupe par défaut, c’est-à-dire le groupe dans lequel sont placés les utilisateurs lorsqu’ils s’inscrivent. Pour des raisons de sécurité, les utilisateurs ne peuvent être placés ni dans le groupe des modérateurs, ni dans celui des administrateurs par défaut."
 
 msgid "Edit groups info"
 msgstr "Les groupes prédéfinis des invités, administrateurs, modérateurs et membres ne peuvent être supprimés. Cependant, ils peuvent être modifiés. Veuillez prendre note que, dans certains groupes, certaines options ne sont pas disponibles (ex. : la permission de <em>modifier les messages</em> pour les invités). Les administrateurs ont toujours toutes les permissions."
@@ -82,22 +82,22 @@ msgid "Group title label"
 msgstr "Titre du groupe"
 
 msgid "User title label"
-msgstr "Titre de l&#8217utilisateur"
+msgstr "Titre de l’utilisateur"
 
 msgid "User title help"
-msgstr "Le rang que l&#8217utilisateur de ce groupe a atteint. Laisser en blanc pour le titre par défaut <b>%s</b>."
+msgstr "Le rang que l’utilisateur de ce groupe a atteint. Laisser en blanc pour le titre par défaut <b>%s</b>."
 
 msgid "Promote users label"
-msgstr "Promouvoir l&#8217utilisateur"
+msgstr "Promouvoir l’utilisateur"
 
 msgid "Promote users help"
-msgstr "Vous pouvez promouvoir des utilisateurs dans un nouveau groupe automatiquement après un certain nombre de messages. Sélectionnez  &quot;%s&quot; pour désactiver. Pour des raisons de sécurité, vous n&#8217êtes pas autorisé à sélectionner un groupe "administrateur". Les changements de groupe pour les utilisateurs touchés par ce paramètre prendra effet <b>immédiatement</b>."
+msgstr "Vous pouvez promouvoir des utilisateurs dans un nouveau groupe automatiquement après un certain nombre de messages. Sélectionnez  &quot;%s&quot; pour désactiver. Pour des raisons de sécurité, vous n’êtes pas autorisé à sélectionner un groupe "administrateur". Les changements de groupe pour les utilisateurs touchés par ce paramètre prendra effet <b>immédiatement</b>."
 
 msgid "Number for promotion label"
 msgstr "Nombre de messages pour promotion"
 
 msgid "Number for promotion help"
-msgstr "Notez que le nombre de messages que vous entrez est le nombre total des messages d&#8217un utilisateur, pas le nombre de messages faits en tant que membre de ce groupe."
+msgstr "Notez que le nombre de messages que vous entrez est le nombre total des messages d’un utilisateur, pas le nombre de messages faits en tant que membre de ce groupe."
 
 msgid "Disable promotion"
 msgstr "Desactiver la promotion"
@@ -106,7 +106,7 @@ msgid "Mod privileges label"
 msgstr "Appliquer des privilèges de modérateur aux utilisateurs"
 
 msgid "Mod privileges help"
-msgstr "Pour qu&#8217un utilisateur de ce groupe puisse obtenir des privilèges de modérateur, il doit être assigné à modérer un ou plusieurs forums. Ceci se fait via la page d&#8217administration d&#8217utilisateur du profil de l&#8217utilisateur."
+msgstr "Pour qu’un utilisateur de ce groupe puisse obtenir des privilèges de modérateur, il doit être assigné à modérer un ou plusieurs forums. Ceci se fait via la page d’administration d’utilisateur du profil de l’utilisateur."
 
 msgid "Edit profile label"
 msgstr "Autoriser les modérateurs à éditer les profils utilisateurs"
@@ -142,7 +142,7 @@ msgid "Read board label"
 msgstr "Lire le forum"
 
 msgid "Read board help"
-msgstr "Autoriser les utilisateurs de ce groupe à afficher le forum. Ce paramètre s&#8217applique à tous les aspects du forum et ne peut donc pas être remplacé par les paramètres spécifiques au forum. Si votre choix porte sur le «&#160;Non&#160;», les utilisateurs dans ce groupe ne pourront que se connecter/déconnecter et s&#8217inscrire."
+msgstr "Autoriser les utilisateurs de ce groupe à afficher le forum. Ce paramètre s’applique à tous les aspects du forum et ne peut donc pas être remplacé par les paramètres spécifiques au forum. Si votre choix porte sur le «&#160;Non&#160;», les utilisateurs dans ce groupe ne pourront que se connecter/déconnecter et s’inscrire."
 
 msgid "View user info label"
 msgstr "Voir les informations utilisateur"
@@ -184,7 +184,7 @@ msgid "Post links label"
 msgstr "Poster des liens"
 
 msgid "Post links help"
-msgstr "Autoriser les utilisateurs de ce groupe à inclure des liens dans leurs messages. Ce paramètre s&#8217applique également aux signatures et au champ site Web du profil utilisateurs."
+msgstr "Autoriser les utilisateurs de ce groupe à inclure des liens dans leurs messages. Ce paramètre s’applique également aux signatures et au champ site Web du profil utilisateurs."
 
 msgid "Set own title label"
 msgstr "L'utilisteur peut choisir son propre titre"
@@ -241,7 +241,7 @@ msgid "Delete-edit interval label"
 msgstr "Intervalle entre modifications de message"
 
 msgid "Delete-edit interval help"
-msgstr "Nombre de secondes pour modifier (ou effacer) vos messages ou discussions. Définir à 0 pour désactiver.<br>Les modérateurs n&#8217ont pas de restrictions dans leur zone d'activité."
+msgstr "Nombre de secondes pour modifier (ou effacer) vos messages ou discussions. Définir à 0 pour désactiver.<br>Les modérateurs n’ont pas de restrictions dans leur zone d'activité."
 
 msgid "Create new group"
 msgstr "Creer un nouveau groupe"
@@ -304,19 +304,19 @@ msgid "Allowed file extensions label"
 msgstr "extensions de fichier autorisées"
 
 msgid "Allowed file extensions help"
-msgstr "Liste des extension autorisées à l&#8217envoi, séparé par des virgules. Laisser le champ libre désactive l&#8217envoi de fichier pour ce groupe."
+msgstr "Liste des extension autorisées à l’envoi, séparé par des virgules. Laisser le champ libre désactive l’envoi de fichier pour ce groupe."
 
 msgid "Max file size label"
 msgstr "Taille de fichier maximum"
 
 msgid "Max file size help"
-msgstr "Taille maximum du fichier à envoyere (<b>KiB</b>). Mettre à 0 pour désactiver l&#8217envoi pour ce groupe."
+msgstr "Taille maximum du fichier à envoyere (<b>KiB</b>). Mettre à 0 pour désactiver l’envoi pour ce groupe."
 
 msgid "Disk space limit label"
 msgstr "Limite d'espace disque"
 
 msgid "Disk space limit help"
-msgstr "Limite d&#8217espace disque (<b>MiB</b>). Mettre à 0 pour désactiver l&#8217envoi pour ce groupe."
+msgstr "Limite d’espace disque (<b>MiB</b>). Mettre à 0 pour désactiver l’envoi pour ce groupe."
 
 msgid "Delete profile label"
 msgstr "Effacer le profil"

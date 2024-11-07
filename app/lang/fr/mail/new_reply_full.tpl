@@ -8,7 +8,7 @@ Content-Type: text/html; charset=UTF-8
   <title>{{topicSubject}}</title>
 </head>
 <body>
-  <p>'{{replier}}' a répondu à la discussion '<a href="{!topicLink!}">{{topicSubject}}</a>' que vous suivez. Il se peut qu&#8217il y ait davantage de nouvelles réponses, mais ce sera la seule notification jusqu&#8217à ce que vous visitiez à nouveau le forum.</p>
+  <p>'{{replier}}' a répondu à la discussion '<a href="{!topicLink!}">{{topicSubject}}</a>' que vous suivez. Il se peut qu’il y ait davantage de nouvelles réponses, mais ce sera la seule notification jusqu’à ce que vous visitiez à nouveau le forum.</p>
   <p></p>
   <p>Contenu du message:</p>
   <p>-----------------------------------------------------------------------</p>

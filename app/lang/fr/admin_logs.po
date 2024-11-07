@@ -58,7 +58,7 @@ msgid "Log deleted redirect"
 msgstr "Journal effacé."
 
 msgid "Failed to delete log redirect"
-msgstr "Echec de l&#8217effacement du journal."
+msgstr "Echec de l’effacement du journal."
 
 msgid "Log %s"
 msgstr "Journal %s"

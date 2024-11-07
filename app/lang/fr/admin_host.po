@@ -13,4 +13,4 @@ msgstr ""
 "Language: fr\n"
 
 msgid "Host info"
-msgstr "L&#8217adresse IP est: %1$s<br>Le nom d\'hôte est: %2$s<br><br><a href=\"%3$s\">Montrer plus d&#8217utilisateurs pour cette IP</a>"
+msgstr "L’adresse IP est: %1$s<br>Le nom d\'hôte est: %2$s<br><br><a href=\"%3$s\">Montrer plus d’utilisateurs pour cette IP</a>"
