@@ -1,0 +1,331 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+
+msgid "Parser settings updated redirect"
+msgstr "Réglages de l&#8217analyseur mis à jours."
+
+msgid "Parser settings head"
+msgstr "Réglages de l&#8217analyseur"
+
+msgid "BBCode subhead"
+msgstr "BBCode"
+
+msgid "BBCode label"
+msgstr "BBCode"
+
+msgid "BBCode help"
+msgstr "Autoriser le BBCode dans les messages (recommendé)."
+
+msgid "BBCode sigs label"
+msgstr "BBCode dans les signatures"
+
+msgid "BBCode sigs help"
+msgstr "Autoriser le BBCode dans les signatures utilisateur."
+
+msgid "Smilies subhead"
+msgstr "Smileys"
+
+msgid "Smilies mess label"
+msgstr "Smileys dans les messages"
+
+msgid "Smilies mess help"
+msgstr "Convertir smileys en petites icones graphiques"
+
+msgid "Smilies sigs label"
+msgstr "Smileys dans les signatures"
+
+msgid "Smilies sigs help"
+msgstr "Convertir smilies en petites icones graphiques dans les signatures utilisateur."
+
+msgid "Clickable links label"
+msgstr "Faire des liens cliquables"
+
+msgid "Clickable links help"
+msgstr "Quand activé, ForkBB détéctera automatiquement les adresses web dans les messages et les convertira en liens hypertextes cliquables."
+
+msgid "BBCode management"
+msgstr "gestion du BBCode"
+
+msgid "Smilies management"
+msgstr "gestion des Smilies"
+
+msgid "Smilies head"
+msgstr "Smilies"
+
+msgid "Available images head"
+msgstr "Images disponibles"
+
+msgid "Available images subhead"
+msgstr "Images disponibles"
+
+msgid "Upload image head"
+msgstr "Envoyer une image"
+
+msgid "Upload image subhead"
+msgstr "Envoyer"
+
+msgid "Picture label"
+msgstr "Image"
+
+msgid "<img src=\"%1$s\" alt=\"%2$s\">"
+msgstr "<img src=\"%1$s\" alt=\"%2$s\">"
+
+msgid "Name label"
+msgstr "Nom du fichier"
+
+msgid "File %s deleted redirect"
+msgstr "File '%s' deleted."
+
+msgid "File %s not deleted redirect"
+msgstr "Fichier '%s' non effacé."
+
+msgid "Upload"
+msgstr "Envoi"
+
+msgid "Upload image label"
+msgstr "Nouvelle image"
+
+msgid "Upload image info"
+msgstr "Selectionner une image à envoyer."
+
+msgid "Image uploaded redirect"
+msgstr "Image envoyée."
+
+msgid "Smilies list subhead"
+msgstr "Liste des smileys"
+
+msgid "Smiley number %s"
+msgstr "Smiley #%s"
+
+msgid "Smiley code label"
+msgstr "Code"
+
+msgid "Position label"
+msgstr "Position"
+
+msgid "New smile subhead"
+msgstr "Nouveau smiley"
+
+msgid "Smilies updated redirect"
+msgstr "Smileys mis à jour."
+
+msgid "Smile deleted redirect"
+msgstr "Smiley effacé."
+
+msgid "BBCode head"
+msgstr "BBCode"
+
+msgid "BBCode list subhead"
+msgstr "BBCode list"
+
+msgid "BBCode tag label"
+msgstr "Mot Clé"
+
+msgid "BBCode tag title"
+msgstr "Modifier BBCode"
+
+msgid "BBCode %s"
+msgstr "BBCode '%s'"
+
+msgid "BBCode allowed"
+msgstr "Autorisé"
+
+msgid "BBCode display only"
+msgstr "Affiche uniquement"
+
+msgid "BBCode not allowed"
+msgstr "Non autorisé"
+
+msgid "BBCode mes label"
+msgstr "Dans les messages"
+
+msgid "BBCode sig label"
+msgstr "Dans les signatures"
+
+msgid "BBCode deleted redirect"
+msgstr "BBCode effacé."
+
+msgid "Add bbcode head"
+msgstr "Ajouter BBCode"
+
+msgid "Edit bbcode head"
+msgstr "Editer le BBCode"
+
+msgid "Delete bbcode head"
+msgstr "Effacer le BBCode"
+
+msgid "Delete bbcode btn"
+msgstr "Effacer le BBCode"
+
+msgid "Tag label"
+msgstr "Tag"
+
+msgid "Tag info"
+msgstr "nom du BB-code. Format de nom: <code>^[a-z\*][a-z\d-]{0,10}$</code>"
+
+msgid "Type label"
+msgstr "Type"
+
+msgid "Type info"
+msgstr "BBCode type ..."
+
+msgid "New type info"
+msgstr "... ou un nouveau type. Format: <code>^[a-z][a-z\d-]{0,19}$</code>"
+
+msgid "Parents label"
+msgstr "Type parent"
+
+msgid "Parents info"
+msgstr "Types de parent BBCode. Vous pouvez spécifier de multiples types."
+
+msgid "Handler label"
+msgstr "Gestionnaire"
+
+msgid "Handler info"
+msgstr "PHP code pour convertir le BBCode en HTML."
+
+msgid "Text handler label"
+msgstr "Gestionnaire de texte"
+
+msgid "Text handler info"
+msgstr "PHP code pour convertir le BBCode en texte."
+
+msgid "Recursive label"
+msgstr "Recursif"
+
+msgid "Recursive info"
+msgstr "Ceci est du BBCode récursif. Jusqu&#8217à la fin de la récursion, l&#8217analyseur ne répond pas à un autre BBCode."
+
+msgid "Text only label"
+msgstr "Texte seulement"
+
+msgid "Text only info"
+msgstr "Ce BBCode contient uniquement du texte."
+
+msgid "Tags only label"
+msgstr "Mot clés seulement"
+
+msgid "Tags only info"
+msgstr "Ce BBCode contient uniquement un autre BBCode."
+
+msgid "Pre label"
+msgstr "Pre"
+
+msgid "Pre info"
+msgstr "Dans ce BBCode, saut de ligne, tabulation et espaces adjacent ne seront pas modifiés."
+
+msgid "Single label"
+msgstr "Simple"
+
+msgid "Single info"
+msgstr "Tag simple. Ce BBCode n&#8217a ni corps ni tag de fin."
+
+msgid "Auto label"
+msgstr "Auto"
+
+msgid "Auto info"
+msgstr "Fermeture automatique de ce tag avec un autre BBCode."
+
+msgid "Self nesting label"
+msgstr "Auto-imbriquation"
+
+msgid "Self nesting info"
+msgstr "Combien de fois ce BBCode peut se contenir lui même."
+
+msgid "No attr subhead"
+msgstr "Réglage de BBCode type [%s]..."
+
+msgid "Allowed label"
+msgstr "Autorisé"
+
+msgid "Allowed no_attr info"
+msgstr "Autoriser l&#8217utilisation de ce BBCode sans attributs."
+
+msgid "Body format label"
+msgstr "Format du corps"
+
+msgid "Body format info"
+msgstr "Expression régulière, définit le corps de ce BBCode."
+
+msgid "Def attr subhead"
+msgstr "Réglages pour BBCode de type [%s=<i>value</i>]..."
+
+msgid "Allowed def_attr info"
+msgstr "Autoriser l&#8217usage de ce BBCode avec un attribut primaire."
+
+msgid "Required label"
+msgstr "Requis"
+
+msgid "Required info"
+msgstr "Attribut requis."
+
+msgid "Format label"
+msgstr "Format"
+
+msgid "Format info"
+msgstr "Expression régulière, défini la règle pour cet attribut."
+
+msgid "Other attr subhead"
+msgstr "Réglage pour BBCode de type [%1$s %2$s=<i>value</i>]..."
+
+msgid "Allowed %s attr info"
+msgstr "Autoriser l&#8217usage de ce BBCode avec l&#8217attribut <b><code>%s</code></b> . Non - cet attribut sera effacé."
+
+msgid "New attr subhead"
+msgstr "Nouvel attribut"
+
+msgid "Allowed new_attr info"
+msgstr "Ajouter un nouvel attribut"
+
+msgid "Attribute name label"
+msgstr "Nouveau nom d&#8217attribut"
+
+msgid "Attribute name info"
+msgstr "Format: <code>^[a-z-]{2,15}$</code>"
+
+msgid "Tag name not specified"
+msgstr "Nom de mot clé non spécifié."
+
+msgid "PHP code error in Handler: %s"
+msgstr "Erreur PHP dans les gestionnaire: %s"
+
+msgid "PHP code error in Text handler: %s"
+msgstr "Code d&#8217erreur PHP dans le gestionnaire de texte: %s"
+
+msgid "Recursive and Tags only are enabled at the same time"
+msgstr "Recursif and mot clé seulement sont autorisés en même temps."
+
+msgid "Recursive and Single are enabled at the same time"
+msgstr "Recursif et Simple sont activés en même temps."
+
+msgid "Text only and Tags only are enabled at the same time"
+msgstr "Texte seulement et mot clé seulement sont activés en même temps."
+
+msgid "Attribute %1$s, %2$s - regular expression error"
+msgstr "Attribut %1$s, champ %2$s - erreur d&#8217expression régulière."
+
+msgid "Attribute name %s is not valid"
+msgstr "le nom d&#8217attribut %s est non valide."
+
+msgid "BBCode updated redirect"
+msgstr "BBCode mis à jour."
+
+msgid "BBCode added redirect"
+msgstr "BBCode ajouté."
+
+msgid "New BBCode"
+msgstr "Nouveau BBCode"
+
+msgid "Default structure"
+msgstr "Par défaut"

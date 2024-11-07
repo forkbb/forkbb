@@ -1,0 +1,76 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+
+msgid "Uploads head"
+msgstr "Envois de fichier"
+
+msgid "Uploads mode label"
+msgstr "Activé"
+
+msgid "Uploads mode help"
+msgstr "Les réglages pour groupes sont ici <a href="%2$s">%1$s</a>."
+
+msgid "Upload quality label"
+msgstr "Qualité"
+
+msgid "Upload quality help"
+msgstr "Qualité des images entre 0 et 100."
+
+msgid "Upload axis limit label"
+msgstr "Limite de taille"
+
+msgid "Upload axis limit help"
+msgstr "L&#8217image envoyée sera redimensioné si largeur ou hauteur sont plus grand que cette limite."
+
+msgid "Output image types label"
+msgstr "Type de l&#8217image traitée"
+
+msgid "Output image types help"
+msgstr "Le type de l&#8217image à sauver sur ce site, séparé par des virgules. Si une image d&#8217un autre type est chargée, elle sera convertie au premier type de cette liste."
+
+msgid "Page %s missing"
+msgstr "Page %s manquante."
+
+msgid "File list head"
+msgstr "Liste des fichiers"
+
+msgid "File head"
+msgstr "Fichier"
+
+msgid "Size head"
+msgstr "Taille"
+
+msgid "Created head"
+msgstr "Crée"
+
+msgid "User head"
+msgstr "Auteur"
+
+msgid "Delete file head"
+msgstr "Effacer le fichier"
+
+msgid "Confirm delete"
+msgstr "Effacer le fichier?"
+
+msgid "I want to delete file %s"
+msgstr "Oui, je veux effacer le fichier <b>%s</b>"
+
+msgid "Delete file warn"
+msgstr "Ce fichier est utilisé (approximativement) dans <b>%1$s</b> messages et dans <b>%2$s</b> messages privés."
+
+msgid "File deleted redirect"
+msgstr "Fichier effacé."
+
+msgid "File not deleted redirect"
+msgstr "File non effacé."

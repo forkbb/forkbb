@@ -1,0 +1,223 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+
+msgid "Invalid email"
+msgstr "L&#8217adresse email entrée est invalide."
+
+msgid "Long email"
+msgstr "L&#8217adresse email entrée est trop longue."
+
+msgid "Passphrase help"
+msgstr "La phrase de passe doit contenir au moins 16 caractères, avec de multiples mots séparés par des espaces (sensible à la casse)."
+
+msgid "Pass format"
+msgstr "La phrase de passe doit contenir au moins 16 caractères, avec de multiples mots séparés par des espaces ."
+
+msgid "Login format"
+msgstr "Le nom d&#8217utilsateur doit commencer par une lettre. Peut contenir lettres, nombvres, espaces, points, tirets et tirets soulignés."
+
+msgid "Banned email"
+msgstr "L&#8217adresse email entrée est bannie de ce forum."
+
+msgid "Username censor"
+msgstr "Le nom d&#8217utilsateur que vous avez entré contient au moins un mot censuré."
+
+msgid "Banned username"
+msgstr "Le nom d&#8217utilsateur que vous avez entré est banni de ce forum."
+
+msgid "Username not unique"
+msgstr "Le nom d&#8217utilsateur que vous avez entré existe déjà."
+
+msgid "Dupe email"
+msgstr "Quelqu&#8217un est déjà enregistré sur ce forum avec cette adresse mail."
+
+msgid "Dupe email (OAuth)"
+msgstr "Quelqu&#8217un est déjà enregistré sur ce forum avec cette adresse mail (OAuth)."
+
+msgid "Account email flood"
+msgstr "Ce compte à déjà demandé une réinitialisation de phrase de passe récemment. Veuillez attendre %s minutes avant de recommencer."
+
+msgid "Old browser"
+msgstr "Veuillez mettre à jour votre navigateur."
+
+msgid "Bad browser"
+msgstr "Veuillez mettre à jour votre navigateur."
+
+msgid "Username contains consecutive spaces"
+msgstr "Le nom d&#8217utilsateur contient des espaces consécutifs."
+
+msgid "Flood message"
+msgstr "Veuillez attendre %s secondes et essayez d&#8217envoyer à nouveau."
+
+msgid "[%1$s] tag in blacklist"
+msgstr "Marqueur [%1$s] en liste noire."
+
+msgid "[%1$s] tag not in whitelist"
+msgstr "Le marqueur[%1$s] n&#8217est pas en liste blanche."
+
+msgid "[%1$s] tag can't be opened in [%2$s] tag"
+msgstr "Le marqueur [%1$s] ne peut être ouvert dans le marqueur[%2$s] ."
+
+msgid "No start tag found for [/%1$s] tag"
+msgstr "Pas de marqueur de départ trouvé pour le marqueur[/%1$s] ."
+
+msgid "Found [/%1$s] tag for single [%1$s] tag"
+msgstr "Trouvé marqueur [/%1$s] pour simple marqueur [%1$s] ."
+
+msgid "No attributes in [%1$s] tag"
+msgstr "Pas d&#8217attributs dand l&#8217étiquette [%1$s]."
+
+msgid "Primary attribute is forbidden in [%1$s] tag"
+msgstr "Le premier attribut est interdit dans le marqueur [%1$s]."
+
+msgid "Secondary attribute is forbidden in [%1$s] tag"
+msgstr "Le second attribut est interdit dans le marqueur [%1$s]."
+
+msgid "Attribute '%2$s' does not match pattern in [%1$s] tag"
+msgstr "L&#8217attribut '%2$s' ne correspond pas au motif du marqueur [%1$s]."
+
+msgid "[%1$s] tag contains unknown secondary attribute '%2$s'"
+msgstr "Le marqueur [%1$s] contient un second attribut inconnu '%2$s'."
+
+msgid "Body of [%1$s] tag does not match pattern"
+msgstr "Le corps du marqueur [%1$s] ne correspond pas au motif."
+
+msgid "[%1$s] tag was opened within itself, this is not allowed"
+msgstr "Le marqueur [%1$s] esst ouvert dans lui même, ce qui est interdit."
+
+msgid "Missing attribute '%2$s' in [%1$s] tag"
+msgstr "Attribut manquant '%2$s' dans le marqueur [%1$s]."
+
+msgid "All tags are empty"
+msgstr "Tous les marqueurs sont vides."
+
+msgid "The depth of the tag tree is greater than %1$s"
+msgstr "La profondeur de l&#8217arbre de marqueurs est plus grand que %1$s."
+
+msgid "[%1$s] tag is enclosed in itself more than %2$s times"
+msgstr "Le marqueur [%1$s] est inclu en lui même plus que %2$s fois."
+
+msgid "Invalid closing %1$s tag. Expected closing %2$s tag"
+msgstr "Marqueur de fermeture invalide &lt;/ %1$s &gt; tag. Attendu le marqueur &lt;/ %2$s &gt; ."
+
+msgid "%2$s attribute is not allowed in %1$s tag"
+msgstr "L&#8217attribut '%2$s' nvest pas autorisé dans le marqueur &lt; %1$s &gt; ."
+
+msgid "Attempting to insert JavaScript into %2$s attribute of %1$s tag"
+msgstr "Tentative d&#8217insérer du  JavaScript dans l&#8217attribut '%2$s' due marqueur &lt; %1$s &gt; ."
+
+msgid "Invalid value for %2$s attribute [=%3$s] of %1$s tag"
+msgstr "Valeur invalide pour le '%2$s' attribut [=%3$s] du marqueur &lt; %1$s &gt; ."
+
+msgid "Missing required %2$s attribute in %1$s tag"
+msgstr "Manque le '%2$s' attribut dans le marqueur &lt; %1$s &gt; ."
+
+msgid "Invalid value for %2$s attribute of %1$s tag (combination)"
+msgstr "Valeur invalide pour le '%2$s' attribut du marqueur &lt; %1$s &gt; (combinaison)."
+
+msgid "Missing required %2$s attribute in %1$s tag (combination)"
+msgstr "Manque le '%2$s' attribut dans le marqueur &lt; %1$s &gt; (combinaison)."
+
+msgid "Not expected to close %1$s tag"
+msgstr "Fermeture inattendue dans le marqueur &lt;/ %1$s &gt; ."
+
+msgid "The :alias should be absent"
+msgstr "Le champ :alias est superflu."
+
+msgid "The :alias is required"
+msgstr "Le champ :alias est recquis."
+
+msgid "The :alias must be string"
+msgstr "Le champ :alias doit être une chaine de caractères."
+
+msgid "The :alias must be numeric"
+msgstr "Le champ :alias doit être numérique."
+
+msgid "The :alias must be integer"
+msgstr "Le champ :alias doit être entier."
+
+msgid "The :alias must be array"
+msgstr "Le champ :alias doit être un tableau."
+
+msgid "The :alias minimum is :attr characters"
+msgstr "La longueur minimum du champ :alias est :attr caractères."
+
+msgid "The :alias minimum is :attr"
+msgstr "La valeur minimum du champ :alias est :attr."
+
+msgid "The :alias minimum is :attr elements"
+msgstr "Le champ :alias doit contenir au moins :attr éléments."
+
+msgid "The :alias maximum is :attr characters"
+msgstr "La longueur maximum du champ :alias est :attr caractères."
+
+msgid "The :alias maximum is :attr"
+msgstr "La valeur maximum du champ :alias est :attr."
+
+msgid "The :alias contains too large a file"
+msgstr "Le champ :alias contient un fichier trop grand."
+
+msgid "The :alias maximum is :attr elements"
+msgstr "Le champ :alias doit contenir au maximum :attr éléments."
+
+msgid "The :alias contains an invalid value"
+msgstr "Le champ :alias contient une valeur invalide."
+
+msgid "The :alias must be same with original"
+msgstr "La valeur du champ :alias doit correspondre à la valeur de la source."
+
+msgid "The :alias is not valid format"
+msgstr "Le champ :alias ne correspond pas au format."
+
+msgid "The :alias not contains file"
+msgstr "Pas de fichier dans le champ :alias ."
+
+msgid "The :alias contains more than one file"
+msgstr "Le champ :alias contient plus d&#8217un fichier."
+
+msgid "The :alias not contains image"
+msgstr "Pas d&#8217image dans le champ :alias ."
+
+msgid "The :alias does not contain a date"
+msgstr "Date indéterminée dans le champ :alias ."
+
+msgid "Too much data"
+msgstr "Trop de données"
+
+msgid "The :alias not exist"
+msgstr "Le champ :alias n&#8217existe pas."
+
+msgid "The :alias contains a link"
+msgstr "Le champ :alias contient un lien."
+
+msgid "The :alias is not valid email"
+msgstr "Le champ :alias contient une adresse mail invalide."
+
+msgid "The %s extension is not allowed"
+msgstr "L&#8217extension .%s n&#8217est pas autorisée."
+
+msgid "Short username"
+msgstr "Le nom d&#8217utilisateur est trop court."
+
+msgid "Long username"
+msgstr "Le nom d&#8217utilisateur est trop long."
+
+msgid "Invalid passphrase"
+msgstr "Phrase de passe invalide."
+
+msgid "Javascript disabled or bot"
+msgstr "Votre navigateur nr supporte pas javascript ou vous êtes un robot :)"
+
+msgid "The :alias contains time before start of Unix"
+msgstr "Le champ :alias contient une date datant d&#8217avant l&#8217époque Unix."

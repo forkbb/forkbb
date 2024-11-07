@@ -1,0 +1,311 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+
+msgid "Mark read redirect"
+msgstr "Toutes les discussions ont été marquées comme lues."
+
+msgid "Mark forum read redirect"
+msgstr "Toutes les discussions du forum spécifié ont été marquées comme lues."
+
+msgid "Form email disabled"
+msgstr "L&#8217utilisateur que vous essayez de joindre a désactiver l&#8217envoi de mail  via le forum."
+
+msgid "Email sent redirect"
+msgstr "Email envoyé."
+
+msgid "Send email to %s"
+msgstr "Envoyer un email à %s"
+
+msgid "Send email title"
+msgstr "Envoyer l&#8217email"
+
+msgid "Email subject"
+msgstr "Sujet"
+
+msgid "Email message"
+msgstr "Message"
+
+msgid "Email disclosure note"
+msgstr "Veuillez noter qu&#8217en utilisant ce formulaire, votre adresse mail sera affichée au destinataire."
+
+msgid "Report redirect"
+msgstr "Message signalé."
+
+msgid "Report post"
+msgstr "Discussion signalée"
+
+msgid "Reason"
+msgstr "Raison"
+
+msgid "Reason desc"
+msgstr "Entrer une courte explication de pourquoi vous signalez ce message"
+
+msgid "Subscribe redirect"
+msgstr "Votre insciption à été enregistrée."
+
+msgid "Unsubscribe redirect"
+msgstr "Votre insciption à été supprimée."
+
+msgid "Moderate"
+msgstr "Modérer"
+
+msgid "Select for moderation"
+msgstr "Selectionner pour modération"
+
+msgid "Move"
+msgstr "Déplacer"
+
+msgid "Split"
+msgstr "Scindre"
+
+msgid "Delete"
+msgstr "Effacer"
+
+msgid "Merge"
+msgstr "Concaténer"
+
+msgid "Open"
+msgstr "Ouvrir"
+
+msgid "Close"
+msgstr "Fermer"
+
+msgid "Stick"
+msgstr "Epingler"
+
+msgid "Unstick"
+msgstr "Désépingler"
+
+msgid "Move topic title"
+msgid_plural "Titre déplacer discussions"
+msgstr[0] "Déplacer la discussion"
+msgstr[1] "Déplacer les discussions"
+
+msgid "Invalid destination"
+msgstr "Destination invalide."
+
+msgid "Move to"
+msgstr "Déplacer vers"
+
+msgid "Nowhere to move"
+msgstr "Pas de forums dans lesquels vous pouvez déplacer des discussions."
+
+msgid "Leave redirect"
+msgstr "Leave redirect topic(s)"
+
+msgid "Move topic redirect"
+msgid_plural "Move topics redirect"
+msgstr[0] "Discussion déplacée."
+msgstr[1] "Discussions déplacées."
+
+msgid "Delete topic title"
+msgid_plural "Delete topics title"
+msgstr[0] "Supprimer la discussion"
+msgstr[1] "Supprimer les discussions"
+
+msgid "Delete topics redirect"
+msgid_plural "Delete topics redirect"
+msgstr[0] "Discussion éffacée."
+msgstr[1] "Les discussion ont été effacées."
+
+msgid "Open topic redirect"
+msgid_plural "Open topics redirect"
+msgstr[0] "Discussion ouverte."
+msgstr[1] "Discussions ouvertes."
+
+msgid "Close topic redirect"
+msgid_plural "Close topics redirect"
+msgstr[0] "Discussion fermée."
+msgstr[1] "Discussions fermées."
+
+msgid "Not enough topics selected"
+msgstr "Vous devez séléctionner au moins deux discussions à assembler."
+
+msgid "Stick topic title"
+msgid_plural "Stick topics title"
+msgstr[0] "Epingler la discussion"
+msgstr[1] "Epingler les discussions"
+
+msgid "Stick topic redirect"
+msgid_plural "Stick topics redirect"
+msgstr[0] "Discussion épinglée."
+msgstr[1] "Discussions épinglées."
+
+msgid "Unstick topic title"
+msgid_plural "Unstick topics title"
+msgstr[0] "Désépingler la discussion"
+msgstr[1] "Désépingler les discussions"
+
+msgid "Unstick topic redirect"
+msgid_plural "Unstick topics redirect"
+msgstr[0] "Discussion désépinglée."
+msgstr[1] "Discussions désépinglées."
+
+msgid "Merge topics title"
+msgstr "Fusionner les discussions"
+
+msgid "Merge topics redirect"
+msgstr "Discussions fusionnées."
+
+msgid "New subject"
+msgstr "Nouveau sujet"
+
+msgid "No subject"
+msgstr "Pas de sujet pour la nouvelle discussion."
+
+msgid "Split posts title"
+msgstr "Scinder la discussion"
+
+msgid "Split posts redirect"
+msgstr "Discussion scindée."
+
+msgid "Delete post title"
+msgid_plural "Delete posts title"
+msgstr[0] "Effacer le message"
+msgstr[1] "Effacer les messages"
+
+msgid "Delete post redirect"
+msgid_plural "Delete posts redirect"
+msgstr[0] "Message effacé."
+msgstr[1] "Messages effacés."
+
+msgid "Topic «%s»"
+msgstr "Discussion «%s»"
+
+msgid "Post «%1$s by %2$s»"
+msgstr "Message «%1$s par %2$s»"
+
+msgid "All posts will be posted in the «%s» topic"
+msgstr "Tous les messages seront envoyés dans la discussion «%s» ."
+
+msgid "Action not available"
+msgstr "Action non valide."
+
+msgid "No object selected"
+msgstr "Vous devez séléctionner au moins un objet pour cette action."
+
+msgid "Open topic title"
+msgid_plural "Open topics title"
+msgstr[0] "Discussion ouverte"
+msgstr[1] "Discussions ouvertes"
+
+msgid "Close topic title"
+msgid_plural "Close topics title"
+msgstr[0] "Fermer la discussion"
+msgstr[1] "Fermer les discussions"
+
+msgid "Topic links cannot be merged"
+msgstr "Les liens de discussion ne peuvent être fusionnés."
+
+msgid "Category prefix"
+msgstr ""
+
+msgid "Forum prefix"
+msgstr ""
+
+msgid "Forum indent"
+msgstr "◦ ◦ "
+
+msgid "Moderate topic"
+msgstr "Modérer la discussion"
+
+msgid "All"
+msgstr "Tous"
+
+msgid "Delete topic btn"
+msgid_plural "Delete topics btn"
+msgstr[0] "Effacer la discussion"
+msgstr[1] "Effacer les discussions"
+
+msgid "Delete post btn"
+msgid_plural "Delete posts btn"
+msgstr[0] "Supprimer le message"
+msgstr[1] "Supprimer les messages"
+
+msgid "Move topic btn"
+msgid_plural "Move topics btn"
+msgstr[0] "Déplacer la discussion"
+msgstr[1] "Déplacer les discussions"
+msgstr[2] "Déplacer les discussions"
+
+msgid "Open topic btn"
+msgid_plural "Open topics btn"
+msgstr[0] "Ouvrir une discussion"
+msgstr[1] "Ouvrir les discussions"
+
+msgid "Close topic btn"
+msgid_plural "Close topics btn"
+msgstr[0] "Fermer la discussion"
+msgstr[1] "Fermer les discussion"
+
+msgid "Merge btn"
+msgstr "Fusionner les discussions"
+
+msgid "Unstick btn"
+msgid_plural "Unstick btn"
+msgstr[0] "Désépingler la discussion"
+msgstr[1] "Désépingler les discussions"
+
+msgid "Stick btn"
+msgid_plural "Stick btn"
+msgstr[0] "Epingler la discussion"
+msgstr[1] "Epingler les dicussions"
+
+msgid "Split btn"
+msgstr "Scinder la discussion"
+
+msgid "Moderate forum"
+msgstr "Modérer le forum"
+
+msgid "When sending email there was an error"
+msgstr "Erreur lors de l&#8217envoi de mail. Veuillez reessayer ultérieurement."
+
+msgid "Confirm your email address"
+msgstr "Tout d&#8217abord, veuillez <a href=\"%s\">confirmer</a> votre adresse mail."
+
+msgid "Poll cannot be attached"
+msgstr "Une discussion avec un sondage ne peut être attachée à une autre discussion."
+
+msgid "Link btn"
+msgstr "Redirection"
+
+msgid "Only one topic is permissible"
+msgstr "Une seule discussion devrait être séléctionner pour gérer les liens vers celle ci."
+
+msgid "Control of redirects title"
+msgstr "Controle des discussions redirigées"
+
+msgid "Need full topic for this operation"
+msgstr "Vous devez séléctionner une discussion à part entière pour cette operation."
+
+msgid "Forum label"
+msgstr "Forum"
+
+msgid "Redir label"
+msgstr "Editer le lien de redirection de la discussion"
+
+msgid "Change btn"
+msgstr "Modifier"
+
+msgid "Redirects changed redirect"
+msgstr "Redirection - discussion modifiée."
+
+msgid "Solution chosen"
+msgstr "La solution a été choisie."
+
+msgid "Solution changed"
+msgstr "La solution a été modifiée."
+
+msgid "Solution removed"
+msgstr "La solution a été supprimée."

@@ -1,0 +1,82 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+
+msgid "Maintenance head"
+msgstr "Maintenance du forum"
+
+msgid "Rebuild index head"
+msgstr "Reconstruction de l&#8217index de recherche"
+
+msgid "Rebuild index info"
+msgstr "Si vous avez ajouté, modifié ou supprimé des messages manuellement dans la base de données ou si vous avez des problèmes de recherche, vous devriez reconstruire l&#8217index de recherche. Pour de meilleures performances, vous devriez passer le forum en mode maintenance durant la reconstruction. <b>Reconstruire l&#8217index de recherche peut prendre un certain temps et va accroitre la charge du serveur durant le processus!</b>"
+
+msgid "Posts per cycle label"
+msgstr "Messages par cycle"
+
+msgid "Posts per cycle help"
+msgstr "Le nombre de messages à afficher pour chaque page. Ex. : si vous indiquez 300, trois cents messages seront traités, ensuite la page sera réactualisée. Ceci évite que le script ne s&#8217interrompe durant le processus de reconstruction."
+
+msgid "Starting post label"
+msgstr "ID du message de départ"
+
+msgid "Starting post help"
+msgstr "L&#8217ID du message de départ pour la reconstruction. La valeur pas défaut est le premier ID disponible dans la base de données. En principe, vous ne devriez pas avoir à changer cela."
+
+msgid "Empty index label"
+msgstr "Effacer l&#8217index"
+
+msgid "Empty index help"
+msgstr "Selectionner ceci si vous voulez que l&#8217index soit vidé avant sa reconstruction (voir plus bas)."
+
+msgid "Rebuild completed info"
+msgstr "Une fois que le processus s&#8217est achevé vous serez redirigé vers cette page. L&#8217activation de Javascript dans votre navigateur est fortement recommandée durant la reconstruction (pour redirection automatique au terme d&#8217un cycle). Si vous êtes contraint d&#8217interrompre le processus de reconstruction, notez l&#8217ID du message traité en dernier et indiquez la valeur ID+1 dans «&#160;ID du message de départ&#160;» lorsque/si vous souhaitez continuer («&#160;Effacer l&#8217index&#160;» ne doit pas être sélectionné)."
+
+msgid "Rebuild index"
+msgstr "Reconstruire l&#8217index"
+
+msgid "Rebuilding search index"
+msgstr "Reconstruire l&#8217index de recherche"
+
+msgid "Rebuilding index end"
+msgstr "Reconstruction de l&#8217index terminée."
+
+msgid "Processed posts"
+msgstr "Messages traités de <b>%1$s</b> à <b>%2$s</b> …"
+
+msgid "Maintenance mode label"
+msgstr "Activé"
+
+msgid "Maintenance mode help"
+msgstr "Quand activé, le forum sera uniquement accessible aux administrateurs connectés avant l&#8217activation. Ceci devrait être utilisé si le forum nécessecite d&#8217être arrété temporairement pour maintenance.<br><b>ATTENTION! Ne pas se déconnecter du forum en mode maintenance. Vous serez dans l&#8217incapacité de vous connecter à nouveau.</b>"
+
+msgid "Maintenance message label"
+msgstr "Message de maintenance (HTML)"
+
+msgid "Maintenance message help"
+msgstr "Le message qui sera affiché aux utilisateurs quand le forum est en mode maintenance."
+
+msgid "Default maintenance message"
+msgstr "Forum en maintenance. <b>Veuillez réessayer dans quelques minutes.</b>"
+
+msgid "Clear cache head"
+msgstr "Effacer le cache"
+
+msgid "Clearing the cache"
+msgstr "Effacer le cache"
+
+msgid "Clear"
+msgstr "Effacer"
+
+msgid "Clear cache redirect"
+msgstr "Cache du forum effacé."

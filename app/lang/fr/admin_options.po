@@ -1,0 +1,496 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+
+msgid "Must enter title message"
+msgstr "Vous devez entrer un titre de forum."
+
+msgid "Invalid e-mail message"
+msgstr "L&#8217adresse email entrée pour l&#8217administrateur est invalide."
+
+msgid "Invalid webmaster e-mail message"
+msgstr "L&#8217adresse email entrée pour l&#8217administrateur est invalide."
+
+msgid "Timeout error message"
+msgstr "La valeur de &quot;;Délai avant déconnexion&quot; doit être inférieure à celle du champ &quot;Délai de fin de visite&quot;."
+
+msgid "Options updated redirect"
+msgstr "Options mises à jour."
+
+msgid "Options head"
+msgstr "Options"
+
+msgid "Essentials subhead"
+msgstr "Essentiels"
+
+msgid "Board title label"
+msgstr "Titre du forum"
+
+msgid "Board title help"
+msgstr "Le nom de ce forum (affiché en haut de toutes les pages)."
+
+msgid "Board desc label"
+msgstr "Description du forum (HTML)"
+
+msgid "Board desc help"
+msgstr "Une courte description de ce forum (affiché en haut de toutes les pages)."
+
+msgid "Timezone label"
+msgstr "Fuseau horaire par défaut"
+
+msgid "Timezone help"
+msgstr "Le fuseau horaire par défaut sera utilisé pour les invités et les utilisateurs qui veulent s&#8217enregistrer sur le forum."
+
+msgid "Language label"
+msgstr "Langage par défaut"
+
+msgid "Language help"
+msgstr "Le langage qui sera utilisé pour les invités et les utilisateurs qui veulent s&#8217enregistrer sur le forum."
+
+msgid "Default style label"
+msgstr "Style par défaut"
+
+msgid "Default style help"
+msgstr "Le style par défaut sera utilisé pour les invités et les utilisateurs qui veulent s&#8217enregistrer sur le forum."
+
+msgid "Timeouts subhead"
+msgstr "Temps et délais"
+
+msgid "Visit timeout label"
+msgstr "délai dernière visite"
+
+msgid "Visit timeout help"
+msgstr "Nombre de secondes qu&#8217un utilisateur doit passer sans activité avant que ses données de dernière visite soit enregistrés (affecte principalement l&#8217affichage des nouveaux messages)."
+
+msgid "Online timeout label"
+msgstr "délai hors-ligne"
+
+msgid "Online timeout help"
+msgstr "Nombre de secondes qu&#8217un utilisateur doit passer sans activité avant d&#8217être supprimé de la liste des utilisateurs en ligne."
+
+msgid "Redirect time label"
+msgstr "Temps de redirection"
+
+msgid "Redirect time help"
+msgstr "Nombre de secondes à attendre avant d&#8217être redirigé. Si 0, la page de redirection ne sera pas affichée."
+
+msgid "Display subhead"
+msgstr "Affichage"
+
+msgid "Info in posts label"
+msgstr "Infos utilisateurs dans les messages"
+
+msgid "Info in posts help"
+msgstr "Afficher les informations à propos de l&#8217utilisateur ayant créé le  message sous son nom d&#8217utilisateur dans la discussion. Les informations données sont&#160;: le lieu, la date d&#8217inscription, le nombre de messages publiés et les liens de contact (e-mail et URL)."
+
+msgid "Post count label"
+msgstr "Compteur de messages utilisateur"
+
+msgid "Post count help"
+msgstr "Affiche le nombre de messages publiés par un utilisateur (indiqué dans les discussions, le profil et la liste d&#8217utilisateurs).. N&#8217affecte pas les modérateurs et aministrateurs."
+
+msgid "Topic review label"
+msgstr "Résumé de discussion"
+
+msgid "Topic review help"
+msgstr "Nombre maximal de sujets à afficher lors de la composition de message (le plus récent en premier). 0 pour désactiver."
+
+msgid "Topics per page help"
+msgstr "Le nombre de discussions à afficher par défaut par page dans un forum. Les utilisateurs peuvent personnaliser ce réglage."
+
+msgid "Posts per page help"
+msgstr "Le nombre de messages à afficher par défaut par page dans une discussion. Les utilisateurs peuvent personnaliser ce réglage."
+
+msgid "Users per page label"
+msgstr "Utilisateurs par page"
+
+msgid "Users per page help"
+msgstr "Le nombre d&#8217utilisateurs affiché sur une page de la liste."
+
+msgid "Features subhead"
+msgstr "Fonctionnalités"
+
+msgid "Quick post label"
+msgstr "Réponse rapide"
+
+msgid "Quick post help"
+msgstr "Si activé, ForkBB ajoutera un formulaire de réponse rapide en fin de discussion. De cette façon, les utilisateurs peuvent répondre directement depuis la page de lecture de la discussion."
+
+msgid "Users online label"
+msgstr "Utilisateurs en ligne"
+
+msgid "Users online help"
+msgstr "Affiche des informations sur la page d&#8217accueil indiquant le nombre d&#8217invités et d&#8217inscrits visitant actuellement les forums."
+
+msgid "User has posted label"
+msgstr "L&#8217utilisateur à posté plus tôt"
+
+msgid "User has posted help"
+msgstr "Cette fonctionnalité affiche un point en face des sujets du forum si le membre connecté actuellement a posté un message dans ce sujet plus tôt. Désactiver ceci si vous expérimentez des surcharges serveur."
+
+msgid "Topic views label"
+msgstr "Affichage des sujets"
+
+msgid "Topic views help"
+msgstr "Garder la trace du nombre de vue cumulée par un sujet. Désactiver ceci si vous expérimentez des surcharges serveur dans un forum très fréquenté."
+
+msgid "Menu items label"
+msgstr "Objets de menu additionnels"
+
+msgid "Menu items help"
+msgstr "Vous pouvez ajouter autant de nouveau objets dans le menu. Chaque ligne défini un objet du format: <b>Position</b><wbr>|<b>Name</b><wbr>|<b>Link</b><wbr><i>[|<b>Identifier</b>]</i>."
+
+msgid "Feed subhead"
+msgstr "Syndication"
+
+msgid "Default feed label"
+msgstr "Type de flux par défaut"
+
+msgid "Default feed help"
+msgstr "Type d&#8217abonnement de flux devant être affiché. Remarque&#160;: le choix «&#160;Aucun&#160;» ne désactive pas le flux, mais le masque simplement par défaut."
+
+msgid "No feeds"
+msgstr "None"
+
+msgid "RSS"
+msgstr "RSS"
+
+msgid "Atom"
+msgstr "Atom"
+
+msgid "Feed TTL label"
+msgstr "Durée de mise en cache des flux"
+
+msgid "Feed TTL help"
+msgstr "Les flux peuvent être mis en cache pour alléger l&#8217impact sur le serveur."
+
+msgid "No cache"
+msgstr "Pas de cache"
+
+msgid "%d Minutes"
+msgstr "%d minutes"
+
+msgid "Reports subhead"
+msgstr "Signalements"
+
+msgid "Reporting method label"
+msgstr "méthode de signalement"
+
+msgid "Internal"
+msgstr "Interne"
+
+msgid "By e-mail"
+msgstr "Email"
+
+msgid "Both"
+msgstr "Les deux"
+
+msgid "Reporting method help"
+msgstr "Choisissez la méthode pour traiter les signalements de discussion/message. Vous pouvez opter pour le système de signalement interne, l&#8217envoi d&#8217un e-mail à la liste de diffusion (voir ci-dessous) ou effectuer les deux opérations."
+
+msgid "Mailing list label"
+msgstr "Mailing list"
+
+msgid "Mailing list help"
+msgstr "Liste d&#8217adresse email séparées par des virgules. Les signalements seron transmis à ces adresses."
+
+msgid "Avatars subhead"
+msgstr "Avatars"
+
+msgid "Use avatars label"
+msgstr "Utililser les avatars"
+
+msgid "Use avatars help"
+msgstr "Si activé, les utilisateurs pour charger leur avatar sur le serveur."
+
+msgid "Upload directory label"
+msgstr "Répertoire de stockage"
+
+msgid "Upload directory help"
+msgstr "Le répertoire de stockage pour les avatars (relatif à %s). PHP doit avoir les permissions en écriture sur ce dossier."
+
+msgid "Max width label"
+msgstr "Largeur maximale"
+
+msgid "Max width help"
+msgstr "La largeur maximum autorisée pour les avatars, en pixel (60 est recommandé)."
+
+msgid "Max height label"
+msgstr "Hauteur maximale"
+
+msgid "Max height help"
+msgstr "La hauteur maximum autorisée pour les avatars, en pixel (60 est recommandé)."
+
+msgid "Max size label"
+msgstr "Poids maximal"
+
+msgid "Max size help"
+msgstr "Poid maximum autorisé pour l&#8217avatar, en octet (10240 est recommandé)."
+
+msgid "Avatar quality label"
+msgstr "Qualité"
+
+msgid "Avatar quality help"
+msgstr "Qualité d&#8217image de l&#8217avatar entre 0 et 100."
+
+msgid "E-mail subhead"
+msgstr "Email"
+
+msgid "Admin e-mail label"
+msgstr "Email de l&#8217administrateur"
+
+msgid "Admin e-mail help"
+msgstr "L&#8217adresse mail de l&#8217administrateur de ce forum."
+
+msgid "Webmaster e-mail label"
+msgstr "Email du webmaster"
+
+msgid "Webmaster e-mail help"
+msgstr "Ceci est l&#8217adresse de la part de qui tous les emails envoyés par ce forum seront adressés. <b>Doit correspondre aux paramètres SMTP (voir dessous), si spécifiés.</b>"
+
+msgid "Forum subscriptions label"
+msgstr "Abonnements au forum"
+
+msgid "Forum subscriptions help"
+msgstr "Autoriser les utilisateurs à s&#8217abonner aux forums (reçoivent un email quand quelqu&#8217un crée un nouveau sujet)."
+
+msgid "Topic subscriptions label"
+msgstr "Abonnementsonnements aux discussions"
+
+msgid "Topic subscriptions help"
+msgstr "Autoriser les utilisateurs à s&#8217abonner aux discussions (eçoivent un email quand quelqu&#8217un poste une réponse)."
+
+msgid "SMTP address label"
+msgstr "adresse du serveur SMTP"
+
+msgid "SMTP address help"
+msgstr "L'adresse d&#8217un serveur SMTP externe via lequel envoyer les mails. Vous pouvez spécifier un port personnalisé si le serveur SMTP ne fonctionne pas sur le port par défaut, 25 (exemple: smtp.gmail.com:465). Laisser en blanc pour utilser le serveur interne."
+
+msgid "SMTP username label"
+msgstr "nom d&#8217utilisateur SMTP"
+
+msgid "SMTP username help"
+msgstr "nom d&#8217utilisateur pour le serveur SMTP. Entrer un nom d&#8217utilisateur seulement si cela est requis par le serveur SMTP."
+
+msgid "SMTP password label"
+msgstr "mot de passe SMTP"
+
+msgid "SMTP change password help"
+msgstr "Cocher si vous souhaitez changer ou effacer le mot de passe stocké actuellement."
+
+msgid "SMTP password help"
+msgstr "Mot de passe pour le serveur SMTP. Entrer un mot de passe seulement si cela est requis par le serveur SMTP."
+
+msgid "SMTP SSL label"
+msgstr "Encrypter SMTP à travers SSL"
+
+msgid "SMTP SSL help"
+msgstr "Encrypte la connection au serveur SMTP en utilisant SSL. Ne devrait être utilisé que si le serveur SMTP le requiert, et que votre version de PHP supporte SSL. TLS doit être mis sur <b>Non</b>."
+
+msgid "Registration subhead"
+msgstr "Enregistrement"
+
+msgid "Allow new label"
+msgstr "Autoriser les nouveaux enregistrements"
+
+msgid "Allow new help"
+msgstr "Controle si ce forum accepte les nouveaux enregistrements. A ne désactiver que dans des circonstances particulières."
+
+msgid "Verify label"
+msgstr "Verifier les enregistrements"
+
+msgid "Verify help"
+msgstr "Si activée, les utilisateurs obtiendront par e-mail un mot de passe aléatoire lors de leur inscription. Ils pourront alors se connecter et modifier leur mot de passe dans leur profil s&#8217ils le souhaitent. Cette fonctionnalité demande également une vérification de leur adresse électronique s&#8217ils choisissent d&#8217en changer. Ceci est un moyen efficace d&#8217éviter l&#8217inscription abusive et de vérifier que les utilisateurs ont une adresse électronique correcte associée à leur profil."
+
+msgid "Report new label"
+msgstr "Signaler les nouveaux enregistrements"
+
+msgid "Report new help"
+msgstr "Si activé, ForkBB notiefiera will notify users on the mailing list (see above) when a new user registers in the forums."
+
+msgid "Use rules label"
+msgstr "Règles utilisateur du forum"
+
+msgid "Use rules help"
+msgstr "Si activée, les utilisateurs devront accepter les règles lorsqu&#8217ils s&#8217inscriront (indiquez le texte ci-dessous). Ces règles seront toujours disponibles sous forme de lien dans le menu de navigation en haut de chaque page."
+
+msgid "Rules label"
+msgstr "Entrez vos règles ici (HTML)"
+
+msgid "Rules help"
+msgstr "Ici vous pouvez indiquer toute règle ou autre information que l&#8217utilisateur doit considérer et accepter avant de s&#8217inscrire. Si vous avez activé les règles ci-dessus vous devez saisir quelque chose ici, sinon, elles seront désactivées. Ce texte ne sera pas traité comme les messages ordinaires et peut contenir du code HTML."
+
+msgid "E-mail default label"
+msgstr "Règlages email par défaut"
+
+msgid "E-mail default help"
+msgstr "Choisissez le paramètre de vie privée pour les nouvelles inscriptions d&#8217utilisateurs."
+
+msgid "Announcement subhead"
+msgstr "Annonces"
+
+msgid "Display announcement label"
+msgstr "Affiche de l&#8217annonce"
+
+msgid "Display announcement help"
+msgstr "Activer ceci pour afficher le message suivant dans le forum."
+
+msgid "Announcement message label"
+msgstr "Message d&#8217annonce (HTML)"
+
+msgid "Announcement message help"
+msgstr ""
+
+msgid "Email max recipients label"
+msgstr "Maximum de destinataires"
+
+msgid "Email max recipients help"
+msgstr "Le nombre maximum de destinataires pour un email. Dépend de votre serveur de mails."
+
+msgid "All caps message label"
+msgstr "Message en Capitales"
+
+msgid "All caps message help"
+msgstr "Autoriser un message contenant uniquement des lettres capitales."
+
+msgid "All caps subject label"
+msgstr "Sujet en capitales"
+
+msgid "All caps subject help"
+msgstr "Autoriser un sujet contenant uniquement des lettres capitales."
+
+msgid "Require e-mail label"
+msgstr "Nécessite l&#8217email de l&#8217invité"
+
+msgid "Require e-mail help"
+msgstr "Nécessite que les invités fournissent une adresse mail pour poster."
+
+msgid "All caps sigs label"
+msgstr "Signature en capitales"
+
+msgid "All caps sigs help"
+msgstr "Autoriser une signature contenant uniquement des lettres capitales."
+
+msgid "Polls subhead"
+msgstr "Sondages"
+
+msgid "Allow polls label"
+msgstr "Autoriser les sondages"
+
+msgid "Max questions label"
+msgstr "Maximum de questions"
+
+msgid "Max questions help"
+msgstr "Le nombre maximum de questions dans un sondage. <b>Il est recommandé de le régler une fois et de ne plus le changer!</b>"
+
+msgid "Max options label"
+msgstr "Maximum d&#8217options"
+
+msgid "Max options help"
+msgstr "Le nombre maximum de réponses possibles à une question. <b>Il est recommandé de le régler une fois et de ne plus le changer!</b>"
+
+msgid "Poll edit time label"
+msgstr "temps d&#8217edition"
+
+msgid "Poll edit time help"
+msgstr "Temps d&#8217edition du sondage(en minutes). Mettre à 0 pour désactiver."
+
+msgid "Hidden voices label"
+msgstr "Nombre de voix"
+
+msgid "Hidden voices help"
+msgstr "Le nombre de votes avant que les résultats du sondage soient cachés. A régler dans le sondage."
+
+msgid "Result for guest label"
+msgstr "Resultat pour les invités"
+
+msgid "Result for guest help"
+msgstr "Les invités voient le résultat du vote."
+
+msgid "The folder for uploading avatars is incorrectly"
+msgstr "Le dossier de stockage des avatars est incorrect."
+
+msgid "For PHP, it is forbidden to write in the folder for uploading avatars"
+msgstr "Pour PHP, l&#8217écriture est interdite dans le répertoire de stockage des avatars."
+
+msgid "PM subhead"
+msgstr "Messages privés"
+
+msgid "Allow PM label"
+msgstr "Autoriser les messages privés"
+
+msgid "Allow PM help"
+msgstr "Les réglages pour les groupes individuels sont ici <a href="%2$s">%1$s</a>."
+
+msgid "Allow oauth label"
+msgstr "Authentification OAuth"
+
+msgid "Allow oauth help"
+msgstr "Autoriser les utilisateurs à s&#8217enregistrer en utilisant un compte tiers."
+
+msgid "Configure providers"
+msgstr "Configurer les fournisseurs"
+
+msgid "Search cache lifetime label"
+msgstr "Durée de vie du cache de recherche"
+
+msgid "Search cache lifetime help"
+msgstr "Durée de vie du cache de recherche en secondes."
+
+msgid "Meta desc label"
+msgstr "Meta tag <i>description</i>"
+
+msgid "Meta desc help"
+msgstr "Ce meta tag peut être utilisé par les moteurs de recherche pour former un fragment qui sera affiché dans les résultats de recherche."
+
+msgid "New og image label"
+msgstr "Nouvelle image"
+
+msgid "New og image help"
+msgstr "Image pour Open Graph par défaut. La taille recommandée est <b>1200</b> x <b>630</b> pixels."
+
+msgid "Not uploaded"
+msgstr "Non envoyé"
+
+msgid "Og image label"
+msgstr "Image pour Open Graph"
+
+msgid "Og image help"
+msgstr "La taille est de <b>%1$s</b> x <b>%2$s</b> pixels."
+
+msgid "Delete og image"
+msgstr "Effacer image pour Open Graph"
+
+msgid "Reaction subhead"
+msgstr "Reactions aux messages"
+
+msgid "Allow reaction label"
+msgstr "Activer le système de reaction"
+
+msgid "Reaction type label"
+msgstr "Types de réactions"
+
+msgid "Reaction type help"
+msgstr "Types de reactions disponibles pour l&#8217utilisateur."
+
+msgid "User has reactioned label"
+msgstr "L&#8217utilisateur à réagi"
+
+msgid "User has reactioned help"
+msgstr "Surligner les réactions que l&#8217utilisateur a séléctionné pour le message affiché. Désactiver si vous expérimentez des surcharges serveur."
+
+msgid "Auto language detection label"
+msgstr "Détection automatique du langage"
+
+msgid "Auto language detection help"
+msgstr "Détecter automatiquement le langage de l&#8217invité en se basant sur les données de sa requête au serveur, ou retourner le langage par défaut si la détection échoue."

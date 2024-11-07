@@ -1,0 +1,166 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+
+msgid "No user message"
+msgstr "Aucun utilisateur enregistré sous ce nom d\'utilisateur. Si vous souhaitez ajouter un bannissement n&#8217étant pas associé à un nom d&#8217utilisateur veuillez laisser le champ du nom d&#8217utilisateur vide."
+
+msgid "No user ID message"
+msgstr "Aucun utilisateur inscrit avec cet ID."
+
+msgid "User is admin message"
+msgstr "L&#8217utilisateur %s est un administrateur et ne peut être banni. Si vous souhaitez bannir un administrateur, vous devez d&#8217abord le destituer de ce rang."
+
+msgid "User is mod message"
+msgstr "L&#8217utilisateur %s est un modérateur et ne peut être banni. Si vous souhaitez bannir un modérateur, vous devez d&#8217abord le destituer de ce rang."
+
+msgid "User is ban"
+msgstr "L&#8217utilisateur %s est banni."
+
+msgid "Must enter message"
+msgstr "ous devez entrer, au minimum, soit un nom d&#8217utilisateur, soit une adresse IP, soit une adresse électronique."
+
+msgid "Cannot ban guest message"
+msgstr "L&#8217utilisqteur invité ne peut être banni."
+
+msgid "Invalid IP message (%s)"
+msgstr "Vous avez entré une IP/plage d&#8217IP invalide.(%s)."
+
+msgid "Invalid e-mail message"
+msgstr "L&#8217adresse électronique (ex. : utilisateur@domaine.com) ou le nom de domaine d&#8217adresse électronique (ex. : domaine.com) que vous avez indiqué est invalide."
+
+msgid "Invalid date message"
+msgstr "Vous avez entré une une date de fin invalide. Le bannissement doit être d'au moins un jour."
+
+msgid "Ban added redirect"
+msgstr "Bannissement ajouté."
+
+msgid "Ban edited redirect"
+msgstr "Bannissement edité."
+
+msgid "Ban removed redirect"
+msgstr "Bannissement supprimé."
+
+msgid "New ban head"
+msgstr "Nouveau bannissement"
+
+msgid "Add ban subhead"
+msgstr "Ajouter un bannissement"
+
+msgid "Edit ban head"
+msgstr "Editer bannissement"
+
+msgid "Edit ban subhead"
+msgstr "Edit sous-titre de bannissement "
+
+msgid "Username label"
+msgstr "Utilisateur"
+
+msgid "Username help"
+msgstr "Insensible à la casse."
+
+msgid "Ban search head"
+msgstr "Recherche de bannissement"
+
+msgid "Ban search subhead"
+msgstr "Critères de recherche"
+
+msgid "Ban search info"
+msgstr "Recherche des bans dans la base de données. Vous pouvez entrer un ou plusieurs termes à recherche. Les caractères génériques (*) sont acceptés. Pour voir tous les bans laisser le champ vide."
+
+msgid "Message label"
+msgstr "Message"
+
+msgid "Order by label"
+msgstr "Décidé par"
+
+msgid "Order by id"
+msgstr "Tri par id"
+
+msgid "Order by username"
+msgstr "tri par nom d&#8217utilisateur"
+
+msgid "Order by ip"
+msgstr "tri par IP"
+
+msgid "Order by e-mail"
+msgstr "tri par email"
+
+msgid "Order by expire"
+msgstr "tri par date d&#8217expiration"
+
+msgid "Ascending"
+msgstr "Montant"
+
+msgid "Descending"
+msgstr "Descendant"
+
+msgid "Submit search"
+msgstr "Soumettre la recherche"
+
+msgid "E-mail label"
+msgstr "Email"
+
+msgid "E-mail help"
+msgstr "L&#8217adresse email ou le domaine que vous vouhaitez bannir (e.g. someone@somewhere.com, somewhere.com or .com)."
+
+msgid "IP label"
+msgstr "Ip ou plage ip"
+
+msgid "IP help"
+msgstr "L&#8217addresse IP ou plage IP que vous souhaitez bannir(e.g. 150.11.110.1 or 150.11.110). Séparer les adresse par des espaces. Si une IP est déjà entrée il s&#8217agit de la dernière adresse connue de l&#8217utilisateur."
+
+msgid "Ban message label"
+msgstr "Message de bannissement"
+
+msgid "Ban message help"
+msgstr "Message qui sera affiché à l&#8217utilisateur lors de ses prochaines visites au forum."
+
+msgid "Message expiry subhead"
+msgstr "Date d&#8217expiration du message"
+
+msgid "Expire date label"
+msgstr "Date d'expiration"
+
+msgid "Expire date help"
+msgstr "La date à laquelle le bannissement va prendre fin automatiquement (format: yyyy-mm-dd). Laisser vide pour une suppression manuelle."
+
+msgid "Results head"
+msgstr "Résultats de recherche"
+
+msgid "Results username head"
+msgstr "Utilisateur"
+
+msgid "Results e-mail head"
+msgstr "Email"
+
+msgid "Results IP address head"
+msgstr "IP/IP-ranges"
+
+msgid "Results expire head"
+msgstr "Expiration"
+
+msgid "Results message head"
+msgstr "Message"
+
+msgid "Results banned by head"
+msgstr "Banni par"
+
+msgid "Results actions head"
+msgstr "Actions"
+
+msgid "Search results legend"
+msgstr "Selectionner comment voir les résultats de recherche"
+
+msgid "No bans found"
+msgstr "Aucun bannissement trouvé qui respecte ces critères."

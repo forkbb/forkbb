@@ -1,0 +1,187 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+
+msgid "User search"
+msgstr "Recherche utilisateur"
+
+msgid "Search info"
+msgstr "Pour une recherche par mot clef, entre un ou des termes à recherche. Séparer ces termes par des espaces. Utiliser AND, OR et NOT (et, ou et pas) pour affiner la recherche. Pour une recherche par auteur, entrer le nom d&#8217utilisateur de l&#8217auteur des messages que vous recherchez. Utilisez les caratères générique * pour des correpondances partielles."
+
+msgid "Keyword search"
+msgstr "Recherche par mot(s) clef"
+
+msgid "Author search"
+msgstr "Recherche par auteur"
+
+msgid "Search in legend"
+msgstr "Séléctionner où chercher"
+
+msgid "Search in info"
+msgstr "Choisir dans quel forum vous souhaitez chercher et si vous voulez cherchers dans les sujets de discussion, les textes de message ou les deux."
+
+msgid "Search multiple forums info"
+msgstr "Si aucun forum n&#8217est sélectionné, la recherche se fera dans tous les forums."
+
+msgid "Forum search"
+msgstr "Forum"
+
+msgid "Search in"
+msgstr "Chercher dans"
+
+msgid "Message and subject"
+msgstr "Textes de messages et sujets de discussion"
+
+msgid "Message only"
+msgstr "Textes des messages seulements"
+
+msgid "Topic only"
+msgstr "Titre des discussion seulement"
+
+msgid "Sort by"
+msgstr "Classé par"
+
+msgid "Sort order"
+msgstr "Résultats ordonnés par"
+
+msgid "Search results legend"
+msgstr "Selectionner comment voir les résultats de recherche"
+
+msgid "Search results info"
+msgstr "Vous pouvez choisir comment classer et afficher vos résultats de recherche."
+
+msgid "Sort by post time"
+msgstr "Date"
+
+msgid "Sort by author"
+msgstr "Auteur"
+
+msgid "Sort by subject"
+msgstr "Sujet"
+
+msgid "Sort by forum"
+msgstr "Forum"
+
+msgid "Ascending"
+msgstr "Ascendant"
+
+msgid "Descending"
+msgstr "Descendant"
+
+msgid "Show as"
+msgstr "Montrer les résultats comme"
+
+msgid "Show as topics"
+msgstr "Discussions"
+
+msgid "Show as posts"
+msgstr "Messages"
+
+msgid "Search results"
+msgstr "Résultats de recherche"
+
+msgid "Quick search new"
+msgstr "Nouvelle"
+
+msgid "Quick search latest_active_topics"
+msgstr "Dernièrs sujets actifs"
+
+msgid "Quick search unanswered_topics"
+msgstr "Non répondus"
+
+msgid "Quick search topics_with_your_posts"
+msgstr "Posté"
+
+msgid "Quick search user topics"
+msgstr "Discussions par %s"
+
+msgid "Quick search user posts"
+msgstr "Postés par %s"
+
+msgid "Quick search user topics_subscriptions"
+msgstr "Abonnements à la discussion par %s"
+
+msgid "Quick search user forums_subscriptions"
+msgstr "Abonnements au forumspar %s"
+
+msgid "Quick search show_user_warn"
+msgstr "Avertissement pour %s"
+
+msgid "Quick search show_last"
+msgstr "Derniers messages"
+
+msgid "Search query: %s"
+msgstr "Requête: «%s»"
+
+msgid "Search query: %1$s and Author: %2$s"
+msgstr "Requête: «%1$s» - Auteur: «%2$s»"
+
+msgid "No hits"
+msgstr "Votre recherche n&#8217a retournée aucun résultat."
+
+msgid "Too many coincidences"
+msgstr "Trop de coincidences."
+
+msgid "Go to post"
+msgstr "Aller au message"
+
+msgid "Go to topic"
+msgstr "Aller à la discussion"
+
+msgid "Go to forum"
+msgstr "Go to forum"
+
+msgid "Search btn"
+msgstr "Rechercher"
+
+msgid "<a href=\"%s\">Advanced search</a>"
+msgstr "<a href=\"%s\" rel=\"nofollow\">Recherche avancée</a>"
+
+msgid "<a href=\"%s\">Simple search</a>"
+msgstr "<a href=\"%s\" rel=\"nofollow\">Recherche simple</a>"
+
+msgid "Category prefix"
+msgstr ""
+
+msgid "Forum prefix"
+msgstr ""
+
+msgid "Forum indent"
+msgstr "◦ ◦ "
+
+msgid "There is no word for search: '%s'"
+msgstr "Il n&#8217y a pas de mot à rechercher: '%s'"
+
+msgid "Logical operator at the end of the search query: '%s'"
+msgstr "Opérateur logique à la fin de la requête: '%s'"
+
+msgid "The order of brackets is broken: '%s'"
+msgstr "L&#8217ordrer des parenthèses est invalide: '%s'"
+
+msgid "Empty subquery: '%s'"
+msgstr "Sous requête vide: '%s'"
+
+msgid "Logical operator at the end of the search subquery: '%s'"
+msgstr "Opérateur logique à la fin de la sous requête: '%s'"
+
+msgid "Logical operator at the beginning of the search (sub)query: '%s'"
+msgstr "Opérateur logique au début de la (sous)requête: '%s'"
+
+msgid "Logical operators follow one after another: '%s'"
+msgstr "Opérateurs logique à la suite l&#8217un de l&#8217autre: '%s'"
+
+msgid "Set up"
+msgstr "Installation"
+
+msgid "Odd number of quotes: '%s'"
+msgstr "Nombre étrange de guillemets: '%s'"

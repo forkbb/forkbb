@@ -1,0 +1,337 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+
+msgid "You must enter a group title"
+msgstr "Vous devez entrer un nom de groupe."
+
+msgid "Title already exists"
+msgstr "Il y a déjà un groupe avec ce nom."
+
+msgid "Default group redirect"
+msgstr "Groupe par défaut défini."
+
+msgid "Group removed redirect"
+msgstr "Groupe effacé."
+
+msgid "Group added redirect"
+msgstr "Groupe ajouté."
+
+msgid "Group edited redirect"
+msgstr "Groupe edité."
+
+msgid "Add group subhead"
+msgstr "Ajouter un nouveau groupe"
+
+msgid "New group label"
+msgstr "Baser le nouveau groupe sur"
+
+msgid "New group help"
+msgstr "Sélectionner un groupe d&#8217utilisateurs duquel le nouveau groupe va hériter les permissions. La page suivante vous permettra de régler plus précisément les paramètres."
+
+msgid "Default group subhead"
+msgstr "Définir le groupe par défaut"
+
+msgid "Default group label"
+msgstr "Groupe par défaut"
+
+msgid "Default group help"
+msgstr "Ceci est le groupe par défaut, c&#8217est-à-dire le groupe dans lequel sont placés les utilisateurs lorsqu&#8217ils s&#8217inscrivent. Pour des raisons de sécurité, les utilisateurs ne peuvent être placés ni dans le groupe des modérateurs, ni dans celui des administrateurs par défaut."
+
+msgid "Edit groups info"
+msgstr "Les groupes prédéfinis des invités, administrateurs, modérateurs et membres ne peuvent être supprimés. Cependant, ils peuvent être modifiés. Veuillez prendre note que, dans certains groupes, certaines options ne sont pas disponibles (ex. : la permission de <em>modifier les messages</em> pour les invités). Les administrateurs ont toujours toutes les permissions."
+
+msgid "Delete link"
+msgstr "Effacer"
+
+msgid "Group delete"
+msgstr "Effacer le groupe"
+
+msgid "I want to delete this group"
+msgstr "Oui, je veux effacer le groupe <b>%s</b>"
+
+msgid "Confirm delete"
+msgstr "Effacer le groupe?"
+
+msgid "Confirm delete warn"
+msgstr "<b>ATTENTION!</b> Après effacement, le groupe ne peut être restauré."
+
+msgid "Move users info"
+msgstr "Le groupe <b>%1$s</b> compte actuellement <b>%2$s</b> membres. Veuillez choisir un groupe auquel ces membres seront assignés après la suppression."
+
+msgid "Move users label"
+msgstr "Déplacer les utilisateurs"
+
+msgid "Delete group"
+msgstr "Effacer groupe"
+
+msgid "Group settings info"
+msgstr "Les options ci dessous et permissions sont les valeurs par défaut de ces groupes d'ultilisateur. Ces options s\'appliquent si aucune  permission spécifique au forum n'est en effet."
+
+msgid "Group title label"
+msgstr "Titre du groupe"
+
+msgid "User title label"
+msgstr "Titre de l&#8217utilisateur"
+
+msgid "User title help"
+msgstr "Le rang que l&#8217utilisateur de ce groupe a atteint. Laisser en blanc pour le titre par défaut <b>%s</b>."
+
+msgid "Promote users label"
+msgstr "Promouvoir l&#8217utilisateur"
+
+msgid "Promote users help"
+msgstr "Vous pouvez promouvoir des utilisateurs dans un nouveau groupe automatiquement après un certain nombre de messages. Sélectionnez  &quot;%s&quot; pour désactiver. Pour des raisons de sécurité, vous n&#8217êtes pas autorisé à sélectionner un groupe "administrateur". Les changements de groupe pour les utilisateurs touchés par ce paramètre prendra effet <b>immédiatement</b>."
+
+msgid "Number for promotion label"
+msgstr "Nombre de messages pour promotion"
+
+msgid "Number for promotion help"
+msgstr "Notez que le nombre de messages que vous entrez est le nombre total des messages d&#8217un utilisateur, pas le nombre de messages faits en tant que membre de ce groupe."
+
+msgid "Disable promotion"
+msgstr "Desactiver la promotion"
+
+msgid "Mod privileges label"
+msgstr "Appliquer des privilèges de modérateur aux utilisateurs"
+
+msgid "Mod privileges help"
+msgstr "Pour qu&#8217un utilisateur de ce groupe puisse obtenir des privilèges de modérateur, il doit être assigné à modérer un ou plusieurs forums. Ceci se fait via la page d&#8217administration d&#8217utilisateur du profil de l&#8217utilisateur."
+
+msgid "Edit profile label"
+msgstr "Autoriser les modérateurs à éditer les profils utilisateurs"
+
+msgid "Edit profile help"
+msgstr "Si les privilèges de modérateurs sont activés, autoriser les utilisateurs de ce groupe à éditer les profils des utilisateurs."
+
+msgid "Rename users label"
+msgstr "Autoriser les modérateurs à renommer les utilisateurs"
+
+msgid "Rename users help"
+msgstr "Si les privilèges de modérateurs sont activés, autoriser les utilisateurs de ce groupe à renommer les utilisateurs."
+
+msgid "Change passwords label"
+msgstr "Autoriser les moderateurs à changer les mots de passe"
+
+msgid "Change passwords help"
+msgstr "Si les privilèges de modérateurs sont activés, autoriser les utilisateurs de ce groupe à changer les mots de passe utilisateurs."
+
+msgid "Mod promote users label"
+msgstr "Autoriser les modérateurs à promouvoir les utilisateurs"
+
+msgid "Mod promote users help"
+msgstr "Si les privilèges de modérateurs sont activés, autoriser les utilisateurs de ce groupe à promouvoir les utilisateurs."
+
+msgid "Ban users label"
+msgstr "Autoriser les modérateurs à bannir les utilisateurs"
+
+msgid "Ban users help"
+msgstr "Si les privilèges de modérateurs sont activés, autoriser les utilisateurs de ce groupe à bannir les utilisateurs."
+
+msgid "Read board label"
+msgstr "Lire le forum"
+
+msgid "Read board help"
+msgstr "Autoriser les utilisateurs de ce groupe à afficher le forum. Ce paramètre s&#8217applique à tous les aspects du forum et ne peut donc pas être remplacé par les paramètres spécifiques au forum. Si votre choix porte sur le «&#160;Non&#160;», les utilisateurs dans ce groupe ne pourront que se connecter/déconnecter et s&#8217inscrire."
+
+msgid "View user info label"
+msgstr "Voir les informations utilisateur"
+
+msgid "View user info help"
+msgstr "Autoriser les utlisateurs à voir la liste des utilisateur ainsi que les profils utilisateurs."
+
+msgid "Post replies label"
+msgstr "Répondre aux messages"
+
+msgid "Post replies help"
+msgstr "Autoriser les utilisateurs de ce groupe à répondre dans les discussions."
+
+msgid "Post topics label"
+msgstr "Créer des discussions"
+
+msgid "Post topics help"
+msgstr "Autoriser les utilisateurs de ce groupe à créer de nouvelles discussions."
+
+msgid "Edit posts label"
+msgstr "Modifier les messages"
+
+msgid "Edit posts help"
+msgstr "Autoriser les utilisateurs de ce groupe à modifier leurs propres messages."
+
+msgid "Delete posts label"
+msgstr "Supprimer des messages"
+
+msgid "Delete posts help"
+msgstr "Autoriser les utilisateurs de ce groupe à supprimer leurs propres messages."
+
+msgid "Delete topics label"
+msgstr "Supprimer des discussions"
+
+msgid "Delete topics help"
+msgstr "Autoriser les utilisateurs de ce groupe à effacer leur propres discussions (<b>incluant toutes les réponses</b>)."
+
+msgid "Post links label"
+msgstr "Poster des liens"
+
+msgid "Post links help"
+msgstr "Autoriser les utilisateurs de ce groupe à inclure des liens dans leurs messages. Ce paramètre s&#8217applique également aux signatures et au champ site Web du profil utilisateurs."
+
+msgid "Set own title label"
+msgstr "L'utilisteur peut choisir son propre titre"
+
+msgid "Set own title help"
+msgstr "Autoriser les utilisateurs de ce groupe à choir leurs propres titres."
+
+msgid "User search label"
+msgstr "Utiliser la recherche"
+
+msgid "User search help"
+msgstr "Autoriser les utilisateurs de ce groupe à utliser la recherche."
+
+msgid "User list search label"
+msgstr "Chercher dans la liste utilisateur"
+
+msgid "User list search help"
+msgstr "Autoriser les utilisateurs de ce groupe de rechercher librement des utilisateurs avec la recherche dans la liste utilisateurs."
+
+msgid "Send e-mails label"
+msgstr "Envoyer des mails"
+
+msgid "Send e-mails help"
+msgstr "Autoriser les utilisateurs de ce groupe à envoyer des emails aux autres utilisateurs."
+
+msgid "Post flood label"
+msgstr "Intervalle entre messages consécutifs"
+
+msgid "Post flood help"
+msgstr "Délai en secondes à respecter par les utilisateurs de ce groupe entre deux messages envoyés. Définir à 0 pour désactiver."
+
+msgid "Search flood label"
+msgstr "Intervalle entre recherches consécutives"
+
+msgid "Search flood help"
+msgstr "Délai en secondes à respecter par les utilisateurs de ce groupe entre deux recherches. Définir à 0 pour désactiver."
+
+msgid "E-mail flood label"
+msgstr "Intervalle entre emails consécutifs"
+
+msgid "E-mail flood help"
+msgstr "Délai en secondes à respecter par les utilisateurs de ce groupe entre deux e-mails envoyés. Définir à 0 pour désactiver."
+
+msgid "Report flood label"
+msgstr "Intervalle entre signalements consécutifs"
+
+msgid "Report flood help"
+msgstr "Délai en secondes à respecter par les utilisateurs de ce groupe entre deux signalements envoyés. Définir à 0 pour désactiver."
+
+msgid "Moderator info"
+msgstr "Notez que pour qu'un utilisateur de ce groupe ait les privilèges de modération, il/elle doit être assigné à modérer au moins un de ces forums. Ceci se fait par le profil utilisateur ( Editer le profil - configurer les droits de modération)."
+
+msgid "Delete-edit interval label"
+msgstr "Intervalle entre modifications de message"
+
+msgid "Delete-edit interval help"
+msgstr "Nombre de secondes pour modifier (ou effacer) vos messages ou discussions. Définir à 0 pour désactiver.<br>Les modérateurs n&#8217ont pas de restrictions dans leur zone d'activité."
+
+msgid "Create new group"
+msgstr "Creer un nouveau groupe"
+
+msgid "Edit group"
+msgstr "Modifier groupe"
+
+msgid "Invalid default group"
+msgstr "Groupe par défaut invalide."
+
+msgid "Invalid group to create on base"
+msgstr "Goupe invalide pour créer un groupe sur la base de celui ci."
+
+msgid "Signature subhead"
+msgstr "Signature"
+
+msgid "Max sig length label"
+msgstr "Longueur maximum de la signature"
+
+msgid "Max sig length help"
+msgstr "LE maximum de caractères que peut contenir une signature utilisateur. 0 - désactive les signatures."
+
+msgid "Max sig lines label"
+msgstr "Maximum de lignes par signature"
+
+msgid "Max sig lines help"
+msgstr "Le nombre maximum de lignes que peut contenir une signature utilisateur. 0 - désactive les signatures."
+
+msgid "Titles subhead"
+msgstr "Titres"
+
+msgid "Promotion subhead"
+msgstr "Promotion"
+
+msgid "Moderation subhead"
+msgstr "Modération"
+
+msgid "Permissions subhead"
+msgstr "Permissions"
+
+msgid "Intervals subhead"
+msgstr "Intervalless"
+
+msgid "PM subhead"
+msgstr "Messages privés"
+
+msgid "Allow PM label"
+msgstr "Autoriser les messages privés"
+
+msgid "PM limit label"
+msgstr "Limites"
+
+msgid "PM limit help"
+msgstr "Le nombre maximum de dialogue privés que peut avoir un utilisateur. Mettre à 0 pour désactiver."
+
+msgid "Upload subhead"
+msgstr "Envoi de fichier"
+
+msgid "Allowed file extensions label"
+msgstr "extensions de fichier autorisées"
+
+msgid "Allowed file extensions help"
+msgstr "Liste des extension autorisées à l&#8217envoi, séparé par des virgules. Laisser le champ libre désactive l&#8217envoi de fichier pour ce groupe."
+
+msgid "Max file size label"
+msgstr "Taille de fichier maximum"
+
+msgid "Max file size help"
+msgstr "Taille maximum du fichier à envoyere (<b>KiB</b>). Mettre à 0 pour désactiver l&#8217envoi pour ce groupe."
+
+msgid "Disk space limit label"
+msgstr "Limite d'espace disque"
+
+msgid "Disk space limit help"
+msgstr "Limite d&#8217espace disque (<b>MiB</b>). Mettre à 0 pour désactiver l&#8217envoi pour ce groupe."
+
+msgid "Delete profile label"
+msgstr "Effacer le profil"
+
+msgid "Delete profile help"
+msgstr "Autorise les utilisateurs de ce groupe à supprimer leur profil (<b>Les messages utilisateurs ne seront pas effacés</b>)."
+
+msgid "Use reaction label"
+msgstr "Use reactions"
+
+msgid "Use reaction help"
+msgstr "Autoriser les utilisateurs de ce groupe à utliser les réactions pour noter les messages."
+
+msgid "Use about me label"
+msgstr "Utiliser &apos;A propos de moi&apos;"
+
+msgid "Use about me help"
+msgstr "Autoriser les utilisateurs de ce groupe à utiliser le champ &apos;A propos de moi&apos; dans leur profil."

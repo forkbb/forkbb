@@ -1,0 +1,55 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+
+msgid "Link to"
+msgstr "Lien:"
+
+msgid "Sub forum"
+msgid_plural "Sub forums"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Parent forum"
+msgstr "Forum parent"
+
+msgid "No parent forum"
+msgstr "Pas de forum parent"
+
+msgid "%s Topic"
+msgid_plural "%s Topics"
+msgstr[0] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> Discussion</span>"
+msgstr[1] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> Discussions</span>"
+
+msgid "%s Post"
+msgid_plural "%s Posts"
+msgstr[0] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> Message</span>"
+msgstr[1] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> Messages</span>"
+
+msgid "Moderated by"
+msgstr "Modéré par"
+
+msgid "Mark all as read"
+msgstr Marqué toutes les discussions comme lues
+
+msgid "Mark forum read"
+msgstr "Marqué ce forum comme lu"
+
+msgid "All is read"
+msgstr "Tout est lu"
+
+msgid "Last post in the topic \"<a href=\"%1$s\">%2$s</a>\""
+msgstr "<small>Dernier message dans cette discussion &quot;</small><a href=\"%1$s\"><span class=\"f-cltname\">%2$s</span><span class=\"f-clttime\" hidden> %3$s</span></a><small>&quot;</small>"
+
+msgid "Last post in the topic \"<span>%2$s</span>\""
+msgstr "<small>Dernier message dans cette discussion &quot;</small><span><span class=\"f-cltname\">%2$s</span><span class=\"f-clttime\" hidden> %3$s</span></span><small>&quot;</small>"

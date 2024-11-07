@@ -1,0 +1,488 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+
+msgid "lang_direction"
+msgstr "ltr"
+
+msgid "lang_identifier"
+msgstr "fr"
+
+msgid "lang_decimal_point"
+msgstr ","
+
+msgid "lang_thousands_sep"
+msgstr " "
+
+msgid "lang_locales"
+msgstr "fr|fr_BE|fr_BF|fr_BI|fr_BJ|fr_BL|fr_CA|fr_CD|fr_CF|fr_CG|fr_CH|fr_CI|fr_CM|fr_DJ|fr_DZ|fr_FR|fr_GA|fr_GF|fr_GN|fr_GP|fr_GQ|fr_HT|fr_KM|fr_LU|fr_MA|fr_MC|fr_MF|fr_MG|fr_ML|fr_MQ|fr_MR|fr_MU|fr_NC|fr_NE|fr_PF|fr_PM|fr_RE|fr_RW|fr_SC|fr_SN|fr_SY|fr_TD|fr_TG|fr_TN|fr_VU|fr_WF|fr_YT"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Cancel redirect"
+msgstr "Opération annulée."
+
+msgid "No confirm redirect"
+msgstr "Absence de confirmation. Operation annulée."
+
+msgid "Confirm action"
+msgstr "Confirmer l&#8217action"
+
+msgid "Forum rules"
+msgstr "Règles du forum"
+
+msgid "Redirecting to index"
+msgstr "Redirection vers la page d&#8217accueil."
+
+msgid "Error mail"
+msgstr "Erreur lors de l&#8217envoi d&#8217email. Essayez plus tard ou contecter l&#8217administrateur du forum <a href=\"mailto:%1$s\">%1$s</a>."
+
+msgid "Bad request"
+msgstr "Mauvaise requête. La requête contient des données invalides."
+
+msgid "Not Found"
+msgstr "Non trouvé. Le lien est incorrect ou périmé."
+
+msgid "No permission"
+msgstr "Vous n&#8217avez pas la permission d&#8217accéder à cette page."
+
+msgid "Bad token"
+msgstr "Erreur de jeton. Veuillez réessayer."
+
+msgid "Expired token"
+msgstr "Jeton expiré. Veuillez réessayer."
+
+msgid "Hidden text"
+msgstr "Texte caché"
+
+msgid "Announcement"
+msgstr "Annonce:"
+
+msgid "Options"
+msgstr "Options"
+
+msgid "Submit"
+msgstr "Soumettre"
+
+msgid "You are banned"
+msgstr "Vous êtes banni de ce forum."
+
+msgid "Your IP is blocked"
+msgstr "Votre IP est bloquée sur ce forum."
+
+msgid "The ban expires %s"
+msgstr "Le bannissement expire après %s"
+
+msgid "Ban message for you"
+msgstr "LVeuillez réessayeradministrateur/modérateur qui vous à banni à laisser ce message:"
+
+msgid "Ban message contact %s"
+msgstr "Pour contester ce bannissement vous pouvez contacter <a href=\"mailto:%1$s\">%1$s</a>."
+
+msgid "Never"
+msgstr "Jamais"
+
+msgid "Today"
+msgstr "Aujourd&#8217hui"
+
+msgid "Yesterday"
+msgstr "Hier"
+
+msgid "Info"
+msgstr "Info"
+
+msgid "Go back"
+msgstr "Revenir en arrière"
+
+msgid "Maintenance"
+msgstr "Maintenance"
+
+msgid "Redirecting"
+msgstr "Redirection"
+
+msgid "Redirecting..."
+msgstr "<br><a href=\"%s\">Redirection…</a>"
+
+msgid "on"
+msgstr "allumé"
+
+msgid "off"
+msgstr "éteint"
+
+msgid "Last post"
+msgstr "dernier message"
+
+msgid "by %s"
+msgstr "par %s"
+
+msgid "New posts"
+msgstr "Nouveaux messages"
+
+msgid "New posts info"
+msgstr "Aller au permier nouveau message de cette discussion"
+
+msgid "Unread posts"
+msgstr "Messages non lus"
+
+msgid "Unread posts info"
+msgstr "Aller au premier message non lu de cette discussion"
+
+msgid "Username"
+msgstr "Nom d&#8217utilisateur"
+
+msgid "Passphrase"
+msgstr "Mot de passe"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Send email"
+msgstr "Envoyer un email"
+
+msgid "Registered"
+msgstr "Enregistré"
+
+msgid "Subject"
+msgstr "Sujet"
+
+msgid "Message"
+msgstr "Message"
+
+msgid "Topic"
+msgstr "Discussion"
+
+msgid "Forum"
+msgstr "Forum"
+
+msgid "Stats"
+msgstr "Statistiques"
+
+msgid "Posts"
+msgstr "Messages"
+
+msgid "Replies"
+msgstr "Réponses"
+
+msgid "%s Reply"
+msgid_plural "%s Réponses"
+msgstr[0] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> Reponse</span>"
+msgstr[1] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> Reponses</span>"
+
+msgid "%s View"
+msgid_plural "%s Vues"
+msgstr[0] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> Vue</span>"
+msgstr[1] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> Vues</span>"
+
+msgid "Pages"
+msgstr "Pages:"
+
+msgid "Page %s"
+msgstr "Page %s"
+
+msgid "Page %1$s of %2$s"
+msgstr "Page %1$s sur %2$s ·"
+
+msgid "Image link"
+msgstr "image"
+
+msgid "%s wrote"
+msgstr "%s à écrit:"
+
+msgid "Mailer"
+msgstr "%s"
+
+msgid "Previous"
+msgstr "Précédent"
+
+msgid "Next"
+msgstr "Suivant"
+
+msgid "Spacer"
+msgstr "&hellip;"
+
+msgid "Title"
+msgstr "Titre"
+
+msgid "Member"
+msgstr "Membre"
+
+msgid "Moderator"
+msgstr "Modérateur"
+
+msgid "Administrator"
+msgstr "Administrateur"
+
+msgid "Banned"
+msgstr "Banni"
+
+msgid "Guest"
+msgstr "Invité"
+
+msgid "Unverified"
+msgstr "Non vérifié"
+
+msgid "Index"
+msgstr "Index"
+
+msgid "Home page"
+msgstr "Page d&#8217accueil"
+
+msgid "User list"
+msgstr "liste d&#8217utilisateur"
+
+msgid "List of users"
+msgstr "liste d&#8217utilisateur"
+
+msgid "Rules"
+msgstr "Règles"
+
+msgid "Board rules"
+msgstr "Règles du forum"
+
+msgid "Search"
+msgstr "Recherche"
+
+msgid "Search topics and posts"
+msgstr "Recherche messages et discussions"
+
+msgid "Register"
+msgstr "S&#8217enregistrer"
+
+msgid "Login"
+msgstr "Entrer"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Your profile"
+msgstr "Votre profil"
+
+msgid "Logout"
+msgstr "Se déconnecter"
+
+msgid "Admin"
+msgstr "Zone administrateur"
+
+msgid "Administration functions"
+msgstr "Fonctions d&#8217administration"
+
+msgid "Title separator"
+msgstr " - "
+
+msgid "PM"
+msgstr "MP"
+
+msgid "PM %s"
+msgstr "<span class="f-spantxtpm">MP </span><b>(%s)</b>"
+
+msgid "Private messages"
+msgstr "Messages privés"
+
+msgid "Send PM"
+msgstr "Send private message"
+
+msgid "Board footer"
+msgstr "Pied de page forum:"
+
+msgid "Powered by"
+msgstr "Propulsé par <a href=\"https://forkbb.ru\">ForkBB</a>"
+
+msgid "Debug table"
+msgstr "Informations de débugging:"
+
+msgid "Generated in %1$s, %2$s queries"
+msgstr "Généré en %1$s secondes, %2$s requêtes exécutées"
+
+msgid "Memory %1$s, Peak %2$s"
+msgstr "Usage mémoire: %1$s (Pic: %2$s)"
+
+msgid "Query times"
+msgstr "Temps (s)"
+
+msgid "Query"
+msgstr "Requête"
+
+msgid "The most recent posts at %s board"
+msgstr "Le plus récent message sur \"%s\" ."
+
+msgid "The most recent posts in %s forum"
+msgstr "Le plus récent message sur \"%s\"."
+
+msgid "The most recent posts in %s topic"
+msgstr "Le plus récent message sur \"%s\" sujets."
+
+msgid "RSS reply"
+msgstr "Re: "
+
+msgid "RSS active topics feed"
+msgstr "RSS active topics feed"
+
+msgid "Atom active topics feed"
+msgstr "Atom active topics feed"
+
+msgid "RSS forum feed"
+msgstr "RSS forum feed"
+
+msgid "Atom forum feed"
+msgstr "Atom forum feed"
+
+msgid "RSS topic feed"
+msgstr "RSS topic feed"
+
+msgid "Atom topic feed"
+msgstr "Atom topic feed"
+
+msgid "After time"
+msgstr "Added later"
+
+msgid "After time s"
+msgstr " s"
+
+msgid "After time i"
+msgstr " min"
+
+msgid "After time H"
+msgstr " h"
+
+msgid "After time d"
+msgstr " d"
+
+msgid "New reports"
+msgstr "<a href=\"%s\">Il y a de nouveaux signalements</a>"
+
+msgid "Maintenance mode enabled"
+msgstr "<a href=\"%s\">Mode maintenance activé</a>"
+
+msgid "Maintenance mode enabled off"
+msgstr "<a href=\"%s\">Mode maintenance bloqué par le paramètre MAINTENANCE_OFF</a>"
+
+msgid "%s B"
+msgstr "%sB"
+
+msgid "%s KiB"
+msgstr "%sK"
+
+msgid "%s MiB"
+msgstr "%sM"
+
+msgid "%s GiB"
+msgstr "%sG"
+
+msgid "%s TiB"
+msgstr "%sT"
+
+msgid "%s PiB"
+msgstr "%sP"
+
+msgid "%s EiB"
+msgstr "%sE"
+
+msgid "Latest active topics"
+msgstr "Derniers sujets actifs"
+
+msgid "Find latest active topics"
+msgstr "Trouver les derniers sujets actifs"
+
+msgid "Unanswered topics"
+msgstr "Discussions sans réponses"
+
+msgid "Find unanswered topics"
+msgstr "Trouver des discussions sans réponse"
+
+msgid "Topics with your posts"
+msgstr "Discussion avec vos messages"
+
+msgid "Find topics with your posts"
+msgstr "Trouver les sujet avec vos messages"
+
+msgid "Male"
+msgstr "Mâle"
+
+msgid "Female"
+msgstr "Femelle"
+
+msgid "Save changes"
+msgstr "Enregistrer"
+
+msgid "Save"
+msgstr "Enregistrer"
+
+msgid "Yes"
+msgstr "Oui"
+
+msgid "No"
+msgstr "Non"
+
+msgid "Your passphrase"
+msgstr "Votre mot de passe"
+
+msgid "User %s"
+msgstr "%s"
+
+msgid "Unsubscribe"
+msgstr "Se désabonner"
+
+msgid "Subscribe"
+msgstr "S&#8217abonner"
+
+msgid "Post from topic %s"
+msgstr "Ce message à été déplacé de la discussion &quot;%s&quot;"
+
+msgid "The search may be case sensitive"
+msgstr "La recherche peut être sensible à la casse pour les langues non latines."
+
+msgid "%s"
+msgstr "%s"
+
+msgid "\"%s\""
+msgstr "&quot;%s&quot;"
+
+msgid "ACTIONS"
+msgstr "ACTIONS"
+
+msgid "Main menu"
+msgstr "Menu principal"
+
+msgid ":like:"
+msgstr "J&#8217aime"
+
+msgid ":fire:"
+msgstr "Feu"
+
+msgid ":lol:"
+msgstr "LOL"
+
+msgid ":smile:"
+msgstr "Sourire"
+
+msgid ":frown:"
+msgstr "Fronce les sourcils"
+
+msgid ":sad:"
+msgstr "Triste"
+
+msgid ":cry:"
+msgstr "Pleure"
+
+msgid ":angry:"
+msgstr "En colère"
+
+msgid ":dislike:"
+msgstr "N&#8217aime pas"
+
+msgid ":meh:"
+msgstr "Meh"
+
+msgid ":shock:"
+msgstr "Choqué"
