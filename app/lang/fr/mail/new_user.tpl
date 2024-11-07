@@ -1,4 +1,4 @@
-Sujet: Alerte - Nouvel enregistrement
+Subject: Alerte - Nouvel enregistrement
 
 L’utilisateur '{!username!}' s’est enregistré sur le forum {!fRootLink!}
 

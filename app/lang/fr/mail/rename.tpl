@@ -1,4 +1,4 @@
-Sujet: Compte utilisateur renommé
+Subject: Compte utilisateur renommé
 
 Durant une mise à jour du forum {!base_url!} votre nom d’utilisateur à été perçu comme trop similaire à un nom existant. En conséquence votre nom d’utilisateur à été changé.
 

@@ -1,4 +1,4 @@
-Sujet: Demande de nouveau mot de passe
+Subject: Demande de nouveau mot de passe
 
 Hello {!username!},
 

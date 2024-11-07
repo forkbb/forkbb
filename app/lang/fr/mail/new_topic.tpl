@@ -1,4 +1,4 @@
-Sujet: Nouvelle discussion dans le forum: {!forumName!}
+Subject: Nouvelle discussion dans le forum: {!forumName!}
 
 '{!poster!}'  a lancé une nouvelle discussion  '{!topicSubject!}' dans le forum '{!forumName!}', que vous suivez.
 

@@ -1,6 +1,6 @@
-Sujet: Rapport ({!forumId!}) - '{!topicSubject!}'
+Subject: Rapport ({!forumId!}) - '{!topicSubject!}'
 
-L\'utilisateur '{!username!}' a signalé le message suivant : {!postLink!}
+L'utilisateur '{!username!}' a signalé le message suivant : {!postLink!}
 
 Raison: {!reason!}
 

@@ -1,4 +1,4 @@
-Sujet: Activation d'adresse mail demandée
+Subject: Activation d'adresse mail demandée
 
 Hello {!username!},
 

@@ -1,4 +1,4 @@
-Sujet: Bienvenue sur {!fTitle!}!
+Subject: Bienvenue sur {!fTitle!}!
 
 Merci de vous être inscrit sur le forum {!fRootLink!}.
 
