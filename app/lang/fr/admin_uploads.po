@@ -31,7 +31,7 @@ msgid "Upload axis limit label"
 msgstr "Limite de taille"
 
 msgid "Upload axis limit help"
-msgstr "L’image envoyée sera redimensioné si largeur ou hauteur sont plus grand que cette limite."
+msgstr "L’image envoyée sera redimensionnée si largeur ou hauteur sont plus grand que cette limite."
 
 msgid "Output image types label"
 msgstr "Type de l’image traitée"
@@ -58,19 +58,19 @@ msgid "User head"
 msgstr "Auteur"
 
 msgid "Delete file head"
-msgstr "Effacer le fichier"
+msgstr "Supprimer le fichier"
 
 msgid "Confirm delete"
-msgstr "Effacer le fichier?"
+msgstr "Supprimer le fichier?"
 
 msgid "I want to delete file %s"
-msgstr "Oui, je veux effacer le fichier <b>%s</b>"
+msgstr "Oui, je veux supprimer le fichier <b>%s</b>"
 
 msgid "Delete file warn"
 msgstr "Ce fichier est utilisé (approximativement) dans <b>%1$s</b> messages et dans <b>%2$s</b> messages privés."
 
 msgid "File deleted redirect"
-msgstr "Fichier effacé."
+msgstr "Fichier supprimé."
 
 msgid "File not deleted redirect"
-msgstr "File non effacé."
+msgstr "Le fichier n'a pas été supprimé."

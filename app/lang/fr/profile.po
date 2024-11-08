@@ -28,7 +28,7 @@ msgid "New email"
 msgstr "Nouvelle adresse email "
 
 msgid "New or old email"
-msgstr "Nouvelle ou ancienne (pour confimationn) adresse email"
+msgstr "Nouvelle ou ancienne (pour confimation) adresse email"
 
 msgid "Delete avatar"
 msgstr "Effacer l’avatar"
@@ -55,7 +55,7 @@ msgid "Posts info"
 msgstr "Total de messages"
 
 msgid "Show posts"
-msgstr "Montrer les message de l’utilisteur"
+msgstr "Montrer les message de l’utilisateur"
 
 msgid "Topics info"
 msgstr "Total de discussions"
@@ -82,7 +82,7 @@ msgid "Sig max size"
 msgstr "Longueur max: <b>%1$s</b> caractères / Lignes max: <b>%2$s</b>"
 
 msgid "Leave blank"
-msgstr "Laisser vide pour utilisaer les valeurs par défaut du forum."
+msgstr "Laisser vide pour utiliser les valeurs par défaut du forum."
 
 msgid "Subscription options"
 msgstr "Options d’abonnement"
@@ -97,7 +97,7 @@ msgid "Auto notify label"
 msgstr "S’abonner automatiquement aux discussions"
 
 msgid "Auto notify info"
-msgstr "S’abonner automatiquement aux discussions lesquelles vous avez posté un message."
+msgstr "S’abonner automatiquement aux discussions dans lesquelles vous avez posté un message."
 
 msgid "Smilies label"
 msgstr "Smileys"
@@ -118,7 +118,7 @@ msgid "Images sigs info"
 msgstr "Montrer les images dans les signatures utilisateur."
 
 msgid "Reaction label"
-msgstr "Reactions"
+msgstr "Réactions"
 
 msgid "Reaction info"
 msgstr "Montrer les reactions aux messages."
@@ -379,7 +379,7 @@ msgid "Update search config redirect"
 msgstr "Paramètres de la recherche mis à jours."
 
 msgid "Select followed forums for %s and %s:"
-msgstr "Séléctionné les forum suivi pour <b><i>%s</i></b> et <b><i>%s</i></b>:"
+msgstr "Sélectionner les forum suivi pour <b><i>%s</i></b> et <b><i>%s</i></b>:"
 
 msgid "mDescription for %s"
 msgstr "Prodil de %s. Activité, messages, discussions et contacts."

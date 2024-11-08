@@ -60,7 +60,7 @@ msgid "User sort order"
 msgstr "Ordre de classement de la liste utilisateur"
 
 msgid "Ascending"
-msgstr "Ascendantg"
+msgstr "Ascendant"
 
 msgid "Descending"
 msgstr "Descendant"

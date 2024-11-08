@@ -19,7 +19,7 @@ msgid "Mark forum read redirect"
 msgstr "Toutes les discussions du forum spécifié ont été marquées comme lues."
 
 msgid "Form email disabled"
-msgstr "L’utilisateur que vous essayez de joindre a désactiver l’envoi de mail  via le forum."
+msgstr "L’utilisateur que vous essayez de joindre a désactivé l’envoi de mail  via le forum."
 
 msgid "Email sent redirect"
 msgstr "Email envoyé."
@@ -67,7 +67,7 @@ msgid "Move"
 msgstr "Déplacer"
 
 msgid "Split"
-msgstr "Scindre"
+msgstr "Scinder"
 
 msgid "Delete"
 msgstr "Effacer"
@@ -130,7 +130,7 @@ msgstr[0] "Discussion fermée."
 msgstr[1] "Discussions fermées."
 
 msgid "Not enough topics selected"
-msgstr "Vous devez séléctionner au moins deux discussions à assembler."
+msgstr "Vous devez sélectionner au moins deux discussions à assembler."
 
 msgid "Stick topic title"
 msgid_plural "Stick topics title"
@@ -193,7 +193,7 @@ msgid "Action not available"
 msgstr "Action non valide."
 
 msgid "No object selected"
-msgstr "Vous devez séléctionner au moins un objet pour cette action."
+msgstr "Vous devez sélectionner au moins un objet pour cette action."
 
 msgid "Open topic title"
 msgid_plural "Open topics title"
@@ -269,7 +269,7 @@ msgid "Moderate forum"
 msgstr "Modérer le forum"
 
 msgid "When sending email there was an error"
-msgstr "Erreur lors de l’envoi de mail. Veuillez reessayer ultérieurement."
+msgstr "Erreur lors de l’envoi de mail. Veuillez réessayer ultérieurement."
 
 msgid "Confirm your email address"
 msgstr "Tout d’abord, veuillez <a href=\"%s\">confirmer</a> votre adresse mail."
@@ -281,13 +281,13 @@ msgid "Link btn"
 msgstr "Redirection"
 
 msgid "Only one topic is permissible"
-msgstr "Une seule discussion devrait être séléctionner pour gérer les liens vers celle ci."
+msgstr "Une seule discussion devrait être séléctionnée pour gérer les liens vers celle ci."
 
 msgid "Control of redirects title"
 msgstr "Controle des discussions redirigées"
 
 msgid "Need full topic for this operation"
-msgstr "Vous devez séléctionner une discussion à part entière pour cette operation."
+msgstr "Vous devez sélectionner une discussion à part entière pour cette operation."
 
 msgid "Forum label"
 msgstr "Forum"

@@ -16,7 +16,7 @@ msgid "User search"
 msgstr "Recherche utilisateur"
 
 msgid "Search info"
-msgstr "Pour une recherche par mot clef, entre un ou des termes à recherche. Séparer ces termes par des espaces. Utiliser AND, OR et NOT (et, ou et pas) pour affiner la recherche. Pour une recherche par auteur, entrer le nom d’utilisateur de l’auteur des messages que vous recherchez. Utilisez les caratères générique * pour des correpondances partielles."
+msgstr "Pour une recherche par mot clef, entrer un ou des termes à rechercher. Séparer ces termes par des espaces. Utiliser AND, OR et NOT (et, ou et pas) pour affiner la recherche. Pour une recherche par auteur, entrer le nom d’utilisateur de l’auteur des messages que vous recherchez. Utilisez le caratère générique * pour des correpondances partielles."
 
 msgid "Keyword search"
 msgstr "Recherche par mot(s) clef"
@@ -25,10 +25,10 @@ msgid "Author search"
 msgstr "Recherche par auteur"
 
 msgid "Search in legend"
-msgstr "Séléctionner où chercher"
+msgstr "Sélectionner où chercher"
 
 msgid "Search in info"
-msgstr "Choisir dans quel forum vous souhaitez chercher et si vous voulez cherchers dans les sujets de discussion, les textes de message ou les deux."
+msgstr "Choisir dans quel forum vous souhaitez chercher et si vous voulez chercher dans les sujets de discussion, les textes de message ou les deux."
 
 msgid "Search multiple forums info"
 msgstr "Si aucun forum n’est sélectionné, la recherche se fera dans tous les forums."
@@ -43,7 +43,7 @@ msgid "Message and subject"
 msgstr "Textes de messages et sujets de discussion"
 
 msgid "Message only"
-msgstr "Textes des messages seulements"
+msgstr "Textes des messages seulement"
 
 msgid "Topic only"
 msgstr "Titre des discussion seulement"
@@ -112,7 +112,7 @@ msgid "Quick search user topics_subscriptions"
 msgstr "Abonnements à la discussion par %s"
 
 msgid "Quick search user forums_subscriptions"
-msgstr "Abonnements au forumspar %s"
+msgstr "Abonnements au forum par %s"
 
 msgid "Quick search show_user_warn"
 msgstr "Avertissement pour %s"
@@ -127,7 +127,7 @@ msgid "Search query: %1$s and Author: %2$s"
 msgstr "Requête: «%1$s» - Auteur: «%2$s»"
 
 msgid "No hits"
-msgstr "Votre recherche n’a retournée aucun résultat."
+msgstr "Aucun résultat ne corresopnd à vos critères de recherche."
 
 msgid "Too many coincidences"
 msgstr "Trop de coincidences."
@@ -166,7 +166,7 @@ msgid "Logical operator at the end of the search query: '%s'"
 msgstr "Opérateur logique à la fin de la requête: '%s'"
 
 msgid "The order of brackets is broken: '%s'"
-msgstr "L’ordrer des parenthèses est invalide: '%s'"
+msgstr "L’ordre des parenthèses est invalide: '%s'"
 
 msgid "Empty subquery: '%s'"
 msgstr "Sous requête vide: '%s'"

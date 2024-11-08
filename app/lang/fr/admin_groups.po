@@ -100,7 +100,7 @@ msgid "Number for promotion help"
 msgstr "Notez que le nombre de messages que vous entrez est le nombre total des messages d’un utilisateur, pas le nombre de messages faits en tant que membre de ce groupe."
 
 msgid "Disable promotion"
-msgstr "Desactiver la promotion"
+msgstr "Désactiver la promotion"
 
 msgid "Mod privileges label"
 msgstr "Appliquer des privilèges de modérateur aux utilisateurs"
@@ -283,7 +283,7 @@ msgid "Permissions subhead"
 msgstr "Permissions"
 
 msgid "Intervals subhead"
-msgstr "Intervalless"
+msgstr "Intervalles"
 
 msgid "PM subhead"
 msgstr "Messages privés"
@@ -304,19 +304,19 @@ msgid "Allowed file extensions label"
 msgstr "extensions de fichier autorisées"
 
 msgid "Allowed file extensions help"
-msgstr "Liste des extension autorisées à l’envoi, séparé par des virgules. Laisser le champ libre désactive l’envoi de fichier pour ce groupe."
+msgstr "Liste des extensions autorisées à l’envoi, séparées par des virgules. Laisser le champ libre désactive l’envoi de fichier pour ce groupe."
 
 msgid "Max file size label"
 msgstr "Taille de fichier maximum"
 
 msgid "Max file size help"
-msgstr "Taille maximum du fichier à envoyere (<b>KiB</b>). Mettre à 0 pour désactiver l’envoi pour ce groupe."
+msgstr "Taille maximum du fichier à envoyer (<b>Ko</b>). Mettre à 0 pour désactiver l’envoi pour ce groupe."
 
 msgid "Disk space limit label"
 msgstr "Limite d'espace disque"
 
 msgid "Disk space limit help"
-msgstr "Limite d’espace disque (<b>MiB</b>). Mettre à 0 pour désactiver l’envoi pour ce groupe."
+msgstr "Limite d’espace disque (<b>Mo</b>). Mettre à 0 pour désactiver l’envoi pour ce groupe."
 
 msgid "Delete profile label"
 msgstr "Effacer le profil"
@@ -325,7 +325,7 @@ msgid "Delete profile help"
 msgstr "Autorise les utilisateurs de ce groupe à supprimer leur profil (<b>Les messages utilisateurs ne seront pas effacés</b>)."
 
 msgid "Use reaction label"
-msgstr "Use reactions"
+msgstr "Utiliser les reactions"
 
 msgid "Use reaction help"
 msgstr "Autoriser les utilisateurs de ce groupe à utliser les réactions pour noter les messages."

@@ -43,7 +43,7 @@ msgid "Most online"
 msgstr "Nombre maximum d’utilisateurs (%1$s) , %2$s"
 
 msgid "User info"
-msgstr "Information sur l’utilisateur"
+msgstr "Informations sur l’utilisateur"
 
 msgid "Visitors online"
 msgstr "Membres en lignes: <b>%1$s</b>, invités: <b>%2$s</b>."

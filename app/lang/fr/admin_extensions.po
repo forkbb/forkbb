@@ -76,7 +76,7 @@ msgid "Update_"
 msgstr "Mettre à jour"
 
 msgid "Downdate_"
-msgstr "Downdate"
+msgstr "Annuler la mise à jour"
 
 msgid "Package version"
 msgstr "Version du pack logiciel"
@@ -97,7 +97,7 @@ msgid "Redirect update"
 msgstr "L’extension à été mise à jour."
 
 msgid "Redirect downdate"
-msgstr "La version d'\extension a été rétrogradée."
+msgstr "La version d'extension a été rétrogradée."
 
 msgid "Redirect enable"
 msgstr "L’extension est activée."

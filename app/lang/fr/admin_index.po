@@ -112,4 +112,4 @@ msgid "Other"
 msgstr "Autre:"
 
 msgid "Community"
-msgstr "Communautée"
+msgstr "Communauté"

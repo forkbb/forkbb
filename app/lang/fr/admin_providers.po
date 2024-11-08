@@ -28,10 +28,10 @@ msgid "Allow label"
 msgstr "Autoriser"
 
 msgid "Providers updated redirect"
-msgstr "Table des fournisseurs mis à jour."
+msgstr "Table des fournisseurs mise à jour."
 
 msgid "Provider updated redirect"
-msgstr "Données fournisseur mis à jour."
+msgstr "Données fournisseur mises à jour."
 
 msgid "github"
 msgstr "GitHub"

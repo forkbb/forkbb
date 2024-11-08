@@ -13,7 +13,7 @@ msgstr ""
 "Language: fr\n"
 
 msgid "No users selected"
-msgstr "Pas d’utilisateur séléctionné."
+msgstr "Pas d’utilisateur sélectionné."
 
 msgid "Action not available"
 msgstr "Action non disponible."
@@ -22,10 +22,10 @@ msgid "You are not allowed to delete the %s"
 msgstr "Vous n’êtes pas autorisé à effacer le %s."
 
 msgid "You are not allowed to ban the %s"
-msgstr "Vous n’êtes pas autorisé à bannier le %s."
+msgstr "Vous n’êtes pas autorisé à bannir le %s."
 
 msgid "You are not allowed to change group for %s"
-msgstr "Vous n’êtes pas autorisé changer le groupe pour %s."
+msgstr "Vous n’êtes pas autorisé à changer le groupe pour %s."
 
 msgid "No move admins message"
 msgstr "Pour des raisons de sécurité, vous n’êtes pas autorisé à déplacer de multiples administrateurs dans un autre groupe. Si vous voulez déplacer ces administrateurs, vous pouvez le faire depuis leurs profils respectifs."

@@ -34,7 +34,7 @@ msgid "Cancel redirect"
 msgstr "Opération annulée."
 
 msgid "No confirm redirect"
-msgstr "Absence de confirmation. Operation annulée."
+msgstr "Absence de confirmation. Opération annulée."
 
 msgid "Confirm action"
 msgstr "Confirmer l’action"
@@ -46,7 +46,7 @@ msgid "Redirecting to index"
 msgstr "Redirection vers la page d’accueil."
 
 msgid "Error mail"
-msgstr "Erreur lors de l’envoi d’email. Essayez plus tard ou contecter l’administrateur du forum <a href=\"mailto:%1$s\">%1$s</a>."
+msgstr "Erreur lors de l’envoi d’email. Essayez plus tard ou contactez l’administrateur du forum <a href=\"mailto:%1$s\">%1$s</a>."
 
 msgid "Bad request"
 msgstr "Mauvaise requête. La requête contient des données invalides."
@@ -85,7 +85,7 @@ msgid "The ban expires %s"
 msgstr "Le bannissement expire après %s"
 
 msgid "Ban message for you"
-msgstr "LVeuillez réessayeradministrateur/modérateur qui vous à banni à laisser ce message:"
+msgstr "L'administrateur/modérateur qui vous à banni à laisser ce message:"
 
 msgid "Ban message contact %s"
 msgstr "Pour contester ce bannissement vous pouvez contacter <a href=\"mailto:%1$s\">%1$s</a>."
@@ -130,7 +130,7 @@ msgid "New posts"
 msgstr "Nouveaux messages"
 
 msgid "New posts info"
-msgstr "Aller au permier nouveau message de cette discussion"
+msgstr "Aller au premier nouveau message de cette discussion"
 
 msgid "Unread posts"
 msgstr "Messages non lus"
@@ -142,7 +142,7 @@ msgid "Username"
 msgstr "Nom d’utilisateur"
 
 msgid "Passphrase"
-msgstr "Mot de passe"
+msgstr "Phrase de passe"
 
 msgid "Email"
 msgstr "Email"
@@ -176,8 +176,8 @@ msgstr "Réponses"
 
 msgid "%s Reply"
 msgid_plural "%s Réponses"
-msgstr[0] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> Reponse</span>"
-msgstr[1] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> Reponses</span>"
+msgstr[0] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> Réponse</span>"
+msgstr[1] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> Réponses</span>"
 
 msgid "%s View"
 msgid_plural "%s Vues"
@@ -242,7 +242,7 @@ msgid "User list"
 msgstr "liste d’utilisateur"
 
 msgid "List of users"
-msgstr "liste d’utilisateur"
+msgstr "liste d’utilisateurs"
 
 msgid "Rules"
 msgstr "Règles"
@@ -290,7 +290,7 @@ msgid "Private messages"
 msgstr "Messages privés"
 
 msgid "Send PM"
-msgstr "Send private message"
+msgstr "Envoyer un message privé"
 
 msgid "Board footer"
 msgstr "Pied de page forum:"
@@ -404,7 +404,7 @@ msgid "Topics with your posts"
 msgstr "Discussion avec vos messages"
 
 msgid "Find topics with your posts"
-msgstr "Trouver les sujet avec vos messages"
+msgstr "Trouver les discussions avec vos messages"
 
 msgid "Male"
 msgstr "Mâle"
@@ -425,7 +425,7 @@ msgid "No"
 msgstr "Non"
 
 msgid "Your passphrase"
-msgstr "Votre mot de passe"
+msgstr "Votre phrase de passe"
 
 msgid "User %s"
 msgstr "%s"
