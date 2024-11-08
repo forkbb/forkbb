@@ -94,7 +94,7 @@ msgid "Redirect help"
 msgstr "Disponible uniquement dans un forum vide."
 
 msgid "Group permissions info"
-msgstr "Dans ce formulaire, vous pouvez accorder des permission spécifiques du forum pour chaque groupe d’utilisateurs. Si vous n’avez fait aucun changement aux permissions de groupe du forum, ce que vous voyez ci dessous est la configuration par défaut basée sur les réglages dans <a href=\"%1$s\">%2$s</a>. Les administrateurs ayant toujours les pleins pouvoirs, ils sont exclus. Les permissions qui diffèrent de l’état d’origine pour le groupe d’utilisateurs sont affichées en rouge. La &quot;Read forum&quot; case à cocher sera désactivée si le groupe en question n’a pas &quot;Read board&quot; permission. Pour les forum redirigés, seul la permission &quot;Read forum&quot; est modifiable."
+msgstr "Dans ce formulaire, vous pouvez accorder des permission spécifiques du forum pour chaque groupe d’utilisateurs. Si vous n’avez fait aucun changement aux permissions de groupe du forum, ce que vous voyez ci dessous est la configuration par défaut basée sur les réglages dans <a href=\"%1$s\">%2$s</a>. Les administrateurs ayant toujours les pleins pouvoirs, ils sont exclus. Les permissions qui diffèrent de l’état d’origine pour le groupe d’utilisateurs sont affichées en rouge. La &quot;Read forum&quot; case à cocher sera désactivée si le groupe en question n’a pas &quot;Read board&quot; permission. Pour les forum redirigés, seule la permission &quot;Read forum&quot; est modifiable."
 
 msgid "Read forum label"
 msgstr "lire le forum"
@@ -112,10 +112,10 @@ msgid "Parent label"
 msgstr "Parent"
 
 msgid "Parent help"
-msgstr "Categorie ou forum for the location of this forum."
+msgstr "Categorie ou forum pour la localisation de ce forum."
 
 msgid "Not selected"
-msgstr "Not selected"
+msgstr "Non sélectionné"
 
 msgid "Category prefix"
 msgstr "▶ "
@@ -130,7 +130,7 @@ msgid "Count messages label"
 msgstr "Compter les messages utilisateurs"
 
 msgid "Count messages help"
-msgstr "Si OUI, alors les nouveaux messages des utilisateurs du forum verront leur compteur de messages croitre dans leur profil. Vous pouvez relcalculer les messages de tous les utilisateurs ici <a href=\"%1$s\">%2$s</a>."
+msgstr "Si OUI, alors les nouveaux messages des utilisateurs du forum verront leur compteur de messages croitre dans leur profil. Vous pouvez recalculer les messages de tous les utilisateurs ici <a href=\"%1$s\">%2$s</a>."
 
 msgid "<span></span>"
 msgstr "<span></span>"
