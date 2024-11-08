@@ -70,7 +70,7 @@ msgid "Visit timeout label"
 msgstr "délai dernière visite"
 
 msgid "Visit timeout help"
-msgstr "Nombre de secondes qu’un utilisateur doit passer sans activité avant que ses données de dernière visite soit enregistrés (affecte principalement l’affichage des nouveaux messages)."
+msgstr "Nombre de secondes qu’un utilisateur doit passer sans activité avant que ses données de dernière visite soient enregistrés (affecte principalement l’affichage des nouveaux messages)."
 
 msgid "Online timeout label"
 msgstr "délai hors-ligne"
@@ -97,7 +97,7 @@ msgid "Post count label"
 msgstr "Compteur de messages utilisateur"
 
 msgid "Post count help"
-msgstr "Affiche le nombre de messages publiés par un utilisateur (indiqué dans les discussions, le profil et la liste d’utilisateurs).. N’affecte pas les modérateurs et aministrateurs."
+msgstr "Affiche le nombre de messages publiés par un utilisateur (indiqué dans les discussions, le profil et la liste d’utilisateurs). N’affecte pas les modérateurs et aministrateurs."
 
 msgid "Topic review label"
 msgstr "Résumé de discussion"
@@ -148,10 +148,10 @@ msgid "Menu items label"
 msgstr "Objets de menu additionnels"
 
 msgid "Menu items help"
-msgstr "Vous pouvez ajouter autant de nouveau objets dans le menu. Chaque ligne défini un objet du format: <b>Position</b><wbr>|<b>Name</b><wbr>|<b>Link</b><wbr><i>[|<b>Identifier</b>]</i>."
+msgstr "Vous pouvez ajouter de nouveaux objets dans le menu. Chaque ligne défini un objet du format: <b>Position</b><wbr>|<b>Name</b><wbr>|<b>Link</b><wbr><i>[|<b>Identifier</b>]</i>."
 
 msgid "Feed subhead"
-msgstr "Syndication"
+msgstr "Sous-titre du flux"
 
 msgid "Default feed label"
 msgstr "Type de flux par défaut"
@@ -160,7 +160,7 @@ msgid "Default feed help"
 msgstr "Type d’abonnement de flux devant être affiché. Remarque&#160;: le choix «&#160;Aucun&#160;» ne désactive pas le flux, mais le masque simplement par défaut."
 
 msgid "No feeds"
-msgstr "None"
+msgstr "Aucun"
 
 msgid "RSS"
 msgstr "RSS"
@@ -199,7 +199,7 @@ msgid "Reporting method help"
 msgstr "Choisissez la méthode pour traiter les signalements de discussion/message. Vous pouvez opter pour le système de signalement interne, l’envoi d’un e-mail à la liste de diffusion (voir ci-dessous) ou effectuer les deux opérations."
 
 msgid "Mailing list label"
-msgstr "Mailing list"
+msgstr "Liste de diffusion"
 
 msgid "Mailing list help"
 msgstr "Liste d’adresse email séparées par des virgules. Les signalements seron transmis à ces adresses."
@@ -208,10 +208,10 @@ msgid "Avatars subhead"
 msgstr "Avatars"
 
 msgid "Use avatars label"
-msgstr "Utililser les avatars"
+msgstr "Utiliser les avatars"
 
 msgid "Use avatars help"
-msgstr "Si activé, les utilisateurs pour charger leur avatar sur le serveur."
+msgstr "Si activé, les utilisateurs peuvent charger leur avatar sur le serveur."
 
 msgid "Upload directory label"
 msgstr "Répertoire de stockage"
@@ -235,7 +235,7 @@ msgid "Max size label"
 msgstr "Poids maximal"
 
 msgid "Max size help"
-msgstr "Poid maximum autorisé pour l’avatar, en octet (10240 est recommandé)."
+msgstr "Poids maximum autorisé pour l’avatar, en octet (10240 est recommandé)."
 
 msgid "Avatar quality label"
 msgstr "Qualité"
@@ -265,10 +265,10 @@ msgid "Forum subscriptions help"
 msgstr "Autoriser les utilisateurs à s’abonner aux forums (reçoivent un email quand quelqu’un crée un nouveau sujet)."
 
 msgid "Topic subscriptions label"
-msgstr "Abonnementsonnements aux discussions"
+msgstr "Abonnements aux discussions"
 
 msgid "Topic subscriptions help"
-msgstr "Autoriser les utilisateurs à s’abonner aux discussions (eçoivent un email quand quelqu’un poste une réponse)."
+msgstr "Autoriser les utilisateurs à s’abonner aux discussions (reçoivent un email quand quelqu’un poste une réponse)."
 
 msgid "SMTP address label"
 msgstr "adresse du serveur SMTP"
@@ -307,16 +307,16 @@ msgid "Allow new help"
 msgstr "Controle si ce forum accepte les nouveaux enregistrements. A ne désactiver que dans des circonstances particulières."
 
 msgid "Verify label"
-msgstr "Verifier les enregistrements"
+msgstr "Vérifier les enregistrements"
 
 msgid "Verify help"
-msgstr "Si activée, les utilisateurs obtiendront par e-mail un mot de passe aléatoire lors de leur inscription. Ils pourront alors se connecter et modifier leur mot de passe dans leur profil s’ils le souhaitent. Cette fonctionnalité demande également une vérification de leur adresse électronique s’ils choisissent d’en changer. Ceci est un moyen efficace d’éviter l’inscription abusive et de vérifier que les utilisateurs ont une adresse électronique correcte associée à leur profil."
+msgstr "Si activé, les utilisateurs obtiendront par e-mail un mot de passe aléatoire lors de leur inscription. Ils pourront alors se connecter et modifier leur mot de passe dans leur profil s’ils le souhaitent. Cette fonctionnalité demande également une vérification de leur adresse électronique s’ils choisissent d’en changer. Ceci est un moyen efficace d’éviter l’inscription abusive et de vérifier que les utilisateurs ont une adresse électronique valide associée à leur profil."
 
 msgid "Report new label"
 msgstr "Signaler les nouveaux enregistrements"
 
 msgid "Report new help"
-msgstr "Si activé, ForkBB notiefiera will notify users on the mailing list (see above) when a new user registers in the forums."
+msgstr "Si activé, ForkBB notifiera les utilisateurs de la liste de diffusion (voir en dessous) quand un nouvel utilisateur s'enregistre sur le forum."
 
 msgid "Use rules label"
 msgstr "Règles utilisateur du forum"
@@ -409,7 +409,7 @@ msgid "Hidden voices label"
 msgstr "Nombre de voix"
 
 msgid "Hidden voices help"
-msgstr "Le nombre de votes avant que les résultats du sondage soient cachés. A régler dans le sondage."
+msgstr "Le nombre de votes avant que les résultats du sondage soient affichés. A régler dans le sondage."
 
 msgid "Result for guest label"
 msgstr "Resultat pour les invités"
@@ -487,7 +487,7 @@ msgid "User has reactioned label"
 msgstr "L’utilisateur à réagi"
 
 msgid "User has reactioned help"
-msgstr "Surligner les réactions que l’utilisateur a séléctionné pour le message affiché. Désactiver si vous expérimentez des surcharges serveur."
+msgstr "Surligner les réactions que l’utilisateur a sélectionné pour le message affiché. Désactiver si vous expérimentez des surcharges serveur."
 
 msgid "Auto language detection label"
 msgstr "Détection automatique du langage"

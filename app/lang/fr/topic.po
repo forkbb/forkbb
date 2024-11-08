@@ -90,10 +90,10 @@ msgid "Warnings"
 msgstr "Attention:"
 
 msgid "Reply"
-msgstr "Repondre"
+msgstr "Répondre"
 
 msgid "User info"
-msgstr "Information utilisateur"
+msgstr "Informations utilisateur"
 
 msgid "Visitors online"
 msgstr "Utilisateurs enreegistré en ligne sur cette discussion: <b>%1$s</b>, invités: <b>%2$s</b>."
@@ -102,7 +102,7 @@ msgid "Online users"
 msgstr "En ligne:"
 
 msgid "Stats info"
-msgstr "Information sur la discussion:"
+msgstr "Informations sur la discussion:"
 
 msgid "Merge posts"
 msgstr "Combiner avec la précedente (si votre)"
@@ -129,7 +129,7 @@ msgid "Attachments"
 msgstr "Pièces jointes"
 
 msgid "Change author and date"
-msgstr "Changer auteur et la date"
+msgstr "Changer l'auteur et la date"
 
 msgid "Solution"
 msgstr "Solution"

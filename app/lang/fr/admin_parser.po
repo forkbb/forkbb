@@ -25,7 +25,7 @@ msgid "BBCode label"
 msgstr "BBCode"
 
 msgid "BBCode help"
-msgstr "Autoriser le BBCode dans les messages (recommendé)."
+msgstr "Autoriser le BBCode dans les messages (recommandé)."
 
 msgid "BBCode sigs label"
 msgstr "BBCode dans les signatures"
@@ -46,7 +46,7 @@ msgid "Smilies sigs label"
 msgstr "Smileys dans les signatures"
 
 msgid "Smilies sigs help"
-msgstr "Convertir smilies en petites icones graphiques dans les signatures utilisateur."
+msgstr "Convertir smileys en petites icones graphiques dans les signatures utilisateur."
 
 msgid "Clickable links label"
 msgstr "Faire des liens cliquables"
@@ -58,10 +58,10 @@ msgid "BBCode management"
 msgstr "gestion du BBCode"
 
 msgid "Smilies management"
-msgstr "gestion des Smilies"
+msgstr "gestion des Smileys"
 
 msgid "Smilies head"
-msgstr "Smilies"
+msgstr "Smileys"
 
 msgid "Available images head"
 msgstr "Images disponibles"
@@ -169,7 +169,7 @@ msgid "Delete bbcode btn"
 msgstr "Effacer le BBCode"
 
 msgid "Tag label"
-msgstr "Tag"
+msgstr "Balise"
 
 msgid "Tag info"
 msgstr "nom du BB-code. Format de nom: <code>^[a-z\*][a-z\d-]{0,10}$</code>"

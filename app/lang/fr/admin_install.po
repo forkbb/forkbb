@@ -43,10 +43,10 @@ msgid "Database type"
 msgstr "Type de base de données"
 
 msgid "Info 2"
-msgstr "Choisier une base de données. Sont supportés SQLite, MySQL and PostgreSQL."
+msgstr "Choisir une base de données. Sont supportés SQLite, MySQL and PostgreSQL."
 
 msgid "Database server hostname"
-msgstr "Serveur hote de la base"
+msgstr "Serveur hôte de la base"
 
 msgid "Info 3"
 msgstr "Vous devriez pouvoir obtenir ces infos de votre hébergeur, si <code>localhost</code> ne fonctionne pas."
@@ -70,7 +70,7 @@ msgid "Table prefix"
 msgstr "Préfixe de la table"
 
 msgid "Info 6"
-msgstr "Le préfix peut contenir les lettres a à z, nombre et tiret_souligné. Il doivent toutefois commencer par une lettre. La taille maximum est de 40 caractères."
+msgstr "Le préfix peut contenir les lettres a à z, nombre et tiret_souligné. Il doit toutefois commencer par une lettre. La taille maximum est de 40 caractères."
 
 msgid "Administration setup"
 msgstr "<b>Installation de l’admministration</b>"
@@ -85,10 +85,10 @@ msgid "Info 8"
 msgstr "Le pseudo doit commencer par une lettre. Peut contenir lettres, nombres, espaces, points, tiret et souligné."
 
 msgid "Administrator passphrase"
-msgstr "Mot de passe administrateur"
+msgstr "Phrase de passe administrateur"
 
 msgid "Info 9"
-msgstr "Le mot de passe doit faire au moins 16 caractères de long. Sensible à la casse."
+msgstr "La phrase de passe doit faire au moins 16 caractères de long. Plusieurs mots séparés par des espaces. Sensible à la casse."
 
 msgid "Administrator email"
 msgstr "Email de l'administrateur"
@@ -124,7 +124,7 @@ msgid "You are running error"
 msgstr "Vous utilisez %1$s version %2$s. ForkBB rev.%3$s nécessite au moins %1$s %4$s pour fonctionner correctement. Vous devez mettre à jour votre installation de %1$s avant de pouvoir continuer."
 
 msgid "Alert folder %s"
-msgstr "In order for ForkBB fonctionne correctement, le dossier <em>%s</em> doit pouvoir être accéder en écriture par PHP. Utiliser chmod pour régler les permissions appropriées."
+msgstr "Pour que ForkBB fonctionne correctement, le dossier <em>%s</em> doit pouvoir être accédé en écriture par PHP. Utiliser chmod pour régler les permissions appropriées."
 
 msgid "No language packs"
 msgstr "Pas de packs de langue."
@@ -133,7 +133,7 @@ msgid "No styles"
 msgstr "Pas de styles."
 
 msgid "No DB extensions"
-msgstr "Cet environement PHP n’a aucun support que ForkBB supporte. PDO doit être activé."
+msgstr "Cet environement PHP n’a aucune extension de connexion à la base de données que ForkBB supporte. PDO doit être activé."
 
 msgid "No access to main.dist.php"
 msgstr "Pas d'accès à main.dist.php."
@@ -172,7 +172,7 @@ msgid "Guests"
 msgstr "Invités"
 
 msgid "Guest "
-msgstr "Invités"
+msgstr "Invité"
 
 msgid "Members"
 msgstr "Membres"
@@ -196,7 +196,7 @@ msgid "Test post"
 msgstr "Sujet test"
 
 msgid "Test message"
-msgstr "Si vous lisez ceci, l\installation de ForkBB semble avoir fonctionné! Maintenant connectez vous et direction le panneau de controle d'administration pour configurer votre forum."
+msgstr "Si vous lisez ceci, l'installation de ForkBB semble avoir fonctionné! Maintenant connectez vous et direction le panneau de controle d'administration pour configurer votre forum."
 
 msgid "Test category"
 msgstr "Catégorie de test"
@@ -223,13 +223,13 @@ msgid "Cookie setup"
 msgstr "<b>Réglage du cookie</b>"
 
 msgid "Info 12"
-msgstr "Les cookies sont des fichiers dédiés au site, ils permettent de stocker des données dans le navigateur de l’utilisateur,  ce qui est utilisé pour son authentification."
+msgstr "Les cookies sont des fichiers dédiés au site, ils permettent de stocker des données dans le navigateur de l’utilisateur, ce qui est utilisé pour son authentification."
 
 msgid "Cookie Domain"
 msgstr "Domaine du cookie"
 
 msgid "Cookie Domain info"
-msgstr "Si vous spécifiez un (sub)domain, alors les cookies déployés par le forum seront disponibles por lui et <b>tous les sous-domaines </b>! www.example.com et example.com <b>ne sont pas le même domaine</b>. www.example.com est un sous-domaine de example.com. <b>Laisser ce champ vide</b> si le cookie est uniquement pour le domaine du forum."
+msgstr "Si vous spécifiez un (sous)domaine, alors les cookies déployés par le forum seront disponibles pour lui et <b>tous les sous-domaines </b>! www.example.com et example.com <b>ne sont pas le même domaine</b>. www.example.com est un sous-domaine de example.com. <b>Laisser ce champ vide</b> si le cookie est uniquement pour le domaine du forum."
 
 msgid "Cookie Path"
 msgstr "Chemin du cookie"
@@ -247,16 +247,16 @@ msgid "Cookie Secure"
 msgstr "Cookie Secure"
 
 msgid "Cookie Secure info"
-msgstr "Indique que le cookie devrait être transmis uniquement sur une connexion sécurisées <b>HTTPS</b> avec le client. Si <b>YES</b>, le cookie sera uniquement crée si une connexion sécurisée existe.."
+msgstr "Indique que le cookie devrait être transmis uniquement sur une connexion sécurisée <b>HTTPS</b> avec le client. Si <b>YES</b>, le cookie sera uniquement crée si une connexion sécurisée existe."
 
 msgid "Failed to create table"
-msgstr "La création de la table dans la base de données sélectionnée à échouée."
+msgstr "La création de la table dans la base de données sélectionnée à échoué."
 
 msgid "Wrong data type for numeric fields"
-msgstr "Le pilote PDO retourne des types de données incorrectes pour les champs numérique, probablement des chaines. Pour MySQL, la raison la plus probable est que pdo_mysql extension utilise la bibliothèque libmysql et pas mysqlnd. Changez la configuration de PHP(Parmi les extensions PHP dans le panneau de commande, il peut y avoir nd_pdo_mysql, selectionner celui au lieu de pdo_mysql)."
+msgstr "Le pilote PDO retourne des types de données incorrectes pour les champs numériques, probablement des chaines. Pour MySQL, la raison la plus probable est que pdo_mysql extension utilise la bibliothèque libmysql et pas mysqlnd. Changez la configuration de PHP(Parmi les extensions PHP dans le panneau de commande, il peut y avoir nd_pdo_mysql, sélectionner celui au lieu de pdo_mysql)."
 
 msgid "Failed to drop table"
-msgstr "Echec du vidage de la table dans la base séléctionnée."
+msgstr "Echec du vidage de la table dans la base sélectionnée."
 
 msgid "Failed to truncate table"
-msgstr "Echec du tronquage d’une table dans la base séléctionnée."
+msgstr "Echec du tronquage d’une table dans la base sélectionnée."

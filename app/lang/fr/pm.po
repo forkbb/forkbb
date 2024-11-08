@@ -13,7 +13,7 @@ msgstr ""
 "Language: fr\n"
 
 msgid "PM Folders"
-msgstr "Dossierrs"
+msgstr "Dossiers"
 
 msgid "New messages"
 msgstr "Nouveaux messages"
@@ -103,7 +103,7 @@ msgid "Dialogue %s was not found in the database"
 msgstr "Le dialogue %s n’a pas été trouvé dans la base de données."
 
 msgid "Select"
-msgstr "Séléctionner"
+msgstr "Sélectionner"
 
 msgid "Closed"
 msgstr "Fermé"
@@ -127,7 +127,7 @@ msgid "Dialogue is locked"
 msgstr "Les actions sur ce dialogue sont bloquées."
 
 msgid "Target pm off"
-msgstr "Le destinataire à désactivé les messages privés."
+msgstr "Le destinataire a désactivé les messages privés."
 
 msgid "Target group pm off"
 msgstr "Le groupe de destinataires n’a pas accès aux messages privés."
@@ -202,7 +202,7 @@ msgid "Unknown action selected"
 msgstr "Action inconnue."
 
 msgid "Dialogue %s is not yours"
-msgstr "Dialogue %s n’est pas le votre."
+msgstr "Le dialogue %s n’est pas le votre."
 
 msgid "InfoDeleteQ"
 msgstr "Confirmer la suppression"

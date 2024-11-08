@@ -130,7 +130,7 @@ msgid "Count messages label"
 msgstr "Compter les messages utilisateurs"
 
 msgid "Count messages help"
-msgstr "Si OUI, alors les nouveaux messages des utilisateurs du forum verront leur compteur de messages croitre dans leur profile. Vous pouvez relcalculer les messages de tous les utilisateurs ici <a href=\"%1$s\">%2$s</a>."
+msgstr "Si OUI, alors les nouveaux messages des utilisateurs du forum verront leur compteur de messages croitre dans leur profil. Vous pouvez relcalculer les messages de tous les utilisateurs ici <a href=\"%1$s\">%2$s</a>."
 
 msgid "<span></span>"
 msgstr "<span></span>"
@@ -151,7 +151,7 @@ msgid "Use custom fields label"
 msgstr "Utiliser des champs modifiés"
 
 msgid "Use custom fields help"
-msgstr "Autoriser des champs modifiés à être utilisé lors de la créatonde discussions. N’affecte pas les discussions existantes."
+msgstr "Autoriser des champs modifiés à être utilisés lors de la création de discussions. N’affecte pas les discussions existantes."
 
 msgid "Customize fields"
 msgstr "modifier les champs"
@@ -169,7 +169,7 @@ msgid "Add field head"
 msgstr "ajouter un champ ( head )"
 
 msgid "Edit field head"
-msgstr "Editer champ"
+msgstr "Modifier le champ"
 
 msgid "Field required label"
 msgstr "Nécessaire"
@@ -196,10 +196,10 @@ msgid "Fields updated redirect"
 msgstr "Champs mis à jour."
 
 msgid "Field deleted redirect"
-msgstr "Champ effacé."
+msgstr "Champ supprimé."
 
 msgid "I want to delete field %s"
-msgstr "Oui, je veux effacer ce champ <b>%s</b>"
+msgstr "Oui, je veux supprimer ce champ <b>%s</b>"
 
 msgid "Delete field"
-msgstr "Effacer le champ"
+msgstr "Supprimer le champ"

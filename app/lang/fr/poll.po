@@ -100,7 +100,7 @@ msgid "No vote on question %s"
 msgstr "Pas de vote sur la question %s."
 
 msgid "The selected answer is not present in question %s"
-msgstr "La réponse séléctionnée nest pas présente sur la question %s."
+msgstr "La réponse sélectionnée nest pas présente sur la question %s."
 
 msgid "Too many answers selected in question %s"
-msgstr "Trop de réponses séléctionnées pour la question %s."
+msgstr "Trop de réponses sélectionnées pour la question %s."
