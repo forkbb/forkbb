@@ -223,19 +223,19 @@ msgid "Max width label"
 msgstr "Макс. ширина"
 
 msgid "Max width help"
-msgstr "Макс. разрешённая ширина аватары в пикселях (рекомендуется 60)."
+msgstr "Макс. разрешённая ширина аватары в пикселях."
 
 msgid "Max height label"
 msgstr "Макс. высота"
 
 msgid "Max height help"
-msgstr "Макс. разрешённая высота аватары в пикселях (рекомендуется 60)."
+msgstr "Макс. разрешённая высота аватары в пикселях."
 
 msgid "Max size label"
 msgstr "Макс. размер"
 
 msgid "Max size help"
-msgstr "Макс. разрешённый размер аватары в байтах (рекомендуется 10240)."
+msgstr "Макс. разрешённый размер аватары в байтах."
 
 msgid "Avatar quality label"
 msgstr "Качество"

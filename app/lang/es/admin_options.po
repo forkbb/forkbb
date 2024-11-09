@@ -223,19 +223,19 @@ msgid "Max width label"
 msgstr "Anchura máxima"
 
 msgid "Max width help"
-msgstr "El ancho máximo permitido de avatares en píxeles (se recomienda 60)."
+msgstr "El ancho máximo permitido de avatares en píxeles."
 
 msgid "Max height label"
 msgstr "Altura máxima"
 
 msgid "Max height help"
-msgstr "La altura máxima permitida de los avatares en píxeles (se recomienda 60)."
+msgstr "La altura máxima permitida de los avatares en píxeles."
 
 msgid "Max size label"
 msgstr "Tamaño máximo"
 
 msgid "Max size help"
-msgstr "El tamaño máximo permitido de los avatares en bytes (se recomienda 10240)."
+msgstr "El tamaño máximo permitido de los avatares en bytes."
 
 msgid "Avatar quality label"
 msgstr "Calidad"
