@@ -27,7 +27,7 @@
         "miovisman/normemail": "^1.0.0",
         "psr/simple-cache": "^3",
         "psr/log": "^3",
-        "miovisman/jevix": "^2.2.0"
+        "miovisman/jevix": "^2.3.0"
     },
     "suggest": {
         "ext-openssl": "Needed to send email via smtp server using SSL/TLS.",
