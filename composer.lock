@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "90982c2733edc788d9a1eb35065b863d",
+    "content-hash": "1f491f36cecccfb5f17865bd2cbb4352",
     "packages": [
         {
             "name": "miovisman/jevix",
-            "version": "2.2.1",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MioVisman/Jevix.git",
-                "reference": "bd9807b8e3ea26567e775ee1d372b417440b1198"
+                "reference": "4375a6f241443fd6315ac815a7e80e85a00b184b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MioVisman/Jevix/zipball/bd9807b8e3ea26567e775ee1d372b417440b1198",
-                "reference": "bd9807b8e3ea26567e775ee1d372b417440b1198",
+                "url": "https://api.github.com/repos/MioVisman/Jevix/zipball/4375a6f241443fd6315ac815a7e80e85a00b184b",
+                "reference": "4375a6f241443fd6315ac815a7e80e85a00b184b",
                 "shasum": ""
             },
             "require": {
@@ -60,9 +60,9 @@
             ],
             "description": "Library for html filtering",
             "support": {
-                "source": "https://github.com/MioVisman/Jevix/tree/2.2.1"
+                "source": "https://github.com/MioVisman/Jevix/tree/2.3.0"
             },
-            "time": "2021-03-04T06:07:15+00:00"
+            "time": "2024-11-22T11:50:33+00:00"
         },
         {
             "name": "miovisman/normemail",
@@ -116,16 +116,16 @@
         },
         {
             "name": "miovisman/parserus",
-            "version": "1.2.1",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MioVisman/Parserus.git",
-                "reference": "cfb7aaf20b5250e9bdfa808a5c68425dfea3c1c9"
+                "reference": "8103acdf757c5fd2d683d279c621b2aadc513919"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MioVisman/Parserus/zipball/cfb7aaf20b5250e9bdfa808a5c68425dfea3c1c9",
-                "reference": "cfb7aaf20b5250e9bdfa808a5c68425dfea3c1c9",
+                "url": "https://api.github.com/repos/MioVisman/Parserus/zipball/8103acdf757c5fd2d683d279c621b2aadc513919",
+                "reference": "8103acdf757c5fd2d683d279c621b2aadc513919",
                 "shasum": ""
             },
             "require": {
@@ -156,22 +156,22 @@
             ],
             "support": {
                 "issues": "https://github.com/MioVisman/Parserus/issues",
-                "source": "https://github.com/MioVisman/Parserus/tree/1.2.1"
+                "source": "https://github.com/MioVisman/Parserus/tree/1.5.0"
             },
-            "time": "2023-06-17T13:00:37+00:00"
+            "time": "2024-11-22T11:36:59+00:00"
         },
         {
             "name": "psr/log",
-            "version": "3.0.0",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "fe5ea303b0887d5caefd3d431c3e61ad47037001"
+                "reference": "f16e1d5863e37f8d8c2a01719f5b34baa2b714d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/fe5ea303b0887d5caefd3d431c3e61ad47037001",
-                "reference": "fe5ea303b0887d5caefd3d431c3e61ad47037001",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/f16e1d5863e37f8d8c2a01719f5b34baa2b714d3",
+                "reference": "f16e1d5863e37f8d8c2a01719f5b34baa2b714d3",
                 "shasum": ""
             },
             "require": {
@@ -206,9 +206,9 @@
                 "psr-3"
             ],
             "support": {
-                "source": "https://github.com/php-fig/log/tree/3.0.0"
+                "source": "https://github.com/php-fig/log/tree/3.0.2"
             },
-            "time": "2021-07-14T16:46:02+00:00"
+            "time": "2024-09-11T13:17:53+00:00"
         },
         {
             "name": "psr/simple-cache",
@@ -265,7 +265,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
@@ -276,6 +276,6 @@
         "ext-json": "*",
         "ext-pdo": "*"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }
