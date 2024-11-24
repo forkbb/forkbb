@@ -1,4 +1,4 @@
-Asunto: Bienvenido a {!fTitle!}!
+Subject: Bienvenido a {!fTitle!}!
 
 Gracias por registrarte en los foros de {!fRootLink!}.
 

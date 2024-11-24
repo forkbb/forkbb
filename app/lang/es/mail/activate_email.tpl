@@ -1,4 +1,4 @@
-Asunto: Activar dirección de correo electrónico solicitada
+Subject: Activar dirección de correo electrónico solicitada
 
 Hola {!username!},
 

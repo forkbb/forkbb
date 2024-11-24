@@ -1,4 +1,4 @@
-Asunto: Nuevo tema en el foro: {!forumName!}
+Subject: Nuevo tema en el foro: {!forumName!}
 
 '{!poster!}' ha publicado un nuevo tema '{!topicSubject!}' en el foro '{!forumName!}', al que estás suscrito.
 

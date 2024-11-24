@@ -1,4 +1,4 @@
-Asunto: Nueva frase de contraseña solicitada
+Subject: Nueva frase de contraseña solicitada
 
 Hola {!username!},
 

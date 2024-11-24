@@ -1,4 +1,4 @@
-Asunto: Respuesta al tema: {!topicSubject!}
+Subject: Respuesta al tema: {!topicSubject!}
 Content-Type: text/html; charset=UTF-8
 
 <html lang="es" dir="ltr">

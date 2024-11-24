@@ -1,4 +1,4 @@
-Asunto: Alerta - Nuevo registro
+Subject: Alerta - Nuevo registro
 
 El usuario '{!username!}' se ha registrado en los foros de {!fRootLink!}
 

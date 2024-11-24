@@ -1,4 +1,4 @@
-Asunto: Nuevo mensaje privado: {!pmSubject!}
+Subject: Nuevo mensaje privado: {!pmSubject!}
 
 Hola, {!username!}!
 

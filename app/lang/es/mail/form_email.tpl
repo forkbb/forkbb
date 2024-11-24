@@ -1,4 +1,4 @@
-Asunto: {!mailSubject!}
+Subject: {!mailSubject!}
 
 Hola {!username!},
 

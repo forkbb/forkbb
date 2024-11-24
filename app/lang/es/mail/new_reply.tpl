@@ -1,4 +1,4 @@
-Asunto: Respuesta al tema: {!topicSubject!}
+Subject: Respuesta al tema: {!topicSubject!}
 
 '{!replier!}' ha respondido al tema '{!topicSubject!}' al que estás suscrito. Puede que haya más respuestas nuevas, pero ésta es la única notificación que recibirá hasta que vuelva a visitar el foro.
 

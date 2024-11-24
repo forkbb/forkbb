@@ -1,4 +1,4 @@
-Asunto: Nuevo tema en el foro: {!forumName!}
+Subject: Nuevo tema en el foro: {!forumName!}
 Content-Type: text/html; charset=UTF-8
 
 <html lang="es" dir="ltr">

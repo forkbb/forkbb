@@ -1,4 +1,4 @@
-Asunto: Reporte ({!forumId!}) - '{!topicSubject!}'
+Subject: Reporte ({!forumId!}) - '{!topicSubject!}'
 
 El usuario '{!username!}' ha reportado el siguiente mensaje: {!postLink!}
 
