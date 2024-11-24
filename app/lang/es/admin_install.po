@@ -235,7 +235,7 @@ msgid "Cookie Path"
 msgstr "Ruta de la cookie"
 
 msgid "Cookie Path info"
-msgstr "La ruta en el servidor en el que estará disponible la cookie. Si se establece en <b>/</b>, la cookie estará disponible en todo el dominio. Si se establece en <b>/foo/</b>, la cookie solo estará disponible dentro del directorio <b>/foo/</b> y en todos los subdirectorios como <b>/foo/bar/</. b> de dominio."
+msgstr "La ruta en el servidor en el que estará disponible la cookie. Si se establece en <b>/</b>, la cookie estará disponible en todo el dominio. Si se establece en <b>/foo/</b>, la cookie solo estará disponible dentro del directorio <b>/foo/</b> y en todos los subdirectorios como <b>/foo/bar/</b> de dominio."
 
 msgid "Yes "
 msgstr "Si"
