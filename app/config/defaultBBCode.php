@@ -105,7 +105,7 @@ $text  = $parser->getText($id);
 $ident = $parser->createIdentifier($text);
 $ident = $parser->e($ident);
 
-return "</p><p id=\"{$ident}\" class=\"f-bb-h3\">{$body}</p><p>";
+return "</p><div id=\"{$ident}\" class=\"f-bb-h3\"><p>{$body}</p></div><p>";
 HANDLER,
     ],
     [
@@ -116,7 +116,7 @@ $text  = $parser->getText($id);
 $ident = $parser->createIdentifier($text);
 $ident = $parser->e($ident);
 
-return "</p><p id=\"{$ident}\" class=\"f-bb-h1\">{$body}</p><p>";
+return "</p><div id=\"{$ident}\" class=\"f-bb-h1\"><p>{$body}</p></div><p>";
 HANDLER,
     ],
     [
@@ -127,7 +127,7 @@ $text  = $parser->getText($id);
 $ident = $parser->createIdentifier($text);
 $ident = $parser->e($ident);
 
-return "</p><p id=\"{$ident}\" class=\"f-bb-h2\">{$body}</p><p>";
+return "</p><div id=\"{$ident}\" class=\"f-bb-h2\"><p>{$body}</p></div><p>";
 HANDLER,
     ],
     [
@@ -138,7 +138,7 @@ $text  = $parser->getText($id);
 $ident = $parser->createIdentifier($text);
 $ident = $parser->e($ident);
 
-return "</p><p id=\"{$ident}\" class=\"f-bb-h3\">{$body}</p><p>";
+return "</p><div id=\"{$ident}\" class=\"f-bb-h3\"><p>{$body}</p></div><p>";
 HANDLER,
     ],
     [
@@ -149,7 +149,7 @@ $text  = $parser->getText($id);
 $ident = $parser->createIdentifier($text);
 $ident = $parser->e($ident);
 
-return "</p><p id=\"{$ident}\" class=\"f-bb-h4\">{$body}</p><p>";
+return "</p><div id=\"{$ident}\" class=\"f-bb-h4\"><p>{$body}</p></div><p>";
 HANDLER,
     ],
     [
@@ -160,7 +160,7 @@ $text  = $parser->getText($id);
 $ident = $parser->createIdentifier($text);
 $ident = $parser->e($ident);
 
-return "</p><p id=\"{$ident}\" class=\"f-bb-h5\">{$body}</p><p>";
+return "</p><div id=\"{$ident}\" class=\"f-bb-h5\"><p>{$body}</p></div><p>";
 HANDLER,
     ],
     [
@@ -171,7 +171,7 @@ $text  = $parser->getText($id);
 $ident = $parser->createIdentifier($text);
 $ident = $parser->e($ident);
 
-return "</p><p id=\"{$ident}\" class=\"f-bb-h6\">{$body}</p><p>";
+return "</p><div id=\"{$ident}\" class=\"f-bb-h6\"><p>{$body}</p></div><p>";
 HANDLER,
     ],
     [
@@ -330,6 +330,7 @@ HANDLER,
     [
         'tag' => 'left',
         'type' => 'block',
+        'parents' => ['block', 'h'],
         'handler' => <<<'HANDLER'
 return "</p><p class=\"f-bb-left\">{$body}</p><p>";
 HANDLER,
@@ -337,6 +338,7 @@ HANDLER,
     [
         'tag' => 'right',
         'type' => 'block',
+        'parents' => ['block', 'h'],
         'handler' => <<<'HANDLER'
 return "</p><p class=\"f-bb-right\">{$body}</p><p>";
 HANDLER,
@@ -344,6 +346,7 @@ HANDLER,
     [
         'tag' => 'center',
         'type' => 'block',
+        'parents' => ['block', 'h'],
         'handler' => <<<'HANDLER'
 return "</p><p class=\"f-bb-center\">{$body}</p><p>";
 HANDLER,
@@ -351,6 +354,7 @@ HANDLER,
     [
         'tag' => 'justify',
         'type' => 'block',
+        'parents' => ['block', 'h'],
         'handler' => <<<'HANDLER'
 return "</p><p class=\"f-bb-justify\">{$body}</p><p>";
 HANDLER,

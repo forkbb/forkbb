@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '8.0.0';
     const REV_MIN_FOR_UPDATE         = 53;
-    const LATEST_REV_WITH_DB_CHANGES = 83;
+    const LATEST_REV_WITH_DB_CHANGES = 85;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
     const CONFIG_FILE                = 'main.php';
@@ -1307,6 +1307,35 @@ class Update extends Admin
         $coreConfig->save();
 
         $this->c->DB->addField('::users', 'locale', 'VARCHAR(20)', false, 'en', null, 'language');
+
+        return null;
+    }
+
+    /**
+     * rev.84 to rev.85
+     */
+    protected function stageNumber84(array $args): ?int
+    {
+        $queryU  = 'UPDATE ::bbcode
+            SET bb_structure=?s:structure
+            WHERE bb_tag=?s:tag';
+        $bbcodes = include $this->c->DIR_CONFIG . '/defaultBBCode.php';
+
+        $tagsUpd = ['h', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'left', 'right', 'center', 'justify'];
+        $tagsUpd = \array_flip($tagsUpd);
+
+        foreach ($bbcodes as $bbcode) {
+            if (! isset($tagsUpd[$bbcode['tag']])) {
+                continue;
+            }
+
+            $vars = [
+                ':tag'       => $bbcode['tag'],
+                ':structure' => \json_encode($bbcode, FORK_JSON_ENCODE),
+            ];
+
+            $this->c->DB->exec($queryU, $vars);
+        }
 
         return null;
     }
