@@ -26,25 +26,34 @@ class Categories extends Admin
         $this->c->Lang->load('validator');
         $this->c->Lang->load('admin_categories');
 
+        $list = $this->c->categories->repository;
+
         if ('POST' === $method) {
             $v = $this->c->Validator->reset()
                 ->addRules([
                     'token'                => 'token:AdminCategories',
-                    'form'                 => 'required|array',
-                    'form.*.cat_name'      => 'required|string:trim|max:80',
-                    'form.*.disp_position' => 'required|integer|min:0|max:9999999999',
                     'new'                  => 'exist|string:trim|max:80'
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
                 ]);
 
-            if ($v->validation($_POST)) {
-                foreach ($v->form as $key => $row) {
-                    $this->c->categories->set($key, $row);
-                }
+            if (! empty($list)) {
+                $v->addRules([
+                    'form'                 => 'required|array',
+                    'form.*.cat_name'      => 'required|string:trim|max:80',
+                    'form.*.disp_position' => 'required|integer|min:0|max:9999999999',
+                ]);
+            }
 
-                $this->c->categories->update();
+            if ($v->validation($_POST)) {
+                if (! empty($list)) {
+                    foreach ($v->form as $key => $row) {
+                        $this->c->categories->set($key, $row);
+                    }
+
+                    $this->c->categories->update();
+                }
 
                 if (\strlen($v->new) > 0) {
                     $this->c->categories->insert($v->new);
