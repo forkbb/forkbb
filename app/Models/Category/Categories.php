@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Category;
 
 use ForkBB\Models\Manager;
+use ForkBB\Models\Forum\Forum;
 use PDO;
 use InvalidArgumentException;
 use RuntimeException;
@@ -114,16 +115,19 @@ class Categories extends Manager
     public function delete(int $cid): Categories
     {
         $root = $this->c->forums->get(0);
-        $del  = [];
 
-        foreach ($root->subforums as $forum) {
-            if ($forum->cat_id === $cid) {
-                $del = \array_merge($del, [$forum], $forum->descendants);
+        if ($root instanceof Forum) {
+            $del = [];
+
+            foreach ($root->subforums as $forum) {
+                if ($forum->cat_id === $cid) {
+                    $del = \array_merge($del, [$forum], $forum->descendants);
+                }
             }
-        }
 
-        if ($del) {
-            $this->c->forums->delete(...$del);
+            if ($del) {
+                $this->c->forums->delete(...$del);
+            }
         }
 
         $vars = [
