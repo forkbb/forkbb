@@ -44,8 +44,11 @@ class Mod extends Profile
                 ])->addMessages([
                 ]);
 
-            if ($v->validation($_POST)) {
-                foreach ($this->c->forums->get(0)->descendants as $forum) {
+            if (
+                $v->validation($_POST)
+                && ($root = $this->c->forums->get(0)) instanceof Forum
+            ) {
+                foreach ($root->descendants as $forum) {
                     if (
                         isset($v->moderator[$forum->id])
                         && $v->moderator[$forum->id] === $forum->id
@@ -54,6 +57,7 @@ class Mod extends Profile
                     } else {
                         $forum->modDelete($this->curUser);
                     }
+
                     $this->c->forums->update($forum);
                 }
 
