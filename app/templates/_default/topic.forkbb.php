@@ -88,7 +88,7 @@
     <section id="fork-topic" class="f-main">
       <h2>{!! __('Post list') !!}</h2>
 @foreach ($p->posts as $id => $post)
-    @empty ($post->id))
+    @empty ($post->id)
         @php $iswev = [FORK_MESS_ERR => [['Message %s was not found in the database', $id]]]; @endphp
         @include ('layouts/iswev')
     @else
