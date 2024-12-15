@@ -961,6 +961,29 @@ class Install extends Admin
         ];
         $this->c->DB->createTable('::posts', $schema);
 
+        // drafts
+        $schema = [
+            'FIELDS' => [
+                'id'           => ['SERIAL', false],
+                'poster_id'    => ['INT(10) UNSIGNED', false, 0],
+                'topic_id'     => ['INT(10) UNSIGNED', false, 0],
+                'forum_id'     => ['INT(10) UNSIGNED', false, 0],
+                'poster_ip'    => ['VARCHAR(45)', false, ''],
+                'subject'      => ['VARCHAR(255)', false, ''],
+                'message'      => ['MEDIUMTEXT', false],
+                'hide_smilies' => ['TINYINT(1)', false, 0],
+                'form_data'    => ['MEDIUMTEXT', false],
+            ],
+            'PRIMARY KEY' => ['id'],
+            'INDEXES' => [
+                'poster_id_idx' => ['poster_id'],
+                'multi1_idx'    => ['topic_id', 'poster_id'],
+                'multi2_idx'    => ['forum_id', 'poster_id'],
+            ],
+            'ENGINE' => $this->DBEngine,
+        ];
+        $this->c->DB->createTable('::drafts', $schema);
+
         // reactions
         $schema = [
             'FIELDS' => [
@@ -1211,6 +1234,7 @@ class Install extends Admin
                 'style'            => ['VARCHAR(25)', false, ''],
                 'num_posts'        => ['INT(10) UNSIGNED', false, 0],
                 'num_topics'       => ['INT(10) UNSIGNED', false, 0],
+                'num_drafts'       => ['INT(10) UNSIGNED', false, 0],
                 'last_post'        => ['INT(10) UNSIGNED', false, 0],
                 'last_search'      => ['INT(10) UNSIGNED', false, 0],
                 'last_email_sent'  => ['INT(10) UNSIGNED', false, 0],

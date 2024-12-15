@@ -1337,6 +1337,30 @@ class Update extends Admin
             $this->c->DB->exec($queryU, $vars);
         }
 
+        // drafts
+        $schema = [
+            'FIELDS' => [
+                'id'           => ['SERIAL', false],
+                'poster_id'    => ['INT(10) UNSIGNED', false, 0],
+                'topic_id'     => ['INT(10) UNSIGNED', false, 0],
+                'forum_id'     => ['INT(10) UNSIGNED', false, 0],
+                'poster_ip'    => ['VARCHAR(45)', false, ''],
+                'subject'      => ['VARCHAR(255)', false, ''],
+                'message'      => ['MEDIUMTEXT', false],
+                'hide_smilies' => ['TINYINT(1)', false, 0],
+                'form_data'    => ['MEDIUMTEXT', false],
+            ],
+            'PRIMARY KEY' => ['id'],
+            'INDEXES' => [
+                'poster_id_idx' => ['poster_id'],
+                'multi1_idx'    => ['topic_id', 'poster_id'],
+                'multi2_idx'    => ['forum_id', 'poster_id'],
+            ],
+        ];
+        $this->c->DB->createTable('::drafts', $schema);
+
+        $this->c->DB->addField('::users', 'num_drafts', 'INT(10) UNSIGNED', false, 0, 'num_topics');
+
         return null;
     }
 }
