@@ -188,6 +188,16 @@ trait PostValidatorTrait
             $ruleHideSmilies = 'absent';
         }
 
+        if (
+            $notPM
+            && ! $edit
+            && ! $about
+        ) {
+            $ruleDraft = 'string|check_timeout';
+        } else {
+            $ruleDraft = 'absent';
+        }
+
         $ruleMessage = ($about ? '' : 'required|') . 'string:trim|max:' . $this->c->MAX_POST_SIZE . ($executive ? '' : '|noURL') . '|check_message';
 
         $v = $this->c->Validator->reset()
@@ -209,6 +219,7 @@ trait PostValidatorTrait
                 'terms'        => 'absent',
                 'preview'      => 'string',
                 'submit'       => 'string|check_timeout',
+                'draft'        => $ruleDraft,
                 'message'      => $ruleMessage,
             ])->addAliases([
                 'email'        => 'Email',

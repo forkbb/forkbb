@@ -13,6 +13,8 @@ namespace ForkBB\Models\Pages;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Model;
 use ForkBB\Models\Page;
+use ForkBB\Models\Draft\Draft;
+use ForkBB\Models\Forum\Forum;
 use ForkBB\Models\Topic\Topic;
 use function \ForkBB\__;
 
@@ -22,6 +24,41 @@ class Post extends Page
     use PostValidatorTrait;
     use PostCFTrait;
 
+    protected ?Draft $draft  = null;
+    protected string $marker = '';
+
+    /**
+     * Обрабатывает черновик
+     */
+    public function draft(array $args, string $method): Page
+    {
+        $draft = $this->c->drafts->load($args['did']);
+
+        if (
+            ! $draft instanceof Draft
+        ) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $this->draft          = $draft;
+        $this->marker         = 'Draft';
+        $vars                 = $draft->form_data;
+        $vars['subject']      = $draft->subject;
+        $vars['message']      = $draft->message;
+        $vars['hide_smilies'] = $draft->hide_smilies;
+        $args['_vars']        = $vars;
+
+        if ($draft->topic_id > 0)  {
+            $args['id'] = $draft->topic_id;
+            $result     = $this->newReply($args, $method);
+        } else {
+            $args['id'] = $draft->forum_id;
+            $result     = $this->newTopic($args, $method);
+        }
+
+        return $result;
+    }
+
     /**
      * Создание новой темы
      */
@@ -30,7 +67,7 @@ class Post extends Page
         $forum = $this->c->forums->get($args['id']);
 
         if (
-            empty($forum)
+            ! $forum instanceof Forum
             || $forum->redirect_url
             || ! $forum->canCreateTopic
         ) {
@@ -55,7 +92,7 @@ class Post extends Page
         }
 
         if ('POST' === $method) {
-            $v = $this->messageValidator($forum, 'NewTopic', $args, false, true);
+            $v = $this->messageValidator($forum, $this->marker ?: 'NewTopic', $args, false, true);
 
             if ($this->customFieldsLevel > 0) {
                 $this->addCFtoMessageValidator($forum->custom_fields, $this->customFieldsLevel, $v);
@@ -71,9 +108,12 @@ class Post extends Page
             if (
                 $v->validation($_POST, $this->user->isGuest) //????
                 && null === $v->preview
-                && null !== $v->submit
             ) {
-                return $this->endPost($forum, $v);
+                if (null !== $v->submit) {
+                    return $this->endPost($forum, $v);
+                } elseif (null !== $v->draft) {
+                    return $this->endDraft($forum, $v);
+                }
             }
 
             $this->fIswev  = $v->getErrors();
@@ -104,7 +144,7 @@ class Post extends Page
         $this->robots     = 'noindex';
         $this->formTitle  = 'Post new topic';
         $this->crumbs     = $this->crumbs($this->formTitle, $forum);
-        $this->form       = $this->messageForm($forum, 'NewTopic', $args, false, true, false);
+        $this->form       = $this->messageForm($forum, $this->marker ?: 'NewTopic', $args, false, true, false);
 
         if ($this->customFieldsLevel > 0) {
             $this->form = $this->addCFtoMessageForm($forum->custom_fields, $this->customFieldsLevel, $this->form, $args);
@@ -132,7 +172,7 @@ class Post extends Page
         $this->onlinePos = 'topic-' . $topic->id;
 
         if ('POST' === $method) {
-            $v = $this->messageValidator($topic, 'NewReply', $args, false, false);
+            $v = $this->messageValidator($topic, $this->marker ?: 'NewReply', $args, false, false);
 
             if ($this->user->isGuest) {
                 $v = $this->c->Test->beforeValidation($v);
@@ -141,9 +181,12 @@ class Post extends Page
             if (
                 $v->validation($_POST, $this->user->isGuest) //????
                 && null === $v->preview
-                && null !== $v->submit
             ) {
-                return $this->endPost($topic, $v);
+                if (null !== $v->submit) {
+                    return $this->endPost($topic, $v);
+                } elseif (null !== $v->draft) {
+                    return $this->endDraft($topic, $v);
+                }
             }
 
             $this->fIswev  = $v->getErrors();
@@ -178,7 +221,7 @@ class Post extends Page
         $this->robots     = 'noindex';
         $this->formTitle  = 'Post a reply';
         $this->crumbs     = $this->crumbs($this->formTitle, $topic);
-        $this->form       = $this->messageForm($topic, 'NewReply', $args, false, false, false);
+        $this->form       = $this->messageForm($topic, $this->marker ?: 'NewReply', $args, false, false, false);
         $this->postsTitle = 'Topic review';
         $this->posts      = $topic->review();
 
@@ -186,7 +229,46 @@ class Post extends Page
     }
 
     /**
-     * Создание темы/сообщения
+     * Создает черновик
+     */
+    protected function endDraft(Model $model, Validator $v): Page
+    {
+        if ($this->draft instanceof Draft) {
+            $draft = $this->draft;
+        } else {
+            $draft = $this->c->drafts->create();
+
+            if ($model instanceof Forum) {
+                $draft->forum_id = $model->id;
+            } else {
+                $draft->topic_id = $model->id;
+            }
+
+            $draft->poster_id = $this->user->id;
+        }
+
+        $draft->subject      = $v->subject ?? '';
+        $draft->message      = $v->message;
+        $draft->hide_smilies = $v->hide_smilies ? 1 : 0;
+        $draft->form_data    = $v->getData(false, ['token', 'subject', 'message', 'hide_smilies', 'preview', 'submit', 'draft']);
+
+        if ($this->draft instanceof Draft) {
+            $this->c->drafts->update($draft);
+        } else {
+            $this->c->drafts->insert($draft);
+
+            ++$this->c->user->draft;
+        }
+
+        $this->user->last_post = \time();
+
+        $this->c->users->update($this->user);
+
+        return $this->c->Redirect->url($draft->link)->message('Post redirect', FORK_MESS_SUCC);
+    }
+
+    /**
+     * Создает тему/сообщение
      */
     protected function endPost(Model $model, Validator $v): Page
     {

@@ -58,6 +58,18 @@ trait PostFormTrait
             ];
         }
 
+        if (
+            $notPM
+            && ! $edit
+            && ! $about
+        ) {
+            $form['btns']['draft'] = [
+                'type'  => 'submit',
+                'class' => ['f-opacity'],
+                'value' => __('To draft'),
+            ];
+        }
+
         $fieldset = [];
 
         if ($this->user->isGuest) {
