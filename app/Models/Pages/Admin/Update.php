@@ -1361,6 +1361,35 @@ class Update extends Admin
 
         $this->c->DB->addField('::users', 'num_drafts', 'INT(10) UNSIGNED', false, 0, 'num_topics');
 
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'shared=>drafts',
+            '\\ForkBB\\Models\\Draft\\Drafts::class',
+            'posts'
+        );
+
+        $coreConfig->add(
+            'multiple=>DraftModel',
+            '\\ForkBB\\Models\\Draft\\Draft::class',
+            'PostModel'
+        );
+
+        $coreConfig->add(
+            'shared=>Drafts/load',
+            '\\ForkBB\\Models\\Draft\\Load::class',
+            'Posts/view'
+        );
+
+        $coreConfig->add(
+            'shared=>Drafts/save',
+            '\\ForkBB\\Models\\Draft\\Save::class',
+            'Drafts/load'
+        );
+
+
+        $coreConfig->save();
+
         return null;
     }
 }

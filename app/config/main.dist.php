@@ -171,6 +171,7 @@ return [
         'forums'        => '@ForumManager:init',
         'topics'        => \ForkBB\Models\Topic\Topics::class,
         'posts'         => \ForkBB\Models\Post\Posts::class,
+        'drafts'        => \ForkBB\Models\Draft\Drafts::class,
         'polls'         => \ForkBB\Models\Poll\Polls::class,
         'reports'       => \ForkBB\Models\Report\Reports::class,
         'user'          => '@users:current',
@@ -299,6 +300,9 @@ return [
         'Posts/userInfoFromIP' => \ForkBB\Models\Post\UserInfoFromIP::class,
         'Posts/userStat'       => \ForkBB\Models\Post\UserStat::class,
         'Posts/view'           => \ForkBB\Models\Post\View::class,
+
+        'Drafts/load' => \ForkBB\Models\Draft\Load::class,
+        'Drafts/save' => \ForkBB\Models\Draft\Save::class,
 
         'Reports/load' => \ForkBB\Models\Report\Load::class,
         'Reports/save' => \ForkBB\Models\Report\Save::class,
@@ -440,6 +444,7 @@ return [
         'GroupManager'      => \ForkBB\Models\Group\Groups::class,
         'PollModel'         => \ForkBB\Models\Poll\Poll::class,
         'PostModel'         => \ForkBB\Models\Post\Post::class,
+        'DraftModel'        => \ForkBB\Models\Draft\Draft::class,
         'PPostModel'        => \ForkBB\Models\PM\PPost::class,
         'PTopicModel'       => \ForkBB\Models\PM\PTopic::class,
         'ReportModel'       => \ForkBB\Models\Report\Report::class,
