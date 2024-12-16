@@ -526,6 +526,16 @@ class Routing
             );
         }
 
+        // черновики
+        if (! $user->isGuest) {
+            $r->add(
+                $r::DUO,
+                '/draft/{did|i:[1-9]\d*}/edit',
+                'Post:draft',
+                'Draft'
+            );
+        }
+
         // админ и модератор
         if ($user->isAdmMod) {
             $r->add(
