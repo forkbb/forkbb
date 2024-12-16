@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Model;
+use ForkBB\Models\Forum\Forum;
 use function \ForkBB\{__, size};
 
 trait PostFormTrait
@@ -35,7 +36,7 @@ trait PostFormTrait
             'btns'   => [
                 'submit' => [
                     'type'  => 'submit',
-                    'value' => __('NewTopic' === $marker ? 'Create topic' : 'Submit'),
+                    'value' => __($model instanceof Forum ? 'Create topic' : 'Submit'),
                 ],
                 'preview' => [
                     'type'  => 'submit',
