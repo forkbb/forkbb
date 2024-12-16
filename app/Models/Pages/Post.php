@@ -42,11 +42,14 @@ class Post extends Page
 
         $this->draft          = $draft;
         $this->marker         = 'Draft';
-        $vars                 = $draft->form_data;
-        $vars['subject']      = $draft->subject;
-        $vars['message']      = $draft->message;
-        $vars['hide_smilies'] = $draft->hide_smilies;
-        $args['_vars']        = $vars;
+
+        if ('POST' !== $method) {
+            $vars                 = $draft->form_data;
+            $vars['subject']      = $draft->subject;
+            $vars['message']      = $draft->message;
+            $vars['hide_smilies'] = $draft->hide_smilies;
+            $args['_vars']        = $vars;
+        }
 
         if ($draft->topic_id > 0)  {
             $args['id'] = $draft->topic_id;
@@ -257,7 +260,7 @@ class Post extends Page
         } else {
             $this->c->drafts->insert($draft);
 
-            ++$this->c->user->draft;
+            ++$this->c->user->num_drafts;
         }
 
         $this->user->last_post = \time();
