@@ -62,6 +62,7 @@ trait PostFormTrait
             $notPM
             && ! $edit
             && ! $about
+            && $this->c->userRules->useDraft
         ) {
             $form['btns']['draft'] = [
                 'type'  => 'submit',

@@ -527,7 +527,7 @@ class Routing
         }
 
         // черновики
-        if (! $user->isGuest) {
+        if ($userRules->useDraft) {
             $r->add(
                 $r::DUO,
                 '/draft/{did|i:[1-9]\d*}/edit',

@@ -201,4 +201,12 @@ class Users extends Rules
             && 1 === $this->user->g_use_reaction
             && $this->user->id !== $post->poster_id;
     }
+
+    /**
+     * Статус возможности использования черновиков
+     */
+    protected function getuseDraft(): bool
+    {
+        return ! $this->user->isGuest;
+    }
 }

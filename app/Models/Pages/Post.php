@@ -32,10 +32,10 @@ class Post extends Page
      */
     public function draft(array $args, string $method): Page
     {
-        $draft = $this->c->drafts->load($args['did']);
-
         if (
-            ! $draft instanceof Draft
+            ! $this->c->userRules->useDraft
+            || ! ($draft = $this->c->drafts->load($args['did'])) instanceof Draft
+            || $draft->poster_id !== $this->user->id
         ) {
             return $this->c->Message->message('Bad request');
         }
