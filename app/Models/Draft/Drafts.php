@@ -97,4 +97,19 @@ class Drafts extends Manager
 
         return $id;
     }
+
+    /**
+     * Вычисляет количество черновиков текущего пользователя
+     */
+    public function count(): int
+    {
+        $var = [
+            ':uid' => $this->c->user->id;
+        ];
+        $query = 'SELECT COUNT(poster_id)
+            FROM ::drafts
+            WHERE poster_id=?i:uid';
+
+        return (int) $this->c->DB->query($query, $vars)->fetchColumn();
+    }
 }
