@@ -254,13 +254,14 @@ class Post extends Page
         $draft->message      = $v->message;
         $draft->hide_smilies = $v->hide_smilies ? 1 : 0;
         $draft->form_data    = $v->getData(false, ['token', 'subject', 'message', 'hide_smilies', 'preview', 'submit', 'draft']);
+        $draft->poster_ip    = $this->user->ip;
 
         if ($this->draft instanceof Draft) {
             $this->c->drafts->update($draft);
         } else {
             $this->c->drafts->insert($draft);
 
-            ++$this->c->user->num_drafts;
+            ++$this->user->num_drafts;
         }
 
         $this->user->last_post = \time();
@@ -399,6 +400,13 @@ class Post extends Page
         // синхронизация вложений
         if ($this->userRules->useUpload) {
             $this->c->attachments->syncWithPost($merge ? $lastPost : $post);
+        }
+
+        // удалить черновик и пересчитать их количество
+        if ($this->draft instanceof Draft) {
+            $this->c->drafts->delete($this->draft);
+
+            $this->user->num_drafts = $this->c->drafts->count();
         }
 
         // обновление данных текущего пользователя
