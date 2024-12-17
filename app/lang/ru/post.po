@@ -33,8 +33,14 @@ msgstr "Сообщение опубликовано."
 msgid "Post a reply"
 msgstr "Публикация ответа"
 
+msgid "[Draft] Post a reply"
+msgstr "[Черновик] Публикация ответа"
+
 msgid "Post new topic"
 msgstr "Публикация новой темы"
+
+msgid "[Draft] Post new topic"
+msgstr "[Черновик] Публикация новой темы"
 
 msgid "Hide smilies"
 msgstr "Никогда не показывать смайлы в виде картинок в этом сообщении"
@@ -119,3 +125,6 @@ msgstr "Данные из этого поля видны только админ
 
 msgid "To draft"
 msgstr "В черновики"
+
+msgid "Draft redirect"
+msgstr "Черновик сохранен."

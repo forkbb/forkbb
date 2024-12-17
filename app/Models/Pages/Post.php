@@ -145,7 +145,7 @@ class Post extends Page
         $this->nameTpl    = 'post';
         $this->canonical  = $forum->linkCreateTopic;
         $this->robots     = 'noindex';
-        $this->formTitle  = 'Post new topic';
+        $this->formTitle  = $this->draft instanceof Draft ? '[Draft] Post new topic' : 'Post new topic';
         $this->crumbs     = $this->crumbs($this->formTitle, $forum);
         $this->form       = $this->messageForm($forum, $this->marker ?: 'NewTopic', $args, false, true, false);
 
@@ -222,7 +222,7 @@ class Post extends Page
         $this->nameTpl    = 'post';
         $this->canonical  = $topic->linkReply;
         $this->robots     = 'noindex';
-        $this->formTitle  = 'Post a reply';
+        $this->formTitle  = $this->draft instanceof Draft ? '[Draft] Post a reply' : 'Post a reply';
         $this->crumbs     = $this->crumbs($this->formTitle, $topic);
         $this->form       = $this->messageForm($topic, $this->marker ?: 'NewReply', $args, false, false, false);
         $this->postsTitle = 'Topic review';
@@ -268,7 +268,7 @@ class Post extends Page
 
         $this->c->users->update($this->user);
 
-        return $this->c->Redirect->url($draft->link)->message('Post redirect', FORK_MESS_SUCC);
+        return $this->c->Redirect->url($draft->link)->message('Draft redirect', FORK_MESS_SUCC);
     }
 
     /**

@@ -33,8 +33,14 @@ msgstr "Message posté."
 msgid "Post a reply"
 msgstr "Répondre"
 
+msgid "[Draft] Post a reply"
+msgstr "[Draft] Répondre"
+
 msgid "Post new topic"
 msgstr "Créer une nouvelle discussion"
+
+msgid "[Draft] Post new topic"
+msgstr "[Draft] Créer une nouvelle discussion"
 
 msgid "Hide smilies"
 msgstr "Ne jamais montrer les smyleys en images dans ce message"
@@ -119,3 +125,6 @@ msgstr "Les données de ce champ sont visibles par les administrateurs uniquemen
 
 msgid "To draft"
 msgstr "To draft"
+
+msgid "Draft redirect"
+msgstr "Draft saved."
