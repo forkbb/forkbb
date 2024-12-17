@@ -82,7 +82,7 @@ class Draft extends DataModel
         return $this->c->Router->link(
             'DeleteDraft',
             [
-                'id' => $this->id,
+                'did' => $this->id,
             ]
         );
     }

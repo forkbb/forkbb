@@ -534,6 +534,13 @@ class Routing
                 'Post:draft',
                 'Draft'
             );
+
+            $r->add(
+                $r::DUO,
+                '/draft/{did|i:[1-9]\d*}/delete',
+                'Delete:deleteDraft',
+                'DeleteDraft'
+            );
         }
 
         // админ и модератор
