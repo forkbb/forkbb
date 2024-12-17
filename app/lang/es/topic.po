@@ -142,3 +142,6 @@ msgstr "Tabla de contenidos"
 
 msgid "Go to solution"
 msgstr "Ir a la solución"
+
+msgid "To draft"
+msgstr "To draft"

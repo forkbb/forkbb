@@ -143,3 +143,6 @@ msgstr "Содержание темы"
 
 msgid "Go to solution"
 msgstr "Перейти к решению"
+
+msgid "To draft"
+msgstr "В черновики"

@@ -116,3 +116,6 @@ msgstr "Le données de ce champ sont visible par les administrateurs et moodéra
 
 msgid "Admins only"
 msgstr "Les données de ce champ sont visibles par les administrateurs uniquement."
+
+msgid "To draft"
+msgstr "To draft"

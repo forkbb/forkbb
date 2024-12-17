@@ -116,3 +116,6 @@ msgstr "Los datos de este campo solo son visibles para los administradores y mod
 
 msgid "Admins only"
 msgstr "Los datos de este campo solo son visibles para los administradores."
+
+msgid "To draft"
+msgstr "To draft"
