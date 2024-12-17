@@ -103,7 +103,7 @@ class Drafts extends Manager
      */
     public function count(): int
     {
-        $var = [
+        $vars = [
             ':uid' => $this->c->user->id,
         ];
         $query = 'SELECT COUNT(poster_id)
