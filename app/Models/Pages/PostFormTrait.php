@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Model;
+use ForkBB\Models\Draft\Draft;
 use ForkBB\Models\Forum\Forum;
 use function \ForkBB\{__, size};
 
@@ -36,6 +37,7 @@ trait PostFormTrait
             'btns'   => [
                 'submit' => [
                     'type'  => 'submit',
+                    'class' => $this->draft instanceof Draft ? ['f-opacity'] : null,
                     'value' => __($model instanceof Forum ? 'Create topic' : 'Submit'),
                 ],
                 'preview' => [
@@ -66,7 +68,7 @@ trait PostFormTrait
         ) {
             $form['btns']['draft'] = [
                 'type'  => 'submit',
-                'class' => ['f-opacity'],
+                'class' => $this->draft instanceof Draft ? null : ['f-opacity'],
                 'value' => __('To draft'),
             ];
         }
