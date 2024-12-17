@@ -301,8 +301,9 @@ return [
         'Posts/userStat'       => \ForkBB\Models\Post\UserStat::class,
         'Posts/view'           => \ForkBB\Models\Post\View::class,
 
-        'Drafts/load' => \ForkBB\Models\Draft\Load::class,
-        'Drafts/save' => \ForkBB\Models\Draft\Save::class,
+        'Drafts/load'   => \ForkBB\Models\Draft\Load::class,
+        'Drafts/save'   => \ForkBB\Models\Draft\Save::class,
+        'Drafts/delete' => \ForkBB\Models\Draft\Delete::class,
 
         'Reports/load' => \ForkBB\Models\Report\Load::class,
         'Reports/save' => \ForkBB\Models\Report\Save::class,

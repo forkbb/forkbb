@@ -1387,6 +1387,11 @@ class Update extends Admin
             'Drafts/load'
         );
 
+        $coreConfig->add(
+            'shared=>Drafts/delete',
+            '\\ForkBB\\Models\\Draft\\Delete::class',
+            'Drafts/save'
+        );
 
         $coreConfig->save();
 
