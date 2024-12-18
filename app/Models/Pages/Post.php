@@ -40,8 +40,8 @@ class Post extends Page
             return $this->c->Message->message('Bad request');
         }
 
-        $this->draft          = $draft;
-        $this->marker         = 'Draft';
+        $this->draft  = $draft;
+        $this->marker = 'Draft';
 
         if ('POST' !== $method) {
             $vars                 = $draft->form_data;

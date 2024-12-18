@@ -529,6 +529,13 @@ class Routing
         // черновики
         if ($userRules->useDraft) {
             $r->add(
+                $r::GET,
+                '/drafts[/{page|i:[1-9]\d*}]',
+                'Drafts:view',
+                'Drafts'
+            );
+
+            $r->add(
                 $r::DUO,
                 '/draft/{did|i:[1-9]\d*}/edit',
                 'Post:draft',
