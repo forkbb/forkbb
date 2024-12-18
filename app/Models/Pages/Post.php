@@ -402,11 +402,9 @@ class Post extends Page
             $this->c->attachments->syncWithPost($merge ? $lastPost : $post);
         }
 
-        // удалить черновик и пересчитать их количество
+        // удалить черновик
         if ($this->draft instanceof Draft) {
             $this->c->drafts->delete($this->draft);
-
-            $this->user->num_drafts = $this->c->drafts->count();
         }
 
         // обновление данных текущего пользователя

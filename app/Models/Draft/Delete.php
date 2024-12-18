@@ -30,14 +30,15 @@ class Delete extends Action
             throw new InvalidArgumentException('No arguments, expected User(s), Forum(s), Topic(s) or Draft(s)');
         }
 
-        $users   = [];
-        $forums  = [];
-        $topics  = [];
-        $drafts  = [];
-        $isUser  = 0;
-        $isForum = 0;
-        $isTopic = 0;
-        $isDraft = 0;
+        $users       = [];
+        $forums      = [];
+        $topics      = [];
+        $drafts      = [];
+        $isUser      = 0;
+        $isForum     = 0;
+        $isTopic     = 0;
+        $isDraft     = 0;
+        $uidsUpdate  = [];
 
         foreach ($args as $arg) {
             if ($arg instanceof User) {
@@ -64,6 +65,8 @@ class Delete extends Action
             } elseif ($arg instanceof Draft) {
                 $drafts[$arg->id] = $arg->id;
                 $isDraft          = 1;
+
+                $uidsUpdate[$arg->poster_id] = $arg->poster_id;
             }
         }
 
@@ -86,6 +89,13 @@ class Delete extends Action
             $vars = [
                 ':forums' => $forums,
             ];
+            $query = 'SELECT poster_id
+                FROM ::drafts
+                WHERE forum_id IN (?ai:forums)
+                GROUP BY poster_id';
+
+            $uidsUpdate = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
+
             $query = 'DELETE
                 FROM ::drafts
                 WHERE forum_id IN (?ai:forums)';
@@ -97,6 +107,13 @@ class Delete extends Action
             $vars = [
                 ':topics' => $topics,
             ];
+            $query = 'SELECT poster_id
+                FROM ::drafts
+                WHERE topic_id IN (?ai:topics)
+                GROUP BY poster_id';
+
+            $uidsUpdate = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
+
             $query = 'DELETE
                 FROM ::drafts
                 WHERE topic_id IN (?ai:topics)';
@@ -115,6 +132,24 @@ class Delete extends Action
             $query = 'DELETE
                 FROM ::drafts
                 WHERE id IN (?ai:drafts)';
+
+            $this->c->DB->exec($query, $vars);
+        }
+
+        if ($uidsUpdate) {
+            if (\count($uidsUpdate) > 1) {
+                \sort($uidsUpdate, \SORT_NUMERIC);
+            }
+
+            $vars  = [
+                ':ids' => $uidsUpdate,
+            ];
+            $query = 'UPDATE ::users
+                SET num_drafts = COALESCE((
+                    SELECT COUNT(d.id)
+                    FROM ::drafts AS d
+                    WHERE d.poster_id=::users.id
+                ), 0) WHERE ::users.id IN (?ai:ids)';
 
             $this->c->DB->exec($query, $vars);
         }
