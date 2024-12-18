@@ -1393,6 +1393,12 @@ class Update extends Admin
             'Drafts/save'
         );
 
+        $coreConfig->add(
+            'multiple=>Drafts',
+            '\\ForkBB\\Models\\Pages\\Drafts::class',
+            'Reaction'
+        );
+
         $coreConfig->save();
 
         return null;
