@@ -68,7 +68,7 @@ class Draft extends DataModel
         $user = $this->c->users->load($this->poster_id);
 
         if (! $user instanceof User) {
-            throw new RuntimeException("No user data in post number {$this->id}");
+            throw new RuntimeException("No user data in draft number {$this->id}");
         }
 
         return $user;
