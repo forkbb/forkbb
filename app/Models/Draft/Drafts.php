@@ -12,6 +12,7 @@ namespace ForkBB\Models\Draft;
 
 use ForkBB\Models\Manager;
 use ForkBB\Models\Draft\Draft;
+use PDO;
 
 class Drafts extends Manager
 {
@@ -111,5 +112,38 @@ class Drafts extends Manager
             WHERE poster_id=?i:uid';
 
         return (int) $this->c->DB->query($query, $vars)->fetchColumn();
+    }
+
+    /**
+     * Возвращает список черновиков текущего пользователя со старницы $page
+     */
+    public function view(int $page): array
+    {
+        $vars = [
+            ':uid'    => $this->c->user->id,
+            ':offset' => ($page - 1) * $this->c->user->disp_posts,
+            ':rows'   => $this->c->user->disp_posts,
+        ];
+        $query = 'SELECT d.id
+            FROM ::drafts AS d
+            WHERE d.poster_id=?i:uid
+            ORDER BY d.id DESC
+            LIMIT ?i:rows OFFSET ?i:offset';
+
+        $ids = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
+
+        if (empty($ids)) {
+            return [];
+        }
+
+        return $this->loadByIds($ids);
+    }
+
+    /**
+     * Количество страниц в черновиках
+     */
+    public function numPages(): int
+    {
+        return (int) \ceil($this->c->user->num_drafts / $this->c->user->disp_posts);
     }
 }
