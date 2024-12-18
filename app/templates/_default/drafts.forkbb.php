@@ -50,7 +50,7 @@
           <h3 class="f-phead-h3">
             <span class="f-psh-forum"><a href="{{ $post->parent->parent->link }}" title="{{ __('Go to forum') }}">{{ $post->parent->parent->forum_name }}</a></span>
             <span class="f-sep"><small>»</small></span>
-            <span class="f-psh-topic"><a href="{{ $post->parent->link }}" title="{{ __('Go to topic') }}">{{ $post->parent->name }}</a></span>
+            <span class="f-psh-topic">@if ($post->topic_id)<a href="{{ $post->parent->link }}" title="{{ __('Go to topic') }}">@endif{{ $post->parent->name }}@if ($post->topic_id)</a>@endif</span>
           </h3>
           <span class="f-post-number">#{{ $post->postNumber }}</span>
         </header>
@@ -73,21 +73,15 @@
             </ul>
             <ul class="f-post-search-info">
               <li class="f-psi-forum">{!! __('Forum') !!}: <a href="{{ $post->parent->parent->link }}">{{ $post->parent->parent->forum_name }}</a></li>
-              <li class="f-psi-topic">{!! __('Topic') !!}: <a href="{{ $post->parent->link }}">{{ $post->parent->name }}</a></li>
+              <li class="f-psi-topic">{!! __('Topic') !!}:&#32;@if ($post->topic_id)<a href="{{ $post->parent->link }}">@endif{{ $post->parent->name }}@if ($post->topic_id)</a>@endif</li>
             </ul>
           </div>
         </address>
         <div class="f-post-body">
-          <div class="f-post-main" @if (! empty($p->model->queryRegexp) && 2 !== $p->searchInValue) data-search-regexp="{{ $p->model->queryRegexp }}" @endif>
+          <div class="f-post-main">
             {!! $post->html() !!}
           </div>
           <aside class="f-post-bfooter">
-        @php $showPostReaction = $p->userRules->showReaction && (! empty($post->reactions) || $post->useReaction) && ! empty($reactions = $post->reactionData(false)) @endphp
-        @if ($showPostReaction)
-            <div class="f-post-reaction">
-            @include ('layouts/reaction')
-            </div>
-        @endif
             <div class="f-post-btns">
               <small>{!! __('ACTIONS') !!}</small>
               <small>-</small>
