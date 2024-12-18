@@ -119,9 +119,11 @@ class Drafts extends Manager
      */
     public function view(int $page): array
     {
+        $offset = ($page - 1) * $this->c->user->disp_posts;
+
         $vars = [
             ':uid'    => $this->c->user->id,
-            ':offset' => ($page - 1) * $this->c->user->disp_posts,
+            ':offset' => $offset,
             ':rows'   => $this->c->user->disp_posts,
         ];
         $query = 'SELECT d.id
@@ -136,7 +138,17 @@ class Drafts extends Manager
             return [];
         }
 
-        return $this->loadByIds($ids);
+        $result = $this->loadByIds($ids);
+
+        foreach ($result as $draft) {
+            ++$offset;
+
+            if ($draft instanceof Draft) {
+                $draft->__postNumber = $offset;
+            }
+        }
+
+        return $result;
     }
 
     /**
