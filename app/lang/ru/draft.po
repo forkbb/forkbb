@@ -26,3 +26,6 @@ msgstr "Удалить"
 
 msgid "Edit"
 msgstr "Изменить"
+
+msgid "Draft %s failed to load"
+msgstr "Не удалось загрузить черновик %s. Родительская тема или форум, вероятно, недоступны."

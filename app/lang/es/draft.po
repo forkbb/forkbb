@@ -26,3 +26,6 @@ msgstr "Eliminar"
 
 msgid "Edit"
 msgstr "Editar"
+
+msgid "Draft %s failed to load"
+msgstr "Draft %s failed to load. The parent topic/forum is probably unavailable."

@@ -42,7 +42,7 @@
       <h2>{!! __('Post list') !!}</h2>
 @foreach ($p->drafts as $id => $post)
     @empty ($post->id)
-        @php $iswev = [FORK_MESS_ERR => [['Message %s was not found in the database', $id]]]; @endphp
+        @php $iswev = [FORK_MESS_ERR => [['Draft %s failed to load', $id]]]; @endphp
         @include ('layouts/iswev')
     @else
       <article id="p{!! (int) $post->id !!}" class="f-post f-post-search @if (FORK_GEN_MAN == $post->user->gender) f-user-male @elseif (FORK_GEN_FEM == $post->user->gender) f-user-female @endif @if ($post->user->online) f-user-online @endif">
