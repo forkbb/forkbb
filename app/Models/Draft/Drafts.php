@@ -12,7 +12,9 @@ namespace ForkBB\Models\Draft;
 
 use ForkBB\Models\Manager;
 use ForkBB\Models\Draft\Draft;
+use ForkBB\Models\Topic\Topic;
 use PDO;
+use InvalidArgumentException;
 
 class Drafts extends Manager
 {
@@ -157,5 +159,31 @@ class Drafts extends Manager
     public function numPages(): int
     {
         return (int) \ceil($this->c->user->num_drafts / $this->c->user->disp_posts);
+    }
+
+    /**
+     * Перемещает черновики из тем ...$from в тему $to
+     */
+    public function move(Topic $to, Topic ...$from): void
+    {
+        if ($to->id < 1) {
+            throw new InvalidArgumentException('Unexpected number of the recipient topic.');
+        }
+
+        $tids = [];
+
+        foreach ($from as $topic) {
+            $tids[$topic->id] = $topic->id;
+        }
+
+        $vars = [
+            ':new'  => $to->id,
+            ':tids' => $tids,
+        ];
+        $query = 'UPDATE ::drafts
+            SET topic_id=?i:new
+            WHERE topic_id IN (?ai:tids)';
+
+        $this->c->DB->exec($query, $vars);
     }
 }
