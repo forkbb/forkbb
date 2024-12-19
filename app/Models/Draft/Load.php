@@ -19,18 +19,6 @@ use RuntimeException;
 class Load extends Action
 {
     /**
-     * Создает текст запрос
-     */
-    protected function getSql(string $where): string
-    {
-        $query = 'SELECT d.*
-            FROM ::drafts AS d
-            WHERE ' . $where;
-
-        return $query;
-    }
-
-    /**
      * Загружает черновик из БД
      * Загружает тему этого черновика в репозиторий topics (????)
      * Проверка доступности
