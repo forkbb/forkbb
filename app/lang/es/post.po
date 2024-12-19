@@ -33,14 +33,8 @@ msgstr "Mensaje ingresado."
 msgid "Post a reply"
 msgstr "Responder"
 
-msgid "[Draft] Post a reply"
-msgstr "[Draft] Responder"
-
 msgid "Post new topic"
 msgstr "Nuevo tema"
-
-msgid "[Draft] Post new topic"
-msgstr "[Draft] Nuevo tema"
 
 msgid "Hide smilies"
 msgstr "No mostrar nunca emoticones como íconos para este mensaje"
@@ -125,6 +119,3 @@ msgstr "Los datos de este campo solo son visibles para los administradores."
 
 msgid "To draft"
 msgstr "To draft"
-
-msgid "Draft redirect"
-msgstr "Draft saved."

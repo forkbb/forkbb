@@ -29,3 +29,12 @@ msgstr "Edit"
 
 msgid "Draft %s failed to load"
 msgstr "Draft %s failed to load. The parent topic/forum is probably unavailable."
+
+msgid "[Draft] Post a reply"
+msgstr "[Draft] Post a reply"
+
+msgid "[Draft] Post new topic"
+msgstr "[Draft] Post new topic"
+
+msgid "Draft redirect"
+msgstr "Draft saved."

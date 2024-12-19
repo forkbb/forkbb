@@ -29,3 +29,12 @@ msgstr "Изменить"
 
 msgid "Draft %s failed to load"
 msgstr "Не удалось загрузить черновик %s. Родительская тема или форум, вероятно, недоступны."
+
+msgid "[Draft] Post a reply"
+msgstr "[Черновик] Публикация ответа"
+
+msgid "[Draft] Post new topic"
+msgstr "[Черновик] Публикация новой темы"
+
+msgid "Draft redirect"
+msgstr "Черновик сохранен."

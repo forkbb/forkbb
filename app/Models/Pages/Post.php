@@ -43,6 +43,8 @@ class Post extends Page
         $this->draft  = $draft;
         $this->marker = 'Draft';
 
+        $this->c->Lang->load('draft');
+
         if ('POST' !== $method) {
             $vars                 = $draft->form_data;
             $vars['subject']      = $draft->subject;
@@ -267,6 +269,7 @@ class Post extends Page
         $this->user->last_post = \time();
 
         $this->c->users->update($this->user);
+        $this->c->Lang->load('draft');
 
         return $this->c->Redirect->url($draft->link)->message('Draft redirect', FORK_MESS_SUCC);
     }

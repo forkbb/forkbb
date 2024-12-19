@@ -33,14 +33,8 @@ msgstr "Post entered."
 msgid "Post a reply"
 msgstr "Post a reply"
 
-msgid "[Draft] Post a reply"
-msgstr "[Draft] Post a reply"
-
 msgid "Post new topic"
 msgstr "Post new topic"
-
-msgid "[Draft] Post new topic"
-msgstr "[Draft] Post new topic"
 
 msgid "Hide smilies"
 msgstr "Never show smilies as icons for this post"
@@ -125,6 +119,3 @@ msgstr "Data from this field is visible only to administrators."
 
 msgid "To draft"
 msgstr "To draft"
-
-msgid "Draft redirect"
-msgstr "Draft saved."
