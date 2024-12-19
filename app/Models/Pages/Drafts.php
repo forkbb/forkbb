@@ -51,12 +51,7 @@ class Drafts extends Page
         $this->fIndex     = self::FI_DRAFT;
         $this->onlinePos  = 'drafts';
         $this->robots     = 'noindex';
-        $this->crumbs     = $this->crumbs(
-            [
-                $this->c->Router->link('Drafts'),
-                'Drafts',
-            ]
-        );
+        $this->crumbs     = $this->crumbs([$this->c->Router->link('Drafts'), 'Drafts']);
 
         $this->c->Parser; // предзагрузка
 
@@ -114,10 +109,7 @@ class Drafts extends Page
         $this->onlinePos  = 'draft-' . $draft->id;
         $this->robots     = 'noindex';
         $this->formTitle  = 'Delete draft';
-        $this->crumbs     = $this->crumbs($this->formTitle, [
-            $this->c->Router->link('Drafts'),
-            'Drafts',
-        ]);
+        $this->crumbs     = $this->crumbs($this->formTitle, [$this->c->Router->link('Drafts'), 'Drafts']);
         $this->posts      = [$draft];
         $this->postsTitle = 'Delete draft info';
         $this->form       = $this->formDelete($args, $draft);
