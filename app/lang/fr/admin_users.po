@@ -275,3 +275,6 @@ msgstr "Recalcul du nombre de messages et discussion utilisateurs"
 
 msgid "Number of users posts"
 msgstr "Nombre de messages et discussion utilisateurs"
+
+msgid "Drafts label"
+msgstr "Drafts"
