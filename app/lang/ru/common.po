@@ -492,5 +492,5 @@ msgstr "Я в шоке"
 msgid "Drafts (%s)"
 msgstr "<span class="f-spantxtpm">Черн. </span><b>(%s)</b>"
 
-msgid "Show your drafts"
-msgstr "Показать ваши черновики"
+msgid "Your drafts"
+msgstr "Ваши черновики"

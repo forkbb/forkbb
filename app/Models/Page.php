@@ -261,7 +261,7 @@ abstract class Page extends Model
                 $navUser[self::FI_DRAFT] = [
                     $r->link('Drafts'),
                     ['Drafts (%s)', $this->user->num_drafts],
-                    'Show your drafts',
+                    'Your drafts',
                     null,
                     ['pmnew'],
                 ];
