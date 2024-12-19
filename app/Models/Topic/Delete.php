@@ -116,6 +116,7 @@ class Delete extends Action
         }
 
         $this->c->posts->delete(...$args);
+        $this->c->drafts->delete(...$args);
 
         if ($uids) {
             $vars = [

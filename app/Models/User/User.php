@@ -280,7 +280,7 @@ class User extends DataModel
      */
     protected function getdisp_posts(): int
     {
-        $attr = $this->getModelAttr('disp_topics');
+        $attr = $this->getModelAttr('disp_posts');
 
         if ($attr < 10) {
             $attr = $this->c->config->i_disp_posts_default;

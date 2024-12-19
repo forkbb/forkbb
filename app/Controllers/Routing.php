@@ -526,6 +526,30 @@ class Routing
             );
         }
 
+        // черновики
+        if ($userRules->useDraft) {
+            $r->add(
+                $r::GET,
+                '/drafts[/{page|i:[1-9]\d*}]',
+                'Drafts:view',
+                'Drafts'
+            );
+
+            $r->add(
+                $r::DUO,
+                '/draft/{did|i:[1-9]\d*}/edit',
+                'Post:draft',
+                'Draft'
+            );
+
+            $r->add(
+                $r::DUO,
+                '/draft/{did|i:[1-9]\d*}/delete',
+                'Drafts:delete',
+                'DeleteDraft'
+            );
+        }
+
         // админ и модератор
         if ($user->isAdmMod) {
             $r->add(

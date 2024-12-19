@@ -26,6 +26,7 @@ abstract class Page extends Model
     const FI_PM    = 'pm';
     const FI_ADMIN = 'admin';
     const FI_LGOUT = 'logout';
+    const FI_DRAFT = 'drafts';
 
     /**
      * Заголовки страницы
@@ -250,6 +251,19 @@ abstract class Page extends Model
                     'Private messages',
                     null,
                     $tmpPM ?: null,
+                ];
+            }
+
+            if (
+                $this->userRules->useDraft
+                && $this->user->num_drafts > 0
+            ) {
+                $navUser[self::FI_DRAFT] = [
+                    $r->link('Drafts'),
+                    ['Drafts (%s)', $this->user->num_drafts],
+                    'Your drafts',
+                    null,
+                    ['pmnew'],
                 ];
             }
 

@@ -79,6 +79,8 @@ class View extends Users
                         'last_visit_2'    => 'date',
                         'registered_1'    => 'date',
                         'registered_2'    => 'date',
+                        'num_drafts_1'    => 'integer|min:0|max:9999999999',
+                        'num_drafts_2'    => 'integer|min:0|max:9999999999',
                         'order_by'        => 'required|string|in:username,email,num_posts,last_post,last_visit,registered',
                         'direction'       => 'required|string|in:ASC,DESC',
                         'user_group'      => 'required|integer|in:' . \implode(',', $this->groups(true)),
@@ -100,6 +102,8 @@ class View extends Users
                         'last_visit_2'    => 'Last visit label',
                         'registered_1'    => 'Registered label',
                         'registered_2'    => 'Registered label',
+                        'num_drafts_1'    => 'Drafts label',
+                        'num_drafts_2'    => 'Drafts label',
                         'order_by'        => 'Order by label',
 #                        'direction'       => ,
                         'user_group'      => 'User group label',
@@ -322,6 +326,28 @@ class View extends Users
             'type'      => 'datetime-local',
             'value'     => $data['registered_2'] ?? null,
             'step'      => '1',
+        ];
+        $fields[] = [
+            'type' => 'endwrap',
+        ];
+        $fields['between5'] = [
+            'class' => ['between'],
+            'type'  => 'wrap',
+        ];
+        $fields['num_drafts_1'] = [
+            'type'    => 'number',
+            'class'   => ['bstart'],
+            'min'     => '0',
+            'max'     => '9999999999',
+            'value'   => $data['num_drafts_1'] ?? null,
+            'caption' => 'Drafts label',
+        ];
+        $fields['num_drafts_2'] = [
+            'type'    => 'number',
+            'class'   => ['bend'],
+            'min'     => '0',
+            'max'     => '9999999999',
+            'value'   => $data['num_drafts_2'] ?? null,
         ];
         $fields[] = [
             'type' => 'endwrap',

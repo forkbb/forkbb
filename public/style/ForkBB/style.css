@@ -597,6 +597,11 @@ body,
   content: "\f0e0";
 }
 
+#fork-nav-drafts .f-menu-a::before {
+  font-weight: 400;
+  content: "\f044";
+}
+
 #fork-nav-admin .f-menu-a::before {
   content: "\f7d9";
 }

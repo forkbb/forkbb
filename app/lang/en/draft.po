@@ -1,0 +1,55 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "Drafts"
+msgstr "Drafts"
+
+msgid "No drafts"
+msgstr "No drafts"
+
+msgid "Page missing"
+msgstr "Page missing"
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Edit"
+msgstr "Edit"
+
+msgid "Draft %s failed to load"
+msgstr "Draft %s failed to load. The parent topic/forum is probably unavailable."
+
+msgid "[Draft] Post a reply"
+msgstr "[Draft] Post a reply"
+
+msgid "[Draft] Post new topic"
+msgstr "[Draft] Post new topic"
+
+msgid "Draft redirect"
+msgstr "Draft saved."
+
+msgid "Draft del redirect"
+msgstr "Draft deleted."
+
+msgid "Delete draft"
+msgstr "Delete draft"
+
+msgid "Confirm delete draft"
+msgstr "Confirm delete draft"
+
+msgid "Delete draft info"
+msgstr "Deleted draft"
+
+msgid "Delete  draft"
+msgstr "Delete draft"

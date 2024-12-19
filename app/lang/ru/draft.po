@@ -1,0 +1,55 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+
+msgid "Drafts"
+msgstr "Черновики"
+
+msgid "No drafts"
+msgstr "Нет черновиков."
+
+msgid "Page missing"
+msgstr "Страница отсутствует."
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "Edit"
+msgstr "Изменить"
+
+msgid "Draft %s failed to load"
+msgstr "Не удалось загрузить черновик %s. Родительская тема или форум, вероятно, недоступны."
+
+msgid "[Draft] Post a reply"
+msgstr "[Черновик] Публикация ответа"
+
+msgid "[Draft] Post new topic"
+msgstr "[Черновик] Публикация новой темы"
+
+msgid "Draft redirect"
+msgstr "Черновик сохранен."
+
+msgid "Draft del redirect"
+msgstr "Черновик удален."
+
+msgid "Delete draft"
+msgstr "Удаление черновика"
+
+msgid "Confirm delete draft"
+msgstr "Подтверждаю удаление черновика"
+
+msgid "Delete draft info"
+msgstr "Удаляемый черновик"
+
+msgid "Delete  draft"
+msgstr "Удалить черновик"

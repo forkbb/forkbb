@@ -68,6 +68,8 @@ class Merge extends Action
             $this->c->DB->exec($query, $vars);
         }
 
+        $this->c->drafts->move($firstTopic, ...$otherTopics);
+
         // добавить перенос подписок на первую тему?
 
         if ($redirect) {

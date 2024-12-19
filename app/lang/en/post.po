@@ -116,3 +116,6 @@ msgstr "Data from this field is visible only to administrators and forum moderat
 
 msgid "Admins only"
 msgstr "Data from this field is visible only to administrators."
+
+msgid "To draft"
+msgstr "To draft"
