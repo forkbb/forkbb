@@ -545,7 +545,7 @@ class Routing
             $r->add(
                 $r::DUO,
                 '/draft/{did|i:[1-9]\d*}/delete',
-                'Delete:deleteDraft',
+                'Drafts:delete',
                 'DeleteDraft'
             );
         }

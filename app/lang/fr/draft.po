@@ -38,3 +38,18 @@ msgstr "[Draft] Créer une nouvelle discussion"
 
 msgid "Draft redirect"
 msgstr "Draft saved."
+
+msgid "Draft del redirect"
+msgstr "Draft deleted."
+
+msgid "Delete draft"
+msgstr "Delete draft"
+
+msgid "Confirm delete draft"
+msgstr "Confirm delete draft"
+
+msgid "Delete draft info"
+msgstr "Deleted draft"
+
+msgid "Delete  draft"
+msgstr "Delete draft"

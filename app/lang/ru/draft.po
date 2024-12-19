@@ -38,3 +38,18 @@ msgstr "[Черновик] Публикация новой темы"
 
 msgid "Draft redirect"
 msgstr "Черновик сохранен."
+
+msgid "Draft del redirect"
+msgstr "Черновик удален."
+
+msgid "Delete draft"
+msgstr "Удаление черновика"
+
+msgid "Confirm delete draft"
+msgstr "Подтверждаю удаление черновика"
+
+msgid "Delete draft info"
+msgstr "Удаляемый черновик"
+
+msgid "Delete  draft"
+msgstr "Удалить черновик"
