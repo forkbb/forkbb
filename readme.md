@@ -31,12 +31,12 @@ Two options
 ### For NGINX:
 
 * [Example](https://github.com/forkbb/forkbb/blob/master/nginx.dist.conf) nginx configuration.
-* Note: Root must point to the [**public/**](https://github.com/forkbb/forkbb/tree/master/public) directory.
+* Note: Root must point to the [**/public/**](https://github.com/forkbb/forkbb/tree/master/public) directory.
 * Note: The **index.dist.php** file does not need to be renamed.
 
 ## Favicon
-* You can rename public/favicon48.ico file to public/favicon.ico
-* You can create your own favicon file and copy it to public/favicon.ico
+* You can rename /public/**favicon48.ico** file to /public/**favicon.ico**
+* You can create your own favicon file and copy it to /public/favicon.ico
 
 ## Links
 
