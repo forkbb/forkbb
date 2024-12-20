@@ -20,36 +20,13 @@ Topic [Установка (Installation)](https://forkbb.ru/topic/28/ustanovka-i
 Apache must have **mod_rewrite** and **mod_headers** enabled. Also, the **AllowOverride** directive must be set to **All**.
 
 Two options
-1. Document Root != **public** folder (shared hosting):
+1. Shared hosting or site folder (Document Root != **public** folder):
     * Rename **.dist.htaccess** to **.htaccess**,
     * Rename **index.dist.php** to **index.php**.
-2. Document Root == **public** folder (recommended if you have access to Apache configuration):
-    * Rename public/**.dist.htaccess** to public/**.htaccess**,
-    * Rename public/**index.dist.php** to public/**index.php**;
-
-**Note**
-
-To determine which of these two options is yours, then immediately after uploading the engine to your site (before these changes), make two requests:
-1. your.site/public/robots.txt
-2. your.site/robots.txt
-
-On one of the requests, you should see the content of the robots.txt file. Similar to:
-```
-User-agent: *
-Disallow: /adm
-Disallow: /log
-Disallow: /mod
-Disallow: /reg
-Disallow: /search
-Disallow: /post
-Disallow: /feed
-Disallow: /forum/scroll
-Disallow: /forum/*/new/topic
-Disallow: /topic/*/new/reply
-Disallow: /userlist
-```
-On which option you see the contents of the file, choose the option for changing the file names above.
-P.S. If you see the contents of the file in both cases, then something went wrong or you have already changed the names of the files **.dist.htaccess** and **index.dist.php**.
+    (If you install the forum engine in the site folder, there may be conflicts between the forum's .htaccess rules and the site's .htaccess rules.)
+2. VPS/VDS with access to Apache configuration (Document Root == **public** folder):
+    * Rename /public/**.dist.htaccess** to /public/**.htaccess**,
+    * Rename /public/**index.dist.php** to /public/**index.php**;
 
 ### For NGINX:
 
