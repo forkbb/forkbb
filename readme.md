@@ -23,7 +23,7 @@ Two options
 1. Shared hosting or site folder (Document Root != **public** folder):
     * Rename **.dist.htaccess** to **.htaccess**,
     * Rename **index.dist.php** to **index.php**.
-    (If you install the forum engine in the site folder, there may be conflicts between the forum's .htaccess rules and the site's .htaccess rules.)
+    * (If you install the forum engine in the site folder, there may be conflicts between the forum's .htaccess rules and the site's .htaccess rules.)
 2. VPS/VDS with access to Apache configuration (Document Root == **public** folder):
     * Rename /public/**.dist.htaccess** to /public/**.htaccess**,
     * Rename /public/**index.dist.php** to /public/**index.php**;
