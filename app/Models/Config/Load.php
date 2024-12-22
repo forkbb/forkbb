@@ -21,10 +21,8 @@ class Load extends Method
     public function load(): array
     {
         $config = [];
-        $query  = 'SELECT cf.conf_name, cf.conf_value
-            FROM ::config AS cf';
-
-        $stmt = $this->c->DB->query($query);
+        $query  = 'SELECT cf.conf_name, cf.conf_value FROM ::config AS cf';
+        $stmt   = $this->c->DB->query($query);
 
         while ($row = $stmt->fetch()) {
             switch ($row['conf_name'][0]) {

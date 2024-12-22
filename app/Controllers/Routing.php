@@ -81,6 +81,7 @@ class Routing
                     'RegActivate'
                 );
             }
+
         } else {
             // выход
             $r->add(
@@ -222,6 +223,7 @@ class Routing
                 );
 
                 $idPattern = '[1-9]\d*';
+
             } elseif (! $user->isGuest) {
                 // только свой профиль
                 $r->add(
@@ -937,6 +939,7 @@ class Routing
                     && $user->isGuest
                 ) {
                     $page = $this->c->Redirect->page('Login');
+
                 } else {
                     $page = $this->c->Message->message('Not Found', true, 404);
                 }

@@ -212,12 +212,16 @@ class BBCode extends Parser
     {
         if ('ROOT' === $tag) {
             return 1;
+
         } elseif (empty($white) && empty($black)) {
             return 2;
+
         } elseif (\in_array($tag, $black)) {
             return 0;
+
         } elseif (\in_array($tag, $white)) {
             return 2;
+
         } else {
             return 1;
         }
@@ -354,6 +358,7 @@ class BBCode extends Parser
             $title            = 'Edit bbcode head';
             $page             = 'AdminBBCodeEdit';
             $pageArgs         = ['id' => $id];
+
         } else {
             $title            = 'Add bbcode head';
             $page             = 'AdminBBCodeNew';
@@ -420,9 +425,12 @@ class BBCode extends Parser
                 if ($v->validation($_POST)) {
                     if ($id > 0) {
                         $this->c->bbcode->update($id, $structure);
+
                         $message = 'BBCode updated redirect';
+
                     } else {
                         $id = $this->c->bbcode->insert($structure);
+
                         $message = 'BBCode added redirect';
                     }
 
@@ -463,6 +471,7 @@ class BBCode extends Parser
                 if (isset($value[0])) {
                     $structure->type = $value;
                 }
+
             } else {
                 $structure->{$key} = $value;
             }
@@ -473,6 +482,7 @@ class BBCode extends Parser
         if (\is_array($error)) {
             if (1 === \count($error)) {
                 $v->addError(\reset($error));
+
             } else {
                 $v->addError($error);
             }

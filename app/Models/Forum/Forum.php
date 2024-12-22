@@ -34,6 +34,7 @@ class Forum extends DataModel
             }
 
             return null;
+
         } else {
             return $this->manager->get($this->parent_forum_id);
         }
@@ -132,6 +133,7 @@ class Forum extends DataModel
     {
         if (0 === $this->id) {
             return $this->c->Router->link('Index');
+
         } else {
             return $this->c->Router->link(
                 'Forum',
@@ -155,6 +157,7 @@ class Forum extends DataModel
                     'action' => 'new',
                 ]
             );
+
         } else {
             return $this->c->Router->link(
                 'SearchAction',
@@ -173,6 +176,7 @@ class Forum extends DataModel
     {
         if ($this->last_post_id < 1) {
             return '';
+
         } else {
             return $this->c->Router->link(
                 'ViewPost',
@@ -216,6 +220,7 @@ class Forum extends DataModel
     {
         if ($this->id < 1) {
             return '';
+
         } else {
             return $this->c->Router->link(
                 'ForumSubscription',
@@ -234,6 +239,7 @@ class Forum extends DataModel
     {
         if ($this->id < 1) {
             return '';
+
         } else {
             return $this->c->Router->link(
                 'ForumSubscription',
@@ -444,6 +450,7 @@ class Forum extends DataModel
 
         if (isset($arr[$tid])) {
             $this->page = (int) \ceil(($arr[$tid] + 1) / $this->c->user->disp_topics);
+
         } else {
             $this->page = null;
         }
@@ -503,6 +510,7 @@ class Forum extends DataModel
             || ! \is_array($attr = \json_decode($attr, true, 512, \JSON_THROW_ON_ERROR))
         ) {
             return [];
+
         } else {
             return $attr;
         }
@@ -512,6 +520,7 @@ class Forum extends DataModel
     {
         if (\is_array($value)) {
             $value = \json_encode($value, FORK_JSON_ENCODE);
+
         } elseif (
             ! \is_string($value)
             || ! \is_array(\json_decode($value, true))

@@ -42,6 +42,7 @@ class Send extends Method
                     INNER JOIN ::topic_subscriptions AS s ON u.id=s.user_id
                     LEFT JOIN ::online AS o ON u.id=o.user_id
                     WHERE s.topic_id=?i:tid AND u.id!=?i:uid AND COALESCE(o.logged, u.last_visit)>?i:prev';
+
             } else {
                 $newTopic     = true;
                 $tplNameFull  = 'new_topic_full.tpl';
@@ -109,6 +110,7 @@ class Send extends Method
                         'button'          => __('Unsubscribe'),
                         'fMailer'         => __(['Mailer', $this->c->config->o_board_title]),
                     ];
+
                 } else {
                     $tplData = [
                         'forumName'       => $forum->name,

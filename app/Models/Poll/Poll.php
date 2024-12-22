@@ -68,6 +68,7 @@ class Poll extends DataModel
     {
         if ($this->tid > 0) {
             return $this->c->Router->link('Poll', ['tid' => $this->tid]);
+
         } else {
             return null;
         }
@@ -80,6 +81,7 @@ class Poll extends DataModel
     {
         if ($this->tid > 0) {
             return $this->c->Csrf->create('Poll', ['tid' => $this->tid]);
+
         } else {
             return null;
         }
@@ -197,6 +199,7 @@ class Poll extends DataModel
                 foreach (\array_keys($this->answer[$q]) as $a) {
                     $result[$q][$a] = \min(100, \round($this->vote[$q][$a] / $total, 2));
                 }
+
             } else {
                 foreach (\array_keys($this->answer[$q]) as $a) {
                     $result[$q][$a] = 0;
@@ -221,6 +224,7 @@ class Poll extends DataModel
                 foreach (\array_keys($this->answer[$q]) as $a) {
                     $result[$q][$a] = \min(100, \round($this->vote[$q][$a] / $max));
                 }
+
             } else {
                 foreach (\array_keys($this->answer[$q]) as $a) {
                     $result[$q][$a] = 0;
@@ -238,19 +242,25 @@ class Poll extends DataModel
     {
         if ($this->tid < 1) {
             return null;
+
         } elseif (
             $this->c->user->isGuest
             && 1 !== $this->c->config->b_poll_guest
         ) {
             return 'Poll results are hidden from the guests';
+
         } elseif (! $this->isOpen) {
             return 'This poll is closed';
+
         } elseif (! $this->canSeeResult) {
             return ['Poll results are hidden up to %s voters', $this->parent->poll_term];
+
         } elseif ($this->userVoted) {
             return 'You voted';
+
         } elseif ($this->c->user->isGuest) {
             return 'Guest cannot vote';
+
         } else {
             return 'Poll status is undefined';
         }
@@ -274,6 +284,7 @@ class Poll extends DataModel
 
                 if (0 == $count) {
                     return __(['No vote on question %s', $q]);
+
                 } elseif ($count > $this->type[$q]) {
                     return __(['Too many answers selected in question %s', $q]);
                 }
@@ -285,9 +296,11 @@ class Poll extends DataModel
 
                     $data[] = [$q, $a];
                 }
+
             } else {
                 if (! isset($vote[$q][0])) {
                     return __(['No vote on question %s', $q]);
+
                 } elseif (! isset($this->answer[$q][$vote[$q][0]])) {
                     return __(['The selected answer is not present in question %s', $q]);
                 }

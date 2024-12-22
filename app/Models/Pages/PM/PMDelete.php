@@ -84,6 +84,7 @@ class PMDelete extends AbstractPM
             if ($deleteTopic) {
                 if ($this->pms->numCurrent + $this->pms->numArchive > 1) {
                     $second = $this->pms->second;
+
                 } else {
                     $second = null;
                 }
@@ -95,6 +96,7 @@ class PMDelete extends AbstractPM
                 $topic->status = Cnst::PT_DELETED;
 
                 $this->pms->delete($topic);
+
             } else {
                 $redirect = $this->c->Redirect
                     ->url($post->linkPrevious)

@@ -73,14 +73,17 @@ class Container
     {
         if (\array_key_exists($key, $this->instances)) {
             return $this->instances[$key];
+
         } elseif (false !== \strpos($key, '.')) {
             $tree    = \explode('.', $key);
             $service = $this->__get(\array_shift($tree));
 
             if (\is_array($service)) {
                 return $this->fromArray($service, $tree);
+
             } elseif (\is_object($service)) {
                 return $service->{$tree[0]};
+
             } else {
                 return null;
             }
@@ -89,11 +92,14 @@ class Container
         if (isset($this->shared[$key])) {
             $toShare = true;
             $config  = $this->shared[$key];
+
         } elseif (isset($this->multiple[$key])) {
             $toShare = false;
             $config  = $this->multiple[$key];
+
         } elseif (isset($this->shared["%{$key}%"])) {
             return $this->instances[$key] = $this->resolve($this->shared["%{$key}%"]);
+
         } else {
             throw new InvalidArgumentException("Wrong property name: {$key}");
         }
@@ -107,6 +113,7 @@ class Container
             foreach ($config as $k => $v) {
                 $args[] = \is_numeric($k) ? $v : $this->resolve($v);
             }
+
         } else {
             $class = $config;
         }
@@ -120,6 +127,7 @@ class Container
 
             $factory = $this->__get($name);
             $service = $factory->$method(...$args);
+
         } else {
             // Adding this container in the arguments for constructor
             $args[]  = $this;
@@ -141,6 +149,7 @@ class Container
     {
         if (false !== \strpos($key, '.')) {
             throw new InvalidArgumentException("Wrong property name: {$key}");
+
         } else {
             $this->instances[$key] = $service;
         }
@@ -156,6 +165,7 @@ class Container
         foreach ($tree as $s) {
             if (isset($ptr[$s])) {
                 $ptr = &$ptr[$s];
+
             } else {
                 return null;
             }
@@ -178,11 +188,13 @@ class Container
             if (--$n) {
                 if (! \array_key_exists($s, $ptr)) {
                     $ptr[$s] = [];
+
                 } elseif (! \is_array($ptr[$s])) {
                     throw new InvalidArgumentException("Scalar '{$s}' in the path '{$name}'");
                 }
 
                 $ptr = &$ptr[$s];
+
             } else {
                 $ptr[$s] = $value;
             }
@@ -198,6 +210,7 @@ class Container
                 // whole string substitution can return any type of value
                 if (\preg_match('~^%([a-z0-9_]+(?:\.[a-z0-9_]+)*)%$~i', $value, $matches)) {
                     $value = $this->__get($matches[1]);
+
                 } else {
                     // partial string substitution casts value to string
                     $value = \preg_replace_callback(
@@ -208,12 +221,14 @@ class Container
                         $value
                     );
                 }
+
             } elseif (
                 isset($value[0])
                 && '@' === $value[0]
             ) {
                 return $this->__get(\substr($value, 1));
             }
+
         } elseif (\is_array($value)) {
             foreach ($value as &$v) {
                 $v = $this->resolve($v);

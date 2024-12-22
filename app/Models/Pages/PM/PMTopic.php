@@ -64,6 +64,7 @@ class PMTopic extends AbstractPM
 
         if (! isset($args['more2'])) {
             $this->model->page = 1;
+
         } elseif (Cnst::ACTION_NEW === $args['more2']) {
             $new = $this->model->firstNew;
 
@@ -72,10 +73,13 @@ class PMTopic extends AbstractPM
             }
 
             return $this->c->Redirect->url($new instanceof PPost ? $new->link : $this->model->linkLast);
+
         } elseif (Cnst::ACTION_SEND === $args['more2']) {
             return $this->send($args, $method);
+
         } elseif ('' === \trim($args['more2'], '1234567890')) {
             $this->model->page = (int) $args['more2'];
+
         } else {
             return $this->c->Message->message('Not Found', true, 404);
         }

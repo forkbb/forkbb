@@ -56,6 +56,7 @@ class Post extends Page
         if ($draft->topic_id > 0)  {
             $args['id'] = $draft->topic_id;
             $result     = $this->newReply($args, $method);
+
         } else {
             $args['id'] = $draft->forum_id;
             $result     = $this->newTopic($args, $method);
@@ -116,6 +117,7 @@ class Post extends Page
             ) {
                 if (null !== $v->submit) {
                     return $this->endPost($forum, $v);
+
                 } elseif (null !== $v->draft) {
                     return $this->endDraft($forum, $v);
                 }
@@ -189,6 +191,7 @@ class Post extends Page
             ) {
                 if (null !== $v->submit) {
                     return $this->endPost($topic, $v);
+
                 } elseif (null !== $v->draft) {
                     return $this->endDraft($topic, $v);
                 }
@@ -204,6 +207,7 @@ class Post extends Page
                 $this->previewHtml = $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies);
                 $this->useMediaJS  = true;
             }
+
         } elseif (isset($args['quote'])) {
             $post = $this->c->posts->load($args['quote'], $topic->id);
 
@@ -240,11 +244,13 @@ class Post extends Page
     {
         if ($this->draft instanceof Draft) {
             $draft = $this->draft;
+
         } else {
             $draft = $this->c->drafts->create();
 
             if ($model instanceof Forum) {
                 $draft->forum_id = $model->id;
+
             } else {
                 $draft->topic_id = $model->id;
             }
@@ -260,6 +266,7 @@ class Post extends Page
 
         if ($this->draft instanceof Draft) {
             $this->c->drafts->update($draft);
+
         } else {
             $this->c->drafts->insert($draft);
 
@@ -304,10 +311,12 @@ class Post extends Page
                     if ($v->merge_post) {
                         $merge = true;
                     }
+
                 } else {
                     $merge = true;
                 }
             }
+
         // создание темы
         } else {
             $createTopic = true;
@@ -344,6 +353,7 @@ class Post extends Page
                 $lastPost->editor_id = $this->user->id; // ???? может копировать из poster_id
 
                 $this->c->posts->update($lastPost);
+
             } else {
                 $merge = false;
             }
@@ -359,11 +369,7 @@ class Post extends Page
             $post->poster_email = (string) $v->email;
             $post->message      = $v->message; //?????
             $post->hide_smilies = $v->hide_smilies ? 1 : 0;
-#           $post->edit_post    =
             $post->posted       = $now;
-#           $post->edited       =
-#           $post->editor       =
-#           $post->editor_id    =
             $post->user_agent   = \mb_substr($this->user->userAgent, 0, 255, 'UTF-8');
             $post->topic_id     = $topic->id;
 
@@ -441,6 +447,7 @@ class Post extends Page
                 && ! $topic->is_subscribed
             ) {
                 $this->c->subscriptions->subscribe($this->user, $topic);
+
             } elseif (
                 ! $v->subscribe
                 && $topic->is_subscribed
@@ -451,6 +458,7 @@ class Post extends Page
 
         if ($merge) {
             $this->c->search->index($lastPost, 'merge');
+
         } else {
             $this->c->search->index($post);
 
@@ -458,6 +466,7 @@ class Post extends Page
                 if (1 === $this->c->config->b_forum_subscriptions) { // ????
                     $this->c->subscriptions->send($post, $topic);
                 }
+
             } else {
                 if (1 === $this->c->config->b_topic_subscriptions) { // ????
                     $this->c->subscriptions->send($post);

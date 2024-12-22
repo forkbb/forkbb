@@ -34,6 +34,7 @@ class Promote extends Action
                 WHERE group_id=?i:old';
 
             return $this->c->DB->exec($query, $vars);
+
         // продвижение всех пользователей в группе 0
         } elseif (1 == $count) {
             $vars = [
@@ -46,6 +47,7 @@ class Promote extends Action
                 WHERE group_id=?i:old AND num_posts>=?i:count';
 
             return $this->c->DB->exec($query, $vars);
+
         } else {
             throw new RuntimeException("Illegal number of parameters ({$count})");
         }

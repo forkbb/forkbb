@@ -44,6 +44,7 @@ class Index extends Page
 
         if (empty($forums)) {
             $this->fIswev = [FORK_MESS_INFO, 'Empty board'];
+
         } else {
             foreach ($forums as $forum) {
                 $ctgs[$forum->cat_id][] = $forum;

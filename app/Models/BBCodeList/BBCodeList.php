@@ -55,9 +55,11 @@ class BBCodeList extends Model
         if (\is_file($this->fileCache)) {
             if (\unlink($this->fileCache)) {
                 return $this->invalidate();
+
             } else {
                 throw new RuntimeException('The generated bbcode file cannot be deleted');
             }
+
         } else {
             return $this;
         }

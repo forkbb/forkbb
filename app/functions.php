@@ -40,6 +40,7 @@ function __(string|array $arg): string
             }
 
             return '';
+
         } else {
             $lang = $c->Lang;
         }
@@ -51,6 +52,7 @@ function __(string|array $arg): string
 
         if (null === $tr) {
             $tr = e($str);
+
         } elseif (\is_array($tr)) {
             $num = \array_shift($arg);
             $tr  = $lang->getForm($tr, $num);
@@ -58,12 +60,15 @@ function __(string|array $arg): string
 
         if (empty($arg)) {
             return $tr;
+
         } elseif (\is_array(\reset($arg))) {
             return \strtr($tr, \array_map('\\ForkBB\\e', \reset($arg)));
+
         } else {
             $arg = \array_map('\\ForkBB\\e', $arg);
             return \sprintf($tr, ...$arg);
         }
+
     } else {
         return $lang->get($arg) ?? e($arg);
     }
@@ -184,6 +189,7 @@ function url(string $url): string
                 }
 
                 $schemeOn = true;
+
             } else {
                 $schemeOn = false;
                 $url      = 'http://' . $url;
@@ -250,6 +256,7 @@ function url(string $url): string
 
                 if (\is_string($host)) {
                     $result .= $host;
+
                 } elseif (
                     isset($p['host'][1])
                     && '[' === $p['host'][0]
@@ -257,6 +264,7 @@ function url(string $url): string
                     && \filter_var(\substr($p['host'], 1, -1), \FILTER_VALIDATE_IP, \FILTER_FLAG_IPV6)
                 ) {
                     $result .= $p['host'];
+
                 } else {
                     return '';
                 }

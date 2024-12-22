@@ -170,6 +170,7 @@ class Options extends Admin
                             'width'  => $v->upload_og_image->width(),
                             'height' => $v->upload_og_image->height(),
                         ];
+
                     } else {
                         $config->a_og_image = [];
 
@@ -232,6 +233,7 @@ class Options extends Admin
 
         if (! \is_dir($this->c->DIR_PUBLIC . $dir)) {
             $v->addError('The folder for uploading avatars is incorrectly');
+
         } elseif (! \is_writable($this->c->DIR_PUBLIC . $dir)) {
             $v->addError('For PHP, it is forbidden to write in the folder for uploading avatars');
         }
@@ -309,7 +311,6 @@ class Options extends Admin
                     'caption'   => 'Board title label',
                     'help'      => 'Board title help',
                     'required'  => true,
-#                   'autofocus' => true,
                 ],
                 'o_board_desc' => [
                     'type'    => 'textarea',

@@ -34,6 +34,7 @@ class StopwordList extends Model
             && $data['id'] === $this->generateId()
         ) {
             $this->list = $data['stopwords'];
+
         } else {
             $this->load();
         }

@@ -34,6 +34,7 @@ class Save extends Method
                 if ($id > 0) {
                     $forDel[] = $id;
                 }
+
             } elseif (isset($words[$id])) {
                 if (
                     $list[$id]['search_for'] !== $words[$id]['search_for']
@@ -50,6 +51,7 @@ class Save extends Method
 
                     $this->c->DB->exec($query, $vars);
                 }
+
             } elseif (0 === $id) {
                 $vars = [
                     ':search'  => $list[$id]['search_for'],

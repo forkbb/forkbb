@@ -206,9 +206,11 @@ class Config
 
                             if (null !== $key) {
                                 $result[$this->clearKey($key)] = $value;
+
                             } else {
                                 $result[] = $value;
                             }
+
                         } elseif (null !== $key) {
                             throw new ForkException('Config array cannot be parsed (4)');
                         }
@@ -217,6 +219,7 @@ class Config
                     default:
                         throw new ForkException('Config array cannot be parsed (5)');
                 }
+
             // новый элемент
             } elseif (',' === $token) {
                 switch ($type) {
@@ -228,6 +231,7 @@ class Config
                     default:
                         throw new ForkException('Config array cannot be parsed (6)');
                 }
+
             // присвоение значения
             } elseif ('=>' === $token) {
                 switch ($type) {
@@ -263,6 +267,7 @@ class Config
                     default:
                         throw new ForkException('Config array cannot be parsed (8)');
                 }
+
             // какое-то значение
             } else {
                 switch ($type) {
@@ -288,12 +293,14 @@ class Config
 
                             if (null !== $key) {
                                 $result[$this->clearKey($key)] = $value;
+
                             } else {
                                 $result[] = $value;
                             }
 
                             $value = null;
                             $key   = null;
+
                         } elseif (null !== $key) {
                             throw new ForkException('Config array cannot be parsed (9)');
                         }
@@ -348,11 +355,13 @@ class Config
             if (\is_numeric($key)) { //???? O_o
                 $config[] = [];
                 $config   = &$config[\array_key_last($config)];
+
             } else {
                 $config[$key] ??= [];
 
                 if ($this->isFormat($config[$key])) {
                     $config = &$config[$key]['value'];
+
                 } else {
                     $config = &$config[$key];
                 }
@@ -368,26 +377,31 @@ class Config
             || \is_numeric($after) //???? O_o O_o O_o
         ) {
             $config[] = $value;
+
         } elseif (isset($config[$key])) {
             if (
                 $this->isFormat($config[$key])
                 && ! $this->isFormat($value)
             ) {
                 $config[$key]['value'] = $value;
+
             } else {
                 $config[$key] = $value;
             }
+
         } elseif (
             null === $after
             || ! isset($config[$after])
         ) {
             $config[$key] = $value;
+
         } else {
             $new = [];
 
             foreach ($config as $k => $v) {
                 if (\is_int($k)) {
                     $new[] = $v;
+
                 } else {
                     $new[$k] = $v;
 
@@ -426,6 +440,7 @@ class Config
 
             if ($this->isFormat($config[$key])) {
                 $config = &$config[$key]['value'];
+
             } else {
                 $config = &$config[$key];
             }
@@ -437,6 +452,7 @@ class Config
 
         if (! \array_key_exists($key, $config)) {
             return false;
+
         } else {
             $result = $config[$key];
 
@@ -482,26 +498,31 @@ class Config
             if ($this->isFormat($cur)) {
                 if (\is_string($key)) {
                     $result .= "{$cur['key_before']}'{$key}'{$cur['key_after']}=>{$cur['value_before']}";
+
                 } else {
                     $result .= "{$cur['value_before']}";
                 }
 
                 if (\is_array($cur['value'])) {
                     $result .= $this->toStr($cur['value'], $level + 1) . ",{$cur['value_after']}";
+
                 } else {
                     $result .= "{$cur['value']},{$cur['value_after']}";
                 }
+
             } else {
                 if (\is_string($key)) {
                     $result  = \rtrim($result, "\n\t ");
                     $result .= "\n{$space}'{$key}' => ";
                     $tail    = "\n" . \str_repeat('    ', $level - 1);
+
                 } else {
                     $result .= ' ';
                 }
 
                 if (\is_array($cur)) {
                     $result .= $this->toStr($cur, $level + 1) . ',';
+
                 } else {
                     $result .= "{$cur},";
                 }

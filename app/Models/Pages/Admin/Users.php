@@ -43,6 +43,7 @@ abstract class Users extends Admin
             $hash = $this->c->Secury->hash($data);
 
             return "{$data}:{$hash}";
+
         } else {
             return "ip:{$data}";
         }

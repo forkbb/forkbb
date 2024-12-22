@@ -34,7 +34,6 @@ class Load extends Action
             ORDER BY question_id, field_id';
 
         $stmt = $this->c->DB->query($query, $vars);
-
         $i    = 0;
         $data = [
             'tid'      => $id,
@@ -54,6 +53,7 @@ class Load extends Action
                 $data['question'][$qid]     = $question;
                 $data['type'][$qid]         = (int) $type;
                 $data['total'][$qid]        = $row['votes'];
+
             } else {
                 $data['answer'][$qid][$fid] = $row['qna_text'];
                 $data['vote'][$qid][$fid]   = $row['votes'];
@@ -64,6 +64,7 @@ class Load extends Action
 
         if (0 === $i) {
             return null;
+
         } else {
             return $this->manager->create($data);
         }

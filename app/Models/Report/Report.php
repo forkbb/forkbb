@@ -62,6 +62,7 @@ class Report extends DataModel
     {
         if (! empty($this->zapped_by)) {
             throw new RuntimeException('Report already has a marker');
+
         } elseif ($user->isGuest) {
             throw new RuntimeException('Bad marker');
         }
@@ -127,6 +128,7 @@ class Report extends DataModel
                     'id' => $this->id,
                 ]
             );
+
         } else {
             return '';
         }

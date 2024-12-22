@@ -38,6 +38,7 @@ class Drafts extends Manager
     {
         if ($this->isset($id)) {
             $draft = $this->get($id);
+
         } else {
             $draft = $this->Load->load($id);
 
@@ -58,6 +59,7 @@ class Drafts extends Manager
         foreach ($ids as $id) {
             if ($this->isset($id)) {
                 $result[$id] = $this->get($id);
+
             } else {
                 $result[$id] = null;
                 $data[]      = $id;

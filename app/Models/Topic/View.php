@@ -26,6 +26,7 @@ class View extends Action
     {
         if ($arg instanceof Forum) {
             $full = false;
+
         } elseif ($arg instanceof Search) {
             $full = true;
         }
@@ -50,6 +51,7 @@ class View extends Action
 
         if ('topics_with_your_posts' === $arg->currentAction) {
             $dots = $arg->idsList;
+
         } else {
             $ids = [];
 
@@ -63,6 +65,7 @@ class View extends Action
                     || $uid === $result[$id]->last_poster_id
                 ) {
                     $result[$id]->__dot = true;
+
                 } else {
                     $ids[] = $id;
                 }
@@ -79,6 +82,7 @@ class View extends Action
                     GROUP BY p.topic_id';
 
                 $dots = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
+
             } else {
                 $dots = [];
             }

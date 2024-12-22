@@ -25,6 +25,7 @@ class Refresh extends Action
         if (null === $group) {
             $gid  = $this->c->user->group_id;
             $read = $this->c->user->g_read_board;
+
         } else {
             $gid  = $group->g_id;
             $read = $group->g_read_board;

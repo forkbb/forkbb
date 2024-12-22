@@ -41,6 +41,7 @@ class Topic extends DataModel
             || $forum->redirect_url
         ) {
             return null;
+
         } else {
             return $forum;
         }
@@ -61,13 +62,16 @@ class Topic extends DataModel
     {
         if ($this->moved_to) {
             return false;
+
         } elseif ($this->c->user->isAdmin) {
             return true;
+
         } elseif (
             $this->closed
             || $this->c->user->isBot
         ) {
             return false;
+
         } elseif (
             1 === $this->parent->post_replies
             || (
@@ -77,6 +81,7 @@ class Topic extends DataModel
             || $this->c->user->isModerator($this)
         ) {
             return true;
+
         } else {
             return false;
         }
@@ -130,6 +135,7 @@ class Topic extends DataModel
             || $this->last_post_id < 1
         ) {
             return '';
+
         } else {
             return $this->c->Router->link(
                 'ViewPost',
@@ -201,6 +207,7 @@ class Topic extends DataModel
     {
         if ($this->c->user->isGuest) {
             return null;
+
         } else {
             return $this->c->Router->link(
                 'ForumScrollToTopic',
@@ -261,6 +268,7 @@ class Topic extends DataModel
     {
         if (false === $this->hasNew) {
             return 0;
+
         } elseif ($this->posted > $this->hasNew) {
             return $this->first_post_id;
         }
@@ -283,6 +291,7 @@ class Topic extends DataModel
     {
         if (false === $this->hasUnread) {
             return 0;
+
         } elseif ($this->posted > $this->hasUnread) {
             return $this->first_post_id;
         }
@@ -323,6 +332,7 @@ class Topic extends DataModel
         ) {
             // 1 страницу в списке тем раздела не отображаем
             return [];
+
         } else { //????
             return $this->c->Func->paginate(
                 $this->numPages,
@@ -431,6 +441,7 @@ class Topic extends DataModel
             || $result['pmax'] !== $pid
         ) {
             $this->page = null;
+
         } else {
             $this->page = (int) \ceil($result['pnum'] / $this->c->user->disp_posts);
         }
@@ -503,6 +514,7 @@ class Topic extends DataModel
                         FROM ::mark_of_topic
                         WHERE uid=?i:uid AND tid=?i:tid
                     )';
+
             } else {
                 $query = 'UPDATE ::mark_of_topic
                     SET mt_last_visit=?i:visit, mt_last_read=?i:read
@@ -571,6 +583,7 @@ class Topic extends DataModel
         if (empty($ids)) {
             if ($merge) {
                 return $this;
+
             } elseif ($this->first_post_id === $post->id) {
                 $this->toc = null;
 
@@ -593,6 +606,7 @@ class Topic extends DataModel
             && ! empty($toc[$post->id])
         ) {
             $toc[$post->id] = \array_merge($toc[$post->id], $r);
+
         } else {
             $toc[$post->id] = $r;
         }
@@ -635,6 +649,7 @@ class Topic extends DataModel
         foreach ($toc as $pid => $list) {
             if (isset($visible[$pid])) {
                 $link = '';
+
             } else {
                 $link = $this->c->Router->link('ViewPost', ['id' => $pid]);
                 $link = \strstr($link, '#', true) ?: $link;
@@ -659,6 +674,7 @@ class Topic extends DataModel
     {
         if ($this->solution > 0) {
             return $this->c->Router->link('ViewPost', ['id' => $this->solution]);
+
         } else {
             return '';
         }
@@ -673,6 +689,7 @@ class Topic extends DataModel
             || ! \is_array($attr = \json_decode($attr, true, 512, \JSON_THROW_ON_ERROR))
         ) {
             return [];
+
         } else {
             return $attr;
         }
@@ -682,6 +699,7 @@ class Topic extends DataModel
     {
         if (\is_array($value)) {
             $value = \json_encode($value, FORK_JSON_ENCODE);
+
         } elseif (
             ! \is_string($value)
             || ! \is_array(\json_decode($value, true))
@@ -699,6 +717,7 @@ class Topic extends DataModel
             || empty($this->cf_data)
         ) {
             return 0;
+
         } elseif (
             $this->c->user->isAdmin
             || (
@@ -707,10 +726,13 @@ class Topic extends DataModel
             )
         ) {
             $level = 4;
+
         } elseif ($this->c->user->isModerator($this)) {
             $level = 3;
+
         } elseif (! $this->c->user->isGuest) {
             $level = 2;
+
         } else {
             $level = 1;
         }

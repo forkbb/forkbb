@@ -118,6 +118,7 @@ class Lang
             if (isset($this->loaded[$name][$lang])) {
                 return;
             }
+
         } elseif (isset($this->loaded[$name])) {
             return;
         }
@@ -140,6 +141,7 @@ class Lang
                     && $cache['time'] === $time
                 ) {
                     $data = $cache['data'];
+
                 } else {
                     $data = $this->arrayFromStr(\file_get_contents($fullPath));
 
@@ -154,6 +156,7 @@ class Lang
 
                 if (isset($this->tr[$lang])) {
                     $this->tr[$lang] += $data;
+
                 } else {
                     $this->tr[$lang]  = $data;
                 }
@@ -163,6 +166,7 @@ class Lang
                 $this->langOrder += [$lang => $lang];
 
                 $flag = false;
+
             } elseif ('en' === $lang) {
                 $flag = false;
             }
@@ -227,6 +231,7 @@ class Lang
                         for ($v = 0; $v < $nplurals; ++$v) {
                             if (! isset($cur[$v][0])) {
                                 $curVal = null;
+
                                 break;
                             }
 
@@ -278,39 +283,39 @@ class Lang
                 case 'msgid_plural':
                     $curComm = $command;
                     $curVal  = $v;
-                    break;
 
+                    break;
                 case 'msgstr':
                 case 'msgstr[0]':
                     $curComm = 0;
                     $curVal  = $v;
-                    break;
 
+                    break;
                 case 'msgstr[1]':
                     $curComm = 1;
                     $curVal  = $v;
-                    break;
 
+                    break;
                 case 'msgstr[2]':
                     $curComm = 2;
                     $curVal  = $v;
-                    break;
 
+                    break;
                 case 'msgstr[3]':
                     $curComm = 3;
                     $curVal  = $v;
-                    break;
 
+                    break;
                 case 'msgstr[4]':
                     $curComm = 4;
                     $curVal  = $v;
-                    break;
 
+                    break;
                 case 'msgstr[5]':
                     $curComm = 5;
                     $curVal  = $v;
-                    break;
 
+                    break;
                 default:
                     throw new RuntimeException("File ({$this->cur}) format error");
             }
@@ -365,6 +370,7 @@ class Lang
                 if ('(' === $token) {
                     // функция
                     $stack[] = "$any()";
+
                 } else {
                     // переменная
                     $postfix[] = $any;
@@ -401,6 +407,7 @@ class Lang
                     // стек до ( переложить в postfix
                     if ('(' !== $peek) {
                         $postfix[] = $peek;
+
                     } else {
                         // переложить функцию в postfix
                         if (
@@ -423,8 +430,10 @@ class Lang
 
                 if ('' === $trim) {
                     $postfix[] = (int) $token;
+
                 } elseif ('.' === $trim) {
                     $postfix[] = (float) $token;
+
                 } else {
                     // то ли функция, то ли переменная
                     $any = $token;
@@ -510,6 +519,7 @@ class Lang
                         if (\is_array($v1)) {
                             $v1[]    = $v2;
                             $stack[] = $v1;
+
                         } else {
                             $stack[] = [$v1, $v2];
                         }
@@ -525,6 +535,7 @@ class Lang
 
                         throw new RuntimeException('Unexpected operation: ' . $token);
                 }
+
             } else {
                 $stack[] = $token;
             }

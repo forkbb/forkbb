@@ -53,6 +53,7 @@ class Censorship extends Model
     {
         if (1 === $this->c->config->b_censoring) {
             return (string) \preg_replace($this->searchList, $this->replaceList,  $str);
+
         } else {
             return $str;
         }

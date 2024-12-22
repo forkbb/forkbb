@@ -100,6 +100,7 @@ abstract class Admin extends Page
         if ('index' !== $this->aIndex) {
             if (isset($this->aNavigation[$this->aIndex])) {
                 $crumbs[] = $this->aNavigation[$this->aIndex];
+
             } else {
                 $crumbs[] = [null, ['%s', 'unknown']];
             }

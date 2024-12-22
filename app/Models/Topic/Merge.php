@@ -43,10 +43,12 @@ class Merge extends Action
 
             if (! $firstTopic instanceof Topic) {
                 $firstTopic    = $topic;
+
             } elseif ($topic->first_post_id < $firstTopic->first_post_id) {
                 $otherTopics[] = $firstTopic;
                 $ids[]         = $firstTopic->id;
                 $firstTopic    = $topic;
+
             } else {
                 $otherTopics[] = $topic;
                 $ids[]         = $topic->id;
@@ -101,11 +103,10 @@ class Merge extends Action
             if ($users) {
                 $this->c->users->updateCountTopics(...$users);
             }
+
         } else {
             $this->c->topics->update($firstTopic->calcStat());
-
             $this->manager->delete(...$otherTopics);
-
             $this->c->forums->update($firstTopic->parent->calcStat());
         }
     }

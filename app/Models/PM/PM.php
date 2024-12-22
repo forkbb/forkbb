@@ -114,10 +114,13 @@ class PM extends Model
     {
         if (isset($this->idsArchive[$topic->id])) {
             return Cnst::ACTION_ARCHIVE;
+
         } elseif (isset($this->idsNew[$topic->id])) {
             return Cnst::ACTION_NEW;
+
         } elseif (isset($this->idsCurrent[$topic->id])) {
             return Cnst::ACTION_CURRENT;
+
         } else {
             return null;
         }
@@ -135,6 +138,7 @@ class PM extends Model
             case Cnst::PTOPIC:
                 if ($this->accessTopic($id)) {
                     $model = $this->Load->load($type, $id);
+
                 } else {
                     $model = null;
                 }
@@ -168,6 +172,7 @@ class PM extends Model
         foreach ($ids as $id) {
             if ($this->isset($type, $id)) {
                 $result[$id] = $this->get($type, $id);
+
             } else {
                 switch ($type) {
                     case Cnst::PTOPIC:
@@ -193,6 +198,7 @@ class PM extends Model
                 if (! $this->accessTopic($model->topic_id)) {
                     continue;
                 }
+
             } elseif (! $model instanceof PTopic) {
                 continue;
             }
@@ -324,6 +330,7 @@ class PM extends Model
 
                         break;
                 }
+
             } elseif ($row['target_id'] === $user->id) {
                 switch ($row['target_status']) {
                     case Cnst::PT_ARCHIVE:
@@ -374,9 +381,11 @@ class PM extends Model
         switch ($this->area) {
             case Cnst::ACTION_NEW:
                 $list = $this->idsNew;
+
                 break;
             case Cnst::ACTION_ARCHIVE:
                 $list = $this->idsArchive;
+
                 break;
             default:
                 $list = $this->idsCurrent;

@@ -62,8 +62,10 @@ class Providers extends Manager
     {
         if (! isset($attrs['pr_name'])) {
             throw new RuntimeException('Provider name missing');
+
         } elseif (! isset($this->drivers[$attrs['pr_name']])) {
             throw new RuntimeException("No driver for '{$attrs['pr_name']}' provider");
+
         } elseif ($this->isset($attrs['pr_name'])) {
             throw new RuntimeException("Driver '{$attrs['pr_name']}' already exists");
         }
@@ -116,11 +118,8 @@ class Providers extends Manager
         }
 
         if (! \is_array($this->cache)) {
-            $query = 'SELECT pr_name, pr_allow, pr_pos, pr_cl_id, pr_cl_sec
-                FROM ::providers
-                ORDER BY pr_pos';
-
-            $stmt = $this->c->DB->query($query);
+            $query = 'SELECT pr_name, pr_allow, pr_pos, pr_cl_id, pr_cl_sec FROM ::providers ORDER BY pr_pos';
+            $stmt  = $this->c->DB->query($query);
 
             while ($cur = $stmt->fetch()) {
                 $this->cache[$cur['pr_name']] = $cur;
@@ -141,6 +140,7 @@ class Providers extends Manager
     {
         if (isset($sets[$key])) {
             return '' == $sets[$key];
+
         } else {
             return '' == $cache[$key];
         }

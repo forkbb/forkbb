@@ -85,9 +85,11 @@ class Edit extends Page
                     && $v->poll_enable
                 ) {
                     $this->poll = $this->c->polls->create($v->poll);
+
                     $this->c->polls->revision($this->poll, true);
                 }
             }
+
         } else {
             $args['_vars'] = [
                 'message'      => $post->message,
@@ -300,7 +302,7 @@ class Edit extends Page
             // редактирование
             if ($v->poll_enable) {
                 $topic->poll_type = $v->poll['duration'] > 0 ? 1000 + $v->poll['duration'] : 1; // ???? перенести в модель poll?
-#                $topic->poll_time  = 0;
+//                $topic->poll_time  = 0;
                 $topic->poll_term = $v->poll['hide_result']
                     ? ($topic->poll_term ?: $this->c->config->i_poll_term)
                     : 0;
@@ -310,6 +312,7 @@ class Edit extends Page
                 $poll->__type     = $v->poll['type'];
 
                 $this->c->polls->update($poll);
+
             // удаление
             } else {
                 $topic->poll_type = 0;
@@ -318,6 +321,7 @@ class Edit extends Page
 
                 $this->c->polls->delete($poll);
             }
+
         // добавление
         } elseif ($v->poll_enable) {
             $topic->poll_type = $v->poll['duration'] > 0 ? 1000 + $v->poll['duration'] : 1; // ???? перенести в модель poll?
@@ -446,6 +450,7 @@ class Edit extends Page
                 'username' => $v->username ?: $post->poster,
                 'posted'   => $v->posted ?: $this->c->Func->timeToDate($post->posted),
             ];
+
         } else {
             $data = [
                 'username' => $post->poster,
@@ -472,6 +477,7 @@ class Edit extends Page
             if ($newUser instanceof User) {
                 $username      = $newUser->username;
                 $this->newUser = $newUser;
+
             } else {
                 $v->addError(['User %s does not exist', $username]);
             }

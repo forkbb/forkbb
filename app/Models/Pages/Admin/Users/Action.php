@@ -46,6 +46,7 @@ class Action extends Users
             }
 
             $profile = true;
+
         } else {
             $profile = false;
         }
@@ -72,6 +73,7 @@ class Action extends Users
                     && ! $this->userRules->canChangeGroup($this->c->users->load((int) $args['ids']), true)
                 ) {
                     $error = true;
+
                 } elseif (
                     ! $profile
                     && ! $this->userRules->changeGroup
@@ -228,6 +230,7 @@ class Action extends Users
 
         if (! $profile) {
             unset($list[FORK_GROUP_ADMIN]);
+
         } elseif (! $this->user->isAdmin) {
             $list = [FORK_GROUP_MEMBER => $list[FORK_GROUP_MEMBER]];
         }
@@ -257,6 +260,7 @@ class Action extends Users
             ) {
                 $rulePass = 'required|string:trim|max:100000|check_password';
             }
+
         } else {
             $link = $this->c->Router->link('AdminUsers');
         }
@@ -290,9 +294,11 @@ class Action extends Users
                 if ($profile) {
                     if ($this->c->ProfileRules->setUser($user)->editProfile) {
                         $redirect->url($link);
+
                     } else {
                         $redirect->url($user->link);
                     }
+
                 } else {
                     $redirect->page('AdminUsers');
                 }

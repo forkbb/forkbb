@@ -50,6 +50,7 @@ class Delete extends Profile
 
             if (0 === $v->confirm) {
                 return $this->c->Redirect->page('EditUserProfile', $args)->message('No confirm redirect', FORK_MESS_VLD);
+
             } elseif ($valid) {
                 $this->c->Cookie->deleteUser();
                 $this->c->users->delete($this->user);

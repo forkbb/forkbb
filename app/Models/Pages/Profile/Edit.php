@@ -41,12 +41,14 @@ class Edit extends Profile
         if ('POST' === $method) {
             if ($this->rules->rename) {
                 $ruleUsername = 'required|string:trim|username|noURL:1';
+
             } else {
                 $ruleUsername = 'absent';
             }
 
             if ($this->rules->setTitle) {
                 $ruleTitle = 'exist|string:trim|max:50|noURL';
+
             } else {
                 $ruleTitle = 'absent';
             }
@@ -54,6 +56,7 @@ class Edit extends Profile
             if ($this->rules->useAvatar) {
                 $ruleAvatar    = "image|max:{$this->c->Files->maxImgSize('K')}";
                 $ruleDelAvatar = $this->curUser->avatar ? 'checkbox' : 'absent';
+
             } else {
                 $ruleAvatar    = 'absent';
                 $ruleDelAvatar = 'absent';
@@ -61,18 +64,21 @@ class Edit extends Profile
 
             if ($this->user->isAdmMod) {
                 $ruleAdminNote = 'exist|string:trim|max:30';
+
             } else {
                 $ruleAdminNote = 'absent';
             }
 
             if ($this->rules->editWebsite) {
                 $ruleWebsite = 'exist|string:trim,empty|max:100|regex:%^https?://[^\x00-\x1F\s]+$%uD';
+
             } else {
                 $ruleWebsite = 'absent';
             }
 
             if ($this->rules->useSignature) {
                 $ruleSignature = "exist|string:trim|max:{$this->curUser->g_sig_length}|check_signature";
+
             } else {
                 $ruleSignature = 'absent';
             }
@@ -135,6 +141,7 @@ class Edit extends Profile
 
                     if (true === $result) {
                         $this->curUser->avatar = $v->upload_avatar->name() . '.' . $v->upload_avatar->ext();
+
                     } else {
                         $this->c->Log->warning('Profile Failed image processing', [
                             'user'    => $this->user->fLog(),
@@ -149,6 +156,7 @@ class Edit extends Profile
                 $this->c->users->update($this->curUser);
 
                 return $this->c->Redirect->page('EditUserProfile', $args)->message('Profile redirect', FORK_MESS_SUCC);
+
             } else {
                 $this->fIswev = $v->getErrors();
 
@@ -181,9 +189,11 @@ class Edit extends Profile
             // после цензуры текст сообщения пустой
             if ('' == $this->c->censorship->censor($signature)) {
                 $v->addError('No signature after censoring');
+
             // количество строк
             } elseif (\substr_count($signature, "\n") >= $this->curUser->g_sig_lines) {
                 $v->addError('Signature has too many lines');
+
             // проверка парсером
             } else {
                 $prepare   = true;
@@ -247,6 +257,7 @@ class Edit extends Profile
                 'pattern'   => $this->c->USERNAME['jsPattern'],
                 'value'     => $this->curUser->username,
             ];
+
         } else {
             $fields['username'] = [
                 'class'   => ['pline'],
@@ -273,6 +284,7 @@ class Edit extends Profile
                 'title'   => __('Change user group'),
                 'href'    => $this->linkChangeGroup(),
             ];
+
         } else {
             $fields['group'] = [
                 'class'   => ['pline'],
@@ -298,6 +310,7 @@ class Edit extends Profile
                 'value'     => $this->curUser->title,
                 'help'      => 'Leave blank',
             ];
+
         } else {
             $fields['title'] = [
                 'class'   => ['pline'],
@@ -331,6 +344,7 @@ class Edit extends Profile
                     'caption' => 'Avatar',
                     'value'   => __('Not uploaded'),
                 ];
+
             } elseif ($this->curUser->avatar) {
                 $fields['avatar'] = [
                     'type'    => 'yield',
@@ -467,6 +481,7 @@ class Edit extends Profile
                 'caption'   => 'Website',
                 'value'     => $this->curUser->url,
             ];
+
         } elseif (
             $this->rules->viewWebsite
             && $this->curUser->url

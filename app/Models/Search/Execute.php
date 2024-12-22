@@ -66,6 +66,7 @@ class Execute extends Method
             $this->model->queryNoCache = false;
 
             return true;
+
         } elseif ($flood) {
             return false;
         }
@@ -74,6 +75,7 @@ class Execute extends Method
 
         if (1 === $v->sort_dir) {
             \asort($ids, $structure['sortType']);
+
         } else {
             \arsort($ids, $structure['sortType']);
         }
@@ -121,8 +123,7 @@ class Execute extends Method
                 ':forums' => $structure[':forums'],
                 ':ids'    => \implode(',', \array_map('\\intval', $ids)),
             ];
-
-            $ids = $this->c->DB->query($structure['queryForums'], $vars)->fetchAll(PDO::FETCH_COLUMN);
+            $ids  = $this->c->DB->query($structure['queryForums'], $vars)->fetchAll(PDO::FETCH_COLUMN);
         }
 
         if (
@@ -133,19 +134,18 @@ class Execute extends Method
                 ':author' => $structure[':author'],
                 ':ids'    => \implode(',', \array_map('\\intval', $ids)),
             ];
-
-            $ids = $this->c->DB->query($structure['queryAuthor'], $vars)->fetchAll(PDO::FETCH_COLUMN);
+            $ids  = $this->c->DB->query($structure['queryAuthor'], $vars)->fetchAll(PDO::FETCH_COLUMN);
         }
 
         if (! empty($ids)) {
             if (null === $structure['queryResult']) {
                 return \array_combine($ids, $ids);
+
             } else {
                 $vars = [
                     ':ids' => \implode(',', \array_map('\\intval', $ids)),
                 ];
-
-                $ids = $this->c->DB->query($structure['queryResult'], $vars)->fetchAll(PDO::FETCH_KEY_PAIR);
+                $ids  = $this->c->DB->query($structure['queryResult'], $vars)->fetchAll(PDO::FETCH_KEY_PAIR);
             }
         }
 
@@ -188,6 +188,7 @@ class Execute extends Method
                 && ! isset($word['word'])
             ) {
                 $list = $this->execRaw($word, $structure);
+
             } else {
                 $reqLike = false;
 
@@ -199,12 +200,14 @@ class Execute extends Method
                     $subWords = $this->model->words($word['word'], true);
                     $word     = \str_replace(['#', '%', '_'], ['##', '#%', '#_'], $word['word']);
                     $word     = "%{$word}%";
+
                 } else {
                     $word     = \str_replace(['*', '?'], ['%', '_'], $word);
                 }
 
                 if (isset($this->wordsCache[$word])) {
                     $list = $this->wordsCache[$word];
+
                 } else {
                     if (true === $reqLike) {
                         $list = [];
@@ -212,6 +215,7 @@ class Execute extends Method
                         foreach ($subWords as $cur) {
                             if ($this->model->isCJKWord($cur)) {
                                 $list[] = $cur;
+
                             } else {
                                 $list[] = "{$cur}*";
                             }
@@ -227,29 +231,29 @@ class Execute extends Method
 
                         if (empty($list)) {
                             $this->wordsCache[$word] = [];
+
                         } else {
-                            $vars = [
+                            $vars                    = [
                                 ':list' => \implode(',', \array_map('\\intval', $list)),
                                 ':word' => $word,
                             ];
-
                             $this->wordsCache[$word] = $list = $this->c->DB->query($structure['queryLikeRaw'], $vars)->fetchAll(PDO::FETCH_COLUMN);
                         }
+
                     } else {
-                        $vars = [
+                        $vars  = [
                             ':word' => $word,
                         ];
                         $query = 'SELECT id FROM ::search_words WHERE word LIKE ?s:word';
-
-                        $list = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
+                        $list  = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
                         if (empty($list)) {
                             $this->wordsCache[$word] = [];
+
                         } else {
-                            $vars = [
+                            $vars                    = [
                                 ':list' => \implode(',', \array_map('\\intval', $list)),
                             ];
-
                             $this->wordsCache[$word] = $list = $this->c->DB->query($structure['queryIndxRaw'], $vars)->fetchAll(PDO::FETCH_COLUMN);
                         }
                     }
@@ -258,10 +262,13 @@ class Execute extends Method
 
             if (! $count) {
                 $ids = \array_flip($list);
+
             } elseif ('AND' === $type) {
                 $ids = \array_intersect_key($ids, \array_flip($list));
+
             } elseif ('OR' === $type) {
                 $ids += \array_flip($list);
+
             } elseif ('NOT' === $type) {
                 $ids = \array_diff_key($ids, \array_flip($list));
             }
@@ -324,6 +331,7 @@ class Execute extends Method
 
         if (1 === $this->model->showAs) {
             $key = 'DISTINCT p.topic_id';
+
         } else {
             $key = 'p.id';
         }
@@ -350,6 +358,7 @@ class Execute extends Method
                 if (1 === $this->model->showAs) {
                     $value       = 't.last_post';
                     $useT        = true;
+
                 } else {
                     $value       = 'p.id';
                 }
@@ -361,6 +370,7 @@ class Execute extends Method
 
         if ($key === $value) {
             $out['queryResult'] = null;
+
         } else {
             $useT               = $useT ? 'INNER JOIN ::topics AS t ON t.id=p.topic_id ' : '';
             $out['queryResult'] = "SELECT {$key}, {$value} FROM ::posts AS p " .

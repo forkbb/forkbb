@@ -28,6 +28,7 @@ class Filter extends Action
         foreach ($order as $field => $dir) {
             if (! isset($fields[$field])) {
                 throw new InvalidArgumentException("The '{$field}' field is not found");
+
             } elseif (
                 'ASC' !== $dir
                 && 'DESC' !== $dir
@@ -40,6 +41,7 @@ class Filter extends Action
 
         if (empty($orderBy)) {
             $orderBy = 'u.username ASC';
+
         } else {
             $orderBy = \implode(', ', $orderBy);
         }
@@ -82,20 +84,24 @@ class Filter extends Action
                             $where[] = "u.{$field} BETWEEN ?{$fields[$field]} AND ?{$fields[$field]}";
                             $vars[]  = $rule[1];
                             $vars[]  = $rule[2];
+
                         // min больше max O_o
                         } elseif ($rule[1] > $rule[2]) {
                             $where[] = "u.{$field} NOT BETWEEN ?{$fields[$field]} AND ?{$fields[$field]}";
                             $vars[]  = $rule[1];
                             $vars[]  = $rule[2];
+
                         // min равен max :)
                         } else {
                             $where[] = "u.{$field}=?{$fields[$field]}";
                             $vars[]  = $rule[1];
                         }
+
                     // есть только min
                     } elseif (isset($rule[1])) {
                         $where[] = "u.{$field}>=?{$fields[$field]}";
                         $vars[]  = $rule[1];
+
                     // есть только max
                     } elseif (isset($rule[2])) {
                         $where[] = "u.{$field}<=?{$fields[$field]}";
@@ -112,6 +118,7 @@ class Filter extends Action
             $query = "SELECT u.id
                 FROM ::users AS u
                 ORDER BY {$orderBy}";
+
         } else {
             $where = \implode(' AND ', $where);
             $query = "SELECT u.id

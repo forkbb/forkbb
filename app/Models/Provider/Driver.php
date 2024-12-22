@@ -82,6 +82,7 @@ abstract class Driver extends Model
     {
         if ('' == $type) {
             throw new InvalidArgumentException('Expected non-empty type');
+
         } elseif (0 !== \preg_match('%[^a-zA-Z]%', $type)) {
             throw new InvalidArgumentException('Invalid characters in type');
         }
@@ -213,6 +214,7 @@ abstract class Driver extends Model
 
         if (\extension_loaded('curl')) {
             $result = $this->curlRequest($method, $url, $options);
+
         } elseif (\filter_var(\ini_get('allow_url_fopen'), \FILTER_VALIDATE_BOOL)) {
             $result = $this->streamRequest($method, $url, $options);
         }
@@ -221,6 +223,7 @@ abstract class Driver extends Model
             $this->error = 'No cURL and allow_url_fopen OFF';
 
             return false;
+
         } elseif (\is_string($result)) {
             if (\str_starts_with($this->respContentType, 'application/json')) {
                 $data = \json_decode($result, true, 20);
@@ -282,6 +285,7 @@ abstract class Driver extends Model
 
         if (false === $result) {
             $this->error = 'cURL error: ' . \curl_error($ch);
+
         } else {
             $this->respContentType = \curl_getinfo($ch, \CURLINFO_CONTENT_TYPE);
             $this->respHttpCode    = \curl_getinfo($ch, \CURLINFO_RESPONSE_CODE);
@@ -327,6 +331,7 @@ abstract class Driver extends Model
 
         if (false === $result) {
             $this->error = "Failed file_get_contents for {$url}";
+
         } else {
             $this->respContentType = $this->parseHeader($http_response_header, 'Content-Type:\s*(.+)');
             $this->respHttpCode    = (int) $this->parseHeader($http_response_header, 'HTTP/[0-9.]+\s+([0-9]+)');

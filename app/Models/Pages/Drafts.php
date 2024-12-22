@@ -93,6 +93,7 @@ class Drafts extends Page
                 || '1' !== $v->confirm
             ) {
                 return $this->c->Redirect->page('Drafts')->message('No confirm redirect', FORK_MESS_WARN);
+
             } else {
                 $this->c->drafts->delete($draft);
 

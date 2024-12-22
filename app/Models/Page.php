@@ -46,14 +46,14 @@ abstract class Page extends Model
         $this->identifier   = 'unknown';      # string|array Идентификатор(ы) для установки классов элемента #fork
         $this->fIndex       = self::FI_INDEX; # string       Указатель на активный пункт навигации
         $this->httpStatus   = 200;            # int          HTTP статус ответа для данной страницы
-#       $this->nameTpl      = null;           # null|string  Имя шаблона
-#       $this->titles       = [];             # array        Массив титула страницы | setTitles()
-#       $this->fIswev       = [];             # array        Массив info, success, warning, error, validation информации
-#       $this->onlinePos    = '';             # null|string  Позиция для таблицы онлайн текущего пользователя
+//      $this->nameTpl      = null;           # null|string  Имя шаблона
+//      $this->titles       = [];             # array        Массив титула страницы | setTitles()
+//      $this->fIswev       = [];             # array        Массив info, success, warning, error, validation информации
+//      $this->onlinePos    = '';             # null|string  Позиция для таблицы онлайн текущего пользователя
         $this->onlineDetail = false;          # null|bool    Формировать данные по посетителям online или нет
         $this->onlineFilter = true;           # bool         Посетители только по текущей странице или по всем
-#       $this->robots       = '';             # string       Переменная для meta name="robots"
-#       $this->canonical    = '';             # string       Переменная для link rel="canonical"
+//      $this->robots       = '';             # string       Переменная для meta name="robots"
+//      $this->canonical    = '';             # string       Переменная для link rel="canonical"
         $this->hhsLevel     = 'common';       # string       Ключ для $c->HTTP_HEADERS (для вывода заголовков HTTP из конфига)
 
         $this->fTitle       = $container->config->o_board_title;
@@ -227,6 +227,7 @@ abstract class Page extends Model
                 'Login',
                 'Login',
             ];
+
         } else {
             $navUser[self::FI_PROFL] = [
                 $this->user->link,
@@ -297,6 +298,7 @@ abstract class Page extends Model
 
                    if (isset($navGen[$matches[4][$i]])) {
                        $navGen[$matches[4][$i]] = [$matches[3][$i], $matches[2][$i], $matches[2][$i]];
+
                    } else {
                        $navGen = \array_merge(
                            \array_slice($navGen, 0, (int) $matches[1][$i]),
@@ -323,6 +325,7 @@ abstract class Page extends Model
         ) {
             if ($this->c->MAINTENANCE_OFF) {
                 $this->fIswev = [FORK_MESS_ERR, ['Maintenance mode enabled off', $this->c->Router->link('AdminMaintenance')]];
+
             } else {
                 $this->fIswev = [FORK_MESS_WARN, ['Maintenance mode enabled', $this->c->Router->link('AdminMaintenance')]];
             }
@@ -358,6 +361,7 @@ abstract class Page extends Model
     {
         if (null === $values) {
             return $this->pageHeaders["{$name}_{$type}"] ?? null;
+
         } else {
             $this->pageHeaders["{$name}_{$type}"] = [
                 'weight' => $weight,
@@ -408,12 +412,14 @@ abstract class Page extends Model
             ) {
                 $header = $_SERVER['SERVER_PROTOCOL'];
             }
+
         } else {
             $header .= ':';
         }
 
         if (null === $value) {
             unset($this->httpHeaders[$key]);
+
         } elseif (
             true === $replace
             || empty($this->httpHeaders[$key])
@@ -421,6 +427,7 @@ abstract class Page extends Model
             $this->httpHeaders[$key] = [
                 ["{$header} {$value}", $replace],
             ];
+
         } else {
             $this->httpHeaders[$key][] = ["{$header} {$value}", $replace];
         }
@@ -464,6 +471,7 @@ abstract class Page extends Model
         if (\preg_match('%style\-src([^;]+)%', $header, $matches)) {
             if (false === \strpos($matches[1], 'unsafe-inline')) {
                 return \str_replace($matches[0], "{$matches[0]} 'unsafe-inline'", $header);
+
             } else {
                 return $header;
             }
@@ -472,6 +480,7 @@ abstract class Page extends Model
         if (\preg_match('%default\-src([^;]+)%', $header, $matches)) {
             if (false === \strpos($matches[1], 'unsafe-inline')) {
                 return "{$header};style-src{$matches[1]} 'unsafe-inline'";
+
             } else {
                 return "{$header};style-src{$matches[1]}";
             }
@@ -528,6 +537,7 @@ abstract class Page extends Model
             && 2 === \count($value)
         ) {
             $attr[$value[0]][] = $value[1];
+
         } else {
             $attr = \array_merge_recursive($attr, $value); // ???? добавить проверку?
         }
@@ -565,6 +575,7 @@ abstract class Page extends Model
 
                     if ($crumb->linkCrumbExt) {
                         $ext = [$crumb->linkCrumbExt, $crumb->textCrumbExt ?? '#'];
+
                     } else {
                         $ext = null;
                     }
@@ -574,11 +585,13 @@ abstract class Page extends Model
                     $crumb instanceof Model
                     && null !== $crumb->parent
                 );
+
             // ссылка (передана массивом)
             } elseif (\is_array($crumb)) {
                 $result[]     = [$crumb[0], $crumb[1], $crumb[2] ?? null, $crumb[3] ?? null, $active, $crumb[4] ?? $ext];
                 $this->titles = $crumb[1];
                 $ext          = null;
+
             // строка
             } else {
                 $result[]     = [null, (string) $crumb, null, null, $active, $ext];
@@ -607,6 +620,7 @@ abstract class Page extends Model
                 $matches[1] . '.min' => $matches[2],
                 $matches[1]          => $matches[2],
             ];
+
         } else {
             $variants = [
                 $path                => '',
@@ -619,6 +633,7 @@ abstract class Page extends Model
             if (\is_file($fullPath)) {
                 if ('' === $end) {
                     return $this->c->PUBLIC_URL . $start;
+
                 } else {
                     $time = \filemtime($fullPath) ?: '0';
 

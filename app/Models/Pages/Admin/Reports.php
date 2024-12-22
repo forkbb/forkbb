@@ -80,6 +80,7 @@ class Reports extends Admin
                 $cur = [
                     'legend' => ['Reported %s', dt($report->created)],
                 ];
+
             } else {
                 $cur = [
                     'legend' => ['Marked as read %1$s by %2$s', dt($report->zapped), $report->marker->username],
@@ -105,6 +106,7 @@ class Reports extends Admin
                     'value'   => __(['Post #%s ', $post->id, $post->link, $topic->name, $topic->link, $forum->forum_name, $forum->link]),
                     'html'    => true,
                 ];
+
             } else {
                 $cur['fields']['post' . $report->id] = [
                     'type'    => 'str',

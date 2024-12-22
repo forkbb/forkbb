@@ -36,13 +36,16 @@ class Polls extends Manager
     {
         if ($this->isset($id)) {
             return $this->get($id);
+
         } else {
             $data = $this->c->Cache->get("poll{$id}", false);
 
             if (null === $data) {
                 $poll = null;
+
             } elseif (\is_array($data)) {
                 $poll = $this->create($data);
+
             } else {
                 $poll = $this->Load->load($id);
                 $data = $poll instanceof Poll ? $poll->getModelAttrs() : null; // ????
@@ -76,6 +79,7 @@ class Polls extends Manager
     public function insert(Poll $poll): int
     {
         $id = $this->Save->insert($poll);
+
         $this->set($id, $poll);
 
         return $id;

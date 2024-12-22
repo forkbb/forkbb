@@ -40,6 +40,7 @@ class Search extends Page
 
                 if ($f->redirect_url) {
                     $options[] = [$f->id, $indent . __('Forum prefix') . $f->forum_name, true];
+
                 } else {
                     $options[] = [$f->id, $indent . __('Forum prefix') . $f->forum_name];
                     $idxs[]    = $f->id;
@@ -125,6 +126,7 @@ class Search extends Page
                 && $v->validation($_POST)
             ) {
                 return $this->c->Redirect->page($marker, $v->getData());
+
             } elseif (
                 'GET' === $method
                 && $v->validation($args)
@@ -336,6 +338,7 @@ class Search extends Page
 
                 if (! $search->prepare($query)) {
                     $v->addError([$search->queryError, $search->queryText]);
+
                 } else {
                     if ($search->execute($v, $this->listOfIndexes, $flood)) {
                         $flood = false;
@@ -374,10 +377,13 @@ class Search extends Page
                 && \preg_match('%^\d+(?:\.\d+)*$%D', $forums)
             ) {
                 $forums = \explode('.', $forums);
+
             } elseif (null === $forums) {
                 $forums = '*';
+
             } elseif (! \is_array($forums)) {
                 $v->addError('The :alias contains an invalid value');
+
                 $forums = '*';
             }
         }
@@ -444,6 +450,7 @@ class Search extends Page
             case 'search':
                 if (1 === $model->showAs) {
                     $list          = $model->actionT($action, $forum);
+
                 } else {
                     $list          = $model->actionP($action, $forum);
                     $asTopicsList  = false;
@@ -451,6 +458,7 @@ class Search extends Page
 
                 if ('*' === $args['author']) {
                     $model->name   = ['Search query: %s', $args['keywords']];
+
                 } else {
                     $model->name   = ['Search query: %1$s and Author: %2$s', $args['keywords'], $args['author']];
                 }
@@ -485,6 +493,7 @@ class Search extends Page
 
                     if (empty($this->user->unfollowed_f)) {
                         $model->textCrumbExt = __('Set up');
+
                     } else {
                         $model->textCrumbExt = '-' . (\substr_count($this->user->unfollowed_f, ',') + 1);
                     }
@@ -492,6 +501,7 @@ class Search extends Page
 
                 if ($forum->id) {
                     $model->linkArgs = ['action' => $action, 'forum' => $forum->id];
+
                 } else {
                     $model->linkArgs = ['action' => $action];
                 }
@@ -522,8 +532,10 @@ class Search extends Page
 
                 if ('forums_subscriptions' == $action) {
                     $list = $model->actionF($action, $forum, $user->id);
+
                 } elseif ($asTopicsList) {
                     $list = $model->actionT($action, $forum, $user->id);
+
                 } else {
                     $list = $model->actionP($action, $forum, $user->id);
                 }
@@ -533,17 +545,19 @@ class Search extends Page
 
                 if ($forum->id) {
                     $model->linkArgs = ['action' => $action, 'uid' => $user->id, 'forum' => $forum->id];
+
                 } else {
                     $model->linkArgs = ['action' => $action, 'uid' => $user->id];
                 }
 
                 break;
-#            default:
-#                throw new InvalidArgumentException('Unknown action: ' . $action);
+//            default:
+//                throw new InvalidArgumentException('Unknown action: ' . $action);
         }
 
         if (false === $list) {
             return $this->c->Message->message('Bad request');
+
         } elseif (empty($list)) {
             $this->fIswev = [FORK_MESS_INFO, 'No hits'];
             $this->noHits = true;
@@ -560,9 +574,11 @@ class Search extends Page
                 $this->c->Lang->load('subforums');
 
                 $model->subforums = $list;
+
             } else {
                 $this->topics = $list;
             }
+
         } else {
             $this->c->Lang->load('topic');
 
@@ -593,6 +609,7 @@ class Search extends Page
         // перехват пустого результата для 'latest_active_topics' и 'unanswered_topics'
         if (isset($this->noHits, $this->c->search->linkCrumbExt, $this->c->search->textCrumbExt)) {
             $ext = [$this->c->search->linkCrumbExt, $this->c->search->textCrumbExt];
+
         } else {
             $ext = null;
         }

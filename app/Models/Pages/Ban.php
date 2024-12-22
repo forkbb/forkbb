@@ -24,8 +24,6 @@ class Ban extends Page
         $this->identifier = 'ban';
         $this->httpStatus = 403;
         $this->nameTpl    = 'ban';
-#       $this->onlinePos  = 'ban';
-#       $this->robots     = 'noindex';
         $this->titles     = 'Info';
         $this->ban        = $user->banInfo;
         $this->adminEmail = $this->c->config->o_admin_email;

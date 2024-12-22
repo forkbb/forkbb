@@ -22,6 +22,7 @@ class IsUniqueName extends Action
     {
         if ('#%' === $symbol) {
             $symbol = '%';
+
         } else {
             $symbol = \str_replace(['#', '_', '%'], ['##', '#_', '#%'], $symbol);
         }
@@ -92,6 +93,7 @@ class IsUniqueName extends Action
                 if ($name7bit && $norm7bit) {
                     break;
                 }
+
                 // бд поддерживает UTF-8 сравнение без учета регистра
                 if ($this->c->config->insensitive()) {
                     break;

@@ -48,6 +48,7 @@ class Forums extends Admin
                     || $f->redirect_url
                 ) {
                     $options[] = [$f->id, $indent . __('Forum prefix') . $f->forum_name, true];
+
                 } else {
                     $options[] = [$f->id, $indent . __('Forum prefix') . $f->forum_name];
                     $idxs[]    = $f->id;
@@ -347,6 +348,7 @@ class Forums extends Admin
             $this->aCrumbs[] = [$this->c->Router->link($marker), 'Add forum head'];
             $this->titleForm = 'Add forum head';
             $this->classForm = ['createforum'];
+
         } else {
             $marker          = 'AdminForumsEdit';
             $this->aCrumbs[] = [$this->c->Router->link($marker, $args), 'Edit forum head'];
@@ -397,6 +399,7 @@ class Forums extends Admin
             if ($v->parent > 0) {
                 $forum->parent_forum_id = $v->parent;
                 $forum->cat_id          = $this->c->forums->get($v->parent)->cat_id;
+
             } elseif ($v->parent < 0) {
                 $forum->cat_id          = -$v->parent;
                 $forum->parent_forum_id = 0;
@@ -406,12 +409,14 @@ class Forums extends Admin
                 if ($v->reset) {
                     $message = 'Perms reverted redirect';
                     $this->c->groups->Perm->reset($forum);
+
                 } else {
                     if (empty($args['id'])) {
                         $message = 'Forum added redirect';
                         $forum->disp_position = $this->forumPos($forum);
                         $forum->moderators    = '';
                         $this->c->forums->insert($forum);
+
                     } else {
                         $message = 'Forum updated redirect';
                         $this->c->forums->update($forum);
@@ -617,14 +622,17 @@ class Forums extends Admin
 
         if (empty($args['action'])) {
             $m = 'customFieldsView';
+
         } else {
             switch ($args['action']) {
                 case 'new':
                 case 'edit':
                     $m = 'customFieldsEdit';
+
                     break;
                 case 'delete':
                     $m = 'customFieldsDelete';
+
                     break;
                 default:
                     return $this->c->Message->message('Bad request');
@@ -794,6 +802,7 @@ class Forums extends Admin
             $this->titleForm = 'Add field head';
             $this->classForm = ['createfield'];
             $data            = [];
+
         } else {
             if (empty($forum->custom_fields[$args['field']])) {
                 return $this->c->Message->message('Bad request');

@@ -62,6 +62,7 @@ class Delete extends Method
 
                 $users[$arg->id] = $arg;
                 $isUser          = 1;
+
             } elseif ($arg instanceof PPost) {
                 if (! $arg->parent instanceof PTopic) {
                     throw new RuntimeException('Bad ppost');
@@ -69,6 +70,7 @@ class Delete extends Method
 
                 $posts[$arg->id] = $arg;
                 $isPost          = 1;
+
             } elseif ($arg instanceof PTopic) {
                 if (! $this->model->accessTopic($arg->id)) {
                     throw new RuntimeException('Bad ptopic');
@@ -95,6 +97,7 @@ class Delete extends Method
 
                 if ($topic->isFullDeleted) {
                     $ids[] = $topic->id;
+
                 } else {
                     $this->model->update(Cnst::PTOPIC, $topic);
                 }

@@ -212,6 +212,7 @@ class Install extends Admin
 
             if ($v->validation($_POST)) {
                 return $this->installEnd($v);
+
             } else {
                 $this->fIswev = $v->getErrors();
             }
@@ -470,6 +471,7 @@ class Install extends Admin
     {
         if (! \preg_match('%^[a-z][a-z\d_]*$%i', $prefix)) {
             $v->addError('Table prefix error');
+
         } elseif (
             'sqlite_' === \strtolower($prefix)
             || 'pg_' === \strtolower($prefix)
@@ -509,6 +511,7 @@ class Install extends Admin
 
                 if (\preg_match('%^([^:]+):(\d+)$%', $dbhost, $matches)) {
                     $this->c->DB_DSN = "mysql:host={$matches[1]};port={$matches[2]};dbname={$dbname};charset=utf8mb4";
+
                 } else {
                     $this->c->DB_DSN = "mysql:host={$dbhost};dbname={$dbname};charset=utf8mb4";
                 }
@@ -534,6 +537,7 @@ class Install extends Admin
                 if (\preg_match('%^([^:]+):(\d+)$%', $dbhost, $matches)) {
                     $host = $matches[1];
                     $port = $matches[2];
+
                 } else {
                     $host = $dbhost;
                     $port = '5432';
@@ -644,6 +648,7 @@ class Install extends Admin
 
         if (! $this->c->DB->createTable($table, $schema)) {
             $v->addError('Failed to create table');
+
         } else {
             if (! $this->c->DB->truncateTable($table)) {
                 $v->addError('Failed to truncate table');

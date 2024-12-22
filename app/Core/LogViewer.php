@@ -154,6 +154,7 @@ class LogViewer
                 && $cache[$hash]['time'] === $this->fileList[$key]
             ) {
                 $result[$hash] = $cache[$hash]['data'];
+
             } else {
                 $result[$hash] = $this->generateInfo($key);
                 $cache[$hash]  = [
@@ -235,6 +236,7 @@ class LogViewer
 
                         $current  = $line;
                         $matches1 = $matches;
+
                     } else {
                         $current .= $line;
                     }
@@ -258,6 +260,7 @@ class LogViewer
             $result['context'] = \json_decode($result['context'], true, 512, \JSON_THROW_ON_ERROR);
 
             return $result;
+
         } else {
             return $this->clearMatches($matches1) + [
                 'message' => 'LOG PARSER ERROR',

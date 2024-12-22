@@ -85,6 +85,7 @@ class Model
 
         if (\method_exists($this, $method = 'set' . $name)) {
             $this->$method($value);
+
         } else {
             $this->zAttrs[$name] = $value;
         }
@@ -122,10 +123,13 @@ class Model
     {
         if (\array_key_exists($name, $this->zAttrsCalc)) {
             return $this->zAttrsCalc[$name];
+
         } elseif (\method_exists($this, $method = 'get' . $name)) {
             return $this->zAttrsCalc[$name] = $this->$method();
+
         } elseif (\array_key_exists($name, $this->zAttrs)) {
             return $this->zAttrs[$name];
+
         } elseif (
             \str_starts_with($name, 'censor')
             && isset($this->zAttrs[$root = \lcfirst(\substr($name, 6))])
@@ -137,6 +141,7 @@ class Model
 
         if ($x > 90 || $x < 65) {
             return null;
+
         } else {
             $key = $this->cKey . '/' . \lcfirst($name);
 

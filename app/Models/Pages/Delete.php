@@ -59,11 +59,14 @@ class Delete extends Page
                 $redirect = $this->c->Redirect
                     ->url($topic->parent->link)
                     ->message('Topic del redirect', FORK_MESS_SUCC);
+
                 $this->c->topics->delete($topic);
+
             } else {
                 $redirect = $this->c->Redirect
                     ->page('ViewPost', ['id' => $this->c->posts->previousPost($post)])
                     ->message('Post del redirect', FORK_MESS_SUCC);
+
                 $this->c->posts->delete($post);
             }
 

@@ -86,8 +86,10 @@ class ProviderUser extends Model
     {
         if ($user->isGuest) {
             throw new RuntimeException('User expected, not guest');
+
         } elseif ('' == $provider->userId) {
             throw new RuntimeException('The user ID is empty');
+
         } elseif ('' == $provider->userEmail) {
             throw new RuntimeException('The user email is empty');
         }

@@ -104,6 +104,7 @@ class Online extends Model
         if ($detail) {
             $query = 'SELECT o.user_id, o.ident, o.logged, o.o_position, o.o_name
                 FROM ::online AS o';
+
         } else {
             $query = 'SELECT o.user_id, o.ident, o.logged
                 FROM ::online AS o';
@@ -119,6 +120,7 @@ class Online extends Model
                 if ($cur['logged'] < $tVisit) {
                     if ($cur['user_id'] > 0) {
                         $upUsers[$cur['user_id']] = $cur['logged'];
+
                     } else {
                         $delGuests[] = $cur['ident'];
                     }
@@ -147,9 +149,11 @@ class Online extends Model
             // пользователь
             if ($cur['user_id'] > 0) {
                 $users[$cur['user_id']] = $cur['o_name'];
+
             // гость
             } elseif ('' == $cur['o_name']) {
                 $guests[] = $cur['ident'];
+
             // бот
             } else {
                 $bots[$cur['o_name']][] = $cur['ident'];
@@ -254,11 +258,13 @@ class Online extends Model
                 $query = 'UPDATE ::online
                     SET logged=?i:logged, o_position=?s:pos, o_name=?s:name
                     WHERE user_id=0 AND ident=?s:ident';
+
             } else {
                 $query = 'UPDATE ::online
                     SET logged=?i:logged, o_position=?s:pos
                     WHERE user_id=?i:id';
             }
+
         } else {
             $query = match ($this->c->DB->getType()) {
                 'mysql' => 'INSERT IGNORE INTO ::online (user_id, ident, logged, o_position, o_name)
@@ -294,6 +300,7 @@ class Online extends Model
             $query = 'DELETE
                 FROM ::online
                 WHERE user_id=0 AND ident=?s:ip';
+
         } else {
             $vars = [
                 ':id' => $user->id,

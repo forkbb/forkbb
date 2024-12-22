@@ -33,6 +33,7 @@ class Search extends Profile
 
         if ($this->rules->my) {
             $this->forumManager = $this->c->forums;
+
         } else {
             $this->forumManager = $this->c->ForumManager->init($this->c->groups->get($this->curUser->group_id));
         }

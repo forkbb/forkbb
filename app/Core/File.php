@@ -50,8 +50,10 @@ class File
     {
         if ($files->isBadPath($path)) {
             throw new FileException('Bad path to file');
+
         } elseif (! \is_file($path)) {
             throw new FileException('File not found');
+
         } elseif (! \is_readable($path)) {
             throw new FileException('File can not be read');
         }
@@ -89,6 +91,7 @@ class File
 
         if ('*' === $matches[3]) {
             $matches[3] = $this->ext;
+
         } elseif (
             '(' === $matches[3][0]
             && ')' === $matches[3][-1]
@@ -160,6 +163,7 @@ class File
 
                 return false;
             }
+
         } else {
             if (! \copy($this->path, $path)) {
                 $this->error = 'Error copying file';
@@ -214,6 +218,7 @@ class File
                     $info['filename'] = $name . '_' . $i;
 
                     continue;
+
                 } elseif (! $this->rewrite) {
                     $this->error = 'Such file already exists';
 
@@ -243,6 +248,7 @@ class File
             $this->ext  = $info['extension'];
 
             return true;
+
         } else {
             return false;
         }

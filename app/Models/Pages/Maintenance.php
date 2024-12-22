@@ -24,15 +24,10 @@ class Maintenance extends Page
         $this->identifier         = 'maintenance';
         $this->httpStatus         = 503;
         $this->nameTpl            = 'maintenance';
-#       $this->onlinePos          = null; //????
-#       $this->robots             = 'noindex';
         $this->titles             = 'Maintenance';
-#       $this->fNavigation        = null; //????
         $this->maintenanceMessage = $this->c->config->o_maintenance_message;
 
         $this->header('Retry-After', '3600');
-
-#        $this->fIswev = [FORK_MESS_INFO, $this->c->config->o_maintenance_message];
     }
 
     /**

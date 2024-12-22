@@ -29,14 +29,11 @@ class Load extends Action
             throw new InvalidArgumentException('Expected a positive draft id');
         }
 
-        $vars = [
+        $vars  = [
             ':did' => $id,
         ];
-        $query = 'SELECT d.*
-            FROM ::drafts AS d
-            WHERE d.id=?i:did';
-
-        $data = $this->c->DB->query($query, $vars)->fetch();
+        $query = 'SELECT * FROM ::drafts WHERE id=?i:did';
+        $data  = $this->c->DB->query($query, $vars)->fetch();
 
         if (empty($data)) {
             return null;
@@ -62,14 +59,11 @@ class Load extends Action
             }
         }
 
-        $vars = [
+        $vars  = [
             ':ids' => $ids,
         ];
-        $query = 'SELECT d.*
-            FROM ::drafts AS d
-            WHERE d.id IN (?ai:ids)';
-
-        $stmt = $this->c->DB->query($query, $vars);
+        $query = 'SELECT * FROM ::drafts WHERE id IN (?ai:ids)';
+        $stmt  = $this->c->DB->query($query, $vars);
 
         $result   = [];
         $topicIds = [];
@@ -92,6 +86,7 @@ class Load extends Action
             }
 
             unset($draft);
+
         } else {
             foreach ($topicIds as $id) {
                 if (

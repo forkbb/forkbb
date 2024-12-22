@@ -126,6 +126,7 @@ class Email extends Profile
                         return $this->c->Redirect
                             ->page('EditUserProfile', $args)
                             ->message('Email changed redirect', FORK_MESS_SUCC);
+
                     } else {
                         $this->c->Csrf->setHashExpiration(259200); // ???? хэш действует 72 часа
 
@@ -164,6 +165,7 @@ class Email extends Profile
                             ]);
                         }
                     }
+
                 } elseif (! $this->user->isAdmin) {
                     // обманка
                     $isSent = true;
@@ -181,6 +183,7 @@ class Email extends Profile
 
                         return $this->c->Message
                             ->message(['Activate email sent', $this->c->config->o_admin_email], false, 200);
+
                     } else {
                         return $this->c->Message
                             ->message(['Error mail', $this->c->config->o_admin_email], true, 200);

@@ -147,11 +147,13 @@ class Func
                 $pn = $args['page'];
 
                 unset($args[$pn]);
+
             } else {
                 $pn = 'page';
             }
 
             unset($args['page']);
+
         } else {
             $pn = 'page';
         }
@@ -184,13 +186,16 @@ class Func
             }
 
             $tpl[$all] = $all;
+
         } else {
             $tpl = [];
 
             if ($all > 999) {
                 $d = 2;
+
             } elseif ($all > 99) {
                 $d = 3;
+
             } else {
                 $d = \min(4, $all - 2);
             }
@@ -263,6 +268,7 @@ class Func
                 }
 
                 $q = (float) $q;
+
             } else {
                 $q = 1;
             }
@@ -286,11 +292,13 @@ class Func
     {
         if (null !== $this->offset) {
             return $this->offset;
+
         } elseif (\in_array($this->c->user->timezone, DateTimeZone::listIdentifiers(), true)) {
             $dateTimeZone = new DateTimeZone($this->c->user->timezone);
             $dateTime     = new DateTime('now', $dateTimeZone);
 
             return $this->offset = $dateTime->getOffset();
+
         } else {
             return $this->offset = 0;
         }
@@ -313,8 +321,10 @@ class Func
 
         if (! \is_int($timestamp)) {
             return false;
+
         } elseif ($useOffset) {
             return $timestamp - $this->offset();
+
         } else {
             return $timestamp;
         }

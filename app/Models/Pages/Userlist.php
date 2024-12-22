@@ -81,6 +81,7 @@ class Userlist extends Page
 
         if (\is_numeric($v->group)) {
             $filters['group_id'] = ['=', $v->group];
+
         } else {
             $filters['group_id'] = ['!=', 0];
         }
@@ -118,6 +119,7 @@ class Userlist extends Page
             if (4 === $count) {
                 $vars['group'] = 'all';
                 $vars['name']  = '*';
+
             } else {
                 $vars['group'] = $v->group;
                 $vars['name']  = $v->name;
@@ -142,6 +144,7 @@ class Userlist extends Page
             }
 
             $this->links = $links;
+
         } else {
             $this->startNum = 0;
             $this->userList = null;
@@ -195,8 +198,8 @@ class Userlist extends Page
                 'caption'   => 'Username',
                 'help'      => 'User search info',
                 'required'  => true,
-#               'autofocus' => true,
             ];
+
         } else {
             $form['hidden']['name'] = '*';
         }

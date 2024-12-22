@@ -50,6 +50,7 @@ class ImagickDriver extends DefaultDriver
             || $this->files->isBadPath($path)
         ) {
             return false;
+
         } else {
             try {
                 return new Imagick(\realpath($path));
@@ -115,6 +116,7 @@ class ImagickDriver extends DefaultDriver
                 }
 
                 return $images->deconstructImages();
+
             // нет анимации
             } else {
                 $imagick->resizeImage($width, $height, Imagick::FILTER_LANCZOS, 1);

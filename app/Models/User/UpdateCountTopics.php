@@ -29,11 +29,13 @@ class UpdateCountTopics extends Action
                 && ! $arg->isGuest
             ) {
                 $ids[$arg->id] = true;
+
             } elseif (
                 \is_int($arg)
                 && $arg > 0
             ) {
                 $ids[$arg] = true;
+
             } else {
                 throw new InvalidArgumentException('Expected user or positive integer id');
             }
@@ -42,6 +44,7 @@ class UpdateCountTopics extends Action
         if (empty($ids)) {
             $where = '';
             $vars  = [];
+
         } else {
             if (\count($ids) > 1) {
                 \ksort($ids, \SORT_NUMERIC);

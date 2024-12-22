@@ -150,6 +150,7 @@ class DB
 
         if (\is_file(__DIR__ . "/DB/{$typeU}Statement.php")) {
             $this->statementClass = "ForkBB\\Core\\DB\\{$typeU}Statement";
+
         } else {
             $this->statementClass = DBStatement::class;
         }
@@ -266,6 +267,7 @@ class DB
             && \array_key_exists(':' . $key, $params)
         ) {
             return $params[':' . $key];
+
         } elseif (\array_key_exists($key, $params)) {
             return $params[$key];
         }
@@ -377,6 +379,7 @@ class DB
             && \is_array($args[0])
         ) {
             $params = \array_shift($args);
+
         } else {
             $params = [];
         }
@@ -465,6 +468,7 @@ class DB
     {
         if (isset($this->pdoMethods[$name])) {
             return $this->pdo->$name(...$args);
+
         } elseif (empty($this->dbDrv)) {
             $this->dbDrv = new $this->dbDrvClass($this, $this->dbPrefix);
 

@@ -28,6 +28,7 @@ class Current extends Action
         if (! $user->isGuest) {
             if (! $this->c->Cookie->verifyUser($user)) {
                 $user = $this->load(0, $ip);
+
             } elseif ($user->ip_check_type > 0) {
                 $hexIp = \bin2hex(\inet_pton($ip));
 
@@ -47,8 +48,10 @@ class Current extends Action
             $user->__timezone    = $this->c->config->o_default_timezone;
             $user->__language    = 1 === $this->c->config->b_default_lang_auto ? $this->getLangFromHTTP() : $this->c->config->o_default_lang;
             $user->__locale      = $user->language;
+
         } else {
             $user->__isBot       = false;
+
             // Special case: We've timed out, but no other user has browsed the forums since we timed out
             if (
                 $user->logged > 0
@@ -94,6 +97,7 @@ class Current extends Action
             $data = $this->c->DB->query($query, $vars)->fetch();
 
             return $this->manager->guest($data ?: []);
+
         } else {
             return $this->manager->create($data);
         }
@@ -161,6 +165,7 @@ class Current extends Action
             ) {
                 $status = 2;
                 $agent  = $match[1];
+
                 break;
             }
         }
@@ -205,6 +210,7 @@ class Current extends Action
             || isset($agent[28])
         ) {
             return 'Unknown';
+
         } else {
             return $agent;
         }

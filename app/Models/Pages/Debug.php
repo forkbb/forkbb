@@ -28,12 +28,15 @@ class Debug extends Page
             ) {
                 $total   = 0;
                 $queries = $this->c->DB->getQueries();
+
                 foreach ($queries as $cur) {
                     $total += $cur[1];
                 }
+
                 $this->queries = $queries;
                 $this->total   = $total;
             }
+
         } else {
             $this->numQueries = 0;
         }

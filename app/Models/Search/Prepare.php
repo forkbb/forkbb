@@ -31,6 +31,7 @@ class Prepare extends Method
             $this->model->queryText  = $tag;
 
             return true;
+
         // не парные кавычки
         } elseif (\substr_count($query, '"') % 2) {
             $this->model->queryError = 'Odd number of quotes: \'%s\'';
@@ -61,6 +62,7 @@ class Prepare extends Method
                         && $this->model->cleanText($subQuery, true) === $subQuery
                     ) {
                         $words[] = $subQuery;
+
                     } else {
                         $words[] = [
                             'type' => 'LIKE',
@@ -102,8 +104,10 @@ class Prepare extends Method
 
                         if (! $keyword) {
                             $keyword = true;
+
                         } elseif (empty($words)) {
                             $error = 'Logical operator at the beginning of the search (sub)query: \'%s\'';
+
                         } else {
                             $error = 'Logical operators follow one after another: \'%s\'';
                         }
@@ -121,12 +125,14 @@ class Prepare extends Method
                     case ')':
                         if (! $count) {
                             $error = 'Empty subquery: \'%s\'';
+
                         } elseif ($keyword) {
                             $error = 'Logical operator at the end of the search subquery: \'%s\'';
                         }
 
                         if (empty($stack)) {
                             $error = 'The order of brackets is broken: \'%s\'';
+
                         } else {
                             $temp = $words;
 
@@ -153,14 +159,17 @@ class Prepare extends Method
 
                             if (null === $word) {
                                 continue;
+
                             } elseif (! empty($temp)) {
                                 $temp[] = 'AND';
                             }
 
                             if ($this->model->isCJKWord($word)) {
                                 $temp[] = $word;
+
                             } elseif (\rtrim($word, '?*') === $word) {
                                 $temp[] = $word . '*'; //????
+
                             } else {
                                 $temp[] = $word;
                             }
@@ -179,6 +188,7 @@ class Prepare extends Method
                             ) {
                                 $words  = \array_merge($words, $temp);
                                 $count += $countT;
+
                             } else {
                                 $words[] = $temp;
                                 ++$count;
@@ -196,8 +206,10 @@ class Prepare extends Method
 
         if (! $count) {
             $error = 'There is no word for search: \'%s\'';
+
         } elseif ($keyword) {
             $error = 'Logical operator at the end of the search query: \'%s\'';
+
         } elseif (! empty($stack)) {
             $error = 'The order of brackets is broken: \'%s\'';
         }
@@ -224,6 +236,7 @@ class Prepare extends Method
                 && 'LIKE' === $word['type']
             ) {
                 $word = '"' . $word['word'] . '"';
+
             } elseif (\is_array($word)) {
                 $word = '(' . $this->queryText($word) . ')';
             }
@@ -254,17 +267,21 @@ class Prepare extends Method
                 $skip = false;
 
                 continue;
+
             } elseif ('NOT' === $word) {
                 $skip = true;
 
                 continue;
+
             } elseif (
                 isset($word['type'])
                 && 'LIKE' === $word['type']
             ) {
                 $result .= $space . \preg_replace('%[\\\\+*?\[\]^$(){}|.]%', '\\\\$0', $word['word']);
+
             } elseif (\is_array($word)) {
                 $result .= $space . $this->queryRegexp($word);
+
             } else {
                 $result .= $space . '(?<![\\p{L}\\p{N}_])' . \str_replace(['?', '*'], ['.', '[\\p{L}\\p{N}_]*'], $word);
             }

@@ -57,6 +57,7 @@ class PBlock extends Model
         while ($row = $stmt->fetch()) {
             if ($row['bl_first_id'] === $user->id) {
                 $this->repository[$user->id][$row['bl_second_id']] = $row['bl_second_id'];
+
             } else {
                 $this->repository[$row['bl_first_id']] = true;
             }

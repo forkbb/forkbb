@@ -114,6 +114,7 @@ class Smilies extends Parser
             }
 
             $this->fIswev = $v->getErrors();
+
         } else {
             $data = [];
         }
@@ -372,6 +373,7 @@ class Smilies extends Parser
             $this->c->smilies->delete((int) $args['name']);
 
             $message = 'Smile deleted redirect';
+
         } elseif (\preg_match($this->pattern, $args['name'])) {
             $file = $this->c->DIR_PUBLIC . '/img/sm/' . $args['name'];
 
@@ -381,10 +383,12 @@ class Smilies extends Parser
                 && \unlink($file)
             ) {
                 $message = ['File %s deleted redirect', $args['name']];
+
             } else {
                 $message = ['File %s not deleted redirect', $args['name']];
                 $status  = FORK_MESS_ERR;
             }
+
         } else {
             return $this->c->Message->message('Bad request');
         }
@@ -419,6 +423,7 @@ class Smilies extends Parser
                     ->toFile($this->c->DIR_PUBLIC . '/img/sm/*.(jpg|png|gif)')
             ) {
                 return $this->c->Redirect->page('AdminSmilies')->message('Image uploaded redirect', FORK_MESS_SUCC);
+
             } else {
                 return $this->c->Message->message($v->upload_image->error());
             }

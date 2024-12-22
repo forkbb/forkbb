@@ -57,8 +57,10 @@ class BanList extends Model
 
         if ('' == $val) {
             return null;
+
         } elseif ($toLower) {
             return \mb_strtolower($val, 'UTF-8');
+
         } else {
             return $val;
         }
@@ -78,6 +80,7 @@ class BanList extends Model
                 foreach (\explode(':', $ip) as $cur) {
                     $result .= \substr('0000' . \strtolower($cur), -4);
                 }
+
             } else {
                 $result = '-';
                 // 00-ff
@@ -87,6 +90,7 @@ class BanList extends Model
             }
 
             return $result;
+
         } else {
             // The hyphen is needed for the joint sorting ipv4 and ipv6
             return (isset($bin[4]) ? '' : '-') . \bin2hex($bin);

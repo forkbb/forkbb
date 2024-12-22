@@ -79,6 +79,7 @@ abstract class AbstractStatement extends DBStatement
         if (0 === $mode) {
             $mode   = $this->fetchMode ?? 0;
             $colNum = $this->fetchArg ?? 0;
+
         } else {
             $colNum = 0;
         }

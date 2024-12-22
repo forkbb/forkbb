@@ -24,6 +24,7 @@ class Username extends RulesValidator
         if ($originalUser instanceof User) {
             $id   = $originalUser->id;
             $old  = $originalUser->username;
+
         } else {
             $id   = null;
             $old  = null;
@@ -37,6 +38,7 @@ class Username extends RulesValidator
             if ($this->c->user->isAdmin) {
                 $max     = 190;
                 $pattern = '%^[^@"<>\\/\x00-\x1F]+$%D';
+
             } else {
                 $max     = $this->c->USERNAME['max'];
                 $pattern = $this->c->USERNAME['phpPattern'];
@@ -45,24 +47,30 @@ class Username extends RulesValidator
             // короткое
             if ($len < \max(2, $this->c->USERNAME['min'])) {
                 $v->addError('Short username');
+
             // длинное
             } elseif ($len > \min(190, $max)) {
                 $v->addError('Long username');
+
             // паттерн не совпал
             } elseif (
                 ! \preg_match($pattern, $username)
                 || \preg_match('%[@"<>\\/\x00-\x1F]%', $username)
             ) {
                 $v->addError('Login format');
+
             // идущие подряд пробелы
             } elseif (\preg_match('%\s{2,}%u', $username)) {
                 $v->addError('Username contains consecutive spaces');
+
             // цензура
             } elseif ($this->c->censorship->censor($username) !== $username) {
                 $v->addError('Username censor');
+
             // username забанен
             } elseif ($this->c->bans->banFromName($username) > 0) {
                 $v->addError('Banned username');
+
             // есть пользователь с похожим именем
             } elseif (
                 empty($v->getErrors())

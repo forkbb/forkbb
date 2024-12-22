@@ -39,11 +39,8 @@ class Groups extends Manager
     public function init(): Groups
     {
         if (empty($this->flag)) {
-            $query = 'SELECT g.*
-                FROM ::groups AS g
-                ORDER BY g.g_id';
-
-            $stmt = $this->c->DB->query($query);
+            $query = 'SELECT * FROM ::groups ORDER BY g_id';
+            $stmt  = $this->c->DB->query($query);
 
             while ($row = $stmt->fetch()) {
                 $this->set($row['g_id'], $this->create($row));

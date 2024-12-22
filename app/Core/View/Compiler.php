@@ -69,6 +69,7 @@ class Compiler
             function($match) use ($pre) {
                 if (isset($pre[$match[1]])) {
                     return \rtrim($pre[$match[1]]) . "\n";
+
                 } else {
                     return '';
                 }
@@ -87,6 +88,7 @@ class Compiler
             function($match) {
                 if (\method_exists($this, $method = 'compile' . \ucfirst($match[1]))) {
                     return $this->$method($match[2] ?? '');
+
                 } else {
                     return $match[0];
                 }
@@ -205,9 +207,11 @@ EOD;
         if (\preg_match('%^\(\s*(\!\s*)?(\$[\w>-]+\[(?:\w+|[\'"]\w+[\'"])\])\s*\)$%', $expression, $matches)) {
             if (empty($matches[1])) {
                 return "<?php if (! empty{$expression}): ?>";
+
             } else {
                 return "<?php if (empty({$matches[2]})): ?>";
             }
+
         } else {
             return "<?php if {$expression}: ?>";
         }
@@ -345,6 +349,7 @@ EOD;
             && '(' == $expression[0]
         ) {
             return "<?php if (empty{$expression}): ?>";
+
         } else {
             $s = "<?php endforeach; if (0 === \$__iter{$this->shortID}_{$this->loopsCounter}): ?>";
 

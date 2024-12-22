@@ -70,6 +70,7 @@ class DBStatement
                 foreach ($data as $bParam) {
                     $this->stmt->bindValue($bParam, \array_shift($bValue), $bType); //????
                 }
+
             } else {
                 foreach ($data as $bParam) {
                     $this->stmt->bindValue($bParam, $bValue, $bType); //????

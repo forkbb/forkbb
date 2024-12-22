@@ -54,9 +54,11 @@ class View extends Users
                 if (false === $ip) {
                     $this->fIswev = [FORK_MESS_VLD, 'Bad IP message'];
                     $data         = $v->getData();
+
                 } else {
                     return $this->c->Redirect->page('AdminUsersResult', ['data' => $this->encodeData($ip)]);
                 }
+
             } else {
                 $v = $this->c->Validator->reset()
                     ->addValidators([
@@ -105,7 +107,6 @@ class View extends Users
                         'num_drafts_1'    => 'Drafts label',
                         'num_drafts_2'    => 'Drafts label',
                         'order_by'        => 'Order by label',
-#                        'direction'       => ,
                         'user_group'      => 'User group label',
                     ])->addArguments([
                     ])->addMessages([
@@ -217,7 +218,6 @@ class View extends Users
             FORK_GEN_FEM => __('Female'),
         ];
         $fields['gender'] = [
-#            'class'   => ['block'],
             'type'    => 'radio',
             'value'   => $data['gender'] ?? -1,
             'values'  => $genders,

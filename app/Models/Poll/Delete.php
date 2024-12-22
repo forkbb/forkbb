@@ -38,6 +38,7 @@ class Delete extends Action
 
                 $tids[$arg->tid] = $arg->tid;
                 $isPoll          = 1;
+
             } elseif ($arg instanceof Topic) {
                 if (! $arg->parent instanceof Forum) {
                     throw new RuntimeException('Parent unavailable');

@@ -224,6 +224,7 @@ class View extends Profile
                     'value'   => \substr($this->curUser->linkEmail, 7),
                     'href'    => $this->curUser->linkEmail,
                 ];
+
             } else {
                 $fields['email'] = [
                     'class'   => ['pline'],
@@ -332,6 +333,7 @@ class View extends Profile
                 'title'   => __('Show topics'),
                 'rel'     => 'nofollow',
             ];
+
         } elseif ($this->userRules->showPostCount) {
             $fields['posts'] = [
                 'class'   => ['pline'],

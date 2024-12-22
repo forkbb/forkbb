@@ -70,6 +70,7 @@ class Uploads extends Admin
 
         if ($attachments->hasPage()) {
             $this->formFileList = $this->formFileList($attachments, $args);
+
         } else {
             $this->badPage = $attachments->page;
         }
@@ -165,6 +166,7 @@ class Uploads extends Admin
 
         if (empty($result)) {
             return 'webp';
+
         } else {
             return \implode(',', $result);
         }
@@ -243,6 +245,7 @@ class Uploads extends Admin
                     'value'   => $user->username,
                     'href'    => $user->link,
                 ];
+
             } else {
                 $fields["f{$id}-user"] = [
                     'class'   => ['filelist', 'user'],

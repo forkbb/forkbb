@@ -83,6 +83,7 @@ class Misc extends Page
             $this->c->subscriptions->subscribe($this->user, $forum);
 
             $message = 'Subscribe redirect';
+
         } else {
             $this->c->subscriptions->unsubscribe($this->user, $forum);
 
@@ -117,6 +118,7 @@ class Misc extends Page
             $this->c->subscriptions->subscribe($this->user, $topic);
 
             $message = 'Subscribe redirect';
+
         } else {
             $this->c->subscriptions->unsubscribe($this->user, $topic);
 
@@ -165,10 +167,12 @@ class Misc extends Page
             $topic->solution_wa    = '';
             $topic->solution_wa_id = 0;
             $topic->solution_time  = 0;
+
         } else {
             if (0 === $topic->solution) {
                 $message = 'Solution chosen';
                 $status  = FORK_MESS_SUCC;
+
             } else {
                 $message = 'Solution changed';
                 $status  = FORK_MESS_WARN;

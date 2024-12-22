@@ -44,6 +44,7 @@ class Index extends Method
             while ($row = $stmt->fetch()) {
                 if ($row['subject_match']) {
                     $subCurWords[$row['word']] = $row['id'];
+
                 } else {
                     $mesCurWords[$row['word']] = $row['id'];
                 }
@@ -57,11 +58,13 @@ class Index extends Method
             $words['add']['s'] = \array_diff($subWords, \array_keys($subCurWords));
             $words['del']['p'] = \array_diff_key($mesCurWords, \array_flip($mesWords));
             $words['del']['s'] = \array_diff_key($subCurWords, \array_flip($subWords));
+
         } elseif ('merge' === $mode) {
             $words['add']['p'] = \array_diff($mesWords, \array_keys($mesCurWords));
             $words['add']['s'] = \array_diff($subWords, \array_keys($subCurWords));
             $words['del']['p'] = [];
             $words['del']['s'] = [];
+
         } else {
             $words['add']['p'] = $mesWords;
             $words['add']['s'] = $subWords;
@@ -71,6 +74,7 @@ class Index extends Method
 
         if (empty($words['add']['s'])) {
             $allWords = $words['add']['p'];
+
         } else {
             $allWords = \array_unique(\array_merge($words['add']['p'], $words['add']['s']));
         }
@@ -96,6 +100,7 @@ class Index extends Method
                         $stmt = $this->c->DB->prepare($query, [':word' => $word]);
 
                         $stmt->execute();
+
                     } else {
                         $stmt->execute([':word' => $word]);
                     }

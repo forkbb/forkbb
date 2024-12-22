@@ -56,6 +56,7 @@ class Test
 
         if (empty($_SERVER['HTTP_USER_AGENT'])) {
             $index += 1;
+
         } elseif (\preg_match('%\bmsie\b%i', $_SERVER['HTTP_USER_AGENT'])) {
             $v->addError('Old browser', FORK_MESS_WARN);
 
@@ -66,6 +67,7 @@ class Test
 
         if (empty($_SERVER['HTTP_ACCEPT'])) {
             $index += 5;
+
         } elseif (false === \strpos($_SERVER['HTTP_ACCEPT'], 'text/html')) {
             $index += 1;
         }
@@ -110,6 +112,7 @@ class Test
 
                                 break;
                             }
+
                         } else {
                             $ref = \preg_quote($ref, '%');
                             $ref = \str_replace('\\*', '.*?', $ref);

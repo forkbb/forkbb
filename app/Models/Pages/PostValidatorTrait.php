@@ -25,6 +25,7 @@ trait PostValidatorTrait
         // после цензуры заголовок темы путой
         if ('' == $this->c->censorship->censor($subject)) {
             $v->addError('No subject after censoring');
+
         // заголовок темы только заглавными буквами
         } elseif (
             ! $executive
@@ -52,6 +53,7 @@ trait PostValidatorTrait
         // после цензуры текст сообщения пустой
         if ('' == $this->c->censorship->censor($message)) {
             $v->addError('No message after censoring');
+
         // проверка парсером
         } else {
             $prepare = true;
@@ -116,6 +118,7 @@ trait PostValidatorTrait
             $ruleEmail    = 1 === $this->c->config->b_force_guest_email ? 'required' : 'exist';
             $ruleEmail   .= '|string:trim,empty|email:noban';
             $ruleUsername = 'required|string:trim|username';
+
         } else {
             $ruleEmail    = 'absent';
             $ruleUsername = 'absent';
@@ -131,6 +134,7 @@ trait PostValidatorTrait
             if ($first) {
                 $ruleStickTopic = 'checkbox';
                 $ruleStickFP    = 'checkbox';
+
             } else {
                 $ruleStickTopic = 'absent';
                 $ruleStickFP    = 'absent';
@@ -141,6 +145,7 @@ trait PostValidatorTrait
                 && ! $edit
             ) {
                 $ruleMergePost  = 'checkbox';
+
             } else {
                 $ruleMergePost  = 'absent';
             }
@@ -152,11 +157,13 @@ trait PostValidatorTrait
                 && ! $model->user->isAdmin
             ) {
                 $ruleEditPost   = 'checkbox';
+
             } else {
                 $ruleEditPost   = 'absent';
             }
 
             $executive          = true;
+
         } else {
             $ruleStickTopic     = 'absent';
             $ruleStickFP        = 'absent';
@@ -167,6 +174,7 @@ trait PostValidatorTrait
 
         if ($first) {
             $ruleSubject = 'required|string:trim,spaces|min:1|max:' . $this->c->MAX_SUBJ_LENGTH . '|' . ($executive ? '' : 'noURL|') . 'check_subject';
+
         } else {
             $ruleSubject = 'absent';
         }
@@ -178,12 +186,14 @@ trait PostValidatorTrait
             && $this->user->email_confirmed
         ) {
             $ruleSubscribe = 'checkbox';
+
         } else {
             $ruleSubscribe = 'absent';
         }
 
         if (1 === $this->c->config->b_smilies) {
             $ruleHideSmilies = 'checkbox';
+
         } else {
             $ruleHideSmilies = 'absent';
         }
@@ -195,6 +205,7 @@ trait PostValidatorTrait
             && $this->c->userRules->useDraft
         ) {
             $ruleDraft = 'string|check_timeout';
+
         } else {
             $ruleDraft = 'absent';
         }
@@ -301,6 +312,7 @@ trait PostValidatorTrait
         foreach ($files as $file) {
             if (isset($exts[$file->ext()])) {
                 $result[] = $file;
+
             } else {
                 $v->addError(['The %s extension is not allowed', $file->ext()]);
             }
@@ -356,6 +368,7 @@ trait PostValidatorTrait
                     $calc = true;
 
                     return "[img]{$data['url']}[/img]";
+
                 } else {
                     return 'Bad file';
                 }
@@ -375,6 +388,7 @@ trait PostValidatorTrait
 
                     if ($data['image']) {
                         $result .= "\n[img]{$data['url']}[/img]"; // ={$name}
+
                     } else {
                         $result .= "\n[url={$data['url']}]{$name}[/url]";
                     }

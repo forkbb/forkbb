@@ -89,6 +89,7 @@ class Mysql
                 $this->nameCheck($matches[1]);
 
                 $value = "`{$matches[1]}`{$matches[2]}";
+
             } else {
                 $this->nameCheck($value);
 
@@ -116,10 +117,13 @@ class Mysql
     {
         if (\is_string($data)) {
             return $this->db->quote($data);
+
         } elseif (\is_numeric($data)) {
             return (string) $data;
+
         } elseif (\is_bool($data)) {
             return $data ? 'true' : 'false';
+
         } else {
             throw new PDOException('Invalid data type for DEFAULT');
         }
@@ -144,6 +148,7 @@ class Mysql
                 $this->nameCheck($data[3]);
 
                 $query .= $data[3];
+
             } else {
                 $query .= 'unicode_ci';
             }
@@ -257,6 +262,7 @@ class Mysql
 
         if (isset($schema['ENGINE'])) {
             $engine = $schema['ENGINE'];
+
         } else {
             // при отсутствии типа таблицы он определяется на основании типов других таблиц в базе
             $prefix = \str_replace('_', '\\_', $this->dbPrefix);
@@ -266,6 +272,7 @@ class Mysql
             while ($row = $stmt->fetch()) {
                 if (isset($engine[$row['Engine']])) {
                     ++$engine[$row['Engine']];
+
                 } else {
                     $engine[$row['Engine']] = 1;
                 }
@@ -273,6 +280,7 @@ class Mysql
             // в базе нет таблиц
             if (empty($engine)) {
                 $engine = 'MyISAM';
+
             } else {
                 \arsort($engine);
                 // берем тип наиболее часто встречаемый у имеющихся таблиц
@@ -429,6 +437,7 @@ class Mysql
 
         if ('PRIMARY' == $index) {
             $query .= 'PRIMARY KEY';
+
         } else {
             $this->nameCheck($index);
 
@@ -456,6 +465,7 @@ class Mysql
 
         if ('PRIMARY' == $index) {
             $query .= "PRIMARY KEY";
+
         } else {
             $this->nameCheck($index);
 
@@ -491,6 +501,7 @@ class Mysql
 
             if (isset($engine[$row['Engine']])) {
                 ++$engine[$row['Engine']];
+
             } else {
                 $engine[$row['Engine']] = 1;
             }

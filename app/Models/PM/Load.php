@@ -73,7 +73,7 @@ class Load extends Method
             throw new InvalidArgumentException('Expected a positive ptopic id');
         }
 
-        $vars = [
+        $vars  = [
             ':tid' => $id,
         ];
         $query = $this->getSql(Cnst::PTOPIC);
@@ -100,7 +100,7 @@ class Load extends Method
             throw new InvalidArgumentException('Expected a positive ppost id');
         }
 
-        $vars = [
+        $vars  = [
             ':pid' => $id,
         ];
         $query = $this->getSql(Cnst::PPOST);
@@ -108,6 +108,7 @@ class Load extends Method
 
         if (empty($data)) {
             return null;
+
         } else {
             return $this->model->create(Cnst::PPOST, $data);
         }
@@ -127,7 +128,7 @@ class Load extends Method
             }
         }
 
-        $vars = [
+        $vars    = [
             ':ids' => $ids,
         ];
         $query   = $this->getSql(Cnst::PTOPIC, false);
@@ -161,7 +162,7 @@ class Load extends Method
             }
         }
 
-        $vars = [
+        $vars   = [
             ':ids' => $ids,
         ];
         $query  = $this->getSql(Cnst::PPOST, false);

@@ -70,8 +70,10 @@ class PMView extends AbstractPM
                     $this->pmCrumbs[] = Cnst::PT_ARCHIVE === $this->vStatus ? 'InfoSaveQ' : 'InfoDeleteQ';
 
                     return $this;
+
                 } elseif (1 !== $v->confirm) {
                     return $this->c->Redirect->page('PMAction', $this->args)->message('No confirm redirect', FORK_MESS_WARN);
+
                 } else {
                     $topics = $this->pms->loadByIds(Cnst::PTOPIC, $v->ids);
 
@@ -86,6 +88,7 @@ class PMView extends AbstractPM
                         $message = 'Dialogues moved to archive redirect';
 
                         $args['action'] = Cnst::ACTION_ARCHIVE;
+
                     } else {
                         $message = 'Dialogues deleted redirect';
 
@@ -130,14 +133,17 @@ class PMView extends AbstractPM
                     $v->addError('Archive is full');
 
                     return $action;
+
                 } elseif ($this->pms->totalArchive + \count($v->ids) > $this->user->g_pm_limit) {
                     $v->addError('Cannot be moved');
 
                     return $action;
                 }
             }
+
         } elseif (! empty($v->{Cnst::ACTION_DELETE})) {
             $this->vStatus = Cnst::PT_DELETED;
+
         } else {
             $v->addError('Unknown action selected');
 

@@ -176,6 +176,7 @@ class Extensions extends Manager
                 $context = [
                     'errors' => ['Bad json'],
                 ];
+
             } elseif (! $v->validation($file)) {
                 $context = [
                     'errors' => \array_map('\\ForkBB\__', $v->getErrorsWithoutType()),
@@ -186,6 +187,7 @@ class Extensions extends Manager
                 $data             = $v->getData(true);
                 $data['path']     = $path;
                 $result[$v->name] = $data;
+
             } else {
                 $context['headers'] = false;
                 $path               = \preg_replace('%^.+((?:[\\\\/]+[^\\\\/]+){3})$%', '$1', $path);
@@ -212,6 +214,7 @@ class Extensions extends Manager
                 ]);
 
                 $this->set($name, $model);
+
             } else {
                 $model->setModelAttr('fileData', $data);
             }
@@ -316,6 +319,7 @@ class Extensions extends Manager
     {
         if (true === $ext->canUpdate) {
             return $this->updown($ext);
+
         } else {
             $this->error = 'Invalid action';
 
@@ -330,6 +334,7 @@ class Extensions extends Manager
     {
         if (true === $ext->canDowndate) {
             return $this->updown($ext);
+
         } else {
             $this->error = 'Invalid action';
 
@@ -453,6 +458,7 @@ class Extensions extends Manager
     {
         if (\is_file($file)) {
             return include $file;
+
         } else {
             return [];
         }
@@ -467,6 +473,7 @@ class Extensions extends Manager
 
         if ($ext::NOT_INSTALLED === $ext->status) {
             unset($data[$ext->name]);
+
         } else {
             $data[$ext->name] = $ext->prepareData();
         }
@@ -488,6 +495,7 @@ class Extensions extends Manager
 
         if (false === \file_put_contents($file, $content, \LOCK_EX)) {
             return false;
+
         } else {
             if (\function_exists('\\opcache_invalidate')) {
                 \opcache_invalidate($file, true);
@@ -582,7 +590,7 @@ class Extensions extends Manager
      */
     protected function setSymlinks(Extension $ext): bool
     {
-        $data = $this->loadDataFromFile($this->commonFile);
+        $data     = $this->loadDataFromFile($this->commonFile);
         $symlinks = $data[$ext->name]['symlinks'] ?? [];
 
         foreach ($symlinks as $target => $link) {
@@ -597,7 +605,7 @@ class Extensions extends Manager
      */
     protected function removeSymlinks(Extension $ext): bool
     {
-        $data = $this->loadDataFromFile($this->commonFile);
+        $data     = $this->loadDataFromFile($this->commonFile);
         $symlinks = $data[$ext->name]['symlinks'] ?? [];
 
         foreach ($symlinks as $target => $link) {

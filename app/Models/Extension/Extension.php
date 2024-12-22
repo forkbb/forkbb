@@ -90,6 +90,7 @@ class Extension extends Model
     {
         if (null === $this->dbStatus) {
             return self::NOT_INSTALLED;
+
         } elseif (empty($this->fileData['version'])) {
             return self::CRASH;
         }
@@ -155,6 +156,7 @@ class Extension extends Model
                     case 'pre':
                         if (empty($cur['name'])) {
                             return 'PRE name not found';
+
                         } elseif (empty($cur['file'])) {
                             return ['Template file \'%s\' not found', $cur['file']];
                         }

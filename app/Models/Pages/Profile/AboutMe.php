@@ -46,6 +46,7 @@ class AboutMe extends Profile
 
         if ($this->curUser->about_me_id > 0) {
             $post = $this->c->posts->load($this->curUser->about_me_id);
+
         } else {
             $post = null;
         }
@@ -82,6 +83,7 @@ class AboutMe extends Profile
                 );
                 $this->useMediaJS  = true;
             }
+
         } else {
             $args['_vars'] = [
                 'message'      => $post->message,
@@ -125,6 +127,7 @@ class AboutMe extends Profile
             $this->curUser->about_me_id = 0;
 
             $this->c->users->update($this->curUser);
+
         } elseif (empty($post->id)) {
             $post->poster_ip    = $this->user->ip;
             $post->message      = $v->message;
@@ -151,6 +154,7 @@ class AboutMe extends Profile
             if ($this->user->id !== $this->curUser->id) {
                 $this->c->users->update($this->curUser);
             }
+
         } else {
             $calcPost  = false;
             $calcTopic = false;

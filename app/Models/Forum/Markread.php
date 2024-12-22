@@ -45,6 +45,7 @@ class Markread extends Action
                 WHERE uid=?i:uid';
 
             $this->c->DB->exec($query, $vars);
+
         } elseif ($forum->id > 0) {
             $vars = [
                 ':uid'  => $user->id,
@@ -65,12 +66,14 @@ class Markread extends Action
                 $query = 'UPDATE ::mark_of_forum
                     SET mf_mark_all_read=?i:mark
                     WHERE uid=?i:uid AND fid=?i:fid';
+
             } else {                                                                 // ????
                 $query = 'INSERT INTO ::mark_of_forum (uid, fid, mf_mark_all_read)
                     VALUES (?i:uid, ?i:fid, ?i:mark)';
             }
 
             $this->c->DB->exec($query, $vars);
+
         } else {
             throw new RuntimeException('The model does not have ID');
         }

@@ -42,6 +42,7 @@ class Filter extends Method
 
         if (empty($orderBy)) {
             $orderBy = 'b.id DESC';
+
         } else {
             $orderBy = \implode(', ', $orderBy);
         }
@@ -84,20 +85,24 @@ class Filter extends Method
                             $where[] = "b.{$field} BETWEEN ?{$fields[$field]} AND ?{$fields[$field]}";
                             $vars[]  = $rule[1];
                             $vars[]  = $rule[2];
+
                         // min больше max O_o
                         } elseif ($rule[1] > $rule[2]) {
                             $where[] = "b.{$field} NOT BETWEEN ?{$fields[$field]} AND ?{$fields[$field]}";
                             $vars[]  = $rule[1];
                             $vars[]  = $rule[2];
+
                         // min равен max :)
                         } else {
                             $where[] = "b.{$field}=?{$fields[$field]}";
                             $vars[]  = $rule[1];
                         }
+
                     // есть только min
                     } elseif (isset($rule[1])) {
                         $where[] = "b.{$field}>=?{$fields[$field]}";
                         $vars[]  = $rule[1];
+
                     // есть только max
                     } elseif (isset($rule[2])) {
                         $where[] = "b.{$field}<=?{$fields[$field]}";
@@ -114,6 +119,7 @@ class Filter extends Method
             $query = "SELECT b.id
                 FROM ::bans AS b
                 ORDER BY {$orderBy}";
+
         } else {
             $where = \implode(' AND ', $where);
             $query = "SELECT b.id

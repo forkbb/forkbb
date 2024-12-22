@@ -48,12 +48,14 @@ class Delete extends Action
 
                 if (true === $arg->deleteAllPost) {
                     $uidsDelete[$arg->id] = $arg->id;
+
                 } else {
                     $uidsToGuest[$arg->id] = $arg->id;
                 }
 
                 $uids[$arg->id] = $arg->id;
                 $isUser         = 1;
+
             } elseif ($arg instanceof Forum) {
                 if (! $this->c->forums->get($arg->id) instanceof Forum) {
                     throw new RuntimeException('Forum unavailable');
@@ -61,6 +63,7 @@ class Delete extends Action
 
                 $forums[$arg->id] = $arg;
                 $isForum          = 1;
+
             } elseif ($arg instanceof Topic) {
                 if (! $arg->parent instanceof Forum) {
                     throw new RuntimeException('Parent unavailable');
@@ -106,11 +109,11 @@ class Delete extends Action
 
             $tids = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
-#            $topics = $this->manager->loadByIds($tids, false);
-#
-#            foreach ($topics as $topic) {
-#                $parents[$topic->parent->id] = $topic->parent;
-#            }
+//            $topics = $this->manager->loadByIds($tids, false);
+//
+//            foreach ($topics as $topic) {
+//                $parents[$topic->parent->id] = $topic->parent;
+//            }
 
             $this->delete(...($this->manager->loadByIds($tids, false)));
         }

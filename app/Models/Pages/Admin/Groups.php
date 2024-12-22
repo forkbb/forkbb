@@ -86,7 +86,6 @@ class Groups extends Admin
                             'value'     => $this->c->config->i_default_user_group,
                             'caption'   => 'New group label',
                             'help'      => 'New group help',
-#                           'autofocus' => true,
                         ],
                     ],
                 ],
@@ -187,6 +186,7 @@ class Groups extends Admin
 
             $gid  = $v->basegroup;
             $next = false;
+
         // продолжение редактирования/создания
         } else {
             $gid  = $args['id'] ?? $args['base'];
@@ -210,6 +210,7 @@ class Groups extends Admin
             $this->aCrumbs[] = [null, ['"%s"', $group->g_title]];
             $this->titleForm = 'Edit group';
             $this->classForm = ['editgroup'];
+
         } else {
             $marker          = 'AdminGroupsNew';
             $vars            = ['base' => $group->g_id];
@@ -280,6 +281,7 @@ class Groups extends Admin
                         'a_guest_set.show_img'     => 'required|integer|in:0,1',
                         'a_guest_set.show_img_sig' => 'required|integer|in:0,1',
                     ]);
+
                 } else {
                     $v->addRules([
                         'g_promote_next_group'   => 'required|integer|min:0|not_in:' . $notNext,
@@ -388,6 +390,7 @@ class Groups extends Admin
                 $this->c->config->a_guest_set = $value;
 
                 $this->c->config->save();
+
             } else {
                 $group->$attr = $value;
             }
@@ -395,11 +398,13 @@ class Groups extends Admin
 
         if (null === $group->g_id) {
             $message = 'Group added redirect';
-            $this->c->groups->insert($group);
 
+            $this->c->groups->insert($group);
             $this->c->groups->Perm->copy($baseGroup, $group);
+
         } else {
             $message = 'Group edited redirect';
+
             $this->c->groups->update($group);
 
             if ($group->g_promote_min_posts) {
@@ -438,7 +443,6 @@ class Groups extends Admin
             'value'     => $group->g_title,
             'caption'   => 'Group title label',
             'required'  => true,
-#           'autofocus' => true,
         ];
         $fieldset['g_user_title'] = [
             'type'      => 'text',
@@ -691,6 +695,7 @@ class Groups extends Admin
                     'caption' => 'Images sigs label',
                     'help'    => 'Images sigs info',
                 ];
+
             } else {
                 $fieldset['g_send_email'] = [
                     'type'    => 'radio',
@@ -877,6 +882,7 @@ class Groups extends Admin
             }
 
             $move .= \implode(',', \array_keys($groups));
+
         } else {
             $move = 'absent';
         }
@@ -902,6 +908,7 @@ class Groups extends Admin
 
             if ($v->movegroup) {
                 $this->c->groups->delete($group, $this->c->groups->get($v->movegroup));
+
             } else {
                 $this->c->groups->delete($group);
             }

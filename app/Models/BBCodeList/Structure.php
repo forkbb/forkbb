@@ -153,8 +153,10 @@ class Structure extends Model
 
         if (\is_array($parents)) {
             return $parents;
+
         } elseif ('inline' === $this->type) {
             return ['inline', 'block'];
+
         } else {
             return ['block'];
         }
@@ -201,8 +203,10 @@ class Structure extends Model
 
         if (\is_bool($auto)) {
             return $auto;
+
         } elseif ('inline' === $this->type) {
             return true;
+
         } else {
             return false;
         }
@@ -232,8 +236,10 @@ class Structure extends Model
 
         if (true === $data) {
             return true;
+
         } elseif (! \is_array($data)) {
             return null;
+
         } else {
             $result = [];
 
@@ -269,6 +275,7 @@ class Structure extends Model
             || $data['allowed'] < 1
         ) {
             unset($attrs[$name]);
+
         } else {
             $result = [];
 
@@ -570,7 +577,7 @@ class Structure extends Model
             $result = @eval($testCode);
 
             if (true !== $result) {
-                $error = \error_get_last();
+                $error   = \error_get_last();
                 $message = $error['message'] ?? 'Unknown error';
                 $line    = $error['line'] ?? '';
 

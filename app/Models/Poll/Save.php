@@ -60,6 +60,7 @@ class Save extends Action
                 $modified = true;
 
                 $this->c->DB->exec($queryIn, $vars);
+
             } elseif (
                 $qna !== $oldQuestion[$qid]
                 || $poll->type[$qid] !== $oldType[$qid]
@@ -79,6 +80,7 @@ class Save extends Action
                     $modified = true;
 
                     $this->c->DB->exec($queryIn, $vars);
+
                 } elseif ($qna !== $oldAnswer[$fid]) {
                     $modified = true;
 

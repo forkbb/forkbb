@@ -89,6 +89,7 @@ class Save extends Method
 
                         break;
                 }
+
             } else {
                 $vars = [
                     ':name'  => $name

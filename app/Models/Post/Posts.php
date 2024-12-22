@@ -44,8 +44,10 @@ class Posts extends Manager
             ) {
                 return null;
             }
+
         } else {
             $post = $this->Load->load($id, $tid);
+
             $this->set($id, $post);
         }
 
@@ -63,9 +65,11 @@ class Posts extends Manager
         foreach ($ids as $id) {
             if ($this->isset($id)) {
                 $result[$id] = $this->get($id);
+
             } else {
                 $result[$id] = null;
                 $data[]      = $id;
+
                 $this->set($id, null);
             }
         }
@@ -77,6 +81,7 @@ class Posts extends Manager
         foreach ($this->Load->loadByIds($data, $withTopics) as $post) {
             if ($post instanceof Post) {
                 $result[$post->id] = $post;
+
                 $this->set($post->id, $post);
             }
         }

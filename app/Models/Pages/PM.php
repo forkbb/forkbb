@@ -31,6 +31,7 @@ class PM extends Page
                 if ($second < 1) {
                     return $this->c->Message->message('Bad request');
                 }
+
             } elseif (
                 \strlen($second) < 3
                 || '"' !== $second[0]

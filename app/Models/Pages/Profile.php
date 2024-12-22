@@ -110,6 +110,7 @@ abstract class Profile extends Page
                     ),
                     __('Unban user'),
                 ];
+
             } else {
                 $btns['ban-user'] = [
                     $this->c->Router->link(

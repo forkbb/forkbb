@@ -40,6 +40,7 @@ class Save extends Action
             $fields = $this->c->dbMap->online;
             $table  = 'online';
             $where  = 'user_id=0 AND ident=?s';
+
         } else {
             $fields = $this->c->dbMap->users;
             $table  = 'users';
@@ -60,6 +61,7 @@ class Save extends Action
 
             if ('username' === $name) {
                 $nameChange = true;
+
             } elseif ('group_id' === $name) {
                 $grChange = true;
             }
@@ -74,6 +76,7 @@ class Save extends Action
             && ! $user->isUnverified
         ) {
             $vars[] = $user->ip;
+
         } else {
             $vars[] = $user->id;
         }
@@ -105,6 +108,7 @@ class Save extends Action
     {
         if (null !== $user->id) {
             throw new RuntimeException('The model has ID');
+
         } elseif (
             null === $user->group_id
             || FORK_GROUP_GUEST === $user->group_id

@@ -26,9 +26,10 @@ class Save extends Method
         }
 
         if ($model instanceof PPost) {
-            $table  = 'pm_posts';
+            $table = 'pm_posts';
+
         } elseif ($model instanceof PTopic) {
-            $table  = 'pm_topics';
+            $table = 'pm_topics';
         }
 
         $modified = $model->getModified();
@@ -72,9 +73,10 @@ class Save extends Method
         }
 
         if ($model instanceof PPost) {
-            $table  = 'pm_posts';
+            $table = 'pm_posts';
+
         } elseif ($model instanceof PTopic) {
-            $table  = 'pm_topics';
+            $table = 'pm_topics';
         }
 
         $attrs  = $model->getModelAttrs();

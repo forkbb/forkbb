@@ -59,6 +59,7 @@ class Forum extends Page
 
         if (empty($this->topics)) {
             $this->fIswev = [FORK_MESS_INFO, 'Empty forum'];
+
         } elseif (
             $this->user->isAdmin
             || $this->user->isModerator($forum)

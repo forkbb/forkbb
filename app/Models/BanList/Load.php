@@ -26,11 +26,8 @@ class Load extends Method
         $ipList    = [];
         $banList   = [];
         $first     = 0;
-
-        $query = 'SELECT b.id, b.username, b.ip, b.email, b.message, b.expire
-            FROM ::bans AS b';
-
-        $stmt = $this->c->DB->query($query);
+        $query     = 'SELECT b.id, b.username, b.ip, b.email, b.message, b.expire FROM ::bans AS b';
+        $stmt      = $this->c->DB->query($query);
 
         while ($row = $stmt->fetch()) {
             $name = $this->model->trimToNull($row['username'], true);
@@ -39,10 +36,10 @@ class Load extends Method
                 $userList[$name] = $row['id'];
             }
 
-            $email   = $this->model->trimToNull($row['email']);
+            $email = $this->model->trimToNull($row['email']);
 
             if (null !== $email) {
-                $email = $this->c->NormEmail->normalize($email);
+                $email             = $this->c->NormEmail->normalize($email);
                 $emailList[$email] = $row['id']; // ???? TODO если домен забанен, то email не добавлять
             }
 
@@ -58,10 +55,13 @@ class Load extends Method
                         if (--$count) {
                             if (! isset($list[$letter])) {
                                 $list[$letter] = [];
+
                             } elseif (! \is_array($list[$letter])) {
                                 break;
                             }
+
                             $list = &$list[$letter];
+
                         } else {
                             $list[$letter] = $row['id']; // ???? может не перезаписывать предыдущий бан?
                         }

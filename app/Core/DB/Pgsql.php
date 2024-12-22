@@ -96,6 +96,7 @@ class Pgsql
                 $this->nameCheck($matches[1]);
 
                 $value = "\"{$matches[1]}\"";
+
             } else {
                 $this->nameCheck($value);
 
@@ -123,10 +124,13 @@ class Pgsql
     {
         if (\is_string($data)) {
             return $this->db->quote($data);
+
         } elseif (\is_numeric($data)) {
             return (string) $data;
+
         } elseif (\is_bool($data)) {
             return $data ? 'true' : 'false';
+
         } else {
             throw new PDOException('Invalid data type for DEFAULT');
         }
@@ -149,6 +153,7 @@ class Pgsql
                 && \preg_match('%bin%i', $data[3])
             ) {
                 $query .= '"C"';
+
             } else {
                 $query .= '"fork_icu"';
             }
@@ -426,6 +431,7 @@ class Pgsql
 
         if ('PRIMARY' === $index) {
             $query = "ALTER TABLE \"{$table}\" ADD PRIMARY KEY (" . $this->replIdxs($fields) . ')';
+
         } else {
             $this->nameCheck($index);
 
@@ -449,6 +455,7 @@ class Pgsql
 
         if ('PRIMARY' === $index) {
             $query = "ALTER TABLE \"{$table}\" DROP CONSTRAINT \"{$table}_pkey\"";
+
         } else {
             $this->nameCheck($index);
 

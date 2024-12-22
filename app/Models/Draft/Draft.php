@@ -42,6 +42,7 @@ class Draft extends DataModel
             || ! $topic->parent instanceof Forum
         ) {
             return null;
+
         } else {
             return $topic;
         }

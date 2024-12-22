@@ -62,6 +62,7 @@ class PMBlock extends AbstractPM
             ) {
                 return $this->c->Message->message('Bad request');
             }
+
         } else {
             $post = null;
         }
@@ -106,6 +107,7 @@ class PMBlock extends AbstractPM
                 || '1' !== $v->confirm
             ) {
                 return $this->c->Redirect->url($this->linkBack)->message('No confirm redirect', FORK_MESS_WARN);
+
             } elseif (
                 (
                     ! $v->{self::BLOCK}
@@ -127,6 +129,7 @@ class PMBlock extends AbstractPM
                 $this->pms->block->add($blockUser);
 
                 $message = 'User is blocked redirect';
+
             } else {
                 $this->pms->block->remove($blockUser);
 

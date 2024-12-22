@@ -62,6 +62,7 @@ class Statistics extends Admin
                     'href' => $this->c->Router->link('AdminInfoCSS', ['time' => \time()] ),
                 ]);
             }
+
         } else {
             $phpinfo = '- - -';
         }
@@ -124,6 +125,7 @@ class Statistics extends Admin
                     && \is_array($load = \sys_getloadavg())
                 ) {
                     $this->serverLoad = num($load[0], 2) . ' ' . num($load[1], 2) . ' ' . num($load[2], 2);
+
                 } elseif (\function_exists('\\exec')) {
                     \exec('uptime', $output);
 
@@ -164,9 +166,11 @@ class Statistics extends Admin
         ) {
             $this->accelerator = 'Zend OPcache';
             $this->linkAcc     = 'https://www.php.net/opcache/';
+
         } elseif (\ini_get('wincache.fcenabled')) {
             $this->accelerator = 'Windows Cache for PHP';
             $this->linkAcc     = 'https://www.php.net/wincache/';
+
         } else {
             $this->accelerator = __('NA');
             $this->linkAcc     = null;

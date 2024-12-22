@@ -225,8 +225,10 @@ class Auth extends Page
                 || $this->userAfterLogin->isGuest
             ) {
                 $v->addError('Wrong user/pass');
+
             } elseif ($this->userAfterLogin->isUnverified) {
                 $v->addError('Account is not activated', FORK_MESS_WARN);
+
             } elseif (
                 $this->loginWithForm
                 && ! \password_verify($password, $this->userAfterLogin->password)
@@ -260,6 +262,7 @@ class Auth extends Page
                     'email'  => $user->email,
                     'submit' => 'From User model',
                 ];
+
             } else {
                 $postData = null;
             }

@@ -39,12 +39,11 @@ class Load extends Action
             throw new InvalidArgumentException('Expected a positive user id');
         }
 
-        $vars = [
+        $vars  = [
             ':id' => $id,
         ];
         $query = $this->getSql('u.id=?i:id');
-
-        $data = $this->c->DB->query($query, $vars)->fetch();
+        $data  = $this->c->DB->query($query, $vars)->fetch();
 
         return empty($data['id']) ? null : $this->manager->create($data);
     }
@@ -63,12 +62,11 @@ class Load extends Action
             }
         }
 
-        $vars = [
+        $vars  = [
             ':ids' => $ids,
         ];
         $query = $this->getSql('u.id IN (?ai:ids)');
-
-        $data = $this->c->DB->query($query, $vars)->fetchAll();
+        $data  = $this->c->DB->query($query, $vars)->fetchAll();
 
         $result = [];
 
@@ -88,8 +86,10 @@ class Load extends Action
 
         if (empty($data)) {
             return null;
+
         } elseif (\count($data) > 1) {
             throw new ForkException('Multiple users found');
+
         } else {
             return $this->manager->create($data[0]);
         }
@@ -116,6 +116,7 @@ class Load extends Action
             )
         ) {
             return null;
+
         } else {
             return $user;
         }

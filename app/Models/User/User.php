@@ -130,6 +130,7 @@ class User extends DataModel
 
         if (isset($langs[$lang])) {
             return $lang;
+
         } else {
             return \reset($langs) ?: 'en';
         }
@@ -153,6 +154,7 @@ class User extends DataModel
 
         if (isset($styles[$style])) {
             return $style;
+
         } else {
             return \reset($styles) ?: 'ForkBB';
         }
@@ -165,6 +167,7 @@ class User extends DataModel
     {
         if ($this->isGuest) {
             return null;
+
         } else {
             return $this->c->Router->link(
                 'User',
@@ -220,14 +223,19 @@ class User extends DataModel
     {
         if ($this->isGuest) {
             return __('Guest');
+
         } elseif ($this->isBanByName) {
             return __('Banned');
+
         } elseif ('' != $this->title) {
             return $this->censorTitle;
+
         } elseif ('' != $this->g_user_title) {
             return $this->censorG_user_title;
+
         } elseif ($this->isUnverified) {
             return __('Unverified');
+
         } else {
             return __('Member');
         }
@@ -313,6 +321,7 @@ class User extends DataModel
                     'pid' => $post->id,
                 ]
             );
+
         } else {
             return null;
         }
@@ -382,8 +391,10 @@ class User extends DataModel
             || empty($this->email)
         ) {
             return '';
+
         } elseif (2 === $this->email_setting) {
             return null;
+
         } elseif (
             0 === $this->email_setting
             || (
@@ -392,6 +403,7 @@ class User extends DataModel
             )
         ) {
             return 'mailto:' . $this->censorEmail;
+
         } elseif (
             1 === $this->email_setting
             && (
@@ -402,6 +414,7 @@ class User extends DataModel
             $this->c->Csrf->setHashExpiration(3600);
 
             return $this->c->Router->link('SendEmail', ['id' => $this->id]);
+
         } else {
             return '';
         }

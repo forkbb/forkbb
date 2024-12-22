@@ -46,6 +46,7 @@ class Google extends Driver    // Not tested. Google banned the registration of 
             $this->userInfo = $response;
 
             return true;
+
         } elseif (\is_array($response)) {
             $this->error = 'User error';
         }
@@ -127,6 +128,7 @@ class Google extends Driver    // Not tested. Google banned the registration of 
         if (isset($this->userInfo['gender'])) {
             if ('male' === $this->userInfo['gender']) {
                 return FORK_GEN_MAN;
+
             } elseif ('female' === $this->userInfo['gender']) {
                 return FORK_GEN_FEM;
             }

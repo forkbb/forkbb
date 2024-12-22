@@ -26,6 +26,7 @@ class Load extends Action
             $query = 'SELECT t.*
                 FROM ::topics AS t
                 WHERE ' . $where;
+
         } elseif ($full) {
             $query = 'SELECT t.*, s.user_id AS is_subscribed, mof.mf_mark_all_read, mot.mt_last_visit, mot.mt_last_read
                 FROM ::topics AS t
@@ -33,6 +34,7 @@ class Load extends Action
                 LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND t.forum_id=mof.fid)
                 LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND t.id=mot.tid)
                 WHERE ' . $where;
+
         } else {
             $query = 'SELECT t.*, mot.mt_last_visit, mot.mt_last_read
                 FROM ::topics AS t
@@ -52,13 +54,12 @@ class Load extends Action
             throw new InvalidArgumentException('Expected a positive topic id');
         }
 
-        $vars = [
+        $vars  = [
             ':tid' => $id,
             ':uid' => $this->c->user->id,
         ];
         $query = $this->getSql('t.id=?i:tid', true);
-
-        $row = $this->c->DB->query($query, $vars)->fetch();
+        $row   = $this->c->DB->query($query, $vars)->fetch();
 
         // тема отсутствует или недоступна
         if (empty($row)) {
@@ -72,6 +73,7 @@ class Load extends Action
             $forum->__mf_mark_all_read = $topic->mf_mark_all_read;
 
             return $topic;
+
         } else {
             return null;
         }
@@ -91,13 +93,12 @@ class Load extends Action
             }
         }
 
-        $vars = [
+        $vars  = [
             ':ids' => $ids,
             ':uid' => $this->c->user->id,
         ];
         $query = $this->getSql('t.id IN (?ai:ids)', $full);
-
-        $stmt = $this->c->DB->query($query, $vars);
+        $stmt  = $this->c->DB->query($query, $vars);
 
         $result = [];
 

@@ -44,6 +44,7 @@ class Delete extends Action
 
                 $ids[$arg->id] = $arg->id;
                 $isUser        = 1;
+
             } elseif ($arg instanceof Forum) {
                 if (! $this->c->forums->get($arg->id) instanceof Forum) {
                     throw new RuntimeException('Forum unavailable');
@@ -51,6 +52,7 @@ class Delete extends Action
 
                 $ids[$arg->id] = $arg->id;
                 $isForum       = 1;
+
             } elseif ($arg instanceof Topic) {
                 if (! $arg->parent instanceof Forum) {
                     throw new RuntimeException('Parent unavailable');
@@ -58,6 +60,7 @@ class Delete extends Action
 
                 $ids[$arg->id] = $arg->id;
                 $isTopic       = 1;
+
             } elseif ($arg instanceof Post) {
                 if (
                     ! $arg->parent instanceof Topic

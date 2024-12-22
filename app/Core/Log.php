@@ -53,6 +53,7 @@ class Log implements LoggerInterface
             && \method_exists($message, '__toString')
         ) {
             $message = (string) $message;
+
         } elseif (! \is_string($message)) {
             throw new InvalidArgumentException('Expected string in message');
         }
@@ -107,6 +108,7 @@ class Log implements LoggerInterface
                 case LogLevel::ERROR:
                 case LogLevel::WARNING:
                     $ext = true;
+
                     break;
             }
         }

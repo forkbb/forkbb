@@ -152,18 +152,20 @@ class Attachments extends Model
 
                 $this->c->DB->exec($query, $vars);
             }
+
         } else {
-            $ids  = \array_keys($attInPost);
-            $vars = [
+            $ids     = \array_keys($attInPost);
+            $vars    = [
                 ':ids' => $ids,
             ];
-            $query = 'SELECT id, path FROM ::attachments WHERE id IN (?ai:ids)';
+            $query   = 'SELECT id, path FROM ::attachments WHERE id IN (?ai:ids)';
             $attInDB = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_KEY_PAIR);
-            $ids = [];
+            $ids     = [];
 
             foreach ($attInDB as $id => $path) {
                 if ($path === $attInPost[$id]) {
                     $ids[$id] = $id;
+
                 } else {
                     $this->c->Log->warning("Attachments Sync Path do not match id={$id}", [
                         'user'       => $this->user->fLog(),
@@ -301,13 +303,12 @@ class Attachments extends Model
             return [];
         }
 
-        $vars = [
+        $vars  = [
             ':ids' => $this->idsList,
         ];
         $query = 'SELECT * FROM ::attachments WHERE id IN (?ai:ids)';
-
-        $stmt = $this->c->DB->query($query, $vars);
-        $data = [];
+        $stmt  = $this->c->DB->query($query, $vars);
+        $data  = [];
 
         while ($row = $stmt->fetch()) {
             $data[$row['id']] = $row;
@@ -398,6 +399,7 @@ class Attachments extends Model
             }
 
             return true;
+
         } else {
             return false;
         }

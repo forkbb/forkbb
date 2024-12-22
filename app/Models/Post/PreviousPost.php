@@ -29,6 +29,7 @@ class PreviousPost extends Action
             $query = 'SELECT MAX(p.id)
                 FROM ::posts AS p
                 WHERE p.id < ?i:pid AND p.topic_id=?i:tid';
+
         } else {
             $query = 'SELECT p.posted
                 FROM ::posts AS p

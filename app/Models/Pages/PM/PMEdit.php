@@ -72,6 +72,7 @@ class PMEdit extends AbstractPM
                     $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies)
                 );
             }
+
         } else {
             $args['_vars'] = [
                 'message'      => $post->message,

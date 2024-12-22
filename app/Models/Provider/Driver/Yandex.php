@@ -43,6 +43,7 @@ class Yandex extends Driver
             $this->userInfo = $response;
 
             return true;
+
         } elseif (\is_array($response)) {
             $this->error = 'User error';
         }
@@ -100,6 +101,7 @@ class Yandex extends Driver
             && ! empty($this->userInfo['default_avatar_id'])
         ) {
             return "https://avatars.yandex.net/get-yapic/{$this->userInfo['default_avatar_id']}/islands-200";
+
         } else {
             return '';
         }
@@ -129,6 +131,7 @@ class Yandex extends Driver
         if (isset($this->userInfo['sex'])) {
             if ('male' === $this->userInfo['sex']) {
                 return FORK_GEN_MAN;
+
             } elseif ('female' === $this->userInfo['sex']) {
                 return FORK_GEN_FEM;
             }

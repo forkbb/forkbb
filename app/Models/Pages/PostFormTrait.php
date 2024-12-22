@@ -184,6 +184,7 @@ trait PostFormTrait
                         'label'   => 'Stick first post',
                         'checked' => (bool) ($vars['stick_fp'] ?? false),
                     ];
+
                 } elseif (! $edit) {
                     $fieldset['merge_post'] = [
                         'type'    => 'checkbox',
@@ -220,6 +221,7 @@ trait PostFormTrait
                     ) {
                         $form['hidden']['subscribe'] = '1';
                     }
+
                 } else {
                     $fieldset['subscribe'] = [
                         'type'    => 'checkbox',
@@ -356,6 +358,7 @@ trait PostFormTrait
                         foreach ($this->c->smilies->list as $sm) {
                             if (isset($smilies[$sm['sm_image']])) {
                                 $hidden[$sm['sm_code']] = $sm['sm_image'];
+
                             } else {
                                 $smilies[$sm['sm_image']] = $sm['sm_code'];
                             }

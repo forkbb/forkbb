@@ -24,6 +24,7 @@ class ActionT extends Method
     {
         if (empty($this->c->user->unfollowed_f)) {
             return $forums;
+
         } else {
             return \array_diff($forums, \array_map('\\intval', \explode(',', $this->c->user->unfollowed_f)));
         }
@@ -139,6 +140,7 @@ class ActionT extends Method
                 \arsort($list, \SORT_NUMERIC);
 
                 $list = \array_keys($list);
+
             } else {
                 $list = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
             }
@@ -149,6 +151,7 @@ class ActionT extends Method
         // нет такой страницы в результате поиска
         if (! $this->model->hasPage()) {
             return false;
+
         // результат пуст
         } elseif (empty($list)) {
             return [];

@@ -35,14 +35,13 @@ class Perm extends Action
             WHERE g.g_id!=?i:adm
             ORDER BY g.g_id';
 
-        $perms = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_UNIQUE);
-
+        $perms  = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_UNIQUE);
         $result = [];
 
         foreach ($perms as $gid => $perm) {
             $group  = $this->c->groups->get($gid);
-#           $forums = $this->c->ForumManager->init($group);
-#           $group->g_read_forum = (int) ($forums->get($forum->id) instanceof Forum);
+//           $forums = $this->c->ForumManager->init($group);
+//           $group->g_read_forum = (int) ($forums->get($forum->id) instanceof Forum);
             $group->g_read_forum = $group->g_read_board;
 
             foreach ($perm as $field => $value) {
@@ -82,6 +81,7 @@ class Perm extends Action
                 if ($group->{'dis_' . $field}) {
                     $row[$field] = $group->{'set_' . $field} ? 1 : 0;
                     $modDef      = $row[$field] !== $group->{'g_' . $field} ? true : $modDef;
+
                 } else {
                     $row[$field] = empty($perms[$id][$field]) ? 0 : 1;
                     $modDef      = $row[$field] !== $group->{'g_' . $field} ? true : $modDef;

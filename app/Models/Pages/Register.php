@@ -46,6 +46,7 @@ class Register extends Page
                 'oauth'    => $this->providerToString($provider),
                 'register' => 'Register with OAuth',
             ];
+
         // переход от Rules/завершение регистрации через OAuth
         } else {
             $v = $this->c->Validator->reset()->addRules(['oauth' => 'string']);
@@ -122,6 +123,7 @@ class Register extends Page
 
                 return $this->regEnd($v, $email);
             }
+
         } else {
             $this->fIswev = $v->getErrors();
 
@@ -247,6 +249,7 @@ class Register extends Page
         ) {
             $groupId = FORK_GROUP_UNVERIFIED;
             $key     = $this->c->Secury->randomPass(31);
+
         } else {
             $groupId = $this->c->config->i_default_user_group;
             $key     = '';
@@ -291,12 +294,14 @@ class Register extends Page
 
                 if (true === $result) {
                     $user->avatar = $image->name() . '.' . $image->ext();
+
                 } else {
                     $this->c->Log->warning('OAuth Failed image processing', [
                         'user'  => $user->fLog(),
                         'error' => $image->error(),
                     ]);
                 }
+
             } else {
                 $this->c->Log->warning('OAuth Avatar not image', [
                     'user'  => $user->fLog(),
@@ -400,6 +405,7 @@ class Register extends Page
             // письмо активации аккаунта отправлено
             if ($isSent) {
                 return $this->c->Message->message(['Reg email', $this->c->config->o_admin_email], false, 200);
+
             // форма сброса пароля
             } else {
                 $auth         = $this->c->Auth;
@@ -407,6 +413,7 @@ class Register extends Page
 
                 return $auth->forget([], 'GET', $email);
             }
+
         // форма логина
         } else {
             return $this->c->Auth->login([], 'POST', '', $user);
@@ -482,6 +489,7 @@ class Register extends Page
             // письмо активации аккаунта отправлено
             if ($isSent) {
                 return $this->c->Message->message(['Reg email', $this->c->config->o_admin_email], false, 200);
+
             // форма сброса пароля
             } else {
                 $auth         = $this->c->Auth;
@@ -489,6 +497,7 @@ class Register extends Page
 
                 return $auth->forget([], 'GET', $email);
             }
+
         // форма логина
         } else {
             $auth         = $this->c->Auth;

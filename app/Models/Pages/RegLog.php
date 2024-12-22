@@ -89,6 +89,7 @@ class RegLog extends Page
 
         if ($this->user->isGuest) {
             return $this->byGuest($provider, $uid);
+
         } else {
             return $this->byUser($provider, $uid);
         }

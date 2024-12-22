@@ -109,6 +109,7 @@ class Csrf
                     if ($matches[2] + ($lifetime ?? self::TOKEN_LIFETIME) < $now) {
                         // просрочен
                         $this->error = 'Expired token';
+
                     } elseif (
                         $matches[2] + 0 <= $now
                         && \hash_equals($this->create($marker, $args, $matches[2], $matches[1]), $token)
@@ -123,6 +124,7 @@ class Csrf
                     if ($matches[2] + 0 < $now) {
                         // просрочен
                         $this->error = 'Expired token';
+
                     } elseif (\hash_equals($this->createHash($marker, $args, $matches[2]), $token)) {
                         $this->error = null;
                         $result      = true;

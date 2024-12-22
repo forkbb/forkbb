@@ -40,6 +40,7 @@ class Post extends DataModel
             || ! $topic->parent instanceof Forum
         ) {
             return null;
+
         } else {
             return $topic;
         }
@@ -108,13 +109,16 @@ class Post extends DataModel
     {
         if ($this->c->user->isAdmin) {
             return true;
+
         } elseif (
             $this->c->user->isGuest
             || isset($this->c->admins->list[$this->poster_id]) // ???? или юзера проверять?
         ) {
             return false;
+
         } elseif ($this->c->user->isModerator($this)) {
             return true;
+
         } elseif (0 !== $this->parent->closed) {
             return false;
         }
@@ -157,13 +161,16 @@ class Post extends DataModel
     {
         if ($this->c->user->isAdmin) {
             return true;
+
         } elseif (
             $this->c->user->isGuest
             || isset($this->c->admins->list[$this->poster_id]) // ???? или юзера проверять?
         ) {
             return false;
+
         } elseif ($this->c->user->isModerator($this)) {
             return true;
+
         } elseif (0 !== $this->parent->closed) {
             return false;
         }

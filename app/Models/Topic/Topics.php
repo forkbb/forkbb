@@ -35,6 +35,7 @@ class Topics extends Manager
     {
         if ($this->isset($id)) {
             return $this->get($id);
+
         } else {
             $topic = $this->Load->load($id);
 
@@ -55,6 +56,7 @@ class Topics extends Manager
         foreach ($ids as $id) {
             if ($this->isset($id)) {
                 $result[$id] = $this->get($id);
+
             } else {
                 $result[$id] = null;
                 $data[]      = $id;
@@ -89,6 +91,7 @@ class Topics extends Manager
         foreach ($this->Load->loadLinks($id) as $topic) {
             if ($this->isset($topic->id)) {
                 $result[$topic->id] = $this->get($topic->id);
+
             } else {
                 $result[$topic->id] = $topic;
 

@@ -35,8 +35,10 @@ class FileCache implements CacheInterface
 
         if (empty($dir)) {
             throw new CacheException('Cache directory unset');
+
         } elseif (! \is_dir($dir)) {
             throw new CacheException("Not a directory: {$dir}");
+
         } elseif (! \is_writable($dir)) {
             throw new CacheException("No write access to directory: {$dir}");
         }
@@ -83,6 +85,7 @@ class FileCache implements CacheInterface
 
         if ($ttl instanceof DateInterval) {
             $expire = (new DateTime('now', new DateTimeZone('UTC')))->add($value)->getTimestamp();
+
         } else {
             $expire = null === $ttl || $ttl < 1 ? 0 : \time() + $ttl;
         }
@@ -92,6 +95,7 @@ class FileCache implements CacheInterface
 
         if (false === \file_put_contents($file, $content, \LOCK_EX)) {
             return false;
+
         } else {
             $this->invalidate($file);
 
@@ -224,6 +228,7 @@ class FileCache implements CacheInterface
 
         if (\str_starts_with($key, 'poll')) {
             return $this->cacheDir . "/polls/{$key}.php";
+
         } else {
             return $this->cacheDir . "/cache_{$key}.php";
         }

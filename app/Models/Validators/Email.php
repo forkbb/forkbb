@@ -24,16 +24,19 @@ class Email extends RulesValidator
         // поле отсутствует
         if ($v->noValue($email)) {
             return null;
+
         // проверка длины email
         } elseif (\mb_strlen($email, 'UTF-8') > $this->c->MAX_EMAIL_LENGTH) {
             $v->addError('Long email');
 
             return $email;
+
         // это не email
         } elseif (false === ($result = $this->c->Mail->valid($email, true))) {
             $v->addError('The :alias is not valid email');
 
             return $email;
+
         // есть другие ошибки
         } elseif (! empty($v->getErrors())) {
             return $result;
@@ -128,11 +131,13 @@ class Email extends RulesValidator
                 && ! $originalUser->isGuest
             ) {
                 $flood = \time() - $originalUser->last_email_sent;
+
             } elseif (
                 $user instanceof User
                 && ! $user->isGuest
             ) {
                 $flood = \time() - $user->last_email_sent;
+
             } else {
                 $flood = $this->c->FLOOD_INTERVAL;
             }

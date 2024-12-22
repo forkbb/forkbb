@@ -51,6 +51,7 @@ class Sitemap extends Page
 
         if (empty($this->sitemap)) {
             return $this->c->Message->message('Bad request');
+
         } else {
             $this->header('Content-type', 'application/xml; charset=utf-8');
 

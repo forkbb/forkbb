@@ -75,6 +75,7 @@ class Parser extends Parserus
                 )
                 : [];
             //$blackList = null;
+
         } else {
             $whiteList = 1 === $this->c->config->b_message_bbcode
                 ? (empty($this->c->config->a_bb_white_mes) && empty($this->c->config->a_bb_black_mes)

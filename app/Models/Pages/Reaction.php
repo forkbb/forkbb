@@ -39,6 +39,7 @@ class Reaction extends Page
         if (! $this->c->Csrf->verify($args['token'], 'Reaction', $args)) {
             if (true === $responseAsJSON) {
                 return $this->responseAsJSON(['error' => __($this->c->Csrf->getError())]);
+
             } else {
                 return $this->c->Message->message($this->c->Csrf->getError());
             }
@@ -64,6 +65,7 @@ class Reaction extends Page
         ) {
             if (true === $responseAsJSON) {
                 return $this->responseAsJSON(['error' => __('Bad request')]);
+
             } else {
                 return $this->c->Message->message('Bad request');
             }
@@ -92,6 +94,7 @@ class Reaction extends Page
             \preg_match('%<form[^>]*+>(.+)</form>%is', $tpl, $matches);
 
             return $this->responseAsJSON(['status' => $status, 'reactions' => $matches[1] ?? ''], 'topic-' . $post->parent->id);
+
         } else {
             return $this->c->Redirect->url($post->link)->message(":{$name}:", $status);
         }

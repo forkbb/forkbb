@@ -50,11 +50,13 @@ class Delete extends Action
 
                 if (true === $arg->deleteAllPost) {
                     $uidsDelete[$arg->id] = $arg->id;
+
                 } else {
                     $uidsToGuest[$arg->id] = $arg->id;
                 }
 
                 $isUser = 1;
+
             } elseif ($arg instanceof Forum) {
                 if (! $this->c->forums->get($arg->id) instanceof Forum) {
                     throw new RuntimeException('Forum unavailable');
@@ -62,6 +64,7 @@ class Delete extends Action
 
                 $forums[$arg->id] = $arg;
                 $isForum          = 1;
+
             } elseif ($arg instanceof Topic) {
                 if (! $arg->parent instanceof Forum) {
                     throw new RuntimeException('Parent unavailable');
@@ -69,6 +72,7 @@ class Delete extends Action
 
                 $topics[$arg->id] = $arg;
                 $isTopic          = 1;
+
             } elseif ($arg instanceof Post) {
                 if (
                     ! $arg->parent instanceof Topic
@@ -124,13 +128,13 @@ class Delete extends Action
 
             $tids = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
-#            $query = 'SELECT t.id
-#                FROM ::topics AS t
-#                WHERE t.poster_id IN (?ai:users)';
-#
-#            $notUse = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN); // эти темы удаляются
-#
-#            $tids = \array_diff($tids, $notUse);
+//            $query = 'SELECT t.id
+//                FROM ::topics AS t
+//                WHERE t.poster_id IN (?ai:users)';
+//
+//            $notUse = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN); // эти темы удаляются
+//
+//            $tids = \array_diff($tids, $notUse);
 
             $parents = $this->c->topics->loadByIds($tids, false);
 

@@ -123,6 +123,7 @@ class ErrorHandler
                 $this->error = [];
 
                 \error_clear_last();
+
             } else {
                 exit(1);
             }
@@ -157,6 +158,7 @@ class ErrorHandler
 
         if (isset($this->error['type'])) {
             $show = true;
+
         } elseif (
             \is_array($this->error = \error_get_last())
             && $this->error['type'] & \error_reporting()
@@ -196,6 +198,7 @@ class ErrorHandler
                 \ob_end_clean();
 
                 $this->show($this->error);
+
             } else {
                 \ob_end_flush();
             }
@@ -350,6 +353,7 @@ EOT;
 
                 echo '</ol></div>';
             }
+
         } else {
             echo '<p>Server is tired :(</p>';
         }
@@ -376,6 +380,7 @@ EOT;
             && $error['exception'] instanceof Throwable
         ) {
             $result = "PHP {$type}: {$error['exception']}";
+
         } else {
             $result = "PHP {$type}: {$error['message']}" . (isset($error['file']) ? " in {$error['file']}:[{$error['line']}]" : '');
         }

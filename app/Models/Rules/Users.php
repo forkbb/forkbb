@@ -84,6 +84,7 @@ class Users extends Rules
             && $this->user->isAdmin
         ) {
             return true;
+
         } elseif (
             ! $profile
             && $user->isAdmin

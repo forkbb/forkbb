@@ -87,15 +87,18 @@ class Feed extends Page
                     $feed['items'][] = $item;
                 }
             }
+
         } else {
             if ($this->c->config->i_feed_ttl > 0) {
                 $cacheId = 'feed' . \sha1("{$this->user->group_id}|{$this->user->language}|{$fid}");
+
             } else {
                 $cacheId = null;
             }
 
             if (null !== $cacheId && $this->c->Cache->has($cacheId)) {
                 $feed = $this->c->Cache->get($cacheId);
+
             } else {
                 $forum = $this->c->forums->loadTree($fid);
 
@@ -113,6 +116,7 @@ class Feed extends Page
 
                 if (0 === $fid) {
                     $feed['description'] = __(['The most recent posts at %s board', $this->c->config->o_board_title]);
+
                 } else {
                     $feed['description'] = __(['The most recent posts in %s forum', $forum->forum_name]);
                     $feed['title']      .= __('Title separator') . $forum->forum_name;

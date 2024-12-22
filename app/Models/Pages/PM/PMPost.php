@@ -47,6 +47,7 @@ class PMPost extends AbstractPM
 
             if (1 !== $this->user->u_pm) {
                 return $this->c->Message->message('PM off', true, 403);
+
             } elseif (! $this->c->Csrf->verify($hash, 'PMAction', $temp)) {
                 return $this->c->Message->message($this->c->Csrf->getError());
             }
@@ -72,18 +73,23 @@ class PMPost extends AbstractPM
             $this->formTitle  = Cnst::ACTION_ARCHIVE === $this->pms->area ? 'New PM title archive' : 'New PM title';
             $this->pmCrumbs[] = [$this->c->Router->link('PMAction', $args), 'New message'];
             $this->pmCrumbs[] = $topic;
+
         } else {
             return $this->c->Message->message('Not Found', true, 404);
         }
 
         if ($topic->closed) {
             $this->fIswev = [FORK_MESS_ERR, 'Dialogue is closed'];
+
         } elseif (2 === $topic->blockStatus) {
             $this->fIswev = [FORK_MESS_ERR, 'You block addr'];
+
         } elseif (1 === $topic->blockStatus) {
             $this->fIswev = [FORK_MESS_ERR, 'Addr block you'];
+
         } elseif (! $topic->actionsAllowed) {
             $this->fIswev = [FORK_MESS_ERR, 'Target group pm off'];
+
         } elseif (! $topic->canReply) {
             $this->fIswev = [FORK_MESS_ERR, 'Target pm off'];
         }
@@ -104,12 +110,14 @@ class PMPost extends AbstractPM
                         && $this->targetUser->u_pm_num_all >= $this->targetUser->g_pm_limit
                     ) {
                         $this->fIswev = [FORK_MESS_ERR, 'Target is full'];
+
                     } elseif (
                         $this->user->g_pm_limit > 0
                         && $this->user->u_pm_num_all >= $this->user->g_pm_limit
                     ) {
                         $this->fIswev = [FORK_MESS_ERR, 'Active is full'];
                     }
+
                 } elseif (null !== $v->archive) {
                     if (
                         $this->user->g_pm_limit > 0
@@ -143,6 +151,7 @@ class PMPost extends AbstractPM
                     $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies)
                 );
             }
+
         } elseif ($quote) {
             $quote = $this->pms->load(Cnst::PPOST, $quote);
 
@@ -183,6 +192,7 @@ class PMPost extends AbstractPM
                 'type'  => 'submit',
                 'value' => __('Archive Send later'),
             ];
+
         } elseif (Cnst::ACTION_ARCHIVE === $this->pms->area) {
             $form['btns']['submit']['value'] = __('Save');
         }
@@ -244,6 +254,7 @@ class PMPost extends AbstractPM
             && Cnst::PT_ARCHIVE === $topic->poster_status
         ) {
             $message = 'PM to archive Redirect';
+
         // новый диалог в активные
         } elseif ($this->newTopic) {
             $message = 'PM created Redirect';
@@ -253,9 +264,11 @@ class PMPost extends AbstractPM
             $this->targetUser->u_pm_flash = 1;
 
             $this->pms->recalculate($this->targetUser);
+
         // сообщение в архивный диалог
         } elseif (Cnst::PT_ARCHIVE === $topic->poster_status) {
             $message = 'PM to archive Redirect';
+
         // сообщение в активный диалог
         } else {
             $message = 'PM sent Redirect';

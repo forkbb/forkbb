@@ -29,6 +29,7 @@ class GDDriver extends DefaultDriver
     {
         if ($this->isBadData(\substr($data, 0, 64))) {
             return false;
+
         } else {
             return $this->tuning($this->ready ? \imagecreatefromstring($data) : false);
         }
@@ -42,6 +43,7 @@ class GDDriver extends DefaultDriver
             || $this->isBadData(\file_get_contents($path, false, null, 0, 64))
         ) {
             return false;
+
         } else {
             return $this->tuning(\imagecreatefromstring(\file_get_contents($path)));
         }
@@ -72,6 +74,7 @@ class GDDriver extends DefaultDriver
             )
         ) {
             throw new FileException('Failed to adjust image');
+
         } else {
             return $image;
         }
@@ -113,6 +116,7 @@ class GDDriver extends DefaultDriver
 
         if (\function_exists($function)) {
             return $function(...$args);
+
         } else {
             return null;
         }

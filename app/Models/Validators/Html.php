@@ -25,6 +25,7 @@ class Html extends RulesValidator
 
         if (empty($errors)) {
             return $result;
+
         } else {
             foreach ($errors as $args) {
                 $v->addError($args);

@@ -295,6 +295,7 @@ class Maintenance extends Admin
             ];
 
             return $this->c->Redirect->page('AdminRebuildIndex', $args)->message(['Processed posts', $v->start, $last], FORK_MESS_SUCC);
+
         } else {
             return $this->c->Redirect->page('AdminMaintenance')->message('Rebuilding index end', FORK_MESS_SUCC);
         }

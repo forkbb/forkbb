@@ -56,8 +56,10 @@ class Check extends Method
                     foreach ($letters as $letter) {
                         if (! isset($list[$letter])) {
                             break;
+
                         } elseif (\is_array($list[$letter])) {
                             $list = $list[$letter];
+
                         } else {
                             $id = $list[$letter];
 
@@ -70,6 +72,7 @@ class Check extends Method
                     }
                 }
             }
+
         // проверка пользователя
         } elseif (! $user->isAdmin) {
             $id = $this->model->banFromName($user->username);

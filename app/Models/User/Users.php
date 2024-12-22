@@ -38,6 +38,7 @@ class Users extends Manager
     {
         if ($this->isset($id)) {
             return $this->get($id);
+
         } else {
             $user = $this->Load->load($id);
 
@@ -61,8 +62,10 @@ class Users extends Manager
                 $preGuest = true;
 
                 continue;
+
             } elseif ($this->isset($id)) {
                 $result[$id] = $this->get($id);
+
             } else {
                 $result[$id] = null;
                 $data[]      = $id;
@@ -100,11 +103,13 @@ class Users extends Manager
 
             if ($loadedUser instanceof User) {
                 return $loadedUser;
+
             } else {
                 $this->set($user->id, $user);
 
                 return $user;
             }
+
         } else {
             return null;
         }
@@ -117,6 +122,7 @@ class Users extends Manager
     {
         if ('' === $name) {
             return null;
+
         } else {
             return $this->returnUser($this->Load->loadByName($name, $caseInsencytive));
         }
@@ -129,6 +135,7 @@ class Users extends Manager
     {
         if ('' === $email) {
             return null;
+
         } else {
             return $this->returnUser($this->Load->loadByEmail($email));
         }

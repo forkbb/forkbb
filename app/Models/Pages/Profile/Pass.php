@@ -56,6 +56,7 @@ class Pass extends Profile
 //                    $auth->fIswev = [FORK_MESS_SUCC => [__('Pass updated')]];
 //                    return $auth->login([], 'GET', $this->curUser->username);
                     return $this->c->Redirect->page('Login')->message('Pass updated', FORK_MESS_SUCC); // ???? нужна передача данных между скриптами не привязанная к пользователю
+
                 } else {
                     return $this->c->Redirect->page('EditUserProfile', $args)->message('Pass updated redirect', FORK_MESS_SUCC);
                 }

@@ -32,11 +32,13 @@ class UpdateCountPosts extends Action
                 && ! $arg->isGuest
             ) {
                 $ids[$arg->id] = true;
+
             } elseif (
                 \is_int($arg)
                 && $arg > 0
             ) {
                 $ids[$arg] = true;
+
             } else {
                 throw new InvalidArgumentException('Expected user or positive integer id');
             }
@@ -45,6 +47,7 @@ class UpdateCountPosts extends Action
         if (empty($ids)) {
             $where = '';
             $vars  = [];
+
         } else {
             if (\count($ids) > 1) {
                 \ksort($ids, \SORT_NUMERIC);
@@ -59,6 +62,7 @@ class UpdateCountPosts extends Action
         if (null === $this->count) {
             if ($this->c->user->isAdmin) {
                 $manager = $this->c->forums;
+
             } else {
                 $manager = $this->c->ForumManager->init($this->c->groups->get(FORK_GROUP_ADMIN)); //???? закэшировать?
             }
@@ -70,6 +74,7 @@ class UpdateCountPosts extends Action
             foreach ($forums as $forum) {
                 if (0 === $forum->no_sum_mess) {
                     $yes[] = $forum->id;
+
                 } else {
                     $not[] = $forum->id;
                 }
@@ -93,7 +98,6 @@ class UpdateCountPosts extends Action
 
         } else {
             $vars[':forums'] = $this->need;
-
             $query = 'UPDATE ::users
               SET num_posts = COALESCE((
                     SELECT COUNT(p.id)
@@ -101,7 +105,6 @@ class UpdateCountPosts extends Action
                     INNER JOIN ::topics AS t ON t.id=p.topic_id
                     WHERE p.poster_id=::users.id AND t.forum_id IN (?ai:forums)
                 ), 0)' . $where;
-
         }
 
         $this->c->DB->exec($query, $vars);

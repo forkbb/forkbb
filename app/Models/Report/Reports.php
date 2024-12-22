@@ -39,6 +39,7 @@ class Reports extends Manager
     {
         if ($this->isset($id)) {
             return $this->get($id);
+
         } else {
             $report = $this->Load->load($id);
 
@@ -58,6 +59,7 @@ class Reports extends Manager
         foreach ($this->Load->loadList($noZapped) as $report) {
             if ($this->isset($report->id)) {
                 $result[] = $this->get($report->id);
+
             } else {
                 $result[] = $report;
 
@@ -97,10 +99,8 @@ class Reports extends Manager
         $last = $this->c->Cache->get(self::CACHE_KEY);
 
         if (null === $last) {
-            $query = 'SELECT MAX(r.id)
-                FROM ::reports AS r';
-
-            $last = (int) $this->c->DB->query($query)->fetchColumn();
+            $query = 'SELECT MAX(id) FROM ::reports';
+            $last  = (int) $this->c->DB->query($query)->fetchColumn();
 
             if (true !== $this->c->Cache->set(self::CACHE_KEY, $last)) {
                 throw new RuntimeException('Unable to write value to cache - report');

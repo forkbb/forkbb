@@ -170,6 +170,7 @@ class Cookie extends Model
             $expTime = \time() + $this->time;
             $expire  = $expTime;
             $pfx     = '';
+
         } else {
             $expTime = \time() + $this->c->config->i_timeout_visit;
             $expire  = 0;
@@ -193,6 +194,7 @@ class Cookie extends Model
     {
         if (null === $this->get(self::NAME)) {
             return true;
+
         } else {
             return $this->delete(self::NAME);
         }

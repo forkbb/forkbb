@@ -34,6 +34,7 @@ class HTMLCleaner extends Jevix
             if ($this->hConfigName !== $name) {
                 throw new RuntimeException("A {$this->hConfigName} configuration has been installed, it cannot be replaced with an {$name} configuration");
             }
+
         } else {
             $this->configure($name, include $this->hConfigFile);
 
@@ -64,10 +65,12 @@ class HTMLCleaner extends Jevix
                         || ! \is_array($value)
                     ) {
                         $this->{$method}($value);
+
                     } else {
                         $this->{$method}(...$value);
                     }
                 }
+
             } else {
                 $this->{$method}($args);
             }

@@ -25,14 +25,11 @@ class Load extends Action
             throw new InvalidArgumentException('Expected a positive report id');
         }
 
-        $vars = [
+        $vars  = [
             ':id' => $id,
         ];
-        $query = 'SELECT r.*
-            FROM ::reports AS r
-            WHERE r.id=?i:id';
-
-        $data = $this->c->DB->query($query, $vars)->fetch();
+        $query = 'SELECT * FROM ::reports WHERE id=?i:id';
+        $data  = $this->c->DB->query($query, $vars)->fetch();
 
         if (empty($data)) {
             return null;
@@ -56,6 +53,7 @@ class Load extends Action
                 FROM ::reports AS r
                 WHERE r.zapped=0
                 ORDER BY r.id DESC';
+
         } else {
             $query = 'SELECT r.*
                 FROM ::reports AS r

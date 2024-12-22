@@ -43,6 +43,7 @@ class GitHub extends Driver
             $this->userInfo = $response;
 
             return true;
+
         } elseif (\is_array($response)) {
             $this->error = 'User error';
         }

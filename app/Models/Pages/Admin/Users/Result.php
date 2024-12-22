@@ -24,6 +24,7 @@ class Result extends Users
     public function view(array $args, string $method): Page
     {
         $data = $this->decodeData($args['data']);
+
         if (false === $data) {
             return $this->c->Message->message('Bad request');
         }
@@ -35,6 +36,7 @@ class Result extends Users
 
             $idsN   = $this->forIP($data['ip']);
             $crName = ['%s', $data['ip']];
+
         } else {
             $idsN   = $this->forFilter($data);
             $crName = 'Results head';
@@ -43,7 +45,7 @@ class Result extends Users
         $number = \count($idsN);
 
         if (0 == $number) {
-            $view = $this->c->AdminUsers;
+            $view         = $this->c->AdminUsers;
             $view->fIswev = [FORK_MESS_INFO, 'No users found'];
 
             return $view->view([], 'GET', $data);
@@ -84,25 +86,30 @@ class Result extends Users
                     && $this->userRules->banUsers
                 ) {
                     $action = self::ACTION_BAN;
+
                 } elseif (
                     ! empty($v->delete)
                     && $this->userRules->deleteUsers
                 ) {
                     $action = self::ACTION_DEL;
+
                 } elseif (
                     ! empty($v->change_group)
                     && $this->userRules->changeGroup
                 ) {
                     $action = self::ACTION_CHG;
+
                 } else {
                     $this->fIswev = [FORK_MESS_VLD, 'Action not available'];
                 }
 
                 if (empty($this->fIswev)) {
                     $selected = $this->checkSelected($v->users, $action);
+
                     if (\is_array($selected)) {
                         if (self::ACTION_BAN === $action) {
                             return $this->c->Redirect->page('AdminBansNew', ['ids' => \implode('-', $selected)]);
+
                         } else {
                             return $this->c->Redirect->page('AdminUsersAction', ['action' => $action, 'ids' => \implode('-', $selected)]);
                         }
@@ -217,6 +224,7 @@ class Result extends Users
                 if (\is_string($value)) {
                     $value = $this->c->Func->dateToTime($value);
                 }
+
             } elseif (\is_string($value)) {
                 $type     = 'LIKE';
                 $usedLike = true;

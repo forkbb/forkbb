@@ -46,6 +46,7 @@ class Subscription extends Model
         if (empty($models)) {
             if ($mayBeUsers) {
                 throw new InvalidArgumentException('Expected at least one Forum, Topic or User');
+
             } else {
                 throw new InvalidArgumentException('Expected at least one Forum or Topic');
             }
@@ -57,12 +58,15 @@ class Subscription extends Model
                 && $model instanceof User
             ) {
                 $this->users[$model->id] = $model->id;
+
             } elseif ($model instanceof Forum) {
                 $this->forums[$model->id] = $model->id;
                 $mayBeUsers               = false;
+
             } elseif ($model instanceof Topic) {
                 $this->topics[$model->id] = $model->id;
                 $mayBeUsers               = false;
+
             } else {
                 throw new InvalidArgumentException('Expected only Forum or Topic');
             }
@@ -140,6 +144,7 @@ class Subscription extends Model
             if (1 === \count($this->users)) {
                 $where[':uid'] = 'user_id=?i:uid';
                 $vars[':uid']  = \reset($this->users);
+
             } else {
                 $where[':uid'] = 'user_id IN (?ai:uid)';
                 $vars[':uid']  = $this->users;
@@ -156,6 +161,7 @@ class Subscription extends Model
                 if (1 === \count($this->forums)) {
                     $where[':id'] = 'forum_id=?i:id';
                     $vars[':id']  = \reset($this->forums);
+
                 } else {
                     $where[':id'] = 'forum_id IN (?ai:id)';
                     $vars[':id']  = $this->forums;
@@ -179,6 +185,7 @@ class Subscription extends Model
                 if (1 === \count($this->topics)) {
                     $where[':id'] = 'topic_id=?i:id';
                     $vars[':id']  = \reset($this->topics);
+
                 } else {
                     $where[':id'] = 'topic_id IN (?ai:id)';
                     $vars[':id']  = $this->topics;
@@ -213,6 +220,7 @@ class Subscription extends Model
                     || $model->isGuest
                 ) {
                     $result[self::FORUMS_DATA] = null;
+
                 } else {
                     $query = 'SELECT forum_id
                         FROM ::forum_subscriptions
@@ -228,6 +236,7 @@ class Subscription extends Model
                     || $model->isGuest
                 ) {
                     $result[self::TOPICS_DATA] = null;
+
                 } else {
                     $query = 'SELECT topic_id
                         FROM ::topic_subscriptions
@@ -236,6 +245,7 @@ class Subscription extends Model
                     $result[self::TOPICS_DATA] = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
                 }
             }
+
         } else {
             throw new InvalidArgumentException('Expected only User');
         }

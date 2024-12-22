@@ -63,6 +63,7 @@ class View extends Action
         if ($review) {
             $postCount = $arg->num_replies + 2;
             $sign      = -1;
+
         } else {
             $postCount = 0;
             $sign      = 1;
@@ -72,6 +73,7 @@ class View extends Action
             foreach ($result as $post) {
                 if ($post->id === $arg->last_post_id) { // время последнего сообщения в теме может равняться
                     $timeMax = $arg->last_post;         // времени его редактирования, а не создания
+
                 } elseif ($post->posted > $timeMax) {
                     $timeMax = $post->posted;
                 }
@@ -85,6 +87,7 @@ class View extends Action
                     }
 
                     $post->__postNumber = 1;
+
                 } else {
                     $postCount += $sign;
 
@@ -97,6 +100,7 @@ class View extends Action
             }
 
             $arg->timeMax = $timeMax;
+
         } else {
             foreach ($result as $post) {
                 ++$postCount;

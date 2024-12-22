@@ -40,6 +40,7 @@ class Load extends Action
     {
         if ($id < 1) {
             throw new InvalidArgumentException('Expected a positive post id');
+
         } elseif (
             null !== $tid
             && $tid < 1
@@ -47,13 +48,12 @@ class Load extends Action
             throw new InvalidArgumentException('Expected a positive topic id');
         }
 
-        $vars = [
+        $vars  = [
             ':pid' => $id,
             ':tid' => $tid,
         ];
         $query = $this->getSql(null !== $tid ? 'p.id=?i:pid AND p.topic_id=?i:tid' : 'p.id=?i:pid');
-
-        $data = $this->c->DB->query($query, $vars)->fetch();
+        $data  = $this->c->DB->query($query, $vars)->fetch();
 
         if (empty($data)) {
             return null;
@@ -64,11 +64,13 @@ class Load extends Action
 
         if (! $topic instanceof Topic) {
             return null;
+
         } elseif (
             null !== $tid
             && $topic->id !== $tid
         ) {
             return null;
+
         } else {
             return $post;
         }
@@ -88,12 +90,11 @@ class Load extends Action
             }
         }
 
-        $vars = [
+        $vars  = [
             ':ids' => $ids,
         ];
         $query = $this->getSql('p.id IN (?ai:ids)');
-
-        $stmt = $this->c->DB->query($query, $vars);
+        $stmt  = $this->c->DB->query($query, $vars);
 
         $result   = [];
         $topicIds = [];
@@ -114,6 +115,7 @@ class Load extends Action
             }
 
             unset($post);
+
         } else {
             foreach ($topicIds as $id) {
                 if (

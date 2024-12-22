@@ -70,7 +70,7 @@ class Files
         'image/png'  => 'png',
         'image/bmp'  => 'bmp',
         'image/webp' => 'webp',
-# non-standard mime types
+// non-standard mime types
         'image/x-ms-bmp' => 'bmp',
         'image/avif' => 'avif',
         'image/heif' => 'heif',
@@ -855,7 +855,7 @@ class Files
         'video/x-sgi-movie' => 'movie',
         'video/x-smv' => 'smv',
         'x-conference/x-cooltalk' => 'ice',
-# non-standard mime types
+// non-standard mime types
         'image/x-ms-bmp' => 'bmp',
         'image/avif' => 'avif',
         'image/heif' => 'heif',
@@ -1005,8 +1005,10 @@ class Files
     {
         if ($file instanceof Image) {
             return $file->ext();
+
         } elseif (\is_string($file)) {
             return $this->imageType[$this->mimeType($file)] ?? null;
+
         } else {
             return null;
         }
@@ -1029,6 +1031,7 @@ class Files
 
         if (\function_exists('\\mime_content_type')) {
             return \mime_content_type($path) ?: $default;
+
         } else {
             return $default;
         }
@@ -1080,6 +1083,7 @@ class Files
             }
 
             return empty($result) ? null : $result;
+
         } else {
             if (
                 '' == $file['name']
@@ -1132,6 +1136,7 @@ class Files
         if (false === ($pos = \strrpos($file['name'], '.'))) {
             $name = $file['name'];
             $ext  = '';
+
         } else {
             $name = \substr($file['name'], 0, $pos);
             $ext  = \mb_strtolower(\substr($file['name'], $pos + 1), 'UTF-8');
@@ -1154,6 +1159,7 @@ class Files
 
             $ext       = $this->imageType[$mimeType];
             $className = Image::class;
+
         } else {
             if ($file['size'] > $this->maxFileSize) {
                 $this->error = 'The file too large';
@@ -1196,6 +1202,7 @@ class Files
             $name   = '';
             $type   = $matches[1];
             $offset = \strlen($matches[0]);
+
         } else {
             $cmpn = \parse_url($url);
 
@@ -1242,8 +1249,10 @@ class Files
             if (false === $result) {
                 $this->error = "Failed fwrite() to temp file";
             }
+
         } elseif (\extension_loaded('curl')) {
             $result = $this->curlAction($url, $tmpFile);
+
         } elseif (\filter_var(\ini_get('allow_url_fopen'), \FILTER_VALIDATE_BOOL)) {
             $result = $this->streamAction($url, $tmpFile);
         }
@@ -1261,6 +1270,7 @@ class Files
                 ],
                 false
             );
+
         } elseif (null === $result) {
             $this->error = 'No cURL and allow_url_fopen OFF';
         }

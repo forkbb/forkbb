@@ -98,6 +98,7 @@ class Report extends Page
 
                 if (false === $result && 1 === $this->c->config->i_report_method) {
                     $this->fIswev = [FORK_MESS_ERR, ['Error mail', $this->c->config->o_admin_email]];
+
                 } else {
                     return $this->c->Redirect->page('ViewPost', ['id' => $post->id])->message('Report redirect', FORK_MESS_SUCC);
                 }

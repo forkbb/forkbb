@@ -37,6 +37,7 @@ class Revision extends Action
             || ! \is_array($poll->question)
         ) {
             $this->error = 'The poll structure is broken';
+
         } else {
             $this->test($poll);
         }
@@ -72,6 +73,7 @@ class Revision extends Action
                 unset($questions[$qid], $answers[$qid]);
 
                 continue;
+
             } elseif ($emptyQ) {
                 $this->error = ['Question number %s is preceded by an empty question', $qid];
 
@@ -100,6 +102,7 @@ class Revision extends Action
                     unset($answers[$qid][$fid]);
 
                     continue;
+
                 } elseif ($emptyA) {
                     $this->error = ['Answer number %1$s is preceded by an empty answer (question number %2$s)', $fid, $qid];
 
@@ -116,14 +119,17 @@ class Revision extends Action
                 $this->error = ['For question number %s, the structure of answers is broken', $qid];
 
                 return;
+
             } elseif ($countA < 2) {
                 $this->error = ['Requires at least two answers per question (%s)', $qid];
 
                 return;
+
             } elseif (! isset($types[$qid])) {
                 $this->error = ['For question number %s, there is no value for the maximum number of answers for voting', $qid];
 
                 return;
+
             } elseif ($types[$qid] > $countA) {
                 $this->error = ['For question number %s, the maximum number of answers for voting more answers', $qid];
 

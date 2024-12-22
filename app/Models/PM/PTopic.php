@@ -54,8 +54,10 @@ class PTopic extends DataModel
     {
         if ($this->poster_id === $this->c->user->id) {
             return 'poster';
+
         } elseif ($this->target_id === $this->c->user->id) {
             return 'target';
+
         } else {
             throw new RuntimeException('Bad current user');
         }
@@ -68,8 +70,10 @@ class PTopic extends DataModel
     {
         if ($this->poster_id === $this->c->user->id) {
             return 'target';
+
         } elseif ($this->target_id === $this->c->user->id) {
             return 'poster';
+
         } else {
             throw new RuntimeException('Bad current user');
         }
@@ -105,6 +109,7 @@ class PTopic extends DataModel
     {
         if ($this->last_post_id < 1) {
             return '';
+
         } else {
             return $this->c->Router->link(
                 'PMAction',
@@ -163,6 +168,7 @@ class PTopic extends DataModel
 
         if ($visit < 1) {
             return $this->first_post_id;
+
         } elseif ($visit >= $this->last_post) {
             return $this->last_post_id;
         }
@@ -234,6 +240,7 @@ class PTopic extends DataModel
 
                     return;
             }
+
         } else {
             switch ($status) {
                 case Cnst::PT_ARCHIVE:
@@ -254,8 +261,10 @@ class PTopic extends DataModel
     {
         if (0 === $this->last_number) {
             return $this->poster;
+
         } elseif (1 === $this->last_number) {
             return $this->target;
+
         } else {
             return '';
         }
@@ -273,6 +282,7 @@ class PTopic extends DataModel
     {
         if ('poster' === $this->zp) {
             return ['for %s', $this->target];
+
         } else {
             return ['by %s', $this->poster];
         }
@@ -312,6 +322,7 @@ class PTopic extends DataModel
         ) {
             // 1 страницу в списке тем раздела не отображаем
             return [];
+
         } else {
             return $this->c->Func->paginate(
                 $this->numPages,
@@ -347,6 +358,7 @@ class PTopic extends DataModel
             || $result['pmax'] !== $pid
         ) {
             $this->page = null;
+
         } else {
             $this->page = (int) \ceil($result['pnum'] / $this->c->user->disp_posts);
         }
@@ -494,8 +506,10 @@ class PTopic extends DataModel
     {
         if ($this->c->pms->block->isBlock($this->ztUser) && ! $this->ztUser->isAdmin) {
             return 2;
+
         } elseif ($this->c->pms->block->inBlock($this->ztUser) && ! $this->zpUser->isAdmin) {
             return 1;
+
         } else {
             return 0;
         }

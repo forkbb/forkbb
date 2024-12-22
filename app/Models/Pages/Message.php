@@ -42,10 +42,13 @@ class Message extends Page
 
         if ($status < 200) {
             $type = FORK_MESS_INFO;
+
         } elseif ($status < 300) {
             $type = FORK_MESS_SUCC;
+
         } elseif ($status < 400) {
             $type = FORK_MESS_WARN;
+
         } else {
             $type = FORK_MESS_ERR;
         }

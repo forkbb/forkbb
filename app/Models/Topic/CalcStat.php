@@ -28,6 +28,7 @@ class CalcStat extends Method
 
         if ($this->model->moved_to) {
             $numReplies = 0;
+
         } else {
             $vars = [
                 ':tid' => $this->model->id,

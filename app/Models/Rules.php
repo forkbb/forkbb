@@ -27,6 +27,7 @@ class Rules extends Model
     {
         if (true === $this->ready) {
             return parent::__get($name);
+
         } else {
             throw new RuntimeException('The model of rules isn\'t ready');
         }

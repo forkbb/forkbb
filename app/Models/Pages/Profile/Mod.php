@@ -54,6 +54,7 @@ class Mod extends Profile
                         && $v->moderator[$forum->id] === $forum->id
                     ) {
                         $forum->modAdd($this->curUser);
+
                     } else {
                         $forum->modDelete($this->curUser);
                     }

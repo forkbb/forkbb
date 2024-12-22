@@ -96,7 +96,6 @@ class Bans extends Admin
                 's_expire_1' => 'Expire date label',
                 's_expire_2' => 'Expire date label',
                 'order_by'   => 'Order by label',
-#                        'direction'       => ,
             ])->addArguments([
             ])->addMessages([
             ]);
@@ -107,6 +106,7 @@ class Bans extends Admin
 
             $this->fIswev     = $v->getErrors();
             $this->formSearch = $this->formSearch($v->getData());
+
         } else {
             $this->formSearch = $this->formSearch($data);
 
@@ -335,6 +335,7 @@ class Bans extends Admin
                 if (\is_string($value)) {
                     $value = $this->c->Func->dateToTime($value);
                 }
+
             } elseif (\is_string($value)) {
                 $type     = 'LIKE';
                 $usedLike = true;
@@ -569,6 +570,7 @@ class Bans extends Admin
                 && \count($tmp) === $this->banCount
             ) {
                 $userList = $tmp; // ???? проверка массива на User'ов?
+
             } else {
                 return $this->c->Message->message('No user ID message');
             }
@@ -584,8 +586,10 @@ class Bans extends Admin
 
                 if ($user->isAdmin) {
                     return $this->c->Message->message(['User is admin message', $user->username]);
+
                 } elseif ($user->isAdmMod) {
                     return $this->c->Message->message(['User is mod message', $user->username]);
+
                 } elseif ($user->isGuest) {
                     return $this->c->Message->message('Cannot ban guest message');
                 }
@@ -692,6 +696,7 @@ class Bans extends Admin
                 ) {
                     $user = \reset($userList);
                     $redirect->url($user->link);
+
                 } else {
                     $redirect->page('AdminBans');
                 }
@@ -715,14 +720,17 @@ class Bans extends Admin
 
                 $ip  = (string) $user->registration_ip;
                 $ips = $this->c->posts->userStat($user->id);
+
                 unset($ips[$ip]);
 
                 foreach ($ips as $curIp => $cur) {
                     if (\strlen($ip . ' ' . $curIp) > 255) {
                         break;
                     }
+
                     $ip .= ' ' . $curIp;
                 }
+
                 $data['ip'] = $ip;
             }
         }
@@ -746,13 +754,17 @@ class Bans extends Admin
 
             if (! $user instanceof User) { // ???? может ли вернутся несколько юзеров?
                 $v->addError('No user message');
+
             } elseif ($this->c->bans->banFromName($user->username) > 0) {
                 $v->addError(['User is ban', $user->username]);
+
             } elseif (! $this->userRules->canBanUser($user)) {
                 if ($user->isGuest) {
                     $v->addError('Cannot ban guest message');
+
                 } elseif ($user->isAdmin) {
                     $v->addError(['User is admin message', $user->username]);
+
                 } elseif ($user->isAdmMod) {
                     $v->addError(['User is mod message', $user->username]);
                 }
@@ -779,6 +791,7 @@ class Bans extends Admin
                             continue 2;
                         }
                     }
+
                 } else {
                     foreach ($ending4 as $ending) {
                         if (false !== \filter_var($address . $ending, \FILTER_VALIDATE_IP, \FILTER_FLAG_IPV4)) {
@@ -788,6 +801,7 @@ class Bans extends Admin
                 }
 
                 $v->addError(['Invalid IP message (%s)', $address]);
+
                 break;
             }
         }
@@ -808,11 +822,13 @@ class Bans extends Admin
                 && false !== $this->c->Mail->valid($email)
             ) {
                 $error = false;
+
             } elseif (
                 '.' === $email[0]
                 && false !== $this->c->Mail->valid('test@sub' . $email)
             ) {
                 $error = false;
+
             } elseif (false !== $this->c->Mail->valid('test@' . $email)) {
                 $error = false;
             }
@@ -874,6 +890,7 @@ class Bans extends Admin
 
         if (empty($args['uid'])) {
             $redirect->page('AdminBans');
+
         } else {
             $user = $this->c->users->load($args['uid']);
 

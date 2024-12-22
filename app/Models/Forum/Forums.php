@@ -45,6 +45,7 @@ class Forums extends Manager
     {
         if (null === $group) {
             $gid = $this->c->user->group_id;
+
         } else {
             $gid = $group->g_id;
         }
@@ -59,6 +60,7 @@ class Forums extends Manager
             }
 
             $result = [];
+
         } else {
             $result = $this->c->Cache->get("forums_{$gid}");
         }

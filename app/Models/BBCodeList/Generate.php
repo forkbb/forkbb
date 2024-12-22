@@ -21,12 +21,9 @@ class Generate extends Method
      */
     public function generate(): BBCodeList
     {
-        $query = 'SELECT bb_structure
-            FROM ::bbcode';
-
         $content = "<?php\n\nuse function \\ForkBB\\{__, url};\n\nreturn [\n";
-
-        $stmt = $this->c->DB->query($query);
+        $query   = 'SELECT bb_structure FROM ::bbcode';
+        $stmt    = $this->c->DB->query($query);
 
         while ($row = $stmt->fetch()) {
             $content .= "    [\n"
@@ -38,6 +35,7 @@ class Generate extends Method
 
         if (false === \file_put_contents($this->model->fileCache, $content, \LOCK_EX)) {
             throw new RuntimeException('The generated bbcode file cannot be created');
+
         } else {
             return $this->model->invalidate();
         }
@@ -79,6 +77,7 @@ class Generate extends Method
                         )
                     ) {
                         $value = "function (\$body, \$attrs, \$parser, \$id) {\n{$value}\n{$space}}";
+
                     } else {
                         $value = '\'' . \addslashes($value) . '\'';
                     }

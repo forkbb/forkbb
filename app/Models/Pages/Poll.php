@@ -50,12 +50,14 @@ class Poll extends Page
             ]);
 
         if (! $v->validation($_POST)) {
-            $message = $this->c->Message;
+            $message         = $this->c->Message;
             $message->fIswev = $v->getErrors();
 
             return $message->message('');
+
         } elseif (null !== ($result = $topic->poll->vote($v->poll_vote))) {
             return $this->c->Message->message($result);
+
         } else {
             return $this->c->Redirect->url($topic->link)->message('You voted', FORK_MESS_SUCC);
         }

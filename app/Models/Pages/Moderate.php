@@ -83,6 +83,7 @@ class Moderate extends Page
                     )
                 ) {
                     $options[] = [$f->id, $indent . __('Forum prefix') . $f->forum_name, true];
+
                 } else {
                     $options[] = [$f->id, $indent . __('Forum prefix') . $f->forum_name];
                     $idxs[]    = $f->id;
@@ -115,6 +116,7 @@ class Moderate extends Page
                 || ! ($type & $this->actions[$action])
             ) {
                 $v->addError('Action not available');
+
             // не выбрано ни одного сообщения для действий прямо этого требующих
             } elseif (
                 $v->topic
@@ -130,12 +132,14 @@ class Moderate extends Page
                 && \count($v->ids) < 2
             ) {
                 $v->addError('Not enough topics selected');
+
             // управление перенаправлениями
             } elseif (
                 'link' === $action
                 && \count($v->ids) > 1
             ) {
                 $v->addError('Only one topic is permissible');
+
             // перенос тем или разделение постов
             } elseif (
                 'move' === $action
@@ -145,11 +149,13 @@ class Moderate extends Page
 
                 if (empty($this->listOfIndexes)) {
                     $v->addError('Nowhere to move');
+
                 } elseif (
                     1 === $v->confirm
                     && ! \in_array($v->destination, $this->listOfIndexes, true)
                 ) {
                     $v->addError('Invalid destination');
+
                 } elseif (
                     'split' === $action
                     && 1 === $v->confirm
@@ -213,6 +219,7 @@ class Moderate extends Page
 
         if (! $this->curForum instanceof Forum) {
             return $this->c->Message->message('Bad request');
+
         } elseif (
             ! $this->user->isAdmin
             && ! $this->user->isModerator($this->curForum)
@@ -237,6 +244,7 @@ class Moderate extends Page
 
             if (self::TOTOPIC & $curType) {
                 $objects = [$this->curTopic];
+
             } elseif (self::IFTOTPC & $curType) {
                 if (
                     1 === \count($ids)
@@ -269,6 +277,7 @@ class Moderate extends Page
                     'page' => $v->page,
                 ]
             );
+
         } else {
             $objects = $this->c->topics->loadByIds($v->ids, false);
 
@@ -320,6 +329,7 @@ class Moderate extends Page
                     $this->c->topics->access(true, ...$topics);
 
                     return $this->c->Redirect->url($this->backLink)->message(['Open topic redirect', $this->numObj], FORK_MESS_SUCC);
+
                 } else {
                     return $this->actionCancel($topics, $v);
                 }
@@ -347,6 +357,7 @@ class Moderate extends Page
                     $this->c->topics->access(false, ...$topics);
 
                     return $this->c->Redirect->url($this->backLink)->message(['Close topic redirect', $this->numObj], FORK_MESS_SUCC);
+
                 } else {
                     return $this->actionCancel($topics, $v);
                 }
@@ -402,6 +413,7 @@ class Moderate extends Page
                         $this->c->posts->delete(...$objects);
 
                         $message = 'Delete post redirect';
+
                     } else {
                         $this->c->topics->delete(...$objects);
 
@@ -409,6 +421,7 @@ class Moderate extends Page
                     }
 
                     return $this->c->Redirect->url($this->curForum->link)->message([$message, $this->numObj], FORK_MESS_SUCC);
+
                 } else {
                     return $this->actionCancel($objects, $v);
                 }
@@ -439,6 +452,7 @@ class Moderate extends Page
                     $this->c->topics->move(1 === $v->redirect, $forum, ...$topics);
 
                     return $this->c->Redirect->url($this->curForum->link)->message(['Move topic redirect', $this->numObj], FORK_MESS_SUCC);
+
                 } else {
                     return $this->actionCancel($topics, $v);
                 }
@@ -485,6 +499,7 @@ class Moderate extends Page
                     $this->c->topics->merge(1 === $v->redirect, ...$topics);
 
                     return $this->c->Redirect->url($this->curForum->link)->message('Merge topics redirect', FORK_MESS_SUCC);
+
                 } else {
                     return $this->actionCancel($topics, $v);
                 }
@@ -516,6 +531,7 @@ class Moderate extends Page
                     }
 
                     return $this->c->Redirect->url($this->backLink)->message(['Unstick topic redirect', $this->numObj], FORK_MESS_SUCC);
+
                 } else {
                     return $this->actionCancel($topics, $v);
                 }
@@ -547,6 +563,7 @@ class Moderate extends Page
                     }
 
                     return $this->c->Redirect->url($this->backLink)->message(['Stick topic redirect', $this->numObj], FORK_MESS_SUCC);
+
                 } else {
                     return $this->actionCancel($topics, $v);
                 }
@@ -576,6 +593,7 @@ class Moderate extends Page
                     $this->c->posts->move(false, $newTopic, ...$posts);
 
                     return $this->c->Redirect->url($this->curForum->link)->message('Split posts redirect', FORK_MESS_SUCC);
+
                 } else {
                     return $this->actionCancel($posts, $v);
                 }
@@ -634,6 +652,7 @@ class Moderate extends Page
 
                             $this->c->topics->insert($rTopic);
                             $this->c->forums->update($forum->calcStat());
+
                         // удалить тему(ы)-перенаправление
                         } elseif (
                             ! empty($ft[$forum->id])
@@ -763,6 +782,7 @@ class Moderate extends Page
         foreach ($objects as $object) {
             if ($object instanceof Topic) {
                 $headers[] = __(['Topic «%s»', $object->name]);
+
             } else {
                 $headers[] = __(['Post «%1$s by %2$s»', dt($object->posted), $object->poster]);
             }

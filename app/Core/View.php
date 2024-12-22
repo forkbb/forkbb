@@ -62,6 +62,7 @@ class View
             if (! empty($config['preFile'])) {
                 $this->preFile = $config['preFile'];
             }
+
         } else {
             // для rev. 68 и ниже
             $this->cacheDir   = $config;
@@ -179,6 +180,7 @@ class View
             foreach ($name as $n) {
                 $this->composer($n, $composer);
             }
+
         } else {
             $p = '~^'
                 . \str_replace('\*', '[^' . $this->separator . ']+', \preg_quote($name, $this->separator . '~'))
@@ -293,6 +295,7 @@ class View
             || ! \array_key_exists($name, $this->blocks)
         ) {
             $this->blocks[$name] = \ob_get_clean();
+
         } else {
             $this->blocks[$name] .= \ob_get_clean();
         }
@@ -316,8 +319,10 @@ class View
                 if (! empty($value)) {
                     $out[] = $key;
                 }
+
             } elseif (\is_string($value)) {
                 $out[] = $value;
+
             } elseif (
                 \is_array($value)
                 && ! empty($value[0])

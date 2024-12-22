@@ -66,21 +66,22 @@ class Reactions extends Manager
      */
     public function reaction(Post $post, int $type): ?bool
     {
-        $vars = [
+        $vars  = [
             ':pid'  => $post->id,
             ':uid'  => $this->c->user->id,
             ':type' => $type,
         ];
         $query = 'SELECT reaction FROM ::reactions WHERE pid=?i:pid AND uid=?i:uid';
-
-        $old = (int) $this->c->DB->query($query, $vars)->fetchColumn();
+        $old   = (int) $this->c->DB->query($query, $vars)->fetchColumn();
 
         if ($old === $type) {
             $result = false;
             $query  = 'DELETE FROM ::reactions WHERE pid=?i:pid AND uid=?i:uid';
+
         } elseif ($old > 0) {
             $result = null;
             $query  = 'UPDATE ::reactions SET reaction=?i:type WHERE pid=?i:pid AND uid=?i:uid';
+
         } else {
             $result = true;
             $query  = match ($this->c->DB->getType()) {
@@ -113,11 +114,10 @@ class Reactions extends Manager
      */
     public function recalcReactions(Post $post): bool
     {
-        $vars = [
-            ':pid'  => $post->id,
+        $vars      = [
+            ':pid' => $post->id,
         ];
-        $query = 'SELECT reaction, COUNT(reaction) FROM ::reactions WHERE pid=?i:pid GROUP BY reaction';
-
+        $query     = 'SELECT reaction, COUNT(reaction) FROM ::reactions WHERE pid=?i:pid GROUP BY reaction';
         $reactions = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_KEY_PAIR);
 
         \arsort($reactions, \SORT_NUMERIC);
@@ -154,12 +154,11 @@ class Reactions extends Manager
             return;
         }
 
-        $vars = [
+        $vars      = [
             ':ids' => $ids,
             ':uid' => $this->c->user->id,
         ];
-        $query = 'SELECT pid, reaction FROM ::reactions WHERE pid IN (?ai:ids) AND uid=?i:uid';
-
+        $query     = 'SELECT pid, reaction FROM ::reactions WHERE pid IN (?ai:ids) AND uid=?i:uid';
         $reactions = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_KEY_PAIR);
 
         $types = $this->c->config->a_reaction_types;

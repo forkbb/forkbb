@@ -92,6 +92,7 @@ class Topic extends Page
         if ('post' === $type) {
             $post  = $this->c->posts->load($args['id']);
             $topic = null === $post ? null : $post->parent;
+
         } else {
             $topic = $this->c->topics->load($args['id']);
         }
@@ -228,6 +229,7 @@ class Topic extends Page
                 'type'      => 'submit',
                 'value'     => __('Open'),
             ];
+
         } else {
             $form['btns']['close'] = [
                 'class'     => ['origin'],
@@ -242,6 +244,7 @@ class Topic extends Page
                 'type'      => 'submit',
                 'value'     => __('Unstick'),
             ];
+
         } else {
             $form['btns']['stick'] = [
                 'class'     => ['origin'],

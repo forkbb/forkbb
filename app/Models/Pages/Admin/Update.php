@@ -101,6 +101,7 @@ class Update extends Admin
 
         if (null === $uid) {
             return ! empty($lock);
+
         } else {
             return empty($lock) || ! \hash_equals($uid, (string) $lock);
         }
@@ -151,113 +152,117 @@ class Update extends Admin
                 ])->addMessages([
                 ]);
 
+            if (
+                $v->validation($_POST)
+                && $this->okPass
+            ) {
+                $e = null;
+
+                // версия PHP
                 if (
-                    $v->validation($_POST)
-                    && $this->okPass
+                    null === $e
+                    && \version_compare(\PHP_VERSION, self::PHP_MIN, '<')
                 ) {
-                    $e = null;
-
-                    // версия PHP
-                    if (
-                        null === $e
-                        && \version_compare(\PHP_VERSION, self::PHP_MIN, '<')
-                    ) {
-                        $e = __(['You are running error', 'PHP', \PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN]);
-                    }
-
-                    // база не от ForkBB или старая ревизия
-                    if (
-                        null === $e
-                        && $this->c->config->i_fork_revision < self::REV_MIN_FOR_UPDATE
-                    ) {
-                        $e = 'Version mismatch error';
-                    }
-
-                    // загрузка и проверка конфига
-                    if (null === $e) {
-                        try {
-                            $coreConfig = new CoreConfig($this->configFile);
-                        } catch (ForkException $excp) {
-                            $e = $excp->getMessage();
-                        }
-                    }
-
-                    // проверка доступности базы данных на изменения
-                    if (
-                        null === $e
-                        && $this->c->config->i_fork_revision < self::LATEST_REV_WITH_DB_CHANGES
-                    ) {
-                        $testTable = '::test_tb_for_update';
-
-                        if (
-                            null === $e
-                            && true === $this->c->DB->tableExists($testTable)
-                        ) {
-                            $e = ['The %s table already exists. Delete it.', $testTable];
-                        }
-
-                        $schema = [
-                            'FIELDS' => [
-                                'id' => ['SERIAL', false],
-                            ],
-                            'PRIMARY KEY' => ['id'],
-                        ];
-
-                        if (
-                            null === $e
-                            && false === $this->c->DB->createTable($testTable, $schema)
-                        ) {
-                            $e = ['Unable to create %s table', $testTable];
-                        }
-
-                        if (
-                            null === $e
-                            && false === $this->c->DB->addField($testTable, 'test_field', 'VARCHAR(80)', false, '')
-                        ) {
-                            $e = ['Unable to add test_field field to %s table', $testTable];
-                        }
-
-                        $sql = "INSERT INTO {$testTable} (test_field) VALUES ('TEST_VALUE')";
-                        if (
-                            null === $e
-                            && false === $this->c->DB->exec($sql)
-                        ) {
-                            $e = ['Unable to insert line to %s table', $testTable];
-                        }
-
-                        if (
-                            null === $e
-                            && false === $this->c->DB->dropField($testTable, 'test_field')
-                        ) {
-                            $e = ['Unable to drop test_field field from %s table', $testTable];
-                        }
-
-                        if (
-                            null === $e
-                            && false === $this->c->DB->dropTable($testTable)
-                        ) {
-                            $e = ['Unable to drop %s table', $testTable];
-                        }
-                    }
-
-                    if (null !== $e) {
-                        return $this->c->Message->message($e, true, 503);
-                    }
-
-                    $uid = $this->setLock();
-
-                    if (null === $uid) {
-                        $this->fIswev = [FORK_MESS_ERR, 'Unable to write update lock'];
-                    } else {
-                        $this->c->config->o_maintenance_message = $v->o_maintenance_message;
-
-                        $this->c->config->save();
-
-                        return $this->c->Redirect->page('AdminUpdateStage', ['uid' => $uid, 'stage' => 1]);
-                    }
-                } else {
-                    $this->fIswev = $v->getErrors();
+                    $e = __(['You are running error', 'PHP', \PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN]);
                 }
+
+                // база не от ForkBB или старая ревизия
+                if (
+                    null === $e
+                    && $this->c->config->i_fork_revision < self::REV_MIN_FOR_UPDATE
+                ) {
+                    $e = 'Version mismatch error';
+                }
+
+                // загрузка и проверка конфига
+                if (null === $e) {
+                    try {
+                        $coreConfig = new CoreConfig($this->configFile);
+                    } catch (ForkException $excp) {
+                        $e = $excp->getMessage();
+                    }
+                }
+
+                // проверка доступности базы данных на изменения
+                if (
+                    null === $e
+                    && $this->c->config->i_fork_revision < self::LATEST_REV_WITH_DB_CHANGES
+                ) {
+                    $testTable = '::test_tb_for_update';
+
+                    if (
+                        null === $e
+                        && true === $this->c->DB->tableExists($testTable)
+                    ) {
+                        $e = ['The %s table already exists. Delete it.', $testTable];
+                    }
+
+                    $schema = [
+                        'FIELDS' => [
+                            'id' => ['SERIAL', false],
+                        ],
+                        'PRIMARY KEY' => ['id'],
+                    ];
+
+                    if (
+                        null === $e
+                        && false === $this->c->DB->createTable($testTable, $schema)
+                    ) {
+                        $e = ['Unable to create %s table', $testTable];
+                    }
+
+                    if (
+                        null === $e
+                        && false === $this->c->DB->addField($testTable, 'test_field', 'VARCHAR(80)', false, '')
+                    ) {
+                        $e = ['Unable to add test_field field to %s table', $testTable];
+                    }
+
+                    $sql = "INSERT INTO {$testTable} (test_field) VALUES ('TEST_VALUE')";
+
+                    if (
+                        null === $e
+                        && false === $this->c->DB->exec($sql)
+                    ) {
+                        $e = ['Unable to insert line to %s table', $testTable];
+                    }
+
+                    if (
+                        null === $e
+                        && false === $this->c->DB->dropField($testTable, 'test_field')
+                    ) {
+                        $e = ['Unable to drop test_field field from %s table', $testTable];
+                    }
+
+                    if (
+                        null === $e
+                        && false === $this->c->DB->dropTable($testTable)
+                    ) {
+                        $e = ['Unable to drop %s table', $testTable];
+                    }
+                }
+
+                if (null !== $e) {
+                    return $this->c->Message->message($e, true, 503);
+                }
+
+                $uid = $this->setLock();
+
+                if (null === $uid) {
+                    $this->fIswev = [FORK_MESS_ERR, 'Unable to write update lock'];
+
+                } else {
+                    $this->c->config->o_maintenance_message = $v->o_maintenance_message;
+
+                    $this->c->config->save();
+
+                    return $this->c->Redirect->page('AdminUpdateStage', ['uid' => $uid, 'stage' => 1]);
+                }
+
+            } else {
+                $this->fIswev = $v->getErrors();
+            }
+
         } else {
             $v = null;
         }
@@ -280,6 +285,7 @@ class Update extends Admin
 
                 $v->addError(['Invalid file error', self::CONFIG_FILE]);
             }
+
         } else {
             if (! \hash_equals($this->c->DB_PASSWORD, $dbpass)) {
                 $this->okPass = false;
@@ -594,7 +600,7 @@ class Update extends Admin
         $bbcodes = include $this->c->DIR_CONFIG . '/defaultBBCode.php';
 
         foreach ($bbcodes as $bbcode) {
-            $vars = [
+            $vars  = [
                 ':tag'       => $bbcode['tag'],
                 ':structure' => \json_encode($bbcode, FORK_JSON_ENCODE),
             ];
@@ -707,7 +713,7 @@ class Update extends Admin
                 continue;
             }
 
-            $vars = [
+            $vars  = [
                 ':tag'       => $bbcode['tag'],
                 ':structure' => \json_encode($bbcode, FORK_JSON_ENCODE),
             ];
@@ -1016,7 +1022,6 @@ class Update extends Admin
                     || ! empty($f['translit'])
                     || ! empty($f['WtoHyphen'])
                 ) {
-
                     $names = $this->c->DB->query('SELECT id, forum_name FROM ::forums WHERE redirect_url=\'\' ORDER BY id')->fetchAll(PDO::FETCH_KEY_PAIR);
                     $query = 'UPDATE ::forums SET friendly_name=?s:name WHERE id=?i:id';
 
@@ -1025,6 +1030,7 @@ class Update extends Admin
                             ':id'   => $id,
                             ':name' => \mb_substr($this->c->Func->friendly($name), 0, 80, 'UTF-8'),
                         ];
+
                         $this->c->DB->exec($query, $vars);
                     }
                 }

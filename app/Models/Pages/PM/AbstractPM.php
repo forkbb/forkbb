@@ -150,9 +150,11 @@ abstract class AbstractPM extends Page
                         && ! $user->isGuest
                     ) {
                         $name = $user->username;
+
                     } else {
                         $name = 'unknown'; // ????
                     }
+
                 } else {
                     $name = \substr($pms->second, 1, -1);
                 }
@@ -162,6 +164,7 @@ abstract class AbstractPM extends Page
                     Cnst::ACTION_CURRENT => ['My talks with %s', $name],
                     Cnst::ACTION_ARCHIVE => ['Archive messages with %s', $name],
                 };
+
             } else {
                 if ($this->targetUser instanceof User) {
                     $crumbs[] = [
