@@ -116,9 +116,12 @@ function dt(int $arg, ?int $dateType = null, ?int $timeType = null, bool $noText
     if (0 === $arg) {
         if (null !== $container) {
             $c = $container;
-        }
 
-        return __('Never');
+            return '';
+
+        } else {
+            return __('Never');
+        }
     }
 
     $dateType ??= \min(4, \max(1, $c->user->date_format));
