@@ -18,7 +18,7 @@ function forkGetBaseURL()
 {
     $file    = \str_replace(\realpath($_SERVER['DOCUMENT_ROOT']), '', \realpath($_SERVER['SCRIPT_FILENAME']));
     $baseURL = 'http://'
-        . \preg_replace('%:(80|443)$%', '', $_SERVER['HTTP_HOST'])
+        . \preg_replace('%:(80|443)$%', '', $_SERVER['HTTP_HOST'] ?? 'localhost')
         . \str_replace('\\', '/', \dirname($file)); // $_SERVER['SCRIPT_NAME']
 
     return \rtrim($baseURL, '/');
