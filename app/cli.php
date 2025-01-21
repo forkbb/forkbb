@@ -17,13 +17,16 @@ use ForkBB\Models\Page;
 use RuntimeException;
 use function \ForkBB\__;
 
-if (\PHP_SAPI !== 'cli') { // ???? в интернетах пишут, что этого недостаточно
-    exit('This script wants to be run from the console. [' . \PHP_SAPI . ']' . \PHP_EOL);
-}
-
 \error_reporting(\E_ALL ^ \E_NOTICE);
 \ini_set('display_errors', '1');
 \ini_set('log_errors', '1');
+\ini_set('error_log', __DIR__ . '/cache/error_log.txt');
+
+if (\PHP_SAPI !== 'cli') {
+    \error_log('cli.php SAPI = ' . \PHP_SAPI);
+
+    exit('This script wants to be run from the console. [' . \PHP_SAPI . ']' . \PHP_EOL);
+}
 
 \setlocale(\LC_ALL, 'C');
 \mb_language('uni');
@@ -55,7 +58,7 @@ $errorHandler = new ErrorHandlerCli();
 
 if (\is_file(__DIR__ . '/config/main.php')) {
     $c = new Container(include __DIR__ . '/config/main.php');
-    $a = [];
+    $a = ['test'];
 } elseif (\is_file(__DIR__ . '/config/install.php')) {
     $c = new Container(include __DIR__ . '/config/install.php');
     $a = ['install'];
@@ -152,6 +155,25 @@ switch ($command) {
 
             $tpl = \html_entity_decode($tpl . '---' . \PHP_EOL, \ENT_HTML5 | \ENT_QUOTES | \ENT_SUBSTITUTE, 'UTF-8');
         }
+
+        break;
+    /**
+     * Тест, выводит запись о вызове в лог движка:
+     * php cli.php test
+     */
+    case 'test':
+        $c->user = $c->users->create(['id' => 0, 'group_id' => FORK_GROUP_GUEST]);
+
+        $c->Lang->load('common');
+        $c->Log->debug('CLI test done', [
+            'PHP'     => \PHP_VERSION,
+            'SAPI'    => \PHP_SAPI,
+            'time'    => \number_format(\microtime(true) - $c->START, 3, '.', ''),
+            'user'    => $c->user->fLog(),
+            'headers' => false,
+        ]);
+
+        $tpl = 'Ok';
 
         break;
 }
