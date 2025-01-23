@@ -115,7 +115,9 @@ class Delete extends Action
 //                $parents[$topic->parent->id] = $topic->parent;
 //            }
 
-            $this->delete(...($this->manager->loadByIds($tids, false)));
+            if ($tids) {
+                $this->delete(...($this->manager->loadByIds($tids, false)));
+            }
         }
 
         $this->c->posts->delete(...$args);
