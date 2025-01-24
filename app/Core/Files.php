@@ -869,10 +869,15 @@ class Files
         $init = \min(
             \PHP_INT_MAX,
             $this->size(\ini_get('upload_max_filesize') ?: 0),
-            $this->size(\ini_get('post_max_size') ?: 0)
+            $this->size(\ini_get('post_max_size') ?: '512M')
         );
+        $limit = \ini_get('memory_limit') ?: '32M';
 
-        $this->maxPixels   = (int) ($this->size(\ini_get('memory_limit') ?: 0) / 10);
+        if ('-' === $limit[0]) {
+            $limit = '512M';
+        }
+
+        $this->maxPixels   = (int) ($this->size($limit) / 10);
         $this->maxImgSize  = \min(
             $this->size($maxImgSize),
             $init,
