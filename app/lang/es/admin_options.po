@@ -494,3 +494,9 @@ msgstr "Detección automática de idioma"
 
 msgid "Auto language detection help"
 msgstr "Detecta automáticamente el idioma del huésped en función de los datos de su solicitud al servidor, o devuelve el idioma predeterminado especificado anteriormente si esto falla."
+
+msgid "Cron for email label"
+msgstr "Use Cron"
+
+msgid "Cron for email help"
+msgstr "<b>ATTENTION!!!</b> Before turning on, add the task to your task planner (cron or analog), which will run &apos;<code>php cli.php send_mail</code>&apos; every few minutes. Without this task, emails will not be sent."

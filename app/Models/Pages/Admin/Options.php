@@ -97,6 +97,7 @@ class Options extends Admin
                     'o_smtp_pass'             => 'exist|string:trim|max:255',
                     'changeSmtpPassword'      => 'checkbox',
                     'b_smtp_ssl'              => 'required|integer|in:0,1',
+                    'b_email_use_cron'        => 'required|integer|in:0,1',
                     'b_regs_allow'            => 'required|integer|in:0,1',
                     'b_regs_verify'           => 'required|integer|in:0,1',
                     'b_regs_report'           => 'required|integer|in:0,1',
@@ -716,6 +717,13 @@ class Options extends Admin
                     'values'  => $yn,
                     'caption' => 'SMTP SSL label',
                     'help'    => 'SMTP SSL help',
+                ],
+                'b_email_use_cron' => [
+                    'type'    => 'radio',
+                    'value'   => $config->b_email_use_cron,
+                    'values'  => $yn,
+                    'caption' => 'Cron for email label',
+                    'help'    => 'Cron for email help',
                 ],
             ],
         ];
