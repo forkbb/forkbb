@@ -357,9 +357,14 @@ class Mail
     /**
      * Отправляет письмо
      */
-    public function send(?array $data = null): bool
+    public function send(int|array|null $data = null): bool
     {
-        if (
+        $priority = 5;
+
+        if (\is_int($data)) {
+            $priority = $data;
+
+        } elseif (
             true === FORK_CLI
             && ! empty($data)
         ) {
@@ -400,7 +405,7 @@ class Mail
                 'max'     => $this->maxRecipients,
             ];
 
-            if (true === $this->c->MailQueue->push($data)) {
+            if (true === $this->c->MailQueue->push($data, $priority)) {
                 return true;
             }
         }

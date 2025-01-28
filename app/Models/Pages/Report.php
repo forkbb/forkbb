@@ -185,6 +185,6 @@ class Report extends Page
             ->setTo($this->c->config->o_mailing_list)
             ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
             ->setTpl('new_report.tpl', $tplData)
-            ->send();
+            ->send(7);
     }
 }

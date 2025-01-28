@@ -155,7 +155,7 @@ class Email extends Profile
                                 ->setTo($v->new_email, $this->curUser->username)
                                 ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
                                 ->setTpl('activate_email.tpl', $tplData)
-                                ->send();
+                                ->send(9);
                         } catch (MailException $e) {
                             $isSent = false;
 

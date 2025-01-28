@@ -348,7 +348,7 @@ class Register extends Page
                     ->setTo($this->c->config->o_mailing_list)
                     ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
                     ->setTpl('new_user.tpl', $tplData)
-                    ->send();
+                    ->send(8);
             } catch (MailException $e) {
                 $this->c->Log->error('Registration: notification to admins, MailException', [
                     'exception' => $e,
@@ -391,7 +391,7 @@ class Register extends Page
                     ->setTo($email)
                     ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
                     ->setTpl('welcome.tpl', $tplData)
-                    ->send();
+                    ->send(9);
             } catch (MailException $e) {
                 $this->c->Log->error('Registration: MailException', [
                     'user'      => $user->fLog(),
@@ -462,7 +462,7 @@ class Register extends Page
                     ->setTo($this->c->config->o_mailing_list)
                     ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
                     ->setTpl('dupe_email_register.tpl', $tplData)
-                    ->send();
+                    ->send(8);
             } catch (MailException $e) {
                 $this->c->Log->error('Registration: notification to admins, MailException', [
                     'exception' => $e,

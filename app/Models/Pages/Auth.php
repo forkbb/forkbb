@@ -329,7 +329,7 @@ class Auth extends Page
                             ->setTo($tmpUser->email, $tmpUser->username)
                             ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
                             ->setTpl('passphrase_reset.tpl', $tplData)
-                            ->send();
+                            ->send(9);
                     } catch (MailException $e) {
                         $this->c->Log->error('Passphrase reset: email form, MailException', [
                             'exception' => $e,
