@@ -1618,6 +1618,7 @@ class Install extends Admin
             'o_smtp_user'             => '',
             'o_smtp_pass'             => '',
             'b_smtp_ssl'              => 0,
+            'b_email_use_cron'        => 0,
             'b_regs_allow'            => 1,
             'b_regs_verify'           => 1,
             'b_oauth_allow'           => 0,

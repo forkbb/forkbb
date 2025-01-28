@@ -1409,4 +1409,31 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.85 to rev.86
+     */
+    protected function stageNumber85(array $args): ?int
+    {
+        $config = $this->c->config;
+
+        $config->b_email_use_cron ??= 0;
+
+        $config->save();
+
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'shared=>MailQueue',
+            [
+                'class' => '\\ForkBB\\Core\\Mail\\FileQueue::class',
+                'path'  => '\'%DIR_CACHE%/mail\'',
+            ],
+            'Mail'
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }

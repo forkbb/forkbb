@@ -132,6 +132,10 @@ return [
             'eol'   => '%EOL%',
             'file'  => '%DIR_CONFIG%/domains.default.php',
         ],
+        'MailQueue' => [
+            'class' => \ForkBB\Core\Mail\FileQueue::class,
+            'path'  => '%DIR_CACHE%/mail',
+        ],
         'Func'      => \ForkBB\Core\Func::class,
         'Test'      => [
             'class'  => \ForkBB\Core\Test::class,

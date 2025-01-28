@@ -357,8 +357,19 @@ class Mail
     /**
      * Отправляет письмо
      */
-    public function send(): bool
+    public function send(?array $data = null): bool
     {
+        if (
+            true === FORK_CLI
+            && ! empty($data)
+        ) {
+            $this->from          = $data['from'];
+            $this->to            = $data['to'];
+            $this->headers       = $data['headers'];
+            $this->message       = $data['message'];
+            $this->maxRecipients = $data['max'];
+        }
+
         if (empty($this->to)) {
             throw new MailException('No recipient for the email.');
         }
@@ -376,6 +387,23 @@ class Mail
         }
 
         $this->headers['Date'] = \gmdate('r');
+
+        if (
+            true !== FORK_CLI
+            && 1 === $this->c->config->b_email_use_cron
+        ) {
+            $data = [
+                'from'    => $this->from,
+                'to'      => $this->to,
+                'headers' => $this->headers,
+                'message' => $this->message,
+                'max'     => $this->maxRecipients,
+            ];
+
+            if (true === $this->c->MailQueue->push($data)) {
+                return true;
+            }
+        }
 
         if (\is_array($this->smtp)) {
             return $this->smtp();

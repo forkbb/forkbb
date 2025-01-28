@@ -20,7 +20,7 @@ use function \ForkBB\__;
 \error_reporting(\E_ALL ^ \E_NOTICE);
 \ini_set('display_errors', '1');
 \ini_set('log_errors', '1');
-\ini_set('error_log', __DIR__ . '/cache/error_log.txt');
+//\ini_set('error_log', __DIR__ . '/cache/error_log.txt');
 
 if (\PHP_SAPI !== 'cli') {
     \error_log('cli.php SAPI = ' . \PHP_SAPI);
@@ -58,7 +58,7 @@ $errorHandler = new ErrorHandlerCli();
 
 if (\is_file(__DIR__ . '/config/main.php')) {
     $c = new Container(include __DIR__ . '/config/main.php');
-    $a = ['test'];
+    $a = ['test', 'send_mail'];
 } elseif (\is_file(__DIR__ . '/config/install.php')) {
     $c = new Container(include __DIR__ . '/config/install.php');
     $a = ['install'];
@@ -73,7 +73,7 @@ $errorHandler->setContainer($c);
 require __DIR__ . '/functions.php';
 \ForkBB\_init($c);
 
-$c->FORK_REVISION = 85;
+$c->FORK_REVISION = 86;
 $c->START         = $_SERVER['REQUEST_TIME_FLOAT'] ?? \microtime(true);
 $c->PUBLIC_URL    = $c->BASE_URL . '/public';
 
@@ -174,6 +174,37 @@ switch ($command) {
         ]);
 
         $tpl = 'Ok';
+
+        break;
+    /**
+     * Отправка писем из очереди
+     * php cli.php send_mail [--log={1|2}]
+     *
+     * --log=1 - пишет в лог, если есть выполненные задания или скрипт не смог получить эксклюзивную блокировку
+     * --log=2 - пишет в лог в любом случае
+     */
+    case 'send_mail':
+        $c->user = $c->users->create(['id' => 0, 'group_id' => FORK_GROUP_GUEST]);
+
+        $result = $c->MailQueue->execute(function (array $data) use ($c) {
+            return $c->Mail->send($data);
+        });
+
+        if (
+            ! empty($arguments['log'])
+            && (
+                '2' == $arguments['log']
+                || (
+                    '1' == $arguments['log']
+                    && 0 !== $result
+                )
+            )
+        ) {
+            $c->Log->debug('CLI send_mail. Tasks completed: ' . (false === $result ? 'false' : $result), [
+                'time'    => \number_format(\microtime(true) - $c->START, 3, '.', ''),
+                'headers' => false,
+            ]);
+        }
 
         break;
 }
