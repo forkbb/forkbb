@@ -275,7 +275,7 @@ class Register extends Page
         $user->ip_check_type   = 0;
         $user->location        = $this->useOAuth ? $this->provider->userLocation : '';
         $user->url             = $this->useOAuth ? $this->provider->userURL : '';
-        $user->admin_note      = false === $this->user->isBot ? '' : '{bot reg}';
+        $user->admin_note      = $this->user->isBot ? '{bot reg}' : '';
 
         if (
             $this->useOAuth

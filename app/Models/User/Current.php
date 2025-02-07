@@ -50,7 +50,7 @@ class Current extends Action
             $user->__locale      = $user->language;
 
         } else {
-            $user->__isBot       = false;
+            $user->__isBot       = null;
 
             // Special case: We've timed out, but no other user has browsed the forums since we timed out
             if (
@@ -117,7 +117,7 @@ class Current extends Action
      * Определяет бота
      * Если бот, то возвращает вычисленное имя
      */
-    protected function isBot(string $agent): string|false
+    protected function isBot(string $agent): ?string
     {
         $status = (int) (
             empty($_SERVER['HTTP_ACCEPT'])
@@ -139,7 +139,7 @@ class Current extends Action
         );
 
         if ('' === $agent) {
-            return $status ? 'Unknown' : false;
+            return $status ? 'Unknown' : null;
         }
 
         $agentL = \strtolower($agent);
@@ -185,7 +185,7 @@ class Current extends Action
         }
 
         if (0 === $status) {
-            return false;
+            return null;
         }
 
         $reg = [

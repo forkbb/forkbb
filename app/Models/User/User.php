@@ -362,9 +362,9 @@ class User extends DataModel
      */
     public function fLog(): string
     {
-        return $this->isGuest
-            ? "id:{$this->id} gid:{$this->group_id} guest"
-            : "id:{$this->id} gid:{$this->group_id} name:{$this->username}";
+        $name = $this->isGuest ? ($this->isBot ? 'bot' : 'guest') : "name:{$this->username}";
+
+        return "id:{$this->id} gid:{$this->group_id} {$name}";
     }
 
     /**
