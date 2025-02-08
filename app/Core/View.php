@@ -46,7 +46,7 @@ class View
             $this->defaultDir = $config['defaultDir'];
 
             if (! empty($config['userDir'])) {
-                $this->addTplDir($config['userDir'], 10);
+                $this->setUserDir($config['userDir']);
             }
 
             if (! empty($config['composers'])) {
@@ -70,6 +70,21 @@ class View
         }
 
         $this->defaultHash = \hash('md5', $this->defaultDir);
+    }
+
+    /**
+     * Ищет первую существующую директорию из $data (разделитель "|")
+     * и добавляет её в каталог шаблонов с приоритетом = 10
+     */
+    protected function setUserDir(string $data): void
+    {
+        foreach (\explode('|', $data) as $dir) {
+            if (\is_dir($dir)) {
+                $this->addTplDir($dir, 10);
+
+                return;
+            }
+        }
     }
 
     /**
