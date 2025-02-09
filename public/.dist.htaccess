@@ -26,7 +26,7 @@ AddDefaultCharset UTF-8
   RewriteRule . index.php [L]
 
   <IfModule !litespeed>
-    RewriteRule \.dist\. index.php [L]
+    RewriteRule \.dist\. index.php [END]
 
     RewriteCond %{REQUEST_URI} \.v\.[0-9]
     RewriteRule ^(.+)\.v\.[0-9]+\.([^.\\/]++)$ $1.$2 [L]

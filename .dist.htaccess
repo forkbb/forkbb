@@ -16,19 +16,19 @@ AddDefaultCharset UTF-8
   #RewriteBase /
 
   <IfModule !litespeed>
-    RewriteRule ^favicon\.ico$ public/favicon.ico [L]
-    RewriteRule ^apple-touch-icon\.png$ public/apple-touch-icon.png [L]
-    RewriteRule ^robots\.txt$ public/robots.txt [L]
+    RewriteRule ^favicon\.ico$ public/favicon.ico [END]
+    RewriteRule ^apple-touch-icon\.png$ public/apple-touch-icon.png [END]
+    RewriteRule ^robots\.txt$ public/robots.txt [END]
 
-    RewriteRule !^public/ index.php [L]
+    RewriteRule !^public/ index.php [END]
 
     RewriteCond %{REQUEST_URI} \.v\.[0-9]
     RewriteRule ^(.+)\.v\.[0-9]+\.([^.\\/]++)$ $1.$2 [L]
 
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^public/ index.php [L]
+    RewriteRule ^public/ index.php [END]
 
-    RewriteRule \.dist\. index.php [L]
+    RewriteRule \.dist\. index.php [END]
   </IfModule>
   <IfModule litespeed>
     RewriteRule ^favicon\.ico$ public/favicon.ico
