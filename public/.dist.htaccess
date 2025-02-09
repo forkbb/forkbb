@@ -15,23 +15,33 @@ AddDefaultCharset UTF-8
   RewriteEngine On
   #RewriteBase /
 
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_URI} !^/style/
-  RewriteCond %{REQUEST_URI} !^/img/
-  RewriteCond %{REQUEST_URI} !^/js/
-  RewriteCond %{REQUEST_URI} !^/upload/
-  RewriteCond %{REQUEST_URI} !^/favicon\.ico$
-  RewriteCond %{REQUEST_URI} !^/apple-touch-icon\.png$
-  RewriteCond %{REQUEST_URI} !^/robots\.txt$
-  RewriteRule . index.php [L]
-
   <IfModule !litespeed>
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_URI} !^/style/
+    RewriteCond %{REQUEST_URI} !^/img/
+    RewriteCond %{REQUEST_URI} !^/js/
+    RewriteCond %{REQUEST_URI} !^/upload/
+    RewriteCond %{REQUEST_URI} !^/favicon\.ico$
+    RewriteCond %{REQUEST_URI} !^/apple-touch-icon\.png$
+    RewriteCond %{REQUEST_URI} !^/robots\.txt$
+    RewriteRule . index.php [END]
+
     RewriteRule \.dist\. index.php [END]
 
     RewriteCond %{REQUEST_URI} \.v\.[0-9]
     RewriteRule ^(.+)\.v\.[0-9]+\.([^.\\/]++)$ $1.$2 [L]
   </IfModule>
   <IfModule litespeed>
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_URI} !^/style/
+    RewriteCond %{REQUEST_URI} !^/img/
+    RewriteCond %{REQUEST_URI} !^/js/
+    RewriteCond %{REQUEST_URI} !^/upload/
+    RewriteCond %{REQUEST_URI} !^/favicon\.ico$
+    RewriteCond %{REQUEST_URI} !^/apple-touch-icon\.png$
+    RewriteCond %{REQUEST_URI} !^/robots\.txt$
+    RewriteRule . index.php [L]
+
     RewriteRule \.dist\. index.php
 
     RewriteCond %{REQUEST_URI} \.v\.[0-9]
