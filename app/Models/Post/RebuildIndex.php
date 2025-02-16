@@ -23,10 +23,11 @@ class RebuildIndex extends Action
         $vars = [
             ':start' => $start,
             ':limit' => $limit,
+            ':forum' => FORK_SFID,
         ];
         $query = 'SELECT p.id, p.message, t.id as topic_id, t.subject, t.first_post_id, t.forum_id
             FROM ::posts AS p
-            INNER JOIN ::topics AS t ON t.id=p.topic_id
+            INNER JOIN ::topics AS t ON t.id=p.topic_id AND t.forum_id!=?i:forum
             WHERE p.id>=?i:start
             ORDER BY p.id ASC
             LIMIT ?i:limit';
@@ -37,7 +38,7 @@ class RebuildIndex extends Action
         while ($row = $stmt->fetch()) {
             $number = $row['id'];
 
-            $post  = $this->manager->create([
+            $post = $this->manager->create([
                 'id'       => $row['id'],
                 'message'  => $row['message'],
                 'topic_id' => $row['topic_id'],
