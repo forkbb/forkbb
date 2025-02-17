@@ -525,8 +525,8 @@ body,
   color: var(--c-active);
 }
 
-#fork .f-menu-a:hover,
-#fork .f-menu-a:focus {
+#fork .f-menu-a:hover:not(.f-menu-h3),
+#fork .f-menu-a:focus:not(.f-menu-h3) {
   background-color: var(--c-a-and-btn);
   color: var(--c-nav-focus);
   text-decoration: none;
