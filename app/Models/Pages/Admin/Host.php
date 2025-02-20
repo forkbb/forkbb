@@ -29,8 +29,6 @@ class Host extends Admin
             return $this->c->Message->message('Bad request', false);
         }
 
-        $host = \gethostbyaddr($ip);
-
         $this->nameTpl = 'message';
         $this->titles  = 'Info';
         $this->back    = true;
@@ -39,7 +37,6 @@ class Host extends Admin
             [
                 'Host info',
                 $ip,
-                $host,
                 $this->c->Router->link(
                     'AdminUsersResult',
                     [
@@ -48,6 +45,11 @@ class Host extends Admin
                 )
             ],
         ];
+
+        $this->pageHeader('ipinfo', 'script', 10, [
+            'src' => $this->publicLink('/js/ipinfo.js'),
+        ]);
+        $this->addRulesToCSP(['connect-src' => 'https://ip.guide/']);
 
         return $this;
     }

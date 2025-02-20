@@ -13,4 +13,4 @@ msgstr ""
 "Language: ru\n"
 
 msgid "Host info"
-msgstr "IP адрес: %1$s<br>Имя хоста: %2$s<br><br><a href=\"%3$s\">Показать еще информацию по IP</a>"
+msgstr "IP адрес: %1$s<br><br><div class="f-js-ipinfo" data-ip="%1$s">...</div><br><a href=\"%2$s\">Показать еще информацию по IP</a>"
