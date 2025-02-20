@@ -442,17 +442,18 @@ abstract class Page extends Model
     protected function gethttpHeaders(): array
     {
         foreach ($this->c->HTTP_HEADERS[$this->hhsLevel] as $header => $value) {
-            if (
-                'Content-Security-Policy' === $header
-                && (
+            if ('Content-Security-Policy' === $header) {
+                if (
                     $this->needUnsafeInlineStyle
                     || (
                         $this->c->isInit('Parser')
                         && $this->c->Parser->inlineStyle()
                     )
-                )
-            ) {
-                $value = $this->addUnsafeInline($value);
+                ) {
+                    $this->addRulesToCSP(['style-src' => '\'unsafe-inline\'']);
+                }
+
+                $value = $this->updateCSP($value);
             }
 
             $this->header($header, $value);
@@ -464,29 +465,124 @@ abstract class Page extends Model
     }
 
     /**
-     * Добавляет в заголовок (Content-Security-Policy) значение unsafe-inline для style-src
+     * Массив для дополнительных правил Content-Security-Policy
      */
-    protected function addUnsafeInline(string $header): string
+    protected array $addCSPRules = [];
+
+    /**
+     * Массив допустимых директив Content-Security-Policy
+     */
+    protected array $CSPDirectives = [
+        'default-src'     => false,
+        'script-src'      => 'default-src',
+        'script-src-elem' => 'script-src',
+        'script-src-attr' => 'script-src',
+        'style-src'       => 'default-src',
+        'style-src-elem'  => 'style-src',
+        'style-src-attr'  => 'style-src',
+        'font-src'        => 'default-src',
+        'img-src'         => 'default-src',
+        'connect-src'     => 'default-src',
+        'worker-src'      => 'default-src',
+        'object-src'      => 'default-src',
+        'media-src'       => 'default-src',
+        'manifest-src'    => 'default-src',
+        'child-src'       => 'default-src',
+        'frame-src'       => 'child-src',
+        'worker-src'      => 'child-src',
+        'base-uri'        => false,
+        'form-action'     => false,
+        'frame-ancestors' => false,
+    ];
+
+    /**
+     * Сохраняет дополнительные правила для изменения Content-Security-Policy
+     * Ключи массива - это имена директив, значения - добавляемые правила
+     */
+    public function addRulesToCSP(array $rules): Page
     {
-        if (\preg_match('%style\-src([^;]+)%', $header, $matches)) {
-            if (false === \strpos($matches[1], 'unsafe-inline')) {
-                return \str_replace($matches[0], "{$matches[0]} 'unsafe-inline'", $header);
-
-            } else {
-                return $header;
+        foreach ($rules as $directive => $rule) {
+            if (isset($this->CSPDirectives[$directive])) {
+                foreach (\explode(' ', $rule) as $key) {
+                    if (! empty($key)) {
+                        $this->addCSPRules[$directive][$key] = true;
+                    }
+                }
             }
         }
 
-        if (\preg_match('%default\-src([^;]+)%', $header, $matches)) {
-            if (false === \strpos($matches[1], 'unsafe-inline')) {
-                return "{$header};style-src{$matches[1]} 'unsafe-inline'";
+        return $this;
+    }
 
-            } else {
-                return "{$header};style-src{$matches[1]}";
+    /**
+     * Вносит изменения в Content-Security-Policy на основе дополнительных правил
+     */
+    protected function updateCSP(string $csp): string
+    {
+        if (empty($this->addCSPRules)) {
+            return $csp;
+        }
+
+        $raw   = \array_map('\\trim', \explode(';', $csp));
+        $rules = [];
+
+        foreach ($raw as $cur) {
+            $parts     = \explode(' ', $cur);
+            $directive = \array_shift($parts);
+
+            foreach ($parts as $key) {
+                if (! empty($key)) {
+                    $rules[$directive][$key] = true;
+                }
             }
         }
 
-        return "{$header};style-src 'self' 'unsafe-inline'";
+        foreach ($this->CSPDirectives as $directive => $parent) {
+            if (empty($this->addCSPRules[$directive])) {
+                continue;
+            }
+
+            $addDirRules = $this->addCSPRules[$directive];
+
+            if (isset($addDirRules['\'none\''])) {
+                $rules[$directive] = ['\'none\'' => true];
+            }
+
+            if (empty($rules[$directive])) {
+                $oldDirRules = null;
+
+                while (
+                    \is_string($parent)
+                    && null === $oldDirRules
+                ) {
+                    if (empty($rules[$parent])) {
+                        $parent = $this->CSPDirectives[$parent];
+
+                    } else {
+                        $oldDirRules = $rules[$parent];
+                    }
+                }
+
+            } else {
+                $oldDirRules = $rules[$directive];
+                $parent      = $directive;
+            }
+
+            if (isset($oldDirRules['\'none\''])) {
+                $rules[$directive] = $addDirRules;
+
+            } else {
+                $rules[$directive] = \array_merge($oldDirRules, $addDirRules);
+            }
+        }
+
+        $csp = '';
+
+        foreach ($rules as $directive => $parts) {
+            $csp .= $directive . ' ' . \implode(' ', \array_keys($parts)) . ';';
+        }
+
+        return $csp;
     }
 
     /**
