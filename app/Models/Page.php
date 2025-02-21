@@ -444,11 +444,8 @@ abstract class Page extends Model
         foreach ($this->c->HTTP_HEADERS[$this->hhsLevel] as $header => $value) {
             if ('Content-Security-Policy' === $header) {
                 if (
-                    $this->needUnsafeInlineStyle
-                    || (
-                        $this->c->isInit('Parser')
-                        && $this->c->Parser->inlineStyle()
-                    )
+                    $this->c->isInit('Parser')
+                    && $this->c->Parser->inlineStyle()
                 ) {
                     $this->addRulesToCSP(['style-src' => '\'unsafe-inline\'']);
                 }

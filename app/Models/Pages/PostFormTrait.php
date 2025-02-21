@@ -420,7 +420,7 @@ trait PostFormTrait
 
                     unset($cur);
 
-                    $this->needUnsafeInlineStyle = true;
+                    $this->addRulesToCSP(['style-src' => '\'unsafe-inline\'']);
 
                     break 2;
                 }
