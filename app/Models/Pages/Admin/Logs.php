@@ -13,7 +13,7 @@ namespace ForkBB\Models\Pages\Admin;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin;
 use Throwable;
-use function \ForkBB\__;
+use function \ForkBB\{__, e};
 
 class Logs extends Admin
 {
@@ -186,5 +186,23 @@ class Logs extends Admin
         $this->aCrumbs[] = [$this->c->Router->link('AdminLogsAction', $args), ['Log %s', $this->logName]];
 
         return $this;
+    }
+
+    /**
+     * Экранирует контент и формирует на ip из REMOTE_ADDR ссылку
+     */
+    public function parseIP(string $message): string
+    {
+        return \preg_replace_callback('%REMOTE_ADDR.+?\K[\da-f][\da-f.:]+%', function ($matches) {
+            $ip = \filter_var($matches[0], \FILTER_VALIDATE_IP);
+
+            if (false === $ip) {
+                return $matches[0];
+            } else {
+                $url = e($this->c->Router->link('AdminHost', ['ip' => $ip,]));
+
+                return "<a href=\"{$url}\">{$ip}</a>";
+            }
+        }, e($message));
     }
 }

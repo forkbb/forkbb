@@ -61,7 +61,7 @@
         @if ($cur['context'])
                   </summary>
                   <pre class="f-lgpre">
-{{ $cur['context'] }}
+{!! $p->parseIP($cur['context']) !!}
                   </pre>
                 </details>
         @endif
