@@ -33,8 +33,9 @@ class Debug extends Page
                     $total += $cur[1];
                 }
 
-                $this->queries = $queries;
-                $this->total   = $total;
+                $this->queries  = $queries;
+                $this->total    = $total;
+                $this->lifeTime = $this->c->DB->getLifeTime();
             }
 
         } else {

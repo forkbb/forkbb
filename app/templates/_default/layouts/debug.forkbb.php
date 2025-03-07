@@ -20,7 +20,7 @@
     @endforeach
             <tr>
               <td class="f-tcl">{{ num($p->total, 3) }}</td>
-              <td class="f-tcr"></td>
+              <td class="f-tcr">{{ num($p->lifeTime, 3) }}</td>
             </tr>
           </tbody>
         </table>

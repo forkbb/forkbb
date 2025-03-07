@@ -64,6 +64,12 @@ class DB
      */
     protected float $delta = 0;
 
+    /**
+     * Метки ~ начала и ~ окончания жизни PDO
+     */
+    protected float $pdoStart = 0;
+    protected float $pdoEnd   = 0;
+
     protected array $pdoMethods = [
         'beginTransaction'      => true,
         'commit'                => true,
@@ -112,10 +118,11 @@ class DB
 
         list($initSQLCommands, $initFunction) = $this->prepareOptions($options);
 
-        $start     = \microtime(true);
-        $this->pdo = new PDO($dsn, $username, $password, $options);
+        $this->pdoStart = $start = \microtime(true);
+        $this->pdo               = new PDO($dsn, $username, $password, $options);
 
         $this->saveQuery('PDO::__construct()', \microtime(true) - $start, false);
+
 
         if (\is_string($initSQLCommands)) {
             $this->exec($initSQLCommands);
@@ -289,6 +296,18 @@ class DB
     public function getQueries(): array
     {
         return $this->queries;
+    }
+
+    /**
+     * Метод возвращает приблизительное время жизни текущего экземпляра PDO
+     */
+    public function getLifeTime(): float
+    {
+        if (empty($this->pdoEnd)) {
+            $this->pdoEnd = \microtime(true);
+        }
+
+        return $this->pdoEnd - $this->pdoStart;
     }
 
     /**
@@ -483,6 +502,7 @@ class DB
      */
     public function disconnect(): void
     {
-        $this->pdo = null;
+        $this->pdo    = null;
+        $this->pdoEnd = \microtime(true);
     }
 }
