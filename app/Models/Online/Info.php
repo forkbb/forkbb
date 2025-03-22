@@ -51,7 +51,7 @@ class Info extends Method
             $count  = \count($arr);
             $s     += $count;
             $info[] = [
-                'name' => "[Bot] {$bot}" . ($count > 1 ? " ({$count})" : ''),
+                'name' => ('[' === $bot[0] ? $bot : "[Bot] {$bot}") . ($count > 1 ? " ({$count})" : ''),
                 'link' => null,
             ];
         }
