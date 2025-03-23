@@ -57,7 +57,7 @@ class Test
         if (empty($_SERVER['HTTP_USER_AGENT'])) {
             $index += 1;
 
-        } elseif (\preg_match('%\bmsie\b%i', $_SERVER['HTTP_USER_AGENT'])) {
+        } elseif (\preg_match('%\b(msie|trident|opera|presto)\b%i', $_SERVER['HTTP_USER_AGENT'])) {
             $v->addError('Old browser', FORK_MESS_WARN);
 
             $this->log('Old browser');
@@ -65,33 +65,13 @@ class Test
             return $value;
         }
 
-        if (empty($_SERVER['HTTP_ACCEPT'])) {
+        if (
+            empty($_SERVER['HTTP_ACCEPT'])
+            || false === \strpos($_SERVER['HTTP_ACCEPT'], 'text/html')
+            || empty($_SERVER['HTTP_ACCEPT_ENCODING'])
+            || empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])
+        ) {
             $index += 5;
-
-        } elseif (false === \strpos($_SERVER['HTTP_ACCEPT'], 'text/html')) {
-            $index += 1;
-        }
-
-        if (empty($_SERVER['HTTP_ACCEPT_ENCODING'])) {
-            $index += 1;
-        }
-
-        if (empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-            $index += 1;
-        }
-
-        if (
-            ! empty($_SERVER['HTTP_PRAGMA'])
-            && ! \preg_match('%^no-cache$%iD', $_SERVER['HTTP_PRAGMA'])
-        ) {
-            $index += 1;
-        }
-
-        if (
-            ! empty($_SERVER['HTTP_CONNECTION'])
-            && ! \preg_match('%^(?:keep-alive|close)$%iD', $_SERVER['HTTP_CONNECTION'])
-        ) {
-            $index += 3;
         }
 
         if (! empty($_SERVER['HTTP_REFERER'])) {
