@@ -178,7 +178,10 @@ class Topic extends Page
 
         $topic->updateVisits();
 
-        if ($this->c->config->i_feed_type > 0) {
+        if (
+            $this->c->config->i_feed_type > 0
+            && ! $this->user->isBot
+        ) {
             $feedType = 2 === $this->c->config->i_feed_type ? 'atom' : 'rss';
             $this->pageHeader('feed', 'link', 0, [
                 'rel'  => 'alternate',

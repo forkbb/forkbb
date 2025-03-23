@@ -72,6 +72,7 @@ class Forum extends Page
 
         if (
             $this->c->config->i_feed_type > 0
+            && ! $this->user->isBot
             && $forum->num_posts > 0
         ) {
             $feedType = 2 === $this->c->config->i_feed_type ? 'atom' : 'rss';
