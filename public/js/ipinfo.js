@@ -13,6 +13,8 @@ ForkBB.ipinfo = (function (doc, win) {
     'use strict';
 
     var selectorIP = ".f-js-ipinfo",
+        classDone = ".f-js-ipinfo-done",
+        timeout = 200,
         dataIP = "data-ip",
         url = "https://ip.guide/%%%";
 
@@ -25,6 +27,13 @@ ForkBB.ipinfo = (function (doc, win) {
 
             if (ip) {
                 (function (node, url, ip) {
+                    setTimeout(function animIPInfo() {
+                        if (! node.classList.contains(classDone)) {
+                            node.insertAdjacentText("beforeend", ".");
+
+                            setTimeout(animIPInfo, timeout);
+                        }
+                    }, timeout);
                     fetch(url.replace("%%%", ip))
                     .then(function (response) {
                         return response.json();
@@ -36,6 +45,7 @@ ForkBB.ipinfo = (function (doc, win) {
                             node.removeChild(node.lastChild);
                         }
 
+                        node.classList.add(classDone);
                         node.appendChild(pre);
                     }).catch(function (e) {
                         alert(e);
