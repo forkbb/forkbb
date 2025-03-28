@@ -44,7 +44,10 @@ class Test
 
     public function vTestCheck(Validator $v, mixed $value): mixed
     {
-        if (null !== $value) {
+        if (! empty($v->getErrors())) {
+            return $value;
+
+        } elseif (null !== $value) {
             $v->addError('The :alias contains an invalid value');
 
             $this->log('Invalid value for field');
