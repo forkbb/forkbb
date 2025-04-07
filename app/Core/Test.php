@@ -73,6 +73,7 @@ class Test
             || false === \strpos($_SERVER['HTTP_ACCEPT'], 'text/html')
             || empty($_SERVER['HTTP_ACCEPT_ENCODING'])
             || empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])
+            || empty($_SERVER['HTTP_ORIGIN'])
         ) {
             $index += 5;
         }
