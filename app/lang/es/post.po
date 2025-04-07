@@ -119,3 +119,6 @@ msgstr "Los datos de este campo solo son visibles para los administradores."
 
 msgid "To draft"
 msgstr "To draft"
+
+msgid "Too many censored words"
+msgstr "Too many censored words."

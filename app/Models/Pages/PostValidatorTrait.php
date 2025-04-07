@@ -17,14 +17,23 @@ use function \ForkBB\__;
 
 trait PostValidatorTrait
 {
+    protected int $censorCount = 0;
+
     /**
      * Дополнительная проверка subject
      */
     public function vCheckSubject(Validator $v, string $subject, $attr, bool $executive): string
     {
         // после цензуры заголовок темы путой
-        if ('' == $this->c->censorship->censor($subject)) {
+        if ('' == $this->c->censorship->censor($subject, $this->censorCount)) {
             $v->addError('No subject after censoring');
+
+        // лимит на слова подвергнутые цензуре
+        } elseif (
+            $this->c->config->i_censoring_count > 0
+            && $this->censorCount > $this->c->config->i_censoring_count
+        ) {
+            $v->addError('Too many censored words');
 
         // заголовок темы только заглавными буквами
         } elseif (
@@ -51,8 +60,15 @@ trait PostValidatorTrait
         $prepare = null;
 
         // после цензуры текст сообщения пустой
-        if ('' == $this->c->censorship->censor($message)) {
+        if ('' == $this->c->censorship->censor($message, $this->censorCount)) {
             $v->addError('No message after censoring');
+
+        // лимит на слова подвергнутые цензуре
+        } elseif (
+            $this->c->config->i_censoring_count > 0
+            && $this->censorCount > $this->c->config->i_censoring_count
+        ) {
+            $v->addError('Too many censored words');
 
         // проверка парсером
         } else {

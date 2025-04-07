@@ -29,6 +29,7 @@ class Censoring extends Admin
                 ->addRules([
                     'token'               => 'token:AdminCensoring',
                     'b_censoring'         => 'required|integer|in:0,1',
+                    'i_censoring_count'   => 'required|integer|min:0|max:999',
                     'form'                => 'required|array',
                     'form.*.search_for'   => 'exist|string:trim|max:60',
                     'form.*.replace_with' => 'exist|string:trim|max:60',
@@ -38,9 +39,10 @@ class Censoring extends Admin
                 ]);
 
             if ($v->validation($_POST)) {
-                $this->c->config->b_censoring = $v->b_censoring;
-                $this->c->config->save();
+                $this->c->config->b_censoring       = $v->b_censoring;
+                $this->c->config->i_censoring_count = $v->i_censoring_count;
 
+                $this->c->config->save();
                 $this->c->censorship->save($v->form);
 
                 return $this->c->Redirect->page('AdminCensoring')->message('Data updated redirect', FORK_MESS_SUCC);
@@ -77,6 +79,14 @@ class Censoring extends Admin
                             'values'  => [1 => __('Yes'), 0 => __('No')],
                             'caption' => 'Censor words label',
                             'help'    => 'Censor words help',
+                        ],
+                        'i_censoring_count' => [
+                            'type'    => 'number',
+                            'min'     => '0',
+                            'max'     => '999',
+                            'value'   => $this->c->config->i_censoring_count,
+                            'caption' => 'Censor words count label',
+                            'help'    => 'Censor words count help',
                         ],
                     ],
                 ],

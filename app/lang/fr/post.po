@@ -119,3 +119,6 @@ msgstr "Les données de ce champ sont visibles par les administrateurs uniquemen
 
 msgid "To draft"
 msgstr "To draft"
+
+msgid "Too many censored words"
+msgstr "Too many censored words."

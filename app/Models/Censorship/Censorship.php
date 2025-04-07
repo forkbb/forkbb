@@ -49,14 +49,14 @@ class Censorship extends Model
     /**
      * Выполняет цензуру при необходимости
      */
-    public function censor(string $str): string
+    public function censor(string $str, int &$count = 0): string
     {
         if (1 === $this->c->config->b_censoring) {
-            return (string) \preg_replace($this->searchList, $this->replaceList,  $str);
-
-        } else {
-            return $str;
+            $str    = (string) \preg_replace($this->searchList, $this->replaceList,  $str, -1, $cnt);
+            $count += $cnt;
         }
+
+        return $str;
     }
 
     /**
