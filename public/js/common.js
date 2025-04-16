@@ -12,7 +12,8 @@ if (typeof ForkBB === "undefined" || !ForkBB) {
 ForkBB.common = (function (doc, win) {
     'use strict';
 
-    var selectorBack = ".f-go-back",
+    var nav = win.navigator,
+        selectorBack = ".f-go-back",
         hlClass = "f-highlighted",
         shlClass = "f-search-highlight";
 
@@ -47,21 +48,21 @@ ForkBB.common = (function (doc, win) {
                 }, 1500);
             }
         } else if (
-            (target = doc.getElementById('fork'))
+            (target = doc.getElementById("fork"))
             && (scroll = target.dataset.pageScroll)
             && (scroll = scroll.match(/^(-)?(\d+)$/))
             && "0" !== scroll[2]
         ) {
             target = null;
 
-            if ("2" === scroll[2] && (target = doc.getElementById('fork-announce'))) {
+            if ("2" === scroll[2] && (target = doc.getElementById("fork-announce"))) {
                 do {
                     target = target.nextElementSibling;
                 } while (target && "none" === win.getComputedStyle(target).display)
             }
 
             if (!target) {
-                target = doc.getElementById('fork-main');
+                target = doc.getElementById("fork-main");
             }
 
             if (target) {
@@ -72,20 +73,20 @@ ForkBB.common = (function (doc, win) {
 
     function initShowPass()
     {
-        var inps = doc.querySelectorAll("input[type='password']");
+        var inps = doc.querySelectorAll("input[type=\"password\"]");
 
         for (var i = 0; i < inps.length; i++) {
             var span = doc.createElement("span");
-            span.classList.add('f-pass-ctrl');
+            span.classList.add("f-pass-ctrl");
 
-            span.addEventListener('click', (function(i, s){
+            span.addEventListener("click", (function(i, s){
                 return function () {
-                    if (i.getAttribute('type') == 'password') {
-                        i.setAttribute('type', 'text');
-                        s.classList.add('f-pass-dspl');
+                    if (i.getAttribute("type") == "password") {
+                        i.setAttribute("type", "text");
+                        s.classList.add("f-pass-dspl");
                     } else {
-                        i.setAttribute('type', 'password');
-                        s.classList.remove('f-pass-dspl');
+                        i.setAttribute("type", "password");
+                        s.classList.remove("f-pass-dspl");
                     }
 
                     i.focus();
@@ -94,16 +95,17 @@ ForkBB.common = (function (doc, win) {
 
             var parent = inps[i].parentNode;
             parent.appendChild(span);
-            parent.classList.add('f-pass-prnt');
+            parent.classList.add("f-pass-prnt");
         }
     }
 
     function initForm()
     {
-        var inps = doc.querySelectorAll("input[type='hidden'][name='nekot']");
+        var inps = doc.querySelectorAll("input[type=\"hidden\"][name=\"nekot\"]"),
+            regx = new RegExp("(" + ".".repeat([1]+[2]-[3]-[2]-[1]) + ").*");
 
         for (var i = 0; i < inps.length; i++) {
-            inps[i].value = (inps[i].parentNode.querySelector("input[type='hidden'][name='token']").value.replace(/\D/g, '').replace(/(......).*/, '$1'));
+            inps[i].value = (inps[i].parentNode.querySelector("input[type=\"hidden\"][name=\"token\"]").value.replace(/\D/g, "").replace(regx, "$1"));
         }
     }
 
@@ -112,7 +114,7 @@ ForkBB.common = (function (doc, win) {
         var forms = doc.querySelectorAll("form.f-reaction-form");
 
         for (var i = 0; i < forms.length; i++) {
-            forms[i].addEventListener('click', function (event) {
+            forms[i].addEventListener("click", function (event) {
                 var form,
                     b = event.target;
 
@@ -139,7 +141,7 @@ ForkBB.common = (function (doc, win) {
                     }
                 }).then(function (response) {
                     if (!response.ok) {
-                        throw new Error('HTTP Error: ' + response.status);
+                        throw new Error("HTTP Error: " + response.status);
                     }
 
                     return response.json();
@@ -167,7 +169,7 @@ ForkBB.common = (function (doc, win) {
 
                 for (var i = 0; i < parts.length; i++) {
                     if (regexp.test(parts[i])) {
-                        var newPart = doc.createElement('span');
+                        var newPart = doc.createElement("span");
                         newPart.classList.add(shlClass);
                         newPart.textContent = parts[i];
                     } else {
@@ -193,7 +195,7 @@ ForkBB.common = (function (doc, win) {
         for (var i = 0; i < nodes.length; i++) {
             try {
                 if (nodes[i].dataset.searchRegexp) {
-                    highlightText(nodes[i], new RegExp('(' + nodes[i].dataset.searchRegexp + ')', 'giu'));
+                    highlightText(nodes[i], new RegExp("(" + nodes[i].dataset.searchRegexp + ")", "giu"));
                 }
             } catch (error) {console.log(error);}
         }
@@ -204,7 +206,7 @@ ForkBB.common = (function (doc, win) {
             initGoBack();
             initForm();
 
-            if (typeof DOMTokenList !== 'undefined') {
+            if (typeof DOMTokenList !== "undefined") {
                 initAnchorHL();
                 initShowPass();
                 initHighlight();

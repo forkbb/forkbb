@@ -59,7 +59,7 @@ ForkBB.poll = (function (doc, win) {
         init : function () {
             if (
                 0 !== inputPE
-                || typeof DOMTokenList === 'undefined'
+                || typeof DOMTokenList === "undefined"
             ) {
                 return;
             }

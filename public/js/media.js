@@ -9,10 +9,11 @@ if (typeof ForkBB === "undefined" || !ForkBB) {
     var ForkBB = {};
 }
 
-ForkBB.media = (function (doc, win, nav) {
+ForkBB.media = (function (doc, win) {
     'use strict';
 
-    var id = 0,
+    var nav = win.navigator,
+        id = 0,
         html5mime = {},
         html5aRegx = getHTML5("audio", ["mp3", "m4a", "ogg", "oga", "webma", "wav", "flac"], ["mpeg", "mp4", "ogg", "ogg", "webm", "wav", "flac"]),
         html5vRegx = getHTML5("video", ["mp4", "m4v", "ogv", "webm", "webmv"], ["mp4", "mp4", "ogg", "webm", "webm"]),
@@ -37,7 +38,7 @@ ForkBB.media = (function (doc, win, nav) {
                 }
             }
 
-            return r ? new RegExp('^([^\\\\\\?\\s<>"\'&]+\\.)(' + r + ')$', 'i') : false;
+            return r ? new RegExp("^([^\\\\\\?\\s<>\"'&]+\\.)(" + r + ")$", "i") : false;
         }
 
         return false;
@@ -464,6 +465,6 @@ ForkBB.media = (function (doc, win, nav) {
             }
         },
     };
-}(document, window, navigator));
+}(document, window));
 
 document.addEventListener("DOMContentLoaded", ForkBB.media.init, false);

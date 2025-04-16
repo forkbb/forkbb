@@ -141,8 +141,8 @@ if (typeof postimage.ready === "undefined") {
             postimage.params[decode(match[1])] = decode(match[2]);
         }
     })();
-    window.addEventListener('message', function(e) {
-        var regex = new RegExp('^' + ('https://' + postimage.opt.host).replace(/\./g, '\\.').replace(/\//g, '\\/') + '$', 'i');
+    window.addEventListener("message", function(e) {
+        var regex = new RegExp("^" + ("https://" + postimage.opt.host).replace(/\./g, "\\.").replace(/\//g, "\\/") + "$", "i");
         if (!regex.test(e.origin) || !e.data || !e.data.id || !e.data.message) {
             return;
         };
@@ -151,9 +151,9 @@ if (typeof postimage.ready === "undefined") {
             return;
         }
         postimage.output(id, decodeURIComponent(e.data.message), false);
-        var area = document.querySelector('[data-postimg="' + id + '"]');
+        var area = document.querySelector("[data-postimg=\"" + id + "\"]");
         if (area) {
-            var events = ['blur', 'focus', 'input', 'change', 'paste'];
+            var events = ["blur", "focus", "input", "change", "paste"];
             for (var i = 0; i < events.length; i++) {
                 var event = new Event(events[i]);
                 area.dispatchEvent(event);
@@ -212,9 +212,9 @@ postimage.render = function(i) {
         style.innerText = "#fork .postimages-container--forkbb{display:inline-block;margin-top:0.3125rem}#fork .postimages-button--forkbb{line-height:normal;transition:all .2s;outline:0;color:#3a80ea;border:none;cursor:pointer;border:.0625rem solid rgba(0,0,0,.15);background:#ececec;border-radius:.2rem;padding:.3125rem .625rem;font-size:0.75rem;font-weight:700;text-shadow:none}#fork .postimages-button--forkbb:hover{background:#3a80ea;color:#fff;border-color:rgba(0,0,0,.1)}#fork .postimages-button--forkbb-icon,.postimages-button--forkbb-text{display:inline-block;vertical-align:middle}#fork .postimages-button--forkbb-icon{width:1rem;height:1rem}#fork .postimages-button--forkbb-text{padding-inline-start:.25rem}";
         document.body.appendChild(style);
     }
-    var div = document.createElement('div');
+    var div = document.createElement("div");
     div.className = "postimages-container--forkbb";
-    var but = document.createElement('button');
+    var but = document.createElement("button");
     but.className = "postimages-button--forkbb";
     but.title = postimage.text;
     but.addEventListener("click", function(i) {
@@ -223,10 +223,10 @@ postimage.render = function(i) {
             postimage.upload(i);
         };
     }(i));
-    var icon = document.createElement('span');
+    var icon = document.createElement("span");
     icon.className = "postimages-button--forkbb-icon";
     icon.innerHTML = '<svg class="postimages-button--forkbb-icon" xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 180 180" style="fill: currentcolor;"><path d="M0 90v90h180V0H0v90zm108.3-63.3c9.2 2.7 20.6 9.4 25.8 15.2 10.1 11.4 13.3 21.2 12.8 39.1-.4 10.7-.7 12-4 19-4 8.5-11.6 17.3-18.7 21.9-2.6 1.7-8.4 4.3-12.8 5.7-6.5 2.2-9.7 2.7-18.4 2.7-12 .1-18.8-1.9-26.5-7.9L62 119v42H35.9l.3-48.3c.3-54.4 0-52.2 8.5-64.9C50.1 39.6 54 36.3 64.4 31c13.4-6.8 29.9-8.4 43.9-4.3z"/><path d="M81.9 49.5c-6.4 2-14.1 9.2-17 15.7-3.2 7.4-3.2 18.4.1 24.8 6.1 12.1 14.2 17.3 26.4 17.3 5.2 0 8.5-.6 12.3-2.3 17.2-7.4 22.6-30.8 10.8-46.2-6.7-8.8-21.2-13-32.6-9.3z"/></svg>';
-    var text = document.createElement('span');
+    var text = document.createElement("span");
     text.className = "postimages-button--forkbb-text";
     text.innerText = "Postimage";
     but.appendChild(icon);
@@ -241,18 +241,18 @@ postimage.init = function() {
         if ((area.getAttribute("data-postimg") !== null)) {
             continue;
         }
-        area.setAttribute('data-postimg', 'pi_' + Math.floor(Math.random() * 1e9));
+        area.setAttribute("data-postimg", "pi_" + Math.floor(Math.random() * 1e9));
         postimage.insert(area, postimage.render("'" + area.getAttribute("data-postimg") + "'"));
     }
 };
 if (opener && !opener.closed && postimage.params.hasOwnProperty("postimage_id") && postimage.params.hasOwnProperty("postimage_text")) {
     postimage.output(postimage.params["postimage_id"], postimage.params["postimage_text"], true);
 } else {
-    if (typeof(window.addEventListener) == 'function') {
-        window.addEventListener('DOMContentLoaded', postimage.init, false);
-        window.addEventListener('load', postimage.init, false);
-    } else if (typeof(window.attachEvent) == 'function') {
-        window.attachEvent('onload', postimage.init);
+    if (typeof(window.addEventListener) == "function") {
+        window.addEventListener("DOMContentLoaded", postimage.init, false);
+        window.addEventListener("load", postimage.init, false);
+    } else if (typeof(window.attachEvent) == "function") {
+        window.attachEvent("onload", postimage.init);
     } else {
         if (window.onload != null) {
             var onload = window.onload;

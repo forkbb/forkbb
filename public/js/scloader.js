@@ -21,18 +21,18 @@ ForkBB.editor = (function (doc, win) {
         textarea,
         elForScroll,
         options = {
-            format: 'bbcode',
-            icons: 'monocons',
-            style: '',
+            format: "bbcode",
+            icons: "monocons",
+            style: "",
             emoticonsCompat: true,
             emoticonsEnabled: false,
             resizeWidth: false,
-            width: '100%',
-            toolbar: 'bold,italic,underline,strike,subscript,superscript|' +
-                'left,center,right,justify|h1,h2,h3|font,size,color,removeformat|' +
-                'bulletlist,orderedlist,indent,outdent|' +
-                'table|code,mono,quote|horizontalrule,image,email,link,unlink|' +
-                'emoticon,date,time|maximize,source'
+            width: "100%",
+            toolbar: "bold,italic,underline,strike,subscript,superscript|" +
+                "left,center,right,justify|h1,h2,h3|font,size,color,removeformat|" +
+                "bulletlist,orderedlist,indent,outdent|" +
+                "table|code,mono,quote|horizontalrule,image,email,link,unlink|" +
+                "emoticon,date,time|maximize,source"
         };
 
     function initEditor()
@@ -49,26 +49,26 @@ ForkBB.editor = (function (doc, win) {
         }
 
         options = Object.assign(options, conf);
-        smiliesEnabled = '1' == textarea.getAttribute(emotName);
-        linkEnabled = '1' == textarea.getAttribute(linkName);
+        smiliesEnabled = "1" == textarea.getAttribute(emotName);
+        linkEnabled = "1" == textarea.getAttribute(linkName);
 
-        var forDelete = ['youtube', 'rtl', 'ltr'];
+        var forDelete = ["youtube", "rtl", "ltr"];
 
         if (!smiliesEnabled) {
-            forDelete = forDelete.concat('emoticon');
+            forDelete = forDelete.concat("emoticon");
         }
         if (!linkEnabled) {
-            forDelete = forDelete.concat('url', 'link', 'image', 'img', 'email');
+            forDelete = forDelete.concat("url", "link", "image", "img", "email");
         }
 
         for (var bbcodeForDelete of forDelete) {
             sceditor.command.remove(bbcodeForDelete);
             sceditor.formats.bbcode.remove(bbcodeForDelete);
 
-            options.toolbar = options.toolbar.replace(new RegExp("\\b" + bbcodeForDelete + "\\b", "gi"), '');
+            options.toolbar = options.toolbar.replace(new RegExp("\\b" + bbcodeForDelete + "\\b", "gi"), "");
         }
 
-        options.toolbar = options.toolbar.replace(/[^\w]*\|[^\w]*/g, '|').replace(/,{2,}/g, ',');
+        options.toolbar = options.toolbar.replace(/[^\w]*\|[^\w]*/g, "|").replace(/,{2,}/g, ",");
 
         sceditor.create(textarea, options);
         instance = sceditor.instance(textarea);
@@ -76,10 +76,10 @@ ForkBB.editor = (function (doc, win) {
         instance.height(instance.height() - instance.getContentAreaContainer().offsetHeight + 250);
 
         if (smiliesEnabled) {
-            var checkbox = doc.querySelector('input[name="hide_smilies"]');
+            var checkbox = doc.querySelector("input[name=\"hide_smilies\"]");
 
             if (checkbox) {
-                checkbox.addEventListener('change', function (e) {
+                checkbox.addEventListener("change", function (e) {
                     instance.emoticons(!e.target.checked);
                 });
                 instance.emoticons(!checkbox.checked);
@@ -94,7 +94,7 @@ ForkBB.editor = (function (doc, win) {
         for (var node of users) {
             var a = doc.createElement("a");
             a.textContent = "@";
-            a.addEventListener('click', function (e) {
+            a.addEventListener("click", function (e) {
                 instance.insert("[b]" + e.target.parentNode.textContent + "[/b], ");
                 elForScroll.scrollIntoView({behavior: "smooth", block: "end"});
             });

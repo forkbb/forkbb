@@ -68,7 +68,7 @@
                 },
                 check: "ForkBB",
                 getEditor: function() {
-                    return document.getElementById('id-dl-message');
+                    return document.getElementById("id-dl-message");
                 },
                 editorValue: function(t) {
                     var m = t.match(/\s*(\[img\][^\[\]]+\[\/img\])\s*/);
@@ -278,7 +278,7 @@
                                 if (a.hasOwnProperty("useCustomEditor") && a.useCustomEditor()) return void a.editorValue(t.data.message, i);
                                 a.hasOwnProperty("getEditor") && (e = a.getEditor())
                             }
-                            if (e = e || document.querySelector("[" + o.ns.dataPluginTarget + '="' + i + '"]'))
+                            if (e = e || document.querySelector("[" + o.ns.dataPluginTarget + "=\"" + i + "\"]"))
                                 for (var i = null === e.getAttribute("contenteditable") ? "value" : "innerHTML", s = (e[i] += o.getNewValue(e, t.data.message), ["blur", "focus", "input", "change", "paste"]), n = 0; n < s.length; n++) {
                                     var r = new Event(s[n]);
                                     e.dispatchEvent(r)
