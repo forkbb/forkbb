@@ -488,22 +488,6 @@ class Routing
                 );
             }
 
-            // личные сообщения
-            if ($user->usePM) {
-                $r->add(
-                    $r::GET,
-                    '/pm',
-                    'PM:action',
-                    'PM'
-                );
-                $r->add(
-                    $r::DUO,
-                    '/pm[/user/{second}][/{action}[/{more1|i:[1-9]\d*}[/{more2}]]][#p{numPost}]',
-                    'PM:action',
-                    'PMAction'
-                );
-            }
-
             // реакции
             if (
                 ! $user->isGuest
@@ -516,39 +500,56 @@ class Routing
                     'Reaction'
                 );
             }
+
+            // опросы
+            if ($userRules->usePoll) {
+                $r->add(
+                    $r::PST,
+                    '/poll/{tid|i:[1-9]\d*}',
+                    'Poll:vote',
+                    'Poll'
+                );
+            }
+
+            // черновики
+            if ($userRules->useDraft) {
+                $r->add(
+                    $r::GET,
+                    '/drafts[/{page|i:[1-9]\d*}]',
+                    'Drafts:view',
+                    'Drafts'
+                );
+                $r->add(
+                    $r::DUO,
+                    '/draft/{did|i:[1-9]\d*}/edit',
+                    'Post:draft',
+                    'Draft'
+                );
+                $r->add(
+                    $r::DUO,
+                    '/draft/{did|i:[1-9]\d*}/delete',
+                    'Drafts:delete',
+                    'DeleteDraft'
+                );
+            }
         }
 
-        // опросы
-        if ($userRules->usePoll) {
-            $r->add(
-                $r::PST,
-                '/poll/{tid|i:[1-9]\d*}',
-                'Poll:vote',
-                'Poll'
-            );
-        }
-
-        // черновики
-        if ($userRules->useDraft) {
+        // личные сообщения
+        if (
+            ! $user->isGuest
+            && $user->usePM
+        ) {
             $r->add(
                 $r::GET,
-                '/drafts[/{page|i:[1-9]\d*}]',
-                'Drafts:view',
-                'Drafts'
+                '/pm',
+                'PM:action',
+                'PM'
             );
-
             $r->add(
                 $r::DUO,
-                '/draft/{did|i:[1-9]\d*}/edit',
-                'Post:draft',
-                'Draft'
-            );
-
-            $r->add(
-                $r::DUO,
-                '/draft/{did|i:[1-9]\d*}/delete',
-                'Drafts:delete',
-                'DeleteDraft'
+                '/pm[/user/{second}][/{action}[/{more1|i:[1-9]\d*}[/{more2}]]][#p{numPost}]',
+                'PM:action',
+                'PMAction'
             );
         }
 

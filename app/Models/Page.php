@@ -139,78 +139,73 @@ abstract class Page extends Model
             ],
         ];
 
-        if (
-            1 === $this->user->g_read_board
-            && $this->userRules->viewUsers
-        ) {
-            $navGen[self::FI_USERS] = [
-                $r->link('Userlist'),
-                'User list',
-                'List of users',
-            ];
-        }
-
-        if (
-            1 === $this->c->config->b_rules
-            && 1 === $this->user->g_read_board
-            && (
-                ! $this->user->isGuest
-                || 1 === $this->c->config->b_regs_allow
-            )
-        ) {
-            $navGen[self::FI_RULES] = [
-                $r->link('Rules'),
-                'Rules',
-                'Board rules',
-            ];
-        }
-
-        if (
-            1 === $this->user->g_read_board
-            && 1 === $this->user->g_search
-        ) {
-            $sub = [];
-            $sub['latest'] = [
-                $r->link(
-                    'SearchAction',
-                    [
-                        'action' => 'latest_active_topics',
-                    ]
-                ),
-                'Latest active topics',
-                'Find latest active topics',
-            ];
-
-            if (! $this->user->isGuest) {
-                $sub['with-your-posts'] = [
-                    $r->link(
-                        'SearchAction',
-                        [
-                            'action' => 'topics_with_your_posts',
-                        ]
-                    ),
-                    'Topics with your posts',
-                    'Find topics with your posts',
+        if (1 === $this->user->g_read_board) {
+            if ($this->userRules->viewUsers) {
+                $navGen[self::FI_USERS] = [
+                    $r->link('Userlist'),
+                    'User list',
+                    'List of users',
                 ];
             }
 
-            $sub['unanswered'] = [
-                $r->link(
-                    'SearchAction',
-                    [
-                        'action' => 'unanswered_topics',
-                    ]
-                ),
-                'Unanswered topics',
-                'Find unanswered topics',
-            ];
+            if (
+                1 === $this->c->config->b_rules
+                && (
+                    ! $this->user->isGuest
+                    || 1 === $this->c->config->b_regs_allow
+                )
+            ) {
+                $navGen[self::FI_RULES] = [
+                    $r->link('Rules'),
+                    'Rules',
+                    'Board rules',
+                ];
+            }
 
-            $navGen[self::FI_SRCH] = [
-                $r->link('Search'),
-                'Search',
-                'Search topics and posts',
-                $sub
-            ];
+            if (1 === $this->user->g_search) {
+                $sub = [];
+                $sub['latest'] = [
+                    $r->link(
+                        'SearchAction',
+                        [
+                            'action' => 'latest_active_topics',
+                        ]
+                    ),
+                    'Latest active topics',
+                    'Find latest active topics',
+                ];
+
+                if (! $this->user->isGuest) {
+                    $sub['with-your-posts'] = [
+                        $r->link(
+                            'SearchAction',
+                            [
+                                'action' => 'topics_with_your_posts',
+                            ]
+                        ),
+                        'Topics with your posts',
+                        'Find topics with your posts',
+                    ];
+                }
+
+                $sub['unanswered'] = [
+                    $r->link(
+                        'SearchAction',
+                        [
+                            'action' => 'unanswered_topics',
+                        ]
+                    ),
+                    'Unanswered topics',
+                    'Find unanswered topics',
+                ];
+
+                $navGen[self::FI_SRCH] = [
+                    $r->link('Search'),
+                    'Search',
+                    'Search topics and posts',
+                    $sub
+                ];
+            }
         }
 
         if ($this->user->isGuest) {
@@ -256,7 +251,8 @@ abstract class Page extends Model
             }
 
             if (
-                $this->userRules->useDraft
+                1 === $this->user->g_read_board
+                && $this->userRules->useDraft
                 && $this->user->num_drafts > 0
             ) {
                 $navUser[self::FI_DRAFT] = [
