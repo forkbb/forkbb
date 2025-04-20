@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '8.0.0';
     const REV_MIN_FOR_UPDATE         = 53;
-    const LATEST_REV_WITH_DB_CHANGES = 85;
+    const LATEST_REV_WITH_DB_CHANGES = 87;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
     const CONFIG_FILE                = 'main.php';
@@ -1447,6 +1447,8 @@ class Update extends Admin
         $config->i_censoring_count ??= 0;
 
         $config->save();
+
+        $this->c->DB->addField('::online', 'o_misc', 'INT(10) UNSIGNED', false, 0);
 
         return null;
     }

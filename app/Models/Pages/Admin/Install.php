@@ -926,6 +926,7 @@ class Install extends Admin
                 'last_search' => ['INT(10) UNSIGNED', false, 0],
                 'o_position'  => ['VARCHAR(100)', false, ''],
                 'o_name'      => ['VARCHAR(190)', false, ''],
+                'o_misc'      => ['INT(10) UNSIGNED', false, 0],
             ],
             'UNIQUE KEYS' => [
                 'user_id_ident_idx' => ['user_id', 'ident'],
