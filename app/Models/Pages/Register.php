@@ -99,7 +99,7 @@ class Register extends Page
                 'nekot'             => [FORK_MESS_ERR, 'Javascript disabled or bot'],
             ]);
 
-        $v = $this->c->Test->beforeValidation($v);
+        $v = $this->c->Test->beforeValidation($v, true);
 
         if ($v->validation($_POST, true)) {
             // завершение регистрации
@@ -161,14 +161,15 @@ class Register extends Page
     protected function formReg(Validator $v): array
     {
         $form = [
-            'action' => $this->c->Router->link('RegisterForm'),
-            'hidden' => [
+            'action'  => $this->c->Router->link('RegisterForm'),
+            'enctype' => 'multipart/form-data',
+            'hidden'  => [
                 'token' => $this->c->Csrf->create('RegisterForm'),
                 'agree' => $v->agree,
                 'on'    => '1',
             ],
-            'sets'   => [],
-            'btns'   => [
+            'sets'    => [],
+            'btns'    => [
                 'register' => [
                     'type'  => 'submit',
                     'value' => __('Sign up'),

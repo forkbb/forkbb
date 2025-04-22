@@ -16,6 +16,7 @@ use ForkBB\Core\Validator;
 class Test
 {
     protected array $config = [];
+    protected bool $multi;
 
     public function __construct(string $path, protected Container $c)
     {
@@ -30,8 +31,10 @@ class Test
         $this->config = include $path;
     }
 
-    public function beforeValidation(Validator $v): Validator
+    public function beforeValidation(Validator $v, bool $multi = false): Validator
     {
+        $this->multi = $multi;
+
         $v->addValidators([
             'check_field_validation' => [$this, 'vTestCheck'],
         ])->addRules([
@@ -76,6 +79,14 @@ class Test
             || empty($_SERVER['HTTP_ORIGIN'])
         ) {
             $index += 5;
+        }
+
+        if (
+            $this->multi
+            && ! empty($_SERVER["CONTENT_TYPE"])
+            && ! \str_starts_with($_SERVER["CONTENT_TYPE"], 'multipart/')
+        ) {
+            $index += 4;
         }
 
         if (! empty($_SERVER['HTTP_REFERER'])) {

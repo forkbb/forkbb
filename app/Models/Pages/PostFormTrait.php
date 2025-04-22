@@ -29,12 +29,13 @@ trait PostFormTrait
         $notPM     = $this->fIndex !== self::FI_PM;
         $autofocus = $quick ? null : true;
         $form      = [
-            'action' => $this->c->Router->link($marker, $args),
-            'hidden' => [
+            'action'  => $this->c->Router->link($marker, $args),
+            'enctype' => 'multipart/form-data',
+            'hidden'  => [
                 'token' => $this->c->Csrf->create($marker, $args),
             ],
-            'sets'   => [],
-            'btns'   => [
+            'sets'    => [],
+            'btns'    => [
                 'submit' => [
                     'type'  => 'submit',
                     'class' => $this->draft instanceof Draft ? ['f-opacity'] : null,

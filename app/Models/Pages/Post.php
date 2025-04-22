@@ -108,7 +108,7 @@ class Post extends Page
                 $this->user->isGuest
                 || empty($this->user->last_post)
             ) {
-                $v = $this->c->Test->beforeValidation($v);
+                $v = $this->c->Test->beforeValidation($v, true);
             }
 
             if (
@@ -181,8 +181,11 @@ class Post extends Page
         if ('POST' === $method) {
             $v = $this->messageValidator($topic, $this->marker ?: 'NewReply', $args, false, false);
 
-            if ($this->user->isGuest) {
-                $v = $this->c->Test->beforeValidation($v);
+            if (
+                $this->user->isGuest
+                || empty($this->user->last_post)
+            ) {
+                $v = $this->c->Test->beforeValidation($v, true);
             }
 
             if (

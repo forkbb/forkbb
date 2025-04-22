@@ -70,11 +70,12 @@ class Rules extends Page
     protected function formAgree(): array
     {
         return [
-            'action' => $this->c->Router->link('RegisterForm'),
-            'hidden' => [
+            'action'  => $this->c->Router->link('RegisterForm'),
+            'enctype' => 'multipart/form-data',
+            'hidden'  => [
                 'token' => $this->c->Csrf->create('RegisterForm'),
             ],
-            'sets'   => [
+            'sets'    => [
                 'agree' => [
                     'fields' => [
                         'agree' => [
@@ -85,7 +86,7 @@ class Rules extends Page
                     ],
                 ],
             ],
-            'btns'   => [
+            'btns'    => [
                 'register' => [
                     'type'  => 'submit',
                     'value' => __('Register'),
