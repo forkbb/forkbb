@@ -150,7 +150,7 @@ trait PostFormTrait
             $limit     = $this->user->g_up_size_kb * 1024;
 
             $form['enctype'] = 'multipart/form-data';
-            $form['hidden']['MAX_FILE_SIZE'] = $limit;
+            $form['maxfz']   = $limit;
 
             $form['sets']['uesm-attachments'] = [
                 'legend' => 'Attachments',

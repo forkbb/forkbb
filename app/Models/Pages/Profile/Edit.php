@@ -354,7 +354,7 @@ class Edit extends Profile
             }
 
             $form['enctype'] = 'multipart/form-data';
-            $form['hidden']['MAX_FILE_SIZE'] = $this->c->Files->maxImgSize();
+            $form['maxfz']   = $this->c->Files->maxImgSize();
 
             if ($this->curUser->avatar) {
                 $fields['delete_avatar'] = [

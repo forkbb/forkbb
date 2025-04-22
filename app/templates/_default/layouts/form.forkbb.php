@@ -2,6 +2,9 @@
 @if ($form['action'])
         <form @if ($form['id']) id="{{ $form['id'] }}" @endif class="f-form" method="post" action="{{ $form['action'] }}" @if ($form['enctype']) enctype="{{ $form['enctype'] }}" @endif>
           <!-- PRE formStart -->
+    @if ($form['maxfz'])
+          <input type="hidden" name="MAX_FILE_SIZE" value="{{ $form['maxfz'] }}">
+    @endif
 @endif
 @foreach ($form['sets'] as $setKey => $setVal)
     @if ($setVal['inform'])
