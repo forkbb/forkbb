@@ -147,11 +147,8 @@ trait PostFormTrait
         ];
 
         if ($this->userRules->useUpload) {
-            $autofocus = null;
-            $limit     = $this->user->g_up_size_kb * 1024;
-
-            $form['enctype'] = 'multipart/form-data';
-            $form['maxfz']   = $limit;
+            $limit          = $this->user->g_up_size_kb * 1024;
+            $form['maxfsz'] = $limit;
 
             $form['sets']['uesm-attachments'] = [
                 'legend' => 'Attachments',

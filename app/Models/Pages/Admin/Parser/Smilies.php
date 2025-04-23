@@ -311,7 +311,7 @@ class Smilies extends Parser
         $form = [
             'action'  => $this->c->Router->link('AdminSmiliesUpload'),
             'enctype' => 'multipart/form-data',
-            'maxfz'   => $this->c->Files->maxImgSize(),
+            'maxfsz'  => $this->c->Files->maxImgSize(),
             'hidden'  => [
                 'token'         => $this->c->Csrf->create('AdminSmiliesUpload'),
             ],
