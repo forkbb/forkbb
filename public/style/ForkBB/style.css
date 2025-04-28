@@ -52,13 +52,13 @@
 
 @media (prefers-color-scheme: light) {
   :root {
-    --c-fprimary: #191919;
-    --bg-fprimary: #e8e8e8;
+    --c-fprimary: hsl(0, 0%, 10%);
+    --bg-fprimary: hsl(0, 0%, 91%);
     --br-fprimary: hsl(0, 0%, 66%);
     --bg-like-br1: hsl(0, 40%, 92%);
     --c-a-and-btn: hsl(210, 100%, 40%);
-    --c-fh1: #191919;
-    --bg-fh1: #efefef;
+    --c-fh1: hsl(0, 0%, 10%);
+    --bg-fh1: hsl(0, 0%, 94%);
     --br-fh1: hsl(0, 0%, 20%);
     --c-icon-sub: hsl(0, 0%, 30%);
     --c-icon-new: hsl(210, 50%, 40%);
@@ -66,27 +66,27 @@
     --c-a-focus: hsl(210, 100%, 30%);
     --c-focus: hsl(220, 5%, 88%);
     --bg-focus: hsl(210, 100%, 40%);
-    --bg-post-h: #f8f8f8;
+    --bg-post-h: hsl(0, 0%, 97%);
     --bg-post-s-h: hsl(83, 72%, 78%);
-    --bg-post-b: #FDFEFF;
-    --bg-post-u: #f4f4f4;
-    --bg-fann: #efefef;
-    --bg-submenu: #edf0f1;
-    --bg-stats: #efefef;
+    --bg-post-b: hsl(0, 0%, 99%);
+    --bg-post-u: hsl(0, 0%, 96%);
+    --bg-fann: hsl(0, 0%, 94%);
+    --bg-submenu: hsl(195, 12%, 94%);
+    --bg-stats: hsl(0, 0%, 94%);
     --c-active: hsl(40, 16%, 7%);
     --c-nav-focus: hsl(220, 5%, 88%);
     --bg-active: hsl(220, 20%, 90%);
     --bg-btn: hsl(0, 0%, 92%);
-    --bg-nav: #efefef;
-    --bg-like-nav: #efefef;
+    --bg-nav: hsl(0, 0%, 94%);
+    --bg-like-nav: hsl(0, 0%, 94%);
     --c-light: hsl(40, 16%, 7%);
     --c-tsticky: hsl(0, 100%, 50%);
-    --bg-tsticky: #efefef;;
+    --bg-tsticky: hsl(0, 0%, 94%);;
     --c-faggr: hsl(357, 75%, 50%);
     --c-faggr-pr: hsl(0, 0%, 7%);
     --bg-faggr: hsl(0, 100%, 86%);
     --c-tclosed: hsl(0, 0%, 55%);
-    --bg-tclosed: #efefef;;
+    --bg-tclosed: hsl(0, 0%, 94%);;
     --c-tpoll: hsl(210, 100%, 40%);
     --c-tsolved: hsl(120, 100%, 25%);
     --c-req: hsl(0, 100%, 50%);
