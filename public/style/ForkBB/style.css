@@ -16,6 +16,7 @@
   --bg-post-h: hsl(0, 20%, 26%);
   --bg-post-s-h: hsl(83, 72%, 22%);
   --bg-post-b: hsl(0, 0%, 26%);
+  --bg-post-u: hsl(0, 0%, 19%);
   --bg-fann: hsl(0, 0%, 21%);
   --bg-submenu: hsl(0, 0%, 20%);
   --bg-stats: hsl(0, 0%, 21%);
@@ -47,6 +48,60 @@
   --bg-reaction: hsl(0, 0%, 16%);
   --br-reaction: hsl(0, 0%, 34%);
   --c-post-cf-n: hsl(42, 100%, 50%);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --c-fprimary: #191919;
+    --bg-fprimary: #e8e8e8;
+    --br-fprimary: hsl(0, 0%, 66%);
+    --bg-like-br1: hsl(0, 40%, 92%);
+    --c-a-and-btn: hsl(210, 100%, 40%);
+    --c-fh1: #191919;
+    --bg-fh1: #efefef;
+    --br-fh1: hsl(0, 0%, 20%);
+    --c-icon-sub: hsl(0, 0%, 30%);
+    --c-icon-new: hsl(210, 50%, 40%);
+    --c-focus-v: hsl(230, 100%, 50%);
+    --c-a-focus: hsl(210, 100%, 30%);
+    --c-focus: hsl(220, 5%, 88%);
+    --bg-focus: hsl(210, 100%, 40%);
+    --bg-post-h: #f8f8f8;
+    --bg-post-s-h: hsl(83, 72%, 78%);
+    --bg-post-b: #FDFEFF;
+    --bg-post-u: #f4f4f4;
+    --bg-fann: #efefef;
+    --bg-submenu: #edf0f1;
+    --bg-stats: #efefef;
+    --c-active: hsl(40, 16%, 7%);
+    --c-nav-focus: hsl(220, 5%, 88%);
+    --bg-active: hsl(220, 20%, 90%);
+    --bg-btn: hsl(0, 0%, 92%);
+    --bg-nav: #efefef;
+    --bg-like-nav: #efefef;
+    --c-light: hsl(40, 16%, 7%);
+    --c-tsticky: hsl(0, 100%, 50%);
+    --bg-tsticky: #efefef;;
+    --c-faggr: hsl(357, 75%, 50%);
+    --c-faggr-pr: hsl(0, 0%, 7%);
+    --bg-faggr: hsl(0, 100%, 86%);
+    --c-tclosed: hsl(0, 0%, 55%);
+    --bg-tclosed: #efefef;;
+    --c-tpoll: hsl(210, 100%, 40%);
+    --c-tsolved: hsl(120, 100%, 25%);
+    --c-req: hsl(0, 100%, 50%);
+    --bg-bbcode: hsl(0, 0%, 88%);
+    --br-bbcode: hsl(0, 0%, 25%);
+    --bg-poll-res: hsl(210, 100%, 40%);
+    --c-sel: hsl(0, 0%, 100%);
+    --bg-sel: hsl(0, 0%, 40%);
+    --c-highlighted: hsl(39, 100%, 50%);
+    --c-reaction: hsl(40, 16%, 7%);
+    --c-reaction-sel: hsl(130, 47%, 58%);
+    --bg-reaction: hsl(0, 0%, 90%);
+    --br-reaction: hsl(0, 0%, 66%);
+    --c-post-cf-n: hsl(42, 100%, 35%);
+  }
 }
 
 /*******************/
@@ -491,6 +546,7 @@ body,
   overflow: hidden;
   display: none;
   flex-direction: column;
+  background-color: var(--bg-nav);
 }
 
 #fork .f-menu-item {
@@ -827,6 +883,12 @@ body,
 #fork .f-fbtn[name="delete"]:not(.origin),
 #fork .f-fbtn[name="report"]:not(.origin) {
   color: red;
+
+  &:hover,
+  &:focus {
+    color: var(--c-focus);
+    background-color: red;
+  }
 }
 
 #fork .f-flblr {
@@ -1645,13 +1707,12 @@ body,
 /* Сообщение в теме */
 /********************/
 #fork .f-post {
-  border-top: 0.0625rem solid var(--br-fprimary);
-  border-bottom: 0.0625rem solid var(--br-fprimary);
+  border: 0.0625rem solid var(--br-fprimary);
   position: relative;
 }
 
 #fork .f-post + .f-post {
-  margin-top: 0.625rem;
+  margin-top: 1.25rem;
 }
 
 #fork .f-post-header {
@@ -1705,7 +1766,7 @@ body,
 #fork .f-post-user {
   position: relative;
   padding: 0.625rem;
-  background-color: var(--bg-like-nav);
+  background-color: var(--bg-post-u);
   border-bottom: 0.0625rem solid var(--br-fprimary);
   font-size: 0.875rem;
 }
@@ -3191,6 +3252,10 @@ body,
     display: block;
     position: static;
     background-color: var(--bg-submenu);
+  }
+
+  #fork #fork-stats {
+    margin-top: auto;
   }
 }
 
