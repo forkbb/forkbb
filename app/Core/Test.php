@@ -16,7 +16,7 @@ use ForkBB\Core\Validator;
 class Test
 {
     protected array $config = [];
-    protected bool $multi;
+    protected ?bool $multi;
 
     public function __construct(string $path, protected Container $c)
     {
@@ -31,7 +31,7 @@ class Test
         $this->config = include $path;
     }
 
-    public function beforeValidation(Validator $v, bool $multi = false): Validator
+    public function beforeValidation(Validator $v, ?bool $multi = null): Validator
     {
         $this->multi = $multi;
 
@@ -76,7 +76,10 @@ class Test
             || false === \strpos($_SERVER['HTTP_ACCEPT'], 'text/html')
             || empty($_SERVER['HTTP_ACCEPT_ENCODING'])
             || empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])
-            || empty($_SERVER['HTTP_ORIGIN'])
+            || (
+                false !== $this->multi
+                && empty($_SERVER['HTTP_ORIGIN'])
+            )
         ) {
             $index += 5;
         }

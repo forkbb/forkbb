@@ -94,7 +94,7 @@ class Auth extends Page
                     'password' => 'Passphrase',
                 ]);
 
-            $v = $this->c->Test->beforeValidation($v);
+            $v = $this->c->Test->beforeValidation($v, $this->loginWithForm ? null : false);
 
             if ($v->validation($_POST, true)) {
                 $this->loginEnd($v);
