@@ -58,7 +58,8 @@ class Test
             return $value;
         }
 
-        $index = 0;
+        $index  = 0;
+        $isPost = 'POST' === $_SERVER['REQUEST_METHOD'];
 
         if (empty($_SERVER['HTTP_USER_AGENT'])) {
             $index += 1;
@@ -77,7 +78,7 @@ class Test
             || empty($_SERVER['HTTP_ACCEPT_ENCODING'])
             || empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])
             || (
-                false !== $this->multi
+                $isPost
                 && empty($_SERVER['HTTP_ORIGIN'])
             )
         ) {

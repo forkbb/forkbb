@@ -99,7 +99,7 @@ class Register extends Page
                 'nekot'             => [FORK_MESS_ERR, 'Javascript disabled or bot'],
             ]);
 
-        $v = $this->c->Test->beforeValidation($v, !$this->useOAuth);
+        $v = $this->c->Test->beforeValidation($v, true);
 
         if ($v->validation($_POST, true)) {
             // завершение регистрации
