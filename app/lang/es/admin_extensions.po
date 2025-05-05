@@ -131,3 +131,6 @@ msgstr "Objetivo '%s' no encontrado."
 
 msgid "Link '%s' already exists"
 msgstr "El enlace '%s' ya existe."
+
+msgid "Error creating symbolic link"
+msgstr "Error al crear el enlace simbólico."

@@ -131,3 +131,6 @@ msgstr "Target '%s' not found."
 
 msgid "Link '%s' already exists"
 msgstr "Link '%s' already exists."
+
+msgid "Error creating symbolic link"
+msgstr "Error creating symbolic link."

@@ -131,3 +131,6 @@ msgstr "Cible '%s' non trouvé."
 
 msgid "Link '%s' already exists"
 msgstr "Le lien '%s' existe déjà."
+
+msgid "Error creating symbolic link"
+msgstr "Erreur lors de la création du lien symbolique."

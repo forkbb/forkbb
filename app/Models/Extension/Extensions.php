@@ -260,7 +260,12 @@ class Extensions extends Manager
             return false;
         }
 
-        $this->setSymlinks($ext);
+        if (true !== $this->setSymlinks($ext)) {
+            $this->error = 'Error creating symbolic link';
+
+            return false;
+        }
+
         $this->updateIndividual();
 
         $this->c->DB->exec($query, $vars);
@@ -378,7 +383,12 @@ class Extensions extends Manager
         }
 
         if ($oldStatus) {
-            $this->setSymlinks($ext);
+            if (true !== $this->setSymlinks($ext)) {
+                $this->error = 'Error creating symbolic link';
+
+                return false;
+            }
+
             $this->updateIndividual();
         }
 
@@ -411,7 +421,12 @@ class Extensions extends Manager
             'fileData' => $ext->fileData,
         ]);
 
-        $this->setSymlinks($ext);
+        if (true !== $this->setSymlinks($ext)) {
+            $this->error = 'Error creating symbolic link';
+
+            return false;
+        }
+
         $this->updateIndividual();
 
         $this->c->DB->exec($query, $vars);
@@ -594,7 +609,14 @@ class Extensions extends Manager
         $symlinks = $data[$ext->name]['symlinks'] ?? [];
 
         foreach ($symlinks as $target => $link) {
-            \symlink($target, $link);
+            $level  = $this->c->ErrorHandler->logOnly(\E_WARNING);
+            $result = \symlink($target, $link);
+
+            $this->c->ErrorHandler->logOnly($level);
+
+            if (false === $result) {
+                return false;
+            }
         }
 
         return true;
