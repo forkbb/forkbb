@@ -229,6 +229,12 @@ class Extension extends Model
             }
         }
 
+        if ($this->fileData['extra']['autoload']) {
+            foreach ($this->fileData['extra']['autoload'] as $cur) {
+                $this->prepareData['autoload'][$cur['prefix']] = $this->fileData['path'] . '/' . \trim($cur['path'], '\\/');
+            }
+        }
+
         return true;
     }
 

@@ -146,8 +146,6 @@ class Extensions extends Manager
                 'authors.*.email'            => 'string',
                 'authors.*.homepage'         => 'string',
                 'authors.*.role'             => 'string',
-                'autoload.psr-4'             => 'array',
-                'autoload.psr-4.*'           => 'required|string',
                 'require'                    => 'array',
                 'extra'                      => 'required|array',
                 'extra.display-name'         => 'required|string',
@@ -162,6 +160,9 @@ class Extensions extends Manager
                 'extra.templates.*.name'     => 'string',
                 'extra.templates.*.priority' => 'integer',
                 'extra.templates.*.file'     => 'string',
+                'extra.autoload'             => 'array',
+                'extra.autoload.*.prefix'    => 'required|string',
+                'extra.autoload.*.path'      => 'required|string',
             ])->addAliases([
             ])->addArguments([
             ])->addMessages([
