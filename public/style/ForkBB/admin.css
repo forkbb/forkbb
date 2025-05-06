@@ -1345,6 +1345,12 @@
 
 #forka .f-fbtn[name="uninstall"]:not(.origin) {
   color: red;
+
+  &:hover,
+  &:focus {
+    color: var(--c-focus);
+    background-color: red;
+  }
 }
 
 /*********************/
