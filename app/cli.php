@@ -1,7 +1,7 @@
 #!/usr/bin/php
 <?php
 /**
- * This file is part of the ForkBB <https://github.com/forkbb>.
+ * This file is part of the ForkBB <https://forkbb.ru, https://github.com/forkbb>.
  *
  * @copyright (c) Visman <mio.visman@yandex.ru, https://github.com/MioVisman>
  * @license   The MIT License (MIT)
