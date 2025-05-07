@@ -189,6 +189,7 @@
             </div>
           </li>
         @endif
+    @php $numTopicsDisp = @iteration; @endphp
     @endforeach
         </ol>
       </div>
@@ -197,7 +198,11 @@
     <!-- PRE linksABefore -->
     <div class="f-nav-links">
     @if ($p->model->canCreateTopic || $p->model->pagination || $p->model->canMarkRead || $p->model->canSubscription)
+        @if ($numTopicsDisp > 5)
       <div class="f-nlinks-a">
+        @else
+      <div class="f-nlinks">
+        @endif
         @if ($p->model->canCreateTopic || $p->model->canMarkRead || $p->model->canSubscription)
         <div class="f-actions-links">
           <small>{!! __('ACTIONS') !!}</small>
@@ -222,7 +227,9 @@
         @yield ('pagination')
       </div>
     @endif
-    @yield ('crumbs')
+    @if ($numTopicsDisp > 5)
+        @yield ('crumbs')
+    @endif
     </div>
     <!-- PRE linksAAfter -->
 @endif
