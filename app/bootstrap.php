@@ -12,6 +12,7 @@ namespace ForkBB;
 
 use ForkBB\Core\Container;
 use ForkBB\Core\ErrorHandler;
+use ForkBB\Core\EventDispatcher;
 use ForkBB\Models\Page;
 use RuntimeException;
 
@@ -75,8 +76,8 @@ if (
 $c->FORK_REVISION = 86;
 $c->START         = $forkStart;
 $c->PUBLIC_URL    = $c->BASE_URL . $forkPublicPrefix;
-
-$controllers = ['Primary', 'Routing'];
+$c->dispatcher    = new EventDispatcher($c);
+$controllers      = ['Primary', 'Routing'];
 
 foreach ($controllers as $controller) {
     $page = $c->{$controller};
