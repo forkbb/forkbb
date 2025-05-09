@@ -39,6 +39,7 @@ class Extensions extends Manager
 
     protected string $commonFile;
     protected string $preFile;
+    protected string $execFile;
 
     /**
      * Возвращает action (или свойство) по его имени
@@ -55,6 +56,7 @@ class Extensions extends Manager
     {
         $this->commonFile = $this->c->DIR_CONFIG . '/ext/common.php';
         $this->preFile    = $this->c->DIR_CONFIG . '/ext/pre.php';
+        $this->execFile   = $this->c->DIR_CONFIG . '/ext/exec.php';
 
         $this->fromDB();
 
@@ -163,6 +165,7 @@ class Extensions extends Manager
                 'extra.autoload'             => 'array',
                 'extra.autoload.*.prefix'    => 'required|string',
                 'extra.autoload.*.path'      => 'required|string',
+                'extra.config'               => 'array',
             ])->addAliases([
             ])->addArguments([
             ])->addMessages([
@@ -531,6 +534,10 @@ class Extensions extends Manager
         $commonData = $this->loadDataFromFile($this->commonFile);
         $pre        = [];
         $newPre     = [];
+        $exec       = [
+            'autoload' => [],
+            'config'   => [],
+        ];
 
         // выделение данных
         foreach ($this->repository as $ext) {
@@ -538,10 +545,22 @@ class Extensions extends Manager
                 continue;
             }
 
-            if (isset($commonData[$ext->name]['templates']['pre'])) {
-                $pre = \array_merge_recursive($pre, $commonData[$ext->name]['templates']['pre']);
+            $cur = $commonData[$ext->name];
+
+            if (isset($cur['templates']['pre'])) {
+                $pre = \array_merge_recursive($pre, $cur['templates']['pre']);
+            }
+
+            if (! empty($cur['autoload'])) {
+                $exec['autoload'] = \array_merge($exec['autoload'], $cur['autoload']);
+            }
+
+            if (! empty($cur['config'])) {
+                $exec['config'] = \array_merge($exec['config'], $cur['config']);
             }
         }
+
+        $this->putData($this->execFile, $exec);
 
         // PRE-данные шаблонов
         foreach ($pre as $template => $names) {
