@@ -39,7 +39,8 @@ class Extensions extends Manager
 
     protected string $commonFile;
     protected string $preFile;
-    protected string $execFile;
+    protected string $autoFile;
+    protected string $configFile;
 
     /**
      * Возвращает action (или свойство) по его имени
@@ -56,7 +57,8 @@ class Extensions extends Manager
     {
         $this->commonFile = $this->c->DIR_CONFIG . '/ext/common.php';
         $this->preFile    = $this->c->DIR_CONFIG . '/ext/pre.php';
-        $this->execFile   = $this->c->DIR_CONFIG . '/ext/exec.php';
+        $this->autoFile   = $this->c->DIR_CONFIG . '/ext/auto.php';
+        $this->configFile = $this->c->DIR_CONFIG . '/ext/config.php';
 
         $this->fromDB();
 
@@ -503,13 +505,19 @@ class Extensions extends Manager
     /**
      * Записывает данные в указанный файл
      */
-    protected function putData(string $file, mixed $data): bool
+    protected function putData(string $file, mixed $data, bool $clearClass = false): bool
     {
         $content = "<?php\n\nreturn " . \var_export($data, true) . ";\n";
 
         foreach (self::FOLDER_NAMES as $dir) {
             $search  = \str_replace('\\', '\\\\', $this->c->{$dir});
             $content = \str_replace("'{$search}" , "\$this->c->{$dir} . '", $content);
+        }
+
+        if ($clearClass) {
+            $content = \preg_replace_callback('%(=>\s+)[\'"](\\\\.+?::class)[\'"]%', function ($matches) {
+                return $matches[1] . \str_replace('\\\\', '\\', $matches[2]);
+            }, $content);
         }
 
         if (false === \file_put_contents($file, $content, \LOCK_EX)) {
@@ -534,10 +542,8 @@ class Extensions extends Manager
         $commonData = $this->loadDataFromFile($this->commonFile);
         $pre        = [];
         $newPre     = [];
-        $exec       = [
-            'autoload' => [],
-            'config'   => [],
-        ];
+        $auto       = [];
+        $config     = [];
 
         // выделение данных
         foreach ($this->repository as $ext) {
@@ -552,15 +558,16 @@ class Extensions extends Manager
             }
 
             if (! empty($cur['autoload'])) {
-                $exec['autoload'] = \array_merge($exec['autoload'], $cur['autoload']);
+                $auto = \array_merge($auto, $cur['autoload']);
             }
 
             if (! empty($cur['config'])) {
-                $exec['config'] = \array_merge($exec['config'], $cur['config']);
+                $config = \array_merge($config, $cur['config']);
             }
         }
 
-        $this->putData($this->execFile, $exec);
+        $this->putData($this->autoFile, $auto);
+        $this->putData($this->configFile, $config, true);
 
         // PRE-данные шаблонов
         foreach ($pre as $template => $names) {

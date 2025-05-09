@@ -14,36 +14,36 @@ use ForkBB\Core\Container;
 
 class EventDispatcher
 {
-    protected string $execFile;
-    protected array $execArray;
+    protected string $autoFile;
+    protected string $configFile;
 
     public function __construct(protected Container $c)
     {
-        $this->execFile = $this->c->DIR_CONFIG . '/ext/exec.php';
+        $this->autoFile   = $this->c->DIR_CONFIG . '/ext/auto.php';
+        $this->configFile = $this->c->DIR_CONFIG . '/ext/config.php';
 
         $this->init();
     }
 
     public function init(): self
     {
-        if (\is_file($this->execFile)) {
-            $arr = include $this->execFile;
+        if (\is_file($this->autoFile)) {
+            $arr = include $this->autoFile;
 
-            if (! empty($arr['autoload'])) {
-                foreach ($arr['autoload'] as $prefix => $paths) {
+            if (! empty($arr)) {
+                foreach ($arr as $prefix => $paths) {
                     $this->c->autoloader->addPsr4($prefix, $paths);
                 }
             }
-
-            if (! empty($arr['config'])) {
-                $this->c->config($arr['config']);
-            }
-
-        } else {
-            $arr = [];
         }
 
-        $this->execArray = $arr;
+        if (\is_file($this->configFile)) {
+            $arr = include $this->configFile;
+
+            if (! empty($arr)) {
+                $this->c->config($arr);
+            }
+        }
 
         return $this;
     }
