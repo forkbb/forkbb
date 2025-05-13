@@ -109,6 +109,7 @@ class Options extends Admin
                     'b_message_all_caps'      => 'required|integer|in:0,1',
                     'b_subject_all_caps'      => 'required|integer|in:0,1',
                     'b_force_guest_email'     => 'required|integer|in:0,1',
+                    'b_hide_guest_email_fld'  => 'required|integer|in:0,1',
                     'b_sig_all_caps'          => 'required|integer|in:0,1',
                     'b_poll_enabled'          => 'required|integer|in:0,1',
                     'i_poll_max_questions'    => 'required|integer|min:1|max:99',
@@ -180,6 +181,10 @@ class Options extends Admin
                             'error' => $v->upload_og_image->error(),
                         ]);
                     }
+                }
+
+                if (1 === $config->b_force_guest_email) {
+                    $config->b_hide_guest_email_fld = 0;
                 }
 
                 $config->save();
@@ -488,6 +493,13 @@ class Options extends Admin
                     'values'  => $yn,
                     'caption' => 'Require e-mail label',
                     'help'    => 'Require e-mail help',
+                ],
+                'b_hide_guest_email_fld' => [
+                    'type'    => 'radio',
+                    'value'   => $config->b_hide_guest_email_fld,
+                    'values'  => $yn,
+                    'caption' => 'Hide e-mail label',
+                    'help'    => 'Hide e-mail help',
                 ],
             ],
         ];

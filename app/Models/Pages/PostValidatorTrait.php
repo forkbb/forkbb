@@ -131,8 +131,14 @@ trait PostValidatorTrait
         $notPM = $this->fIndex !== self::FI_PM;
 
         if ($this->user->isGuest) {
-            $ruleEmail    = 1 === $this->c->config->b_force_guest_email ? 'required' : 'exist';
-            $ruleEmail   .= '|string:trim,empty|email:noban';
+            if (1 === $this->c->config->b_hide_guest_email_fld) {
+                $ruleEmail    = 'absent';
+
+            } else {
+                $ruleEmail    = 1 === $this->c->config->b_force_guest_email ? 'required' : 'exist';
+                $ruleEmail   .= '|string:trim,empty|email:noban';
+            }
+
             $ruleUsername = 'required|string:trim|username';
 
         } else {

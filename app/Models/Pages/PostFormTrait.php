@@ -88,17 +88,20 @@ trait PostFormTrait
                 'value'     => $vars['username'] ?? null,
                 'autofocus' => $autofocus,
             ];
-            $fieldset['email'] = [
-                'class'          => 1 === $this->c->config->b_force_guest_email ? ['w2'] : ['w2', 'optional'],
-                'type'           => 'text',
-                'maxlength'      => (string) $this->c->MAX_EMAIL_LENGTH,
-                'caption'        => 'Email',
-                'required'       => 1 === $this->c->config->b_force_guest_email,
-                'pattern'        => '^.*[^@]@[^@].*$',
-                'value'          => $vars['email'] ?? null,
-                'autocapitalize' => 'off',
-            ];
             $autofocus = null;
+
+            if (1 !== $this->c->config->b_hide_guest_email_fld) {
+                $fieldset['email'] = [
+                    'class'          => 1 === $this->c->config->b_force_guest_email ? ['w2'] : ['w2', 'optional'],
+                    'type'           => 'text',
+                    'maxlength'      => (string) $this->c->MAX_EMAIL_LENGTH,
+                    'caption'        => 'Email',
+                    'required'       => 1 === $this->c->config->b_force_guest_email,
+                    'pattern'        => '^.*[^@]@[^@].*$',
+                    'value'          => $vars['email'] ?? null,
+                    'autocapitalize' => 'off',
+                ];
+            }
         }
 
         if ($first) {

@@ -500,3 +500,9 @@ msgstr "Use Cron"
 
 msgid "Cron for email help"
 msgstr "<b>ATTENTION!!!</b> Before turning on, add the task to your task planner (cron or analog), which will run &apos;<code>php cli.php send_mail</code>&apos; every few minutes. Without this task, emails will not be sent."
+
+msgid "Hide e-mail label"
+msgstr "Hide email field"
+
+msgid "Hide e-mail help"
+msgstr "Hide the guest email address field if it is not a required field."
