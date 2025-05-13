@@ -89,7 +89,7 @@ trait PostFormTrait
                 'autofocus' => $autofocus,
             ];
             $fieldset['email'] = [
-                'class'          => ['w2'],
+                'class'          => 1 === $this->c->config->b_force_guest_email ? ['w2'] : ['w2', 'optional'],
                 'type'           => 'text',
                 'maxlength'      => (string) $this->c->MAX_EMAIL_LENGTH,
                 'caption'        => 'Email',

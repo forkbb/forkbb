@@ -470,6 +470,10 @@ body,
   color: var(--c-req);
 }
 
+#fork .f-field-optional {
+  opacity: 0.6;
+}
+
 #fork .f-field-depth1 > dd {
   padding-inline-start: 0.625rem;
 }
