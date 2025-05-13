@@ -100,6 +100,30 @@ ForkBB.editor = (function (doc, win) {
             });
             node.insertBefore(a, node.firstChild);
         }
+
+        if (textarea.form && textarea.form.elements.username) {
+            initField(textarea.form.elements.username);
+
+            if (textarea.form.elements.email) {
+                initField(textarea.form.elements.email);
+            }
+        }
+    }
+
+    function initField(node)
+    {
+        var item = "guest_form_" + node.name,
+            old = localStorage.getItem(item) || "";
+
+        if (node.value == "") {
+            node.value = old;
+        }
+
+        node.addEventListener("change", (function (node, item) {
+            return function () {
+                localStorage.setItem(item, node.value);
+            }
+        })(node, item));
     }
 
     return {
