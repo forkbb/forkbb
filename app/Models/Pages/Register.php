@@ -78,6 +78,9 @@ class Register extends Page
 
         if ($this->useOAuth) {
             unset($rules['email'], $rules['password']);
+
+        } elseif (1 === $this->c->config->b_regs_disable_email) {
+            unset($rules['email']);
         }
 
         if (1 === $this->c->config->b_ant_use_js) {
@@ -104,7 +107,12 @@ class Register extends Page
         if ($v->validation($_POST, true)) {
             // завершение регистрации
             if (1 === $v->on) {
-                $email    = $this->useOAuth ? $this->provider->userEmail : $v->email;
+//                $email    = $this->useOAuth ? $this->provider->userEmail : $v->email;
+                $email    = match (true) {
+                    $this->useOAuth                              => $this->provider->userEmail,
+                    1 === $this->c->config->b_regs_disable_email => 'fake' . \time() . \bin2hex(\random_bytes(3)) . '@localhost',
+                    default                                      => $v->email,
+                };
                 $userInDB = $this->c->users->loadByEmail($email);
 
                 if ($userInDB instanceof User) {
@@ -179,7 +187,10 @@ class Register extends Page
 
         $fields = [];
 
-        if (! $this->useOAuth) {
+        if (
+            ! $this->useOAuth
+            && 1 !== $this->c->config->b_regs_disable_email
+        ) {
             $fields['email'] = [
                 'autofocus'      => true,
                 'class'          => ['hint'],

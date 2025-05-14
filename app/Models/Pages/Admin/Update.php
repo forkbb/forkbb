@@ -1446,6 +1446,7 @@ class Update extends Admin
 
         $config->i_censoring_count      ??= 0;
         $config->b_hide_guest_email_fld ??= 0;
+        $config->b_regs_disable_email   ??= 0;
 
         $config->save();
 

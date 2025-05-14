@@ -100,6 +100,7 @@ class Options extends Admin
                     'b_email_use_cron'        => 'required|integer|in:0,1',
                     'b_regs_allow'            => 'required|integer|in:0,1',
                     'b_regs_verify'           => 'required|integer|in:0,1',
+                    'b_regs_disable_email'    => 'required|integer|in:0,1',
                     'b_regs_report'           => 'required|integer|in:0,1',
                     'b_rules'                 => 'required|integer|in:0,1|check_empty:o_rules_message',
                     'o_rules_message'         => 'exist|string:trim|max:65000 bytes|html',
@@ -185,6 +186,10 @@ class Options extends Admin
 
                 if (1 === $config->b_force_guest_email) {
                     $config->b_hide_guest_email_fld = 0;
+                }
+
+                if (1 === $config->b_regs_verify) {
+                    $config->b_regs_disable_email = 0;
                 }
 
                 $config->save();
@@ -756,6 +761,13 @@ class Options extends Admin
                     'values'  => $yn,
                     'caption' => 'Verify label',
                     'help'    => 'Verify help',
+                ],
+                'b_regs_disable_email' => [
+                    'type'    => 'radio',
+                    'value'   => $config->b_regs_disable_email,
+                    'values'  => $yn,
+                    'caption' => 'Disable email label',
+                    'help'    => 'Disable email help',
                 ],
                 'b_regs_report' => [
                     'type'    => 'radio',

@@ -1623,6 +1623,7 @@ class Install extends Admin
             'b_email_use_cron'        => 0,
             'b_regs_allow'            => 1,
             'b_regs_verify'           => 1,
+            'b_regs_disable_email'    => 0,
             'b_oauth_allow'           => 0,
             'b_announcement'          => 0,
             'o_announcement_message'  => __('Announcement '),

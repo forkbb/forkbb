@@ -506,3 +506,9 @@ msgstr "Hide email field"
 
 msgid "Hide e-mail help"
 msgstr "Hide the guest email address field if it is not a required field."
+
+msgid "Disable email label"
+msgstr "Without email"
+
+msgid "Disable email help"
+msgstr "Do not ask for email upon registration if verify registrations is disabled."
