@@ -58,6 +58,7 @@ class Parser extends Parserus
             'hashtagLink',
             1 === $this->c->user->g_search ? $this->c->Router->link('Search', ['keywords' => 'HASHTAG']) : null
         );
+        $this->setAttr('user', $this->c->user);
     }
 
     /**
