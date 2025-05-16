@@ -135,7 +135,10 @@ class Topic extends Page
         $this->c->Lang->load('topic');
 
         (\current($this->posts))->canEdit; // предзагрузка списка админов если необходимо O_o ????
-        $this->c->Parser; // предзагрузка
+
+        $isModerator = $this->user->isModerator($topic);
+
+        $this->c->Parser->setAttr('isModerator', $isModerator); // предзагрузка
 
         $this->identifier   = 'topic';
         $this->nameTpl      = 'topic';
@@ -164,7 +167,7 @@ class Topic extends Page
 
         if (
             $this->user->isAdmin
-            || $this->user->isModerator($topic)
+            || $isModerator
         ) {
             $this->c->Lang->load('misc');
 
