@@ -16,7 +16,7 @@ msgid "lang_direction"
 msgstr "ltr"
 
 msgid "lang_identifier"
-msgstr "cn"
+msgstr "zh"
 
 msgid "lang_decimal_point"
 msgstr "."
