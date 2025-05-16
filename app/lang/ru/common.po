@@ -494,3 +494,15 @@ msgstr "<span class="f-spantxtpm">Черн. </span><b>(%s)</b>"
 
 msgid "Your drafts"
 msgstr "Ваши черновики"
+
+msgid "bb hide"
+msgstr "Гости не могут видеть содержимое."
+
+msgid "bb hide admin"
+msgstr "Только админы видят содержимое."
+
+msgid "bb hide mod"
+msgstr "Только админы и модераторы раздела видят содержимое."
+
+msgid "bb hide %s posts"
+msgstr "Содержимое видно пользователям с числом сообщений от %s и больше."

@@ -2282,6 +2282,24 @@ body,
   margin-bottom: 0.5rem;
 }
 
+#fork .f-bb-hide {
+  padding: 0.3125rem;
+  margin: 0.3125rem;
+  border: 0.0625rem dotted var(--br-bbcode);
+  border-inline-start: 0.1875rem solid red;
+}
+
+#fork .f-bb-hide::before {
+  display: block;
+  content: "hide: " attr(data-bb);
+  margin-top: -0.3125rem;
+  font-size: 0.75rem;
+}
+
+#fork .f-bb-hide-visible {
+  border-inline-start-color: green;
+}
+
 /****************/
 /* Предпросмотр */
 /****************/

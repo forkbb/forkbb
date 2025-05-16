@@ -492,3 +492,15 @@ msgstr "<span class="f-spantxtpm">Drafts </span><b>(%s)</b>"
 
 msgid "Your drafts"
 msgstr "Your drafts"
+
+msgid "bb hide"
+msgstr "Guests cannot see this content."
+
+msgid "bb hide admin"
+msgstr "Only admins can see this content."
+
+msgid "bb hide mod"
+msgstr "Only admins and forum moderators can see this content."
+
+msgid "bb hide %s posts"
+msgstr "This content is visible to users with %s or more posts."
