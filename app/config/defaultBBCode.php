@@ -14,9 +14,9 @@ return [
         'type' => 'block',
         'handler' => <<<'HANDLER'
 $body = '<p>' . $body . '</p>';
-$body = \str_replace('<p><br>', '<p>', $body);
+$body = \preg_replace('%<p>\s*<br>%u', '<p>', $body);
 $body = \str_replace('<p></p>', '', $body);
-$body = \preg_replace('%<br>(?:\s*?<br>){3,}%', '<br><br><br>', $body);
+$body = \preg_replace('%<br>(?:\s*<br>){3,}%u', '<br><br><br>', $body);
 
 return $body;
 HANDLER,
@@ -770,6 +770,41 @@ if (\is_string($link)) {
 } else {
     return "<span class=\"f-bb-hashtag\">{$body}</span>";
 }
+HANDLER,
+    ],
+    [
+        'tag' => 'hide',
+        'type' => 'block',
+        'attrs' => [
+            'No_attr' => true,
+            'Def' => [
+                'format' => '%^(?:admin|mod|[1-9]\\d{0,8})$%',
+            ],
+        ],
+        'handler' => <<<'HANDLER'
+$user  = $parser->attr('user');
+$isMod = $parser->attr('isModerator');
+$def   = $attrs['Def'] ?? 'guest';
+$type  = $def;
+
+if ('admin' === $def && ! $user->isAdmin) {
+    $body = __('bb hide admin');
+
+} elseif ('mod' === $def && ! $user->isAdmin && ! $isMod) {
+    $body = __('bb hide mod');
+
+} elseif ('guest' === $def && $user->isGuest) {
+    $body = __('bb hide');
+
+} elseif (! $user->isAdmin && ! $isMod && $user->num_posts < ($int = (int) $def)) {
+    $body = __(['bb hide %s posts', $int]);
+    $def  = 'post';
+
+} else {
+    $def  = 'visible';
+}
+
+return "</p><div class=\"f-bb-hide f-bb-hide-{$def}\" data-bb=\"{$type}\"><p>{$body}</p></div><p>";
 HANDLER,
     ],
 ];
