@@ -1,0 +1,16 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: kakadou<m1265861794@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+
+msgid "Host info"
+msgstr "IP 地址是：%1$s<br><a href="%2$s">查看使用此 IP 的其他用户</a><br><br><div class="f-js-ipinfo" data-ip="%1$s">...</div>"

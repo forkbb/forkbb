@@ -1,0 +1,127 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: kakadou<m1265861794@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+
+msgid "OAuth authorization disabled"
+msgstr "OAuth授权<a href="%s">已禁用</a>。"
+
+msgid "Providers"
+msgstr "服务提供商"
+
+msgid "Provider label"
+msgstr "提供商"
+
+msgid "Position label"
+msgstr "位置"
+
+msgid "Allow label"
+msgstr "允许"
+
+msgid "Providers updated redirect"
+msgstr "提供商表已更新。"
+
+msgid "Provider updated redirect"
+msgstr "提供商数据已更新。"
+
+msgid "github"
+msgstr "GitHub"
+
+msgid "yandex"
+msgstr "Yandex"
+
+msgid "google"
+msgstr "Google"
+
+msgid "Callback label"
+msgstr "回调URI"
+
+msgid "Callback help"
+msgstr "用户授予或拒绝应用程序访问权限后返回的URI（对应OAuth协议的redirect_uri）。在提供商服务器上注册应用程序时必须指定此地址。"
+
+msgid "ID label"
+msgstr "客户端ID"
+
+msgid "ID help"
+msgstr "在提供商服务器上注册应用程序时可以获得的标识符。"
+
+msgid "Secret label"
+msgstr "客户端密钥"
+
+msgid "Secret help"
+msgstr "在提供商服务器上注册应用程序时可以获得的密钥（密码）。"
+
+msgid "Change data help"
+msgstr "如果要更改数据，请启用此复选框"
+
+msgid "Sign in with %s"
+msgstr "使用%s登录"
+
+msgid "Sign up with %s"
+msgstr "使用%s注册"
+
+msgid "From %s"
+msgstr "%s"
+
+msgid "Provider response error: %s"
+msgstr "失败。<br>提供商响应：%s。"
+
+msgid "State error"
+msgstr "状态参数错误。"
+
+msgid "Token error: %s"
+msgstr "访问令牌请求失败：%s。"
+
+msgid "cURL disabled"
+msgstr "PHP中的cURL扩展已禁用且allow_url_fopen = OFF。"
+
+msgid "cURL error"
+msgstr "cURL错误。"
+
+msgid "User error"
+msgstr "用户数据请求失败。"
+
+msgid "No new regs"
+msgstr "此论坛不接受新用户注册。"
+
+msgid "Email message"
+msgstr "从%s收到的这个邮箱属于一个已注册用户。<br>也许您使用了其他提供商登录或使用了用户名+密码？"
+
+msgid "Already linked to you"
+msgstr "此账号已经链接到您的账号。"
+
+msgid "Already linked to another"
+msgstr "此账号已经链接到另一个用户。"
+
+msgid "Email registered by another"
+msgstr "从%s收到的邮箱地址已被另一个用户注册。"
+
+msgid "Account linked"
+msgstr "账号已链接。"
+
+msgid "Identifier label"
+msgstr "标识符"
+
+msgid "Email label"
+msgstr "邮箱"
+
+msgid "Verified label"
+msgstr "邮箱已验证"
+
+msgid "Account removed"
+msgstr "账号已移除。"
+
+msgid "First time Register?"
+msgstr "您是第一次来这里。要注册吗？"
+
+msgid "Email banned"
+msgstr "从%s收到的邮箱地址已被禁止。"

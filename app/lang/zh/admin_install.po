@@ -1,0 +1,262 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: kakadou<m1265861794@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+
+msgid "ForkBB Installation"
+msgstr "ForkBB 安装程序"
+
+msgid "Welcome"
+msgstr "您即将安装 ForkBB。要安装 ForkBB，您必须完成下面的选项。如果在安装过程中遇到任何困难，请参阅文档。"
+
+msgid "Choose install language"
+msgstr "选择安装语言"
+
+msgid "Install language"
+msgstr "安装语言"
+
+msgid "Choose install language info"
+msgstr "此安装使用的语言。论坛本身使用的默认语言可以在下面设置。"
+
+msgid "Change language"
+msgstr "更改语言"
+
+msgid "Install"
+msgstr "安装 ForkBB 版本 %s"
+
+msgid "Database setup"
+msgstr "<b>数据库设置</b>"
+
+msgid "Info 1"
+msgstr "创建数据库连接所需的所有信息。"
+
+msgid "Database type"
+msgstr "数据库类型"
+
+msgid "Info 2"
+msgstr "选择一个数据库。我们支持 SQLite、MySQL 和 PostgreSQL。"
+
+msgid "Database server hostname"
+msgstr "数据库服务器主机名"
+
+msgid "Info 3"
+msgstr "如果 <code>localhost</code> 不起作用，您应该能从您的网络主机获取此信息。"
+
+msgid "Database name"
+msgstr "数据库名称"
+
+msgid "Info 4"
+msgstr "您想要安装 ForkBB 的数据库名称。"
+
+msgid "Database username"
+msgstr "数据库用户名"
+
+msgid "Database password"
+msgstr "数据库密码"
+
+msgid "Info 5"
+msgstr "您的数据库用户名和密码（SQLite 可忽略）。"
+
+msgid "Table prefix"
+msgstr "表前缀"
+
+msgid "Info 6"
+msgstr "前缀可以包含字母 a 到 z、任何数字和下划线字符。但必须以字母开头。最大长度为 40 个字符。"
+
+msgid "Administration setup"
+msgstr "<b>管理员设置</b>"
+
+msgid "Info 7"
+msgstr "创建论坛的第一个账户。"
+
+msgid "Administrator username"
+msgstr "管理员用户名"
+
+msgid "Info 8"
+msgstr "用户名必须以字母开头。可以包含字母、数字、空格、点、横线和下划线。"
+
+msgid "Administrator passphrase"
+msgstr "管理员密码短语"
+
+msgid "Info 9"
+msgstr "密码短语必须包含几个词。密码短语长度必须至少为 16 个字符。密码短语区分大小写。"
+
+msgid "Administrator email"
+msgstr "管理员电子邮件"
+
+msgid "Info 10"
+msgstr "请输入有效的电子邮件地址。"
+
+msgid "Board setup"
+msgstr "<b>论坛设置</b>"
+
+msgid "Info 11"
+msgstr "论坛的设置。您可以稍后更改这些设置。"
+
+msgid "Board title"
+msgstr "论坛标题"
+
+msgid "Board description"
+msgstr "论坛描述（支持 HTML）"
+
+msgid "Base URL"
+msgstr "论坛的 URL"
+
+msgid "Default language"
+msgstr "默认语言"
+
+msgid "Default style"
+msgstr "默认样式"
+
+msgid "Start install"
+msgstr "开始安装"
+
+msgid "You are running error"
+msgstr "您正在运行 %1$s 版本 %2$s。ForkBB 版本 %3$s 至少需要 %1$s %4$s 才能正常运行。您必须先升级 %1$s 安装才能继续。"
+
+msgid "Alert folder %s"
+msgstr "为了使 ForkBB 正常运行，目录 <em>%s</em> 必须对 PHP 可写。使用 chmod 设置适当的目录权限。"
+
+msgid "No language packs"
+msgstr "没有语言包。"
+
+msgid "No styles"
+msgstr "没有样式。"
+
+msgid "No DB extensions"
+msgstr "此 PHP 环境不支持 ForkBB 支持的任何数据库。必须启用 PDO。"
+
+msgid "No access to main.dist.php"
+msgstr "无法访问 main.dist.php。"
+
+msgid "My ForkBB Forum"
+msgstr "我的 ForkBB 论坛"
+
+msgid "Description"
+msgstr "由开源软件 ForkBB 驱动的论坛。"
+
+msgid "Wrong email"
+msgstr "您输入的管理员电子邮件地址无效。"
+
+msgid "Table prefix error"
+msgstr "表前缀 '%s' 格式不正确。"
+
+msgid "Prefix reserved"
+msgstr "'sqlite_' 和 'pg_' 前缀是保留的。请选择其他前缀。"
+
+msgid "Existing table error"
+msgstr "数据库 '%2$s' 中包含带有前缀 '%1$s' 的表：<b>%3$s</b>。"
+
+msgid "Administrators"
+msgstr "管理员"
+
+msgid "Administrator "
+msgstr "管理员"
+
+msgid "Moderators"
+msgstr "版主"
+
+msgid "Moderator "
+msgstr "版主"
+
+msgid "Guests"
+msgstr "访客"
+
+msgid "Guest "
+msgstr "访客"
+
+msgid "Members"
+msgstr "会员"
+
+msgid "New members"
+msgstr "新会员"
+
+msgid "New member"
+msgstr "新会员"
+
+msgid "Announcement "
+msgstr "在此输入您的公告。"
+
+msgid "Rules "
+msgstr "在此输入您的规则"
+
+msgid "Maintenance message "
+msgstr "论坛暂时关闭进行维护。请几分钟后再试。"
+
+msgid "Test post"
+msgstr "测试主题"
+
+msgid "Test message"
+msgstr "如果您看到这个（我想您确实看到了），说明 ForkBB 已经安装成功！现在请登录并前往管理控制面板配置您的论坛。"
+
+msgid "Test category"
+msgstr "测试分类"
+
+msgid "Test forum"
+msgstr "测试版块"
+
+msgid "This is just a test forum"
+msgstr "这只是一个测试版块"
+
+msgid "Bad database charset"
+msgstr "数据库必须使用 <b>utf8mb4</b> 字符编码创建（对比 <b>utf8mb4_unicode_ci</b>）。"
+
+msgid "Bad database encoding"
+msgstr "数据库必须使用 <b>%s</b> 字符编码创建。"
+
+msgid "Bad database collate"
+msgstr "数据库必须使用排序规则 <b>C</b>（LC_COLLATE）创建。"
+
+msgid "Bad database ctype"
+msgstr "数据库必须使用字符分类 <b>C</b>（LC_CTYPE）创建。"
+
+msgid "Cookie setup"
+msgstr "<b>Cookie 设置</b>"
+
+msgid "Info 12"
+msgstr "Cookie 是由用户浏览器存储数据的机制，用于用户身份识别。"
+
+msgid "Cookie Domain"
+msgstr "Cookie 域"
+
+msgid "Cookie Domain info"
+msgstr "如果您指定一个（子）域，那么论坛设置的 cookie 将在该域和<b>其所有子域</b>中可用！www.example.com 和 example.com <b>不是同一个域</b>。www.example.com 是 example.com 的子域。如果 cookie 应该只在论坛域中设置，请<b>将此字段留空</b>。"
+
+msgid "Cookie Path"
+msgstr "Cookie 路径"
+
+msgid "Cookie Path info"
+msgstr "服务器上 cookie 可用的路径。如果设置为 <b>/</b>，cookie 将在整个域中可用。如果设置为 <b>/foo/</b>，cookie 将只在域的 <b>/foo/</b> 目录及其所有子目录（如 <b>/foo/bar/</b>）中可用。"
+
+msgid "Yes "
+msgstr "是"
+
+msgid "No "
+msgstr "否"
+
+msgid "Cookie Secure"
+msgstr "Cookie 安全"
+
+msgid "Cookie Secure info"
+msgstr "表示 cookie 应该只通过客户端的安全 <b>HTTPS</b> 连接传输。设置为<b>是</b>时，只有在存在安全连接的情况下才会设置 cookie。"
+
+msgid "Failed to create table"
+msgstr "在选定的数据库中创建表失败。"
+
+msgid "Wrong data type for numeric fields"
+msgstr "PDO 驱动程序返回了错误的数字字段数据类型，很可能是字符串。对于 MySQL，最可能的原因是 pdo_mysql 扩展使用了 libmysql 库而不是 mysqlnd。更改 php 配置（在控制面板的 php 扩展中可能有 nd_pdo_mysql，选择它而不是 pdo_mysql）。"
+
+msgid "Failed to drop table"
+msgstr "在选定的数据库中删除表失败。"
+
+msgid "Failed to truncate table"
+msgstr "在选定的数据库中清空表失败。"

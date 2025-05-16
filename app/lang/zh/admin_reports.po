@@ -1,0 +1,52 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: kakadou<m1265861794@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+
+msgid "Report zapped redirect"
+msgstr "举报已标记为已读。"
+
+msgid "New reports "
+msgstr "新举报"
+
+msgid "Post #%s"
+msgstr "帖子 #%s"
+
+msgid "Post #%s "
+msgstr "<a href="%6$s">%5$s</a> » <a href="%4$s">%3$s</a> » <a href="%2$s">帖子 #%1$s</a>"
+
+msgid "Reported %s"
+msgstr "举报于 %s"
+
+msgid "Reported by"
+msgstr "举报者"
+
+msgid "Reason"
+msgstr "原因"
+
+msgid "Zap"
+msgstr "标记为已读"
+
+msgid "No new reports"
+msgstr "没有新的举报。"
+
+msgid "10 last read reports"
+msgstr "最近10个已读举报"
+
+msgid "NA"
+msgstr "不适用"
+
+msgid "Marked as read %1$s by %2$s"
+msgstr "由 %2$s 于 %1$s 标记为已读"
+
+msgid "No zapped reports"
+msgstr "没有已读举报。"

@@ -1,0 +1,280 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: kakadou<m1265861794@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+
+msgid "No users selected"
+msgstr "未选择用户。"
+
+msgid "Action not available"
+msgstr "操作不可用。"
+
+msgid "You are not allowed to delete the %s"
+msgstr "您不允许删除%s。"
+
+msgid "You are not allowed to ban the %s"
+msgstr "您不允许禁止%s。"
+
+msgid "You are not allowed to change group for %s"
+msgstr "您不允许更改%s的用户组。"
+
+msgid "No move admins message"
+msgstr "出于安全考虑，您不允许将多个管理员移动到另一个组。如果您想移动这些管理员，可以在他们各自的用户资料中进行操作。"
+
+msgid "No delete admins message"
+msgstr "不能删除管理员/版主。要删除管理员/版主，您必须先将他们移动到其他用户组。"
+
+msgid "No ban admins message"
+msgstr "不能禁止管理员/版主。要禁止管理员/版主，您必须先将他们移动到其他用户组。"
+
+msgid "Change user group"
+msgstr "更改用户组"
+
+msgid "Move users"
+msgstr "移动用户"
+
+msgid "New group label"
+msgstr "新组"
+
+msgid "New group help"
+msgstr "选择这些用户将被移动到的组：<b>%s</b>。"
+
+msgid "Users move redirect"
+msgstr "用户组已更改。"
+
+msgid "Deleting users"
+msgstr "删除用户"
+
+msgid "Delete users"
+msgstr "删除用户"
+
+msgid "Confirm delete info"
+msgstr "请确认您要删除这些用户：<b>%s</b>。"
+
+msgid "Delete posts"
+msgstr "删除他们的帖子和主题"
+
+msgid "Delete warning"
+msgstr "<b>警告！</b>已删除的用户和/或帖子无法恢复。如果您选择不删除这些用户发布的帖子，以后只能手动删除这些帖子。"
+
+msgid "Users delete redirect"
+msgstr "用户已删除。"
+
+msgid "User search head"
+msgstr "用户搜索"
+
+msgid "User search subhead"
+msgstr "搜索条件"
+
+msgid "User search info"
+msgstr "在数据库中搜索用户。您可以输入一个或多个搜索条件。接受星号(*)和问号(?)形式的通配符。"
+
+msgid "Username label"
+msgstr "用户名"
+
+msgid "E-mail address label"
+msgstr "邮箱"
+
+msgid "Title label"
+msgstr "头衔"
+
+msgid "Real name label"
+msgstr "真实姓名"
+
+msgid "Gender label"
+msgstr "性别"
+
+msgid "Do not display"
+msgstr "不显示"
+
+msgid "Website label"
+msgstr "网站"
+
+msgid "Location label"
+msgstr "位置"
+
+msgid "Signature label"
+msgstr "签名"
+
+msgid "Admin note label"
+msgstr "管理员备注"
+
+msgid "Posts label"
+msgstr "帖子"
+
+msgid "Last post label"
+msgstr "最后发帖"
+
+msgid "Last visit label"
+msgstr "最后访问"
+
+msgid "Registered label"
+msgstr "注册时间"
+
+msgid "Order by label"
+msgstr "排序方式"
+
+msgid "Order by username"
+msgstr "用户名"
+
+msgid "Order by e-mail"
+msgstr "邮箱"
+
+msgid "Order by posts"
+msgstr "帖子数量"
+
+msgid "Order by last post"
+msgstr "最后发帖"
+
+msgid "Order by last visit"
+msgstr "最后访问"
+
+msgid "Order by registered"
+msgstr "注册时间"
+
+msgid "Ascending"
+msgstr "升序"
+
+msgid "Descending"
+msgstr "降序"
+
+msgid "User group label"
+msgstr "用户组"
+
+msgid "All groups"
+msgstr "所有组"
+
+msgid "Unverified users"
+msgstr "未验证用户"
+
+msgid "Submit search"
+msgstr "提交搜索"
+
+msgid "IP search head"
+msgstr "IP搜索"
+
+msgid "IP search subhead"
+msgstr "搜索IP"
+
+msgid "IP address label"
+msgstr "IP地址"
+
+msgid "Find IP address"
+msgstr "查找IP地址"
+
+msgid "Results head"
+msgstr "搜索结果"
+
+msgid "Results username head"
+msgstr "用户名"
+
+msgid "Results e-mail head"
+msgstr "邮箱"
+
+msgid "Results title head"
+msgstr "头衔/状态"
+
+msgid "Results posts head"
+msgstr "帖子"
+
+msgid "Results admin note head"
+msgstr "备注"
+
+msgid "Results IP address head"
+msgstr "IP地址"
+
+msgid "Results last used head"
+msgstr "最后使用"
+
+msgid "Results times found head"
+msgstr "发现次数"
+
+msgid "Results action head"
+msgstr "操作"
+
+msgid "Results find more link"
+msgstr "查找使用此IP的更多用户"
+
+msgid "Results no posts found"
+msgstr "该用户目前在论坛中没有帖子。"
+
+msgid "Select"
+msgstr "选择"
+
+msgid "Select all"
+msgstr "全选"
+
+msgid "Unselect all"
+msgstr "取消全选"
+
+msgid "Ban"
+msgstr "禁止"
+
+msgid "Delete"
+msgstr "删除"
+
+msgid "Change group"
+msgstr "更改组"
+
+msgid "Bad IP message"
+msgstr "提供的IP地址格式不正确。"
+
+msgid "Results view IP link"
+msgstr "查看IP统计"
+
+msgid "Results show posts link"
+msgstr "显示帖子"
+
+msgid "Search results legend"
+msgstr "选择如何查看搜索结果"
+
+msgid "No users found"
+msgstr "没有找到符合您条件的用户。"
+
+msgid "User promote redirect"
+msgstr "用户已提升。"
+
+msgid "You are trying to change your own group"
+msgstr "您正在尝试更改自己的用户组。"
+
+msgid "User is ban"
+msgstr "用户%s已被禁止。"
+
+msgid "New user head"
+msgstr "新用户"
+
+msgid "New user"
+msgstr "新用户"
+
+msgid "Add user"
+msgstr "添加用户"
+
+msgid "Add user legend"
+msgstr "添加用户"
+
+msgid "New user added redirect"
+msgstr "新用户已添加。"
+
+msgid "Updated the number of users posts redirect"
+msgstr "已更新用户的帖子和主题数量。"
+
+msgid "Recalculate"
+msgstr "重新计算"
+
+msgid "Recalculate head"
+msgstr "重新计算用户的帖子和主题数量"
+
+msgid "Number of users posts"
+msgstr "用户的帖子和主题数量"
+
+msgid "Drafts label"
+msgstr "草稿"

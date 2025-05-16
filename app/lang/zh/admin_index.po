@@ -1,0 +1,115 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: kakadou<m1265861794@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+
+msgid "Not available"
+msgstr "不可用"
+
+msgid "Forum admin head"
+msgstr "论坛管理"
+
+msgid "NA"
+msgstr "不适用"
+
+msgid "Welcome to admin"
+msgstr "欢迎来到 ForkBB 管理控制面板。在这里，您可以控制论坛的重要功能。根据您是管理员还是版主，您可以："
+
+msgid "Welcome 1"
+msgstr "组织分类和论坛。"
+
+msgid "Welcome 2"
+msgstr "设置论坛范围的选项和偏好。"
+
+msgid "Welcome 3"
+msgstr "控制用户和访客的权限。"
+
+msgid "Welcome 4"
+msgstr "查看用户的 IP 统计信息。"
+
+msgid "Welcome 5"
+msgstr "封禁用户。"
+
+msgid "Welcome 6"
+msgstr "审查词语。"
+
+msgid "Welcome 7"
+msgstr "设置用户组和晋升规则。"
+
+msgid "Welcome 8"
+msgstr "清理旧帖子。"
+
+msgid "Welcome 9"
+msgstr "处理帖子举报。"
+
+msgid "About head"
+msgstr "关于 ForkBB"
+
+msgid "ForkBB version label"
+msgstr "版本"
+
+msgid "ForkBB version data"
+msgstr "%s"
+
+msgid "Server statistics label"
+msgstr "服务器统计"
+
+msgid "View server statistics"
+msgstr "查看服务器统计"
+
+msgid "Support label"
+msgstr "支持"
+
+msgid "PHPinfo disabled message"
+msgstr "此服务器已禁用 PHP 函数 phpinfo()。"
+
+msgid "Server statistics head"
+msgstr "服务器统计"
+
+msgid "Server load label"
+msgstr "服务器负载"
+
+msgid "Server load data"
+msgstr "%1$s - %2$s 位访客在线"
+
+msgid "Environment label"
+msgstr "环境"
+
+msgid "Environment data OS"
+msgstr "操作系统：%s"
+
+msgid "Show info"
+msgstr "显示信息"
+
+msgid "Environment data version"
+msgstr "PHP：%s"
+
+msgid "Environment data acc"
+msgstr "加速器："
+
+msgid "Database label"
+msgstr "数据库"
+
+msgid "Database data tables"
+msgstr "表：%s"
+
+msgid "Database data rows"
+msgstr "行数：%s"
+
+msgid "Database data size"
+msgstr "大小：%s"
+
+msgid "Other"
+msgstr "其他："
+
+msgid "Community"
+msgstr "社区"

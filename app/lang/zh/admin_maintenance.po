@@ -1,0 +1,82 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: kakadou<m1265861794@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+
+msgid "Maintenance head"
+msgstr "论坛维护"
+
+msgid "Rebuild index head"
+msgstr "重建搜索索引"
+
+msgid "Rebuild index info"
+msgstr "如果您在数据库中手动添加、编辑或删除了帖子，或者遇到搜索问题，您应该重建搜索索引。为了获得最佳性能，在重建过程中您应该将论坛置于维护模式（见上文）。<b>重建搜索索引可能需要很长时间，并且在重建过程中会增加服务器负载！</b>"
+
+msgid "Posts per cycle label"
+msgstr "每次处理帖子数"
+
+msgid "Posts per cycle help"
+msgstr "每次页面刷新时处理的帖子数量。例如，如果您输入 300，将处理三百个帖子然后页面会刷新。这是为了防止脚本在重建过程中超时。"
+
+msgid "Starting post label"
+msgstr "起始帖子 ID"
+
+msgid "Starting post help"
+msgstr "开始重建的帖子 ID。默认值是数据库中第一个可用的 ID。通常您不需要更改这个值。"
+
+msgid "Empty index label"
+msgstr "清空索引"
+
+msgid "Empty index help"
+msgstr "如果您想在重建之前清空搜索索引，请选择此项（见下文）。"
+
+msgid "Rebuild completed info"
+msgstr "一旦过程完成，您将被重定向回此页面。如果您被迫中止重建过程，请记下最后处理的帖子 ID，并在想要继续时在"起始帖子 ID"中输入该 ID+1（"清空索引"必须不被选中）。"
+
+msgid "Rebuild index"
+msgstr "重建索引"
+
+msgid "Rebuilding search index"
+msgstr "重建搜索索引"
+
+msgid "Rebuilding index end"
+msgstr "重建索引已完成。"
+
+msgid "Processed posts"
+msgstr "已处理从 <b>%1$s</b> 到 <b>%2$s</b> 的消息…"
+
+msgid "Maintenance mode label"
+msgstr "启用"
+
+msgid "Maintenance mode help"
+msgstr "启用后，论坛将只对启用前已登录的管理员可用。如果论坛需要暂时关闭进行维护，应该使用此功能。<br><b>警告！在维护模式下不要登出。您将无法再次登录。</b>"
+
+msgid "Maintenance message label"
+msgstr "维护消息（HTML）"
+
+msgid "Maintenance message help"
+msgstr "当论坛处于维护模式时向用户显示的消息。"
+
+msgid "Default maintenance message"
+msgstr "论坛暂时关闭进行维护。<b>请几分钟后再试。</b>"
+
+msgid "Clear cache head"
+msgstr "清除缓存"
+
+msgid "Clearing the cache"
+msgstr "清除缓存"
+
+msgid "Clear"
+msgstr "清除"
+
+msgid "Clear cache redirect"
+msgstr "论坛缓存已清除。"

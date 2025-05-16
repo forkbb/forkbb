@@ -1,0 +1,337 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: kakadou<m1265861794@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+
+msgid "You must enter a group title"
+msgstr "您必须输入用户组标题。"
+
+msgid "Title already exists"
+msgstr "已存在同名的用户组。"
+
+msgid "Default group redirect"
+msgstr "默认用户组已设置。"
+
+msgid "Group removed redirect"
+msgstr "用户组已删除。"
+
+msgid "Group added redirect"
+msgstr "用户组已添加。"
+
+msgid "Group edited redirect"
+msgstr "用户组已编辑。"
+
+msgid "Add group subhead"
+msgstr "添加新用户组"
+
+msgid "New group label"
+msgstr "基于现有用户组创建"
+
+msgid "New group help"
+msgstr "选择一个用户组作为基础，新用户组将继承其权限设置。您可以在下一页调整具体设置。"
+
+msgid "Default group subhead"
+msgstr "设置默认用户组"
+
+msgid "Default group label"
+msgstr "默认用户组"
+
+msgid "Default group help"
+msgstr "这是默认的用户组，即用户注册时被分配的用户组。出于安全考虑，用户默认不能被分配到版主或管理员用户组。"
+
+msgid "Edit groups info"
+msgstr "预定义的访客、管理员、版主和会员用户组不能被删除，但可以编辑。请注意，某些用户组中的部分选项不可用（例如访客的<em>编辑帖子</em>权限）。管理员始终拥有全部权限。"
+
+msgid "Delete link"
+msgstr "删除"
+
+msgid "Group delete"
+msgstr "删除用户组"
+
+msgid "I want to delete this group"
+msgstr "是的，我要删除用户组 <b>%s</b>"
+
+msgid "Confirm delete"
+msgstr "确认删除用户组？"
+
+msgid "Confirm delete warn"
+msgstr "<b>警告！</b> 删除用户组后将无法恢复。"
+
+msgid "Move users info"
+msgstr "用户组 <b>%1$s</b> 当前有 <b>%2$s</b> 个成员。请选择删除后将这些成员分配到哪个用户组。"
+
+msgid "Move users label"
+msgstr "将用户移动到"
+
+msgid "Delete group"
+msgstr "删除用户组"
+
+msgid "Group settings info"
+msgstr "以下选项和权限是该用户组的默认权限。如果没有特定的论坛权限设置，这些选项将生效。"
+
+msgid "Group title label"
+msgstr "用户组标题"
+
+msgid "User title label"
+msgstr "用户头衔"
+
+msgid "User title help"
+msgstr "该用户组成员获得的头衔。留空则使用默认头衔 <b>%s</b>。"
+
+msgid "Promote users label"
+msgstr "提升用户"
+
+msgid "Promote users help"
+msgstr "当用户达到特定帖子数量时，可以自动提升到新的用户组。选择 &quot;%s&quot; 禁用此功能。出于安全考虑，这里不允许选择管理员用户组。另外请注意，受此设置影响的用户组变更将<b>立即</b>生效。"
+
+msgid "Number for promotion label"
+msgstr "提升所需的帖子数量"
+
+msgid "Number for promotion help"
+msgstr "请注意，这里输入的帖子数量是用户的总帖子数，而不是作为该用户组成员发表的帖子数。"
+
+msgid "Disable promotion"
+msgstr "禁用提升"
+
+msgid "Mod privileges label"
+msgstr "允许用户拥有版主权限"
+
+msgid "Mod privileges help"
+msgstr "要使该用户组的用户拥有版主权限，必须指定其管理一个或多个版块。这可以在用户资料的用户管理页面中设置。"
+
+msgid "Edit profile label"
+msgstr "允许版主编辑用户资料"
+
+msgid "Edit profile help"
+msgstr "如果启用版主权限，允许该用户组的用户编辑用户资料。"
+
+msgid "Rename users label"
+msgstr "允许版主重命名用户"
+
+msgid "Rename users help"
+msgstr "如果启用版主权限，允许该用户组的用户重命名用户。"
+
+msgid "Change passwords label"
+msgstr "允许版主修改密码"
+
+msgid "Change passwords help"
+msgstr "如果启用版主权限，允许该用户组的用户修改用户密码。"
+
+msgid "Mod promote users label"
+msgstr "允许版主提升用户"
+
+msgid "Mod promote users help"
+msgstr "如果启用版主权限，允许该用户组的用户提升其他用户。"
+
+msgid "Ban users label"
+msgstr "允许版主封禁用户"
+
+msgid "Ban users help"
+msgstr "如果启用版主权限，允许该用户组的用户封禁用户。"
+
+msgid "Read board label"
+msgstr "浏览论坛"
+
+msgid "Read board help"
+msgstr "允许该用户组的用户浏览论坛。此设置适用于论坛的所有功能，因此不能被特定版块的权限设置覆盖。如果设置为 &quot;否&quot;，该用户组的用户只能登录/登出和注册。"
+
+msgid "View user info label"
+msgstr "查看用户信息"
+
+msgid "View user info help"
+msgstr "允许用户查看用户列表和用户资料。"
+
+msgid "Post replies label"
+msgstr "回复主题"
+
+msgid "Post replies help"
+msgstr "允许该用户组的用户在主题中发表回复。"
+
+msgid "Post topics label"
+msgstr "发表主题"
+
+msgid "Post topics help"
+msgstr "允许该用户组的用户发表新主题。"
+
+msgid "Edit posts label"
+msgstr "编辑帖子"
+
+msgid "Edit posts help"
+msgstr "允许该用户组的用户编辑自己的帖子。"
+
+msgid "Delete posts label"
+msgstr "删除帖子"
+
+msgid "Delete posts help"
+msgstr "允许该用户组的用户删除自己的帖子。"
+
+msgid "Delete topics label"
+msgstr "删除主题"
+
+msgid "Delete topics help"
+msgstr "允许该用户组的用户删除自己的主题（<b>包括所有回复</b>）。"
+
+msgid "Post links label"
+msgstr "发表链接"
+
+msgid "Post links help"
+msgstr "允许该用户组的用户在帖子中包含链接。此设置也适用于签名档和用户资料中的网站字段。"
+
+msgid "Set own title label"
+msgstr "设置自定义头衔"
+
+msgid "Set own title help"
+msgstr "允许该用户组的用户设置自己的用户头衔。"
+
+msgid "User search label"
+msgstr "使用搜索"
+
+msgid "User search help"
+msgstr "允许该用户组的用户使用搜索功能。"
+
+msgid "User list search label"
+msgstr "搜索用户列表"
+
+msgid "User list search help"
+msgstr "允许该用户组的用户在用户列表中进行自由文本搜索。"
+
+msgid "Send e-mails label"
+msgstr "发送邮件"
+
+msgid "Send e-mails help"
+msgstr "允许该用户组的用户向其他用户发送邮件。"
+
+msgid "Post flood label"
+msgstr "发帖时间间隔"
+
+msgid "Post flood help"
+msgstr "该用户组的用户在两次发帖之间必须等待的秒数。设置为 0 则禁用此限制。"
+
+msgid "Search flood label"
+msgstr "搜索时间间隔"
+
+msgid "Search flood help"
+msgstr "该用户组的用户在两次搜索之间必须等待的秒数。设置为 0 则禁用此限制。"
+
+msgid "E-mail flood label"
+msgstr "发送邮件时间间隔"
+
+msgid "E-mail flood help"
+msgstr "该用户组的用户在两次发送邮件之间必须等待的秒数。设置为 0 则禁用此限制。"
+
+msgid "Report flood label"
+msgstr "举报时间间隔"
+
+msgid "Report flood help"
+msgstr "该用户组的用户在两次举报之间必须等待的秒数。设置为 0 则禁用此限制。"
+
+msgid "Moderator info"
+msgstr "请注意，要使该用户组的用户拥有版主权限，必须指定其管理一个或多个版块。这可以在用户资料中设置（编辑资料 - 配置版主权限）。"
+
+msgid "Delete-edit interval label"
+msgstr "编辑/删除时间限制"
+
+msgid "Delete-edit interval help"
+msgstr "编辑（删除）消息或主题的时间限制（秒）。设置为 0 则禁用此限制。<br>版主在其负责的区域内不受此限制。"
+
+msgid "Create new group"
+msgstr "创建新用户组"
+
+msgid "Edit group"
+msgstr "编辑用户组"
+
+msgid "Invalid default group"
+msgstr "无效的默认用户组。"
+
+msgid "Invalid group to create on base"
+msgstr "无效的基础用户组。"
+
+msgid "Signature subhead"
+msgstr "签名档"
+
+msgid "Max sig length label"
+msgstr "最大签名档长度"
+
+msgid "Max sig length help"
+msgstr "用户签名档允许包含的最大字符数。设置为 0 则禁用签名档。"
+
+msgid "Max sig lines label"
+msgstr "最大签名档行数"
+
+msgid "Max sig lines help"
+msgstr "用户签名档允许包含的最大行数。设置为 0 则禁用签名档。"
+
+msgid "Titles subhead"
+msgstr "头衔"
+
+msgid "Promotion subhead"
+msgstr "提升"
+
+msgid "Moderation subhead"
+msgstr "管理"
+
+msgid "Permissions subhead"
+msgstr "权限"
+
+msgid "Intervals subhead"
+msgstr "时间间隔"
+
+msgid "PM subhead"
+msgstr "私信"
+
+msgid "Allow PM label"
+msgstr "允许私信"
+
+msgid "PM limit label"
+msgstr "限制"
+
+msgid "PM limit help"
+msgstr "该用户组用户允许的最大对话数。设置为 0 则禁用。"
+
+msgid "Upload subhead"
+msgstr "文件上传"
+
+msgid "Allowed file extensions label"
+msgstr "允许的类型"
+
+msgid "Allowed file extensions help"
+msgstr "允许上传的文件扩展名列表，用逗号分隔。留空则禁止该用户组上传文件。"
+
+msgid "Max file size label"
+msgstr "最大文件大小"
+
+msgid "Max file size help"
+msgstr "最大文件上传大小（<b>KiB</b>）。PHP 和引擎设置会影响此参数。设置为 0 则禁止该用户组上传文件。"
+
+msgid "Disk space limit label"
+msgstr "磁盘空间限制"
+
+msgid "Disk space limit help"
+msgstr "磁盘空间限制（<b>MiB</b>）。设置为 0 则禁止该用户组上传文件。"
+
+msgid "Delete profile label"
+msgstr "删除资料"
+
+msgid "Delete profile help"
+msgstr "允许该用户组的用户删除自己的资料（<b>用户的帖子不会被删除</b>）。"
+
+msgid "Use reaction label"
+msgstr "使用表态"
+
+msgid "Use reaction help"
+msgstr "允许该用户组的用户使用表态功能对帖子进行评价。"
+
+msgid "Use about me label"
+msgstr "使用"关于我""
+
+msgid "Use about me help"
+msgstr "允许该用户组的用户在资料中使用"关于我"字段。"
