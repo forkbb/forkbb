@@ -1,0 +1,319 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: kakadou<m1265861794@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+
+msgid "PM Folders"
+msgstr "私信文件夹"
+
+msgid "New messages"
+msgstr "新消息"
+
+msgid "New messages %s"
+msgstr "新消息（%s）"
+
+msgid "New messages with %s"
+msgstr "与 %s 的新消息"
+
+msgid "My talks"
+msgstr "我的对话"
+
+msgid "My talks %s"
+msgstr "我的对话（%s）"
+
+msgid "My talks with %s"
+msgstr "与 %s 的对话"
+
+msgid "Archive messages"
+msgstr "存档消息"
+
+msgid "Archive messages %s"
+msgstr "存档消息（%s）"
+
+msgid "Archive messages with %s"
+msgstr "与 %s 的存档消息"
+
+msgid "PM Storage"
+msgstr "存储空间"
+
+msgid "Active: %s"
+msgstr "活动：%s%%"
+
+msgid "Archive: %s"
+msgstr "存档：%s%%"
+
+msgid "New PT title"
+msgstr "创建私人对话"
+
+msgid "New dialogue"
+msgstr "新建对话"
+
+msgid "New PM title"
+msgstr "发表回复"
+
+msgid "New PM title archive"
+msgstr "保存消息"
+
+msgid "New message"
+msgstr "新消息"
+
+msgid "Edit PT title"
+msgstr "编辑对话"
+
+msgid "Edit dialogue"
+msgstr "编辑对话"
+
+msgid "Edit PM title"
+msgstr "编辑消息"
+
+msgid "Edit message"
+msgstr "编辑消息"
+
+msgid "Topic review"
+msgstr "主题预览（最新优先）"
+
+msgid "Archive Send later"
+msgstr "存档（稍后发送）"
+
+msgid "Info zero"
+msgstr "此文件夹中没有对话。"
+
+msgid "PM to archive Redirect"
+msgstr "私信已保存到存档。"
+
+msgid "PM created Redirect"
+msgstr "新对话已创建。"
+
+msgid "PM sent Redirect"
+msgstr "私信已发送。"
+
+msgid "Dialogue"
+msgstr "对话"
+
+msgid "Dialogue %s was not found in the database"
+msgstr "对话 %s 在数据库中未找到。"
+
+msgid "Select"
+msgstr "选择"
+
+msgid "Closed"
+msgstr "已关闭"
+
+msgid "for %s"
+msgstr "给 %s"
+
+msgid "Last post <a href=\"%1$s\">%2$s</a>"
+msgstr "<small>最新消息 </small><a href=\"%1$s\">%2$s</a>"
+
+msgid "Delete dialogue"
+msgstr "删除对话"
+
+msgid "Delete message"
+msgstr "删除消息"
+
+msgid "Dialogue is closed"
+msgstr "当前对话已关闭。"
+
+msgid "Dialogue is locked"
+msgstr "此对话已锁定，无法操作。"
+
+msgid "Target pm off"
+msgstr "接收者已关闭私信功能。"
+
+msgid "Target group pm off"
+msgstr "接收者所在用户组已禁用私信功能。"
+
+msgid "Target is full"
+msgstr "接收者的私信存储已满。"
+
+msgid "Active is full"
+msgstr "您的私信存储已满。"
+
+msgid "Archive is full"
+msgstr "您的私信存档已满。"
+
+msgid "Delete PT title"
+msgstr "删除对话"
+
+msgid "Delete  dialogue"
+msgstr "删除对话"
+
+msgid "Delete PM title"
+msgstr "删除消息"
+
+msgid "Delete  message"
+msgstr "删除消息"
+
+msgid "Delete info"
+msgstr "您选择要删除的消息"
+
+msgid "Delete dialogue info"
+msgstr "您选择要删除的对话中的第一条消息"
+
+msgid "Dialogue %s"
+msgstr "对话 «%s»"
+
+msgid "Dialogue by %1$s (%2$s)"
+msgstr "由 %1$s 发起的对话<br>创建于 %2$s"
+
+msgid "Message by %1$s (%2$s)"
+msgstr "由 %1$s 发送的消息<br>发送于 %2$s"
+
+msgid "Confirm delete dialogue"
+msgstr "确认删除对话"
+
+msgid "Confirm delete message"
+msgstr "确认删除消息"
+
+msgid "Dialogue del redirect"
+msgstr "对话已删除。"
+
+msgid "Message del redirect"
+msgstr "消息已删除。"
+
+msgid "PM Options"
+msgstr "选项"
+
+msgid "PM Config"
+msgstr "设置"
+
+msgid "Blocked users"
+msgstr "已屏蔽用户"
+
+msgid "To archive"
+msgstr "存档"
+
+msgid "Delete"
+msgstr "删除"
+
+msgid "No dialogs"
+msgstr "您没有选择任何对话进行处理。"
+
+msgid "Unknown action selected"
+msgstr "选择了未知的操作。"
+
+msgid "Dialogue %s is not yours"
+msgstr "对话 %s 不属于您。"
+
+msgid "InfoDeleteQ"
+msgstr "确认删除"
+
+msgid "InfoSaveQ"
+msgstr "确认保存"
+
+msgid "InfoDeleteQt"
+msgstr "删除对话"
+
+msgid "InfoSaveQt"
+msgstr "移动对话"
+
+msgid "Dialogues deleted redirect"
+msgstr "对话已删除。"
+
+msgid "Dialogues moved to archive redirect"
+msgstr "对话已移至存档。"
+
+msgid "Cannot be moved"
+msgstr "无法将这么多对话移至存档。"
+
+msgid "Send dialogue"
+msgstr "发送对话"
+
+msgid "Send dialogue to %s"
+msgstr "将此对话发送给 %s"
+
+msgid "PM Config title"
+msgstr "私信设置"
+
+msgid "Use PM label"
+msgstr "使用私信"
+
+msgid "Use PM help"
+msgstr "启用私信功能。"
+
+msgid "Email notification label"
+msgstr "邮件通知"
+
+msgid "Email notification help"
+msgstr "接收新私信的邮件通知。"
+
+msgid "PM Config redirect"
+msgstr "私信设置已更改。"
+
+msgid "PM Config legend"
+msgstr "设置"
+
+msgid "PM off"
+msgstr "您已关闭私信功能。"
+
+msgid "Block"
+msgstr "屏蔽"
+
+msgid "Unblock"
+msgstr "取消屏蔽"
+
+msgid "You block addr"
+msgstr "无法发送私信。您已屏蔽该用户。"
+
+msgid "Addr block you"
+msgstr "无法发送私信。该用户已屏蔽您。"
+
+msgid "Send  dialogue"
+msgstr "发送对话"
+
+msgid "Send PT title"
+msgstr "发送对话"
+
+msgid "Recipient: %s"
+msgstr "接收者：%s"
+
+msgid "Send info"
+msgstr "第一条消息"
+
+msgid "Send dialogue redirect"
+msgstr "对话已发送。"
+
+msgid "Blocked users title"
+msgstr "已屏蔽用户"
+
+msgid "No blocked users"
+msgstr "没有已屏蔽的用户"
+
+msgid "Block user title"
+msgstr "屏蔽用户"
+
+msgid "Unblock user title"
+msgstr "取消屏蔽用户"
+
+msgid "Block user %s crumb"
+msgstr "屏蔽用户 %s"
+
+msgid "Unblock user %s crumb"
+msgstr "取消屏蔽用户 %s"
+
+msgid "Block user %s"
+msgstr "屏蔽用户 %s"
+
+msgid "Unblock user %s"
+msgstr "取消屏蔽用户 %s"
+
+msgid "Invalid action"
+msgstr "无效的操作。"
+
+msgid "User is blocked redirect"
+msgstr "用户已被屏蔽。"
+
+msgid "User is unblocked redirect"
+msgstr "用户已被取消屏蔽。"
+
+msgid "PM menu"
+msgstr "私信菜单"

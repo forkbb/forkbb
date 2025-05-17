@@ -1,0 +1,430 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: kakadou<m1265861794@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+
+msgid "User activity"
+msgstr "用户活动"
+
+msgid "Activate email sent"
+msgstr "一封包含电子邮件地址激活说明的邮件已发送到指定地址。如果您没有收到邮件，请联系论坛管理员：<a href="mailto:%1$s">%1$s</a>。"
+
+msgid "Email instructions"
+msgstr "一封包含激活链接的邮件将发送到此电子邮件地址。您必须点击邮件中的链接来激活此地址。"
+
+msgid "Change email"
+msgstr "更改电子邮件地址"
+
+msgid "New email"
+msgstr "新电子邮件地址"
+
+msgid "New or old email"
+msgstr "新或旧（用于确认）电子邮件地址"
+
+msgid "Delete avatar"
+msgstr "删除头像"
+
+msgid "Profile redirect"
+msgstr "个人资料已更新。"
+
+msgid "%s's profile"
+msgstr "%s的个人资料"
+
+msgid "Email info"
+msgstr "电子邮件"
+
+msgid "Registered info"
+msgstr "注册时间"
+
+msgid "Last post info"
+msgstr "最后发帖"
+
+msgid "Last visit info"
+msgstr "最后访问"
+
+msgid "Posts info"
+msgstr "发帖总数"
+
+msgid "Show posts"
+msgstr "显示用户的帖子"
+
+msgid "Topics info"
+msgstr "主题总数"
+
+msgid "Show topics"
+msgstr "显示用户的主题"
+
+msgid "Realname"
+msgstr "真实姓名"
+
+msgid "Location"
+msgstr "所在地"
+
+msgid "Website"
+msgstr "网站"
+
+msgid "Avatar"
+msgstr "头像"
+
+msgid "Signature"
+msgstr "签名"
+
+msgid "Sig max size"
+msgstr "最大长度：<b>%1$s</b>个字符 / 最大行数：<b>%2$s</b>"
+
+msgid "Leave blank"
+msgstr "留空则使用论坛默认设置。"
+
+msgid "Subscription options"
+msgstr "订阅选项"
+
+msgid "Notify label"
+msgstr "通知包含帖子内容"
+
+msgid "Notify info"
+msgstr "在订阅通知邮件中包含新帖子的内容。"
+
+msgid "Auto notify label"
+msgstr "自动订阅主题"
+
+msgid "Auto notify info"
+msgstr "自动订阅您发表过帖子的每个主题。"
+
+msgid "Smilies label"
+msgstr "表情图标"
+
+msgid "Smilies info"
+msgstr "将表情符号显示为图标。"
+
+msgid "Images label"
+msgstr "帖子中的图片"
+
+msgid "Images info"
+msgstr "在帖子中显示图片。"
+
+msgid "Images sigs label"
+msgstr "签名中的图片"
+
+msgid "Images sigs info"
+msgstr "在用户签名中显示图片。"
+
+msgid "Reaction label"
+msgstr "回应"
+
+msgid "Reaction info"
+msgstr "显示对帖子的回应。"
+
+msgid "Avatars label"
+msgstr "头像"
+
+msgid "Avatars info"
+msgstr "在帖子中显示用户头像。"
+
+msgid "Sigs label"
+msgstr "签名"
+
+msgid "Sigs info"
+msgstr "显示用户签名。"
+
+msgid "Style"
+msgstr "风格"
+
+msgid "Admin note"
+msgstr "管理员备注"
+
+msgid "Admin note help"
+msgstr "供管理员和版主使用。"
+
+msgid "Delete user"
+msgstr "删除"
+
+msgid "Ban user"
+msgstr "封禁"
+
+msgid "Unban user"
+msgstr "解除封禁"
+
+msgid "Update rights redirect"
+msgstr "论坛版主权限已更新。"
+
+msgid "Gender"
+msgstr "性别"
+
+msgid "Do not display"
+msgstr "不显示"
+
+msgid "Contact details"
+msgstr "联系方式"
+
+msgid "Personal information"
+msgstr "个人信息"
+
+msgid "Email settings label"
+msgstr "邮件设置"
+
+msgid "View "
+msgstr "查看"
+
+msgid "Edit "
+msgstr "编辑"
+
+msgid "Editing profile"
+msgstr "编辑个人资料"
+
+msgid "Configure "
+msgstr "配置"
+
+msgid "Board configuration"
+msgstr "论坛配置"
+
+msgid "Not uploaded"
+msgstr "未上传"
+
+msgid "New avatar"
+msgstr "新头像"
+
+msgid "New avatar info"
+msgstr "头像将自动调整为 <b>%1$s</b>x<b>%2$s</b> 像素。如果压缩后的头像大小超过 <b>%3$s</b> 字节（<i>%4$s</i>），头像将被移除。"
+
+msgid "IP"
+msgstr "IP"
+
+msgid "IP title"
+msgstr "显示IP信息"
+
+msgid "No signature after censoring"
+msgstr "审查后签名文本被删除"
+
+msgid "Signature has too many lines"
+msgstr "签名行数过多"
+
+msgid "All caps signature"
+msgstr "签名不能全部使用大写字母"
+
+msgid "To change email"
+msgstr "更改电子邮件地址"
+
+msgid "To confirm/change email"
+msgstr "确认/更改电子邮件地址"
+
+msgid "Email is old redirect"
+msgstr "电子邮件地址未更改。"
+
+msgid "Email changed redirect"
+msgstr "电子邮件地址已更改。"
+
+msgid "Email confirmed redirect"
+msgstr "电子邮件地址已确认。"
+
+msgid "Pass not match"
+msgstr "密码不匹配。"
+
+msgid "Change pass"
+msgstr "更改密码"
+
+msgid "Change passphrase"
+msgstr "更改密码"
+
+msgid "New pass"
+msgstr "新密码"
+
+msgid "Confirm new pass"
+msgstr "确认新密码"
+
+msgid "Pass updated"
+msgstr "您的密码已更新。您现在可以使用新密码登录。"
+
+msgid "Pass updated redirect"
+msgstr "密码已更新。"
+
+msgid "Language"
+msgstr "语言"
+
+msgid "Essentials"
+msgstr "基本设置"
+
+msgid "Time zone"
+msgstr "时区"
+
+msgid "Default for language"
+msgstr "使用语言默认设置"
+
+msgid "For default"
+msgstr "将此字段设为零以使用默认设置。"
+
+msgid "Time format"
+msgstr "时间格式"
+
+msgid "Date format"
+msgstr "日期格式"
+
+msgid "Viewing posts"
+msgstr "查看帖子"
+
+msgid "Pagination"
+msgstr "分页"
+
+msgid "Board configuration redirect"
+msgstr "论坛配置已更新。"
+
+msgid "Group"
+msgstr "用户组"
+
+msgid "Change user group"
+msgstr "更改用户组"
+
+msgid "Configure moderator rights"
+msgstr "配置版主权限"
+
+msgid "Moderator rights"
+msgstr "版主权限"
+
+msgid "Forum label"
+msgstr "版块"
+
+msgid "Moderator label"
+msgstr "版主"
+
+msgid "Private information"
+msgstr "私人信息"
+
+msgid "Security"
+msgstr "安全设置"
+
+msgid "IP check"
+msgstr "IP检查"
+
+msgid "Disable check"
+msgstr "关闭"
+
+msgid "Not strict check"
+msgstr "宽松"
+
+msgid "Strict check"
+msgstr "严格"
+
+msgid "IP check info"
+msgstr "<b>严格</b> - 如果您的IP地址发生变化，您将被登出；<br><b>宽松</b> - 论坛会记住您最近使用的10-20个IP地址，如果您当前的IP地址不在此列表中，您将被登出；<br><b>关闭</b> - IP地址变化不会影响任何操作。"
+
+msgid "Total topics subscriptions"
+msgstr "主题订阅总数"
+
+msgid "Total forums subscriptions"
+msgstr "版块订阅总数"
+
+msgid "Show topics subscriptions"
+msgstr "显示用户的主题订阅"
+
+msgid "Show forums subscriptions"
+msgstr "显示用户的版块订阅"
+
+msgid "Configure OAuth"
+msgstr "配置OAuth账号"
+
+msgid "OAuth accounts"
+msgstr "OAuth账号"
+
+msgid "No linked accounts"
+msgstr "没有关联的账号。"
+
+msgid "Linked accounts"
+msgstr "已关联的账号"
+
+msgid "Add account"
+msgstr "添加新账号"
+
+msgid "Delete"
+msgstr "删除"
+
+msgid "Delete my profile"
+msgstr "删除个人资料"
+
+msgid "Deleting profile"
+msgstr "删除个人资料"
+
+msgid "You are trying to delete your profile"
+msgstr "您正在尝试删除您的个人资料。"
+
+msgid "Confirm delete label"
+msgstr "确认删除个人资料？"
+
+msgid "Confirm delete info"
+msgstr "<b>此操作不可撤销！</b>"
+
+msgid "Your deleted redirect"
+msgstr "您的个人资料已被删除。"
+
+msgid "Search config"
+msgstr "搜索配置"
+
+msgid "Search options"
+msgstr "搜索选项"
+
+msgid "Set up search"
+msgstr "设置搜索"
+
+msgid "Follow label"
+msgstr "关注"
+
+msgid "Update search config redirect"
+msgstr "搜索设置已更新。"
+
+msgid "Select followed forums for %s and %s:"
+msgstr "为<b><i>%s</i></b>和<b><i>%s</i></b>选择要关注的版块："
+
+msgid "mDescription for %s"
+msgstr "%s的个人资料。活动、帖子、主题和联系方式。"
+
+msgid "Page scroll label"
+msgstr "页面滚动"
+
+msgid "Page scroll info"
+msgstr "如果启用，JavaScript脚本将在活动窗口中滚动页面以跳过指定区块。具体效果取决于您的浏览器及其设置。"
+
+msgid "Not active"
+msgstr "不启用"
+
+msgid "Past the header (smooth)"
+msgstr "跳过页眉（平滑）"
+
+msgid "Past the header and announce (smooth)"
+msgstr "跳过页眉和公告（平滑）"
+
+msgid "Past the header (no animation)"
+msgstr "跳过页眉（无动画）"
+
+msgid "Past the header and announce (no animation)"
+msgstr "跳过页眉和公告（无动画）"
+
+msgid "Recalculate posts and topics"
+msgstr "重新计算帖子和主题数"
+
+msgid "Recalculate %s redirect"
+msgstr "已重新计算<b>%s</b>的帖子和主题数。"
+
+msgid "About me"
+msgstr "关于我"
+
+msgid "To change about me"
+msgstr "更改"
+
+msgid "Change about me"
+msgstr "更改"关于我""
+
+msgid "Other"
+msgstr "其他"
+
+msgid "Locale"
+msgstr "区域设置"
+
+msgid "Locale info"
+msgstr "影响时间和日期格式。依赖于语言设置。"

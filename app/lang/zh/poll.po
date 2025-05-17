@@ -1,0 +1,106 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: kakadou<m1265861794@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+
+msgid "Poll legend"
+msgstr "投票"
+
+msgid "Include poll"
+msgstr "包含投票"
+
+msgid "Hide poll results up to %s voters"
+msgstr "在投票人数达到 %s 之前隐藏投票结果"
+
+msgid "Question text label"
+msgstr "问题"
+
+msgid "Answer type label"
+msgstr "答案数量"
+
+msgid "Answer type help"
+msgstr "投票时可选择的最大答案数量。"
+
+msgid "Answer %s label"
+msgstr "答案 %s"
+
+msgid "Question number %s is preceded by an empty question"
+msgstr "问题编号 %s 之前有一个空问题。"
+
+msgid "For question number %s, the structure of answers is broken"
+msgstr "问题编号 %s 的答案结构已损坏。"
+
+msgid "Answer number %1$s is preceded by an empty answer (question number %2$s)"
+msgstr "答案编号 %1$s 之前有一个空答案（问题编号 %2$s）。"
+
+msgid "For question number %s, there is no value for the maximum number of answers for voting"
+msgstr "问题编号 %s 没有设置投票的最大答案数量。"
+
+msgid "For question number %s, the maximum number of answers for voting more answers"
+msgstr "问题编号 %s 的投票最大答案数量超过了实际答案数量。"
+
+msgid "Requires at least two answers per question (%s)"
+msgstr "每个问题至少需要两个答案（%s）。"
+
+msgid "The poll structure is broken"
+msgstr "投票结构已损坏"
+
+msgid "Question %s legend"
+msgstr "问题 %s"
+
+msgid "You can choose up to %s answers"
+msgstr "您最多可以选择 %s 个答案。"
+
+msgid "In total voted: %s"
+msgstr "总投票数：%s"
+
+msgid "Poll duration label"
+msgstr "持续时间"
+
+msgid "Poll duration help"
+msgstr "投票持续的时间（天数）。设置为0表示永不过期。"
+
+msgid "(%1$s [%2$s%%])"
+msgstr "(%1$s [%2$s%%])"
+
+msgid "Poll results are hidden from the guests"
+msgstr "投票结果对访客隐藏。"
+
+msgid "This poll is closed"
+msgstr "此投票已关闭。"
+
+msgid "Poll results are hidden up to %s voters"
+msgstr "投票结果将在达到 %s 个投票人后显示。"
+
+msgid "You voted"
+msgstr "您已投票。"
+
+msgid "Guest cannot vote"
+msgstr "访客不能投票。"
+
+msgid "Poll status is undefined"
+msgstr "投票状态未定义。"
+
+msgid "Vote"
+msgstr "投票"
+
+msgid "You cannot vote on this poll"
+msgstr "您不能参与此投票。"
+
+msgid "No vote on question %s"
+msgstr "问题 %s 没有投票。"
+
+msgid "The selected answer is not present in question %s"
+msgstr "所选答案在问题 %s 中不存在。"
+
+msgid "Too many answers selected in question %s"
+msgstr "问题 %s 中选择的答案过多。"

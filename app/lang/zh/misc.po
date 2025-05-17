@@ -1,0 +1,311 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: kakadou<m1265861794@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+
+msgid "Mark read redirect"
+msgstr "所有主题和论坛已标记为已读。"
+
+msgid "Mark forum read redirect"
+msgstr "指定论坛中的所有主题已标记为已读。"
+
+msgid "Form email disabled"
+msgstr "您尝试发送邮件的用户已禁用表单邮件。"
+
+msgid "Email sent redirect"
+msgstr "邮件已发送。"
+
+msgid "Send email to %s"
+msgstr "发送邮件给 %s"
+
+msgid "Send email title"
+msgstr "发送邮件"
+
+msgid "Email subject"
+msgstr "主题"
+
+msgid "Email message"
+msgstr "消息"
+
+msgid "Email disclosure note"
+msgstr "请注意，使用此表单时，您的电子邮件地址将会被收件人看到。"
+
+msgid "Report redirect"
+msgstr "帖子已举报。"
+
+msgid "Report post"
+msgstr "举报帖子"
+
+msgid "Reason"
+msgstr "原因"
+
+msgid "Reason desc"
+msgstr "请输入您举报此帖子的简短原因"
+
+msgid "Subscribe redirect"
+msgstr "您的订阅已添加。"
+
+msgid "Unsubscribe redirect"
+msgstr "您的订阅已移除。"
+
+msgid "Moderate"
+msgstr "管理"
+
+msgid "Select for moderation"
+msgstr "选择进行管理"
+
+msgid "Move"
+msgstr "移动"
+
+msgid "Split"
+msgstr "分割"
+
+msgid "Delete"
+msgstr "删除"
+
+msgid "Merge"
+msgstr "合并"
+
+msgid "Open"
+msgstr "打开"
+
+msgid "Close"
+msgstr "关闭"
+
+msgid "Stick"
+msgstr "置顶"
+
+msgid "Unstick"
+msgstr "取消置顶"
+
+msgid "Move topic title"
+msgid_plural "Move topics title"
+msgstr[0] "移动主题"
+msgstr[1] "移动主题"
+
+msgid "Invalid destination"
+msgstr "无效的目标位置。"
+
+msgid "Move to"
+msgstr "移动到"
+
+msgid "Nowhere to move"
+msgstr "没有可以移动主题的论坛。"
+
+msgid "Leave redirect"
+msgstr "保留重定向主题"
+
+msgid "Move topic redirect"
+msgid_plural "Move topics redirect"
+msgstr[0] "主题已移动。"
+msgstr[1] "主题已移动。"
+
+msgid "Delete topic title"
+msgid_plural "Delete topics title"
+msgstr[0] "删除主题"
+msgstr[1] "删除主题"
+
+msgid "Delete topics redirect"
+msgid_plural "Delete topics redirect"
+msgstr[0] "主题已删除。"
+msgstr[1] "主题已删除。"
+
+msgid "Open topic redirect"
+msgid_plural "Open topics redirect"
+msgstr[0] "主题已打开。"
+msgstr[1] "主题已打开。"
+
+msgid "Close topic redirect"
+msgid_plural "Close topics redirect"
+msgstr[0] "主题已关闭。"
+msgstr[1] "主题已关闭。"
+
+msgid "Not enough topics selected"
+msgstr "合并操作必须选择至少两个主题。"
+
+msgid "Stick topic title"
+msgid_plural "Stick topics title"
+msgstr[0] "置顶主题"
+msgstr[1] "置顶主题"
+
+msgid "Stick topic redirect"
+msgid_plural "Stick topics redirect"
+msgstr[0] "主题已置顶。"
+msgstr[1] "主题已置顶。"
+
+msgid "Unstick topic title"
+msgid_plural "Unstick topics title"
+msgstr[0] "取消置顶主题"
+msgstr[1] "取消置顶主题"
+
+msgid "Unstick topic redirect"
+msgid_plural "Unstick topics redirect"
+msgstr[0] "主题已取消置顶。"
+msgstr[1] "主题已取消置顶。"
+
+msgid "Merge topics title"
+msgstr "合并主题"
+
+msgid "Merge topics redirect"
+msgstr "主题已合并。"
+
+msgid "New subject"
+msgstr "新主题"
+
+msgid "No subject"
+msgstr "新主题没有标题。"
+
+msgid "Split posts title"
+msgstr "分割主题"
+
+msgid "Split posts redirect"
+msgstr "主题已分割。"
+
+msgid "Delete post title"
+msgid_plural "Delete posts title"
+msgstr[0] "删除帖子"
+msgstr[1] "删除帖子"
+
+msgid "Delete post redirect"
+msgid_plural "Delete posts redirect"
+msgstr[0] "帖子已删除。"
+msgstr[1] "帖子已删除。"
+
+msgid "Topic «%s»"
+msgstr "主题 «%s»"
+
+msgid "Post «%1$s by %2$s»"
+msgstr "帖子 «%1$s 由 %2$s 发表»"
+
+msgid "All posts will be posted in the «%s» topic"
+msgstr "所有帖子将被发表在 «%s» 主题中。"
+
+msgid "Action not available"
+msgstr "操作不可用。"
+
+msgid "No object selected"
+msgstr "必须至少选择一个对象进行操作。"
+
+msgid "Open topic title"
+msgid_plural "Open topics title"
+msgstr[0] "打开主题"
+msgstr[1] "打开主题"
+
+msgid "Close topic title"
+msgid_plural "Close topics title"
+msgstr[0] "关闭主题"
+msgstr[1] "关闭主题"
+
+msgid "Topic links cannot be merged"
+msgstr "主题链接无法合并。"
+
+msgid "Category prefix"
+msgstr "分类前缀"
+
+msgid "Forum prefix"
+msgstr "论坛前缀"
+
+msgid "Forum indent"
+msgstr "◦ ◦ "
+
+msgid "Moderate topic"
+msgstr "管理主题"
+
+msgid "All"
+msgstr "全部"
+
+msgid "Delete topic btn"
+msgid_plural "Delete topics btn"
+msgstr[0] "删除主题"
+msgstr[1] "删除主题"
+
+msgid "Delete post btn"
+msgid_plural "Delete posts btn"
+msgstr[0] "删除帖子"
+msgstr[1] "删除帖子"
+
+msgid "Move topic btn"
+msgid_plural "Move topics btn"
+msgstr[0] "移动主题"
+msgstr[1] "移动主题"
+msgstr[2] "移动主题"
+
+msgid "Open topic btn"
+msgid_plural "Open topics btn"
+msgstr[0] "打开主题"
+msgstr[1] "打开主题"
+
+msgid "Close topic btn"
+msgid_plural "Close topics btn"
+msgstr[0] "关闭主题"
+msgstr[1] "关闭主题"
+
+msgid "Merge btn"
+msgstr "合并主题"
+
+msgid "Unstick btn"
+msgid_plural "Unstick btn"
+msgstr[0] "取消置顶主题"
+msgstr[1] "取消置顶主题"
+
+msgid "Stick btn"
+msgid_plural "Stick btn"
+msgstr[0] "置顶主题"
+msgstr[1] "置顶主题"
+
+msgid "Split btn"
+msgstr "分割主题"
+
+msgid "Moderate forum"
+msgstr "管理论坛"
+
+msgid "When sending email there was an error"
+msgstr "发送邮件时出现错误。请稍后重试。"
+
+msgid "Confirm your email address"
+msgstr "请先<a href=\"%s\">确认</a>您的电子邮件地址。"
+
+msgid "Poll cannot be attached"
+msgstr "带有投票的主题无法附加到其他主题。"
+
+msgid "Link btn"
+msgstr "重定向"
+
+msgid "Only one topic is permissible"
+msgstr "管理链接时只能选择一个主题。"
+
+msgid "Control of redirects title"
+msgstr "管理重定向主题"
+
+msgid "Need full topic for this operation"
+msgstr "此操作需要选择一个完整的主题。"
+
+msgid "Forum label"
+msgstr "论坛"
+
+msgid "Redir label"
+msgstr "设置重定向主题"
+
+msgid "Change btn"
+msgstr "更改"
+
+msgid "Redirects changed redirect"
+msgstr "重定向主题已更改。"
+
+msgid "Solution chosen"
+msgstr "已选择解决方案。"
+
+msgid "Solution changed"
+msgstr "解决方案已更改。"
+
+msgid "Solution removed"
+msgstr "解决方案已移除。"

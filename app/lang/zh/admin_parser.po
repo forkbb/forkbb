@@ -1,0 +1,331 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: kakadou<m1265861794@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+
+msgid "Parser settings updated redirect"
+msgstr "解析器设置已更新。"
+
+msgid "Parser settings head"
+msgstr "解析器设置"
+
+msgid "BBCode subhead"
+msgstr "BBCode"
+
+msgid "BBCode label"
+msgstr "BBCode"
+
+msgid "BBCode help"
+msgstr "允许在帖子中使用BBCode（推荐）。"
+
+msgid "BBCode sigs label"
+msgstr "签名中的BBCode"
+
+msgid "BBCode sigs help"
+msgstr "允许在用户签名中使用BBCode。"
+
+msgid "Smilies subhead"
+msgstr "表情符号"
+
+msgid "Smilies mess label"
+msgstr "帖子中的表情符号"
+
+msgid "Smilies mess help"
+msgstr "将表情符号转换为小图标。"
+
+msgid "Smilies sigs label"
+msgstr "签名中的表情符号"
+
+msgid "Smilies sigs help"
+msgstr "在用户签名中将表情符号转换为小图标。"
+
+msgid "Clickable links label"
+msgstr "生成可点击链接"
+
+msgid "Clickable links help"
+msgstr "启用后，ForkBB将自动检测帖子中的任何URL并将其转换为可点击的超链接。"
+
+msgid "BBCode management"
+msgstr "BBCode管理"
+
+msgid "Smilies management"
+msgstr "表情符号管理"
+
+msgid "Smilies head"
+msgstr "表情符号"
+
+msgid "Available images head"
+msgstr "可用图片"
+
+msgid "Available images subhead"
+msgstr "可用图片"
+
+msgid "Upload image head"
+msgstr "上传图片"
+
+msgid "Upload image subhead"
+msgstr "上传"
+
+msgid "Picture label"
+msgstr "图片"
+
+msgid "<img src=\"%1$s\" alt=\"%2$s\">"
+msgstr "<img src=\"%1$s\" alt=\"%2$s\">"
+
+msgid "Name label"
+msgstr "文件名"
+
+msgid "File %s deleted redirect"
+msgstr "文件'%s'已删除。"
+
+msgid "File %s not deleted redirect"
+msgstr "文件'%s'未删除。"
+
+msgid "Upload"
+msgstr "上传"
+
+msgid "Upload image label"
+msgstr "新图片"
+
+msgid "Upload image info"
+msgstr "选择要上传的图片文件。"
+
+msgid "Image uploaded redirect"
+msgstr "图片已上传。"
+
+msgid "Smilies list subhead"
+msgstr "表情符号列表"
+
+msgid "Smiley number %s"
+msgstr "表情符号 #%s"
+
+msgid "Smiley code label"
+msgstr "代码"
+
+msgid "Position label"
+msgstr "位置"
+
+msgid "New smile subhead"
+msgstr "新表情符号"
+
+msgid "Smilies updated redirect"
+msgstr "表情符号已更新。"
+
+msgid "Smile deleted redirect"
+msgstr "表情符号已删除。"
+
+msgid "BBCode head"
+msgstr "BBCode"
+
+msgid "BBCode list subhead"
+msgstr "BBCode列表"
+
+msgid "BBCode tag label"
+msgstr "标签"
+
+msgid "BBCode tag title"
+msgstr "编辑BBCode"
+
+msgid "BBCode %s"
+msgstr "BBCode '%s'"
+
+msgid "BBCode allowed"
+msgstr "允许"
+
+msgid "BBCode display only"
+msgstr "仅显示"
+
+msgid "BBCode not allowed"
+msgstr "不允许"
+
+msgid "BBCode mes label"
+msgstr "在消息中"
+
+msgid "BBCode sig label"
+msgstr "在签名中"
+
+msgid "BBCode deleted redirect"
+msgstr "BBCode已删除。"
+
+msgid "Add bbcode head"
+msgstr "添加BBCode"
+
+msgid "Edit bbcode head"
+msgstr "编辑BBCode"
+
+msgid "Delete bbcode head"
+msgstr "删除BBCode"
+
+msgid "Delete bbcode btn"
+msgstr "删除BBCode"
+
+msgid "Tag label"
+msgstr "标签"
+
+msgid "Tag info"
+msgstr "BB代码名称。名称格式：<code>^[a-z\*][a-z\d-]{0,10}$</code>"
+
+msgid "Type label"
+msgstr "类型"
+
+msgid "Type info"
+msgstr "BBCode类型..."
+
+msgid "New type info"
+msgstr "...或新类型。格式：<code>^[a-z][a-z\d-]{0,19}$</code>"
+
+msgid "Parents label"
+msgstr "父类型"
+
+msgid "Parents info"
+msgstr "父BBCode的类型。您可以指定多个类型。"
+
+msgid "Handler label"
+msgstr "处理器"
+
+msgid "Handler info"
+msgstr "将BBCode转换为HTML的PHP代码。"
+
+msgid "Text handler label"
+msgstr "文本处理器"
+
+msgid "Text handler info"
+msgstr "将BBCode转换为纯文本的PHP代码。"
+
+msgid "Recursive label"
+msgstr "递归"
+
+msgid "Recursive info"
+msgstr "这是递归BBCode。在递归结束之前，解析器不会响应其他BBCode。"
+
+msgid "Text only label"
+msgstr "仅文本"
+
+msgid "Text only info"
+msgstr "此BBCode仅包含文本。"
+
+msgid "Tags only label"
+msgstr "仅标签"
+
+msgid "Tags only info"
+msgstr "此BBCode仅包含其他BBCode。"
+
+msgid "Pre label"
+msgstr "预格式化"
+
+msgid "Pre info"
+msgstr "在此BBCode中，换行符、制表符和相邻空格将不会被更改。"
+
+msgid "Single label"
+msgstr "单标签"
+
+msgid "Single info"
+msgstr "单个标签。此BBCode没有主体和结束标签。"
+
+msgid "Auto label"
+msgstr "自动"
+
+msgid "Auto info"
+msgstr "与其他BBCode一起自动关闭此标签。"
+
+msgid "Self nesting label"
+msgstr "自嵌套"
+
+msgid "Self nesting info"
+msgstr "此BBCode可以在同一个中嵌套多少次。"
+
+msgid "No attr subhead"
+msgstr "BBCode类型[%s]的设置..."
+
+msgid "Allowed label"
+msgstr "允许"
+
+msgid "Allowed no_attr info"
+msgstr "允许不带属性使用此BBCode。"
+
+msgid "Body format label"
+msgstr "主体格式"
+
+msgid "Body format info"
+msgstr "正则表达式，设置此BBCode主体的规则。"
+
+msgid "Def attr subhead"
+msgstr "BBCode类型[%s=<i>值</i>]的设置..."
+
+msgid "Allowed def_attr info"
+msgstr "允许使用带主要属性的此BBCode。"
+
+msgid "Required label"
+msgstr "必需"
+
+msgid "Required info"
+msgstr "必需的属性。"
+
+msgid "Format label"
+msgstr "格式"
+
+msgid "Format info"
+msgstr "正则表达式，设置此属性的规则。"
+
+msgid "Other attr subhead"
+msgstr "BBCode类型[%1$s %2$s=<i>值</i>]的设置..."
+
+msgid "Allowed %s attr info"
+msgstr "允许使用带<b><code>%s</code></b>属性的此BBCode。否则此属性将被删除。"
+
+msgid "New attr subhead"
+msgstr "新属性"
+
+msgid "Allowed new_attr info"
+msgstr "添加新属性"
+
+msgid "Attribute name label"
+msgstr "新属性名称"
+
+msgid "Attribute name info"
+msgstr "格式：<code>^[a-z-]{2,15}$</code>"
+
+msgid "Tag name not specified"
+msgstr "未指定标签名称。"
+
+msgid "PHP code error in Handler: %s"
+msgstr "处理器中的PHP代码错误：%s"
+
+msgid "PHP code error in Text handler: %s"
+msgstr "文本处理器中的PHP代码错误：%s"
+
+msgid "Recursive and Tags only are enabled at the same time"
+msgstr "递归和仅标签同时启用。"
+
+msgid "Recursive and Single are enabled at the same time"
+msgstr "递归和单标签同时启用。"
+
+msgid "Text only and Tags only are enabled at the same time"
+msgstr "仅文本和仅标签同时启用。"
+
+msgid "Attribute %1$s, %2$s - regular expression error"
+msgstr "属性%1$s，字段%2$s - 正则表达式错误。"
+
+msgid "Attribute name %s is not valid"
+msgstr "属性名称%s无效。"
+
+msgid "BBCode updated redirect"
+msgstr "BBCode已更新。"
+
+msgid "BBCode added redirect"
+msgstr "BBCode已添加。"
+
+msgid "New BBCode"
+msgstr "新BBCode"
+
+msgid "Default structure"
+msgstr "默认结构"

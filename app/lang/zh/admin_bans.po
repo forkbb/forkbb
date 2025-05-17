@@ -1,0 +1,166 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: kakadou<m1265861794@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+
+msgid "No user message"
+msgstr "没有找到该用户名的注册用户。如果你想添加一个不针对特定用户名的封禁，请将用户名留空。"
+
+msgid "No user ID message"
+msgstr "没有找到该 ID 的注册用户。"
+
+msgid "User is admin message"
+msgstr "用户 %s 是管理员，无法被封禁。如果你想封禁一个管理员，必须先取消其管理员身份。"
+
+msgid "User is mod message"
+msgstr "用户 %s 是版主，无法被封禁。如果你想封禁一个版主，必须先取消其版主身份。"
+
+msgid "User is ban"
+msgstr "用户 %s 已被封禁。"
+
+msgid "Must enter message"
+msgstr "你必须至少输入用户名、IP 地址或电子邮件地址其中之一。"
+
+msgid "Cannot ban guest message"
+msgstr "访客用户无法被封禁。"
+
+msgid "Invalid IP message (%s)"
+msgstr "你输入的 IP/IP 范围无效 (%s)。"
+
+msgid "Invalid e-mail message"
+msgstr "你输入的电子邮件地址（如 user@domain.com）或部分邮件域名（如 domain.com 或 .com）无效。"
+
+msgid "Invalid date message"
+msgstr "你输入的到期日期无效。封禁时间必须至少持续一天。"
+
+msgid "Ban added redirect"
+msgstr "封禁已添加。"
+
+msgid "Ban edited redirect"
+msgstr "封禁已编辑。"
+
+msgid "Ban removed redirect"
+msgstr "封禁已移除。"
+
+msgid "New ban head"
+msgstr "新建封禁"
+
+msgid "Add ban subhead"
+msgstr "添加封禁"
+
+msgid "Edit ban head"
+msgstr "编辑封禁"
+
+msgid "Edit ban subhead"
+msgstr "编辑封禁"
+
+msgid "Username label"
+msgstr "用户名"
+
+msgid "Username help"
+msgstr "不区分大小写。"
+
+msgid "Ban search head"
+msgstr "封禁搜索"
+
+msgid "Ban search subhead"
+msgstr "搜索条件"
+
+msgid "Ban search info"
+msgstr "在数据库中搜索封禁记录。你可以输入一个或多个搜索条件。支持使用星号（*）作为通配符。要显示所有封禁记录，请将所有字段留空。"
+
+msgid "Message label"
+msgstr "消息"
+
+msgid "Order by label"
+msgstr "排序方式"
+
+msgid "Order by id"
+msgstr "记录编号"
+
+msgid "Order by username"
+msgstr "用户名"
+
+msgid "Order by ip"
+msgstr "IP"
+
+msgid "Order by e-mail"
+msgstr "电子邮件"
+
+msgid "Order by expire"
+msgstr "到期日期"
+
+msgid "Ascending"
+msgstr "升序"
+
+msgid "Descending"
+msgstr "降序"
+
+msgid "Submit search"
+msgstr "提交搜索"
+
+msgid "E-mail label"
+msgstr "电子邮件"
+
+msgid "E-mail help"
+msgstr "你想要封禁的电子邮件或邮件域名（如 someone@somewhere.com、somewhere.com 或 .com）。"
+
+msgid "IP label"
+msgstr "IP 地址/IP 范围"
+
+msgid "IP help"
+msgstr "你想要封禁的 IP 地址或 IP 范围（如 150.11.110.1 或 150.11.110）。多个地址请用空格分隔。如果已经输入了 IP，这是该用户在数据库中最后一次使用的 IP。"
+
+msgid "Ban message label"
+msgstr "封禁消息"
+
+msgid "Ban message help"
+msgstr "当被封禁用户访问论坛时将显示此消息。"
+
+msgid "Message expiry subhead"
+msgstr "封禁消息和到期时间"
+
+msgid "Expire date label"
+msgstr "到期日期"
+
+msgid "Expire date help"
+msgstr "此封禁将自动解除的日期（格式：yyyy-mm-dd）。留空表示需要手动解除。"
+
+msgid "Results head"
+msgstr "搜索结果"
+
+msgid "Results username head"
+msgstr "用户名"
+
+msgid "Results e-mail head"
+msgstr "电子邮件"
+
+msgid "Results IP address head"
+msgstr "IP/IP 范围"
+
+msgid "Results expire head"
+msgstr "到期时间"
+
+msgid "Results message head"
+msgstr "消息"
+
+msgid "Results banned by head"
+msgstr "封禁执行人"
+
+msgid "Results actions head"
+msgstr "操作"
+
+msgid "Search results legend"
+msgstr "选择如何查看搜索结果"
+
+msgid "No bans found"
+msgstr "未找到符合条件的封禁记录。"

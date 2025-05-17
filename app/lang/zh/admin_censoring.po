@@ -1,0 +1,34 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: kakadou<m1265861794@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+
+msgid "Censoring info"
+msgstr "以下是需要审查的词语及其替换词的列表。支持使用通配符（例如：<b>*某词*</b>会匹配<b>某词某处</b>和<b>在某词中</b>）。审查词语也会影响用户名。新用户将无法注册包含任何被审查词语的用户名。搜索不区分大小写。"
+
+msgid "Censored word label"
+msgstr "审查词语"
+
+msgid "Replacement label"
+msgstr "替换词语"
+
+msgid "Censor words label"
+msgstr "启用"
+
+msgid "Censor words help"
+msgstr "启用此功能可以审查论坛中的特定词语。"
+
+msgid "Censor words count label"
+msgstr "限制"
+
+msgid "Censor words count help"
+msgstr "如果一条消息/主题中替换的词语数量超过此处指定的数量，该消息/主题将不会被发布/保存。设置为 0 则禁用此限制。"
