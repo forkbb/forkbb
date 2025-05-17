@@ -218,8 +218,10 @@ class Post extends Page
                 return $this->c->Message->message('Bad request');
             }
 
+            $message = $this->c->Parser->prepareToQuote($post->message, ['hide' => '[ hide ]']);
+
             $args['_vars'] = [
-                'message' => "[quote=\"{$post->poster}\"]{$post->message}[/quote]",
+                'message' => "[quote=\"{$post->poster}\"]{$message}[/quote]",
             ];
 
             unset($args['quote']);
