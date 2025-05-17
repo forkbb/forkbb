@@ -351,6 +351,7 @@ body.sceditor-maximize {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
 }
 #fork div.sceditor-font-picker,
+#fork div.sceditor-hide-picker,
 #fork div.sceditor-fontsize-picker,
 #fork div.sceditor-format {
   padding: 6px 0;
@@ -385,6 +386,7 @@ body.sceditor-maximize {
 }
 #fork .sceditor-fontsize-option,
 #fork .sceditor-font-option,
+#fork .sceditor-hide-option,
 #fork .sceditor-format a {
   display: block;
   padding: 7px 10px;

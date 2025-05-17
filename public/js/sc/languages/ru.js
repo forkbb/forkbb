@@ -61,6 +61,14 @@
 		'Left-to-Right': 'Слева направо',
 		'Right-to-Left': 'Справа налево',
 		'Description (optional):': 'Описание (необязательно):',
-		dateFormat: 'day.month.year'
+		dateFormat: 'day.month.year',
+		'Hidden content': 'Скрытый контент',
+		'Spoiler': 'Спойлер',
+		'Hide from guests': 'Скрыть от гостей',
+		'Hide by number of posts': 'Скрыть по числу сообщений',
+		'Show only to admins': 'Только для админов',
+		'Show to admins and forum moderators': 'Для админов и модераторов раздела',
+		'Spoiler title': 'Заголовок спойлера',
+		'Number of posts to view': 'Количество сообщений<br>для просмотра'
 	};
 })();

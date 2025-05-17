@@ -258,6 +258,12 @@
 		},
 		h6: {
 			txtExec: ['[h6]', '[/h6]']
+		},
+		spoiler: {
+			txtExec: ['[spoiler]', '[/spoiler]']
+		},
+		hide: {
+			txtExec: ['[hide]', '[/hide]']
 		}
 	};
 
@@ -946,8 +952,8 @@
 			isInline: false,
 //			quoteType: QuoteType.never,
 			format: function (element, content) {
-				var summary;
-				var children = element.children;
+				var summary,
+					children = element.children;
 
 				for (var i = 0; !summary && i < children.length; i++) {
 					if (is(children[i], 'summary')) {
@@ -977,6 +983,37 @@
 				}
 
 				return '<details><summary>' + summary + '</summary><div class="f-bb-s-body">' + content + '</div></details>';
+			}
+		},
+		// END_COMMAND
+
+		// START_COMMAND: Hide
+		hide: {
+			tags: {
+				div: {
+					class: 'f-bb-hide'
+				}
+			},
+			isInline: false,
+			format: function (element, content) {
+				var type = attr(element, 'data-bb');
+
+				if (/^(?:admin|mod|[1-9]\d{0,8})$/.test(type)) {
+					type = '=' + type;
+				} else {
+					type = '';
+				}
+
+				return '[hide' + type + ']' + content + '[/hide]';
+			},
+			html: function (token, attrs, content) {
+				var type = 'guest';
+
+				if (attrs.defaultattr && /^(?:admin|mod|[1-9]\d{0,8})$/.test(attrs.defaultattr)) {
+					type = escapeEntities(attrs.defaultattr);
+				}
+
+				return '<div class="f-bb-hide f-bb-hide-visible" data-bb="' + type + '">' + content + '</div>';
 			}
 		},
 		// END_COMMAND
@@ -2528,6 +2565,17 @@
 						return value[isStrict ? 'every' : 'some'](isStyleMatch);
 					} else {
 						var val = attr(element, name);
+
+						// Visman - фикс обработки поиска класса
+						if (name === 'class' && val) {
+							val = val.split(/\s+/);
+
+							if (typeof value === 'string') {
+								value = [value];
+							}
+
+							return value.some(function (cur) {return val.includes(cur);})
+						}
 
 						return val && (!value || value.includes(val));
 					}

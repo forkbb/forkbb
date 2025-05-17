@@ -1829,6 +1829,9 @@
 		emoticon: '<img src="{url}" data-sceditor-emoticon="{key}" ' +
 			'alt="{key}" title="{tooltip}" />',
 
+		hideOpt: '<a class="sceditor-hide-option" href="#" ' +
+			'data-type="{type}">{text}</a>',
+
 		fontOpt: '<a class="sceditor-font-option" href="#" ' +
 			'data-font="{font}"><font face="{font}">{font}</font></a>',
 
@@ -1883,7 +1886,12 @@
 		youtube:
 			'<iframe width="560" height="315" frameborder="0" allowfullscreen ' +
 			'src="https://www.youtube-nocookie.com/embed/{id}?wmode=opaque&start={time}" ' +
-			'data-youtube-id="{id}"></iframe>'
+			'data-youtube-id="{id}"></iframe>',
+
+		singlefield:
+			'<div><label for="sptitle">{title}</label> ' +
+				'<input type="{type}" id="idsinglefield" /></div>' +
+			'<div><input type="button" class="button" value="{insert}" /></div>'
 	};
 
 	/**
@@ -2051,6 +2059,82 @@
 		justify: {
 			exec: 'justifyfull',
 			tooltip: 'Justify'
+		},
+		// END_COMMAND
+
+		// START_COMMAND: Hide
+		hide: {
+			_dropDown: function (editor, caller, callback) {
+				var	content = createElement('div');
+
+				on(content, 'click', 'a', function (e) {
+					var type = data(this, 'type');
+					editor.closeDropDown(true);
+					e.preventDefault();
+					callback(type, caller);
+				});
+
+				[
+					['Spoiler', 'spoiler'],
+					['Hide from guests', 'guest'],
+					['Hide by number of posts', 'post'],
+					['Show only to admins', 'admin'],
+					['Show to admins and forum moderators', 'mod']
+				].forEach(function (cur) {
+					appendChild(content, _tmpl('hideOpt', {
+						type: cur[1],
+						text: editor._(cur[0])
+					}, true));
+				});
+
+				editor.createDropDown(caller, 'hide-picker', content);
+			},
+			_dropDown2: function (editor, caller, title, type, callback) {
+				var	content = createElement('div');
+
+				on(content, 'click', '.button', function (e) {
+					callback(find(content, '#idsinglefield')[0].value);
+					editor.closeDropDown(true);
+					e.preventDefault();
+				});
+
+				appendChild(content, _tmpl('singlefield', {
+					title: title,
+					type: type,
+					insert: editor._('Insert')
+				}, true));
+
+				editor.createDropDown(caller, 'spoiler-picker', content);
+			},
+			exec: function (caller) {
+				var	editor  = this;
+
+				defaultCmds.hide._dropDown(editor, caller, function (type, caller) {
+					switch (type) {
+						case 'guest':
+						case 'admin':
+						case 'mod':
+							editor.wysiwygEditorInsertHtml('<div class="f-bb-hide f-bb-hide-visible" data-bb="' + type + '">', '<br /></div>');
+							break;
+						case 'post':
+							defaultCmds.hide._dropDown2(editor, caller, editor._('Number of posts to view'), 'number', function (num) {
+								num = Number(num);
+								if (num > 0) {
+									editor.wysiwygEditorInsertHtml('<div class="f-bb-hide f-bb-hide-visible" data-bb="' + num + '">', '<br /></div>');
+								}
+							});
+							break;
+						case 'spoiler':
+							defaultCmds.hide._dropDown2(editor, caller, editor._('Spoiler title'), 'text', function (title) {
+								title = stringTrim(title);
+								title = title ? entities(title) : 'Hidden text';
+								editor.wysiwygEditorInsertHtml('<details open><summary>' + title + '</summary><div class="f-bb-s-body">', '<br /></div></details>');
+							});
+							break;
+					}
+				});
+			},
+			tooltip: 'Hidden content'
 		},
 		// END_COMMAND
 

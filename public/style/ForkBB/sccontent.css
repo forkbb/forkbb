@@ -406,3 +406,21 @@ h6 {
   font-size: .67rem;
   margin: 2.33rem;
 }
+
+.f-bb-hide {
+  padding: 0.3125rem;
+  margin: 0.3125rem;
+  border: 0.0625rem dotted var(--br-bbcode);
+  border-inline-start: 0.1875rem solid red;
+}
+
+.f-bb-hide::before {
+  display: block;
+  content: "hide: " attr(data-bb);
+  margin-top: -0.3125rem;
+  font-size: 0.75rem;
+}
+
+.f-bb-hide-visible {
+  border-inline-start-color: green;
+}
