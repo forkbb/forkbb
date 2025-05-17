@@ -1,0 +1,124 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: kakadou<m1265861794@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+
+msgid "No subject after censoring"
+msgstr "主题必须包含标题。应用审查过滤器后，您的标题为空。"
+
+msgid "No message after censoring"
+msgstr "您必须输入内容。应用审查过滤器后，您的内容为空。"
+
+msgid "All caps subject"
+msgstr "标题不能全部使用大写字母。"
+
+msgid "All caps message"
+msgstr "帖子内容不能全部使用大写字母。"
+
+msgid "Post preview"
+msgstr "帖子预览"
+
+msgid "Post redirect"
+msgstr "帖子已发表。"
+
+msgid "Post a reply"
+msgstr "发表回复"
+
+msgid "Post new topic"
+msgstr "发表新主题"
+
+msgid "Hide smilies"
+msgstr "不在此帖子中显示表情图标"
+
+msgid "New subscribe"
+msgstr "订阅此主题"
+
+msgid "Stay subscribed"
+msgstr "保持订阅此主题"
+
+msgid "Topic review"
+msgstr "主题预览（最新优先）"
+
+msgid "Preview"
+msgstr "预览"
+
+msgid "EditPost edit"
+msgstr "允许无限制编辑此消息"
+
+msgid "Stick first post"
+msgstr "将第一个帖子固定在主题的所有页面上"
+
+msgid "Edit post"
+msgstr "编辑帖子"
+
+msgid "Edit topic"
+msgstr "编辑主题"
+
+msgid "Merge posts"
+msgstr "如果是您的帖子则与前一个合并"
+
+msgid "Edit redirect"
+msgstr "帖子已更新。"
+
+msgid "Stick topic"
+msgstr "置顶主题"
+
+msgid "Create topic"
+msgstr "创建主题"
+
+msgid "Re"
+msgstr "回复："
+
+msgid "%1$s (%2$s max size)"
+msgstr "%1$s（最大尺寸 %2$s）"
+
+msgid "Attachments"
+msgstr "附件"
+
+msgid "Change author and date"
+msgstr "更改作者和日期"
+
+msgid "Change"
+msgstr "更改"
+
+msgid "Posted"
+msgstr "发表于"
+
+msgid "Change AnD topic"
+msgstr "更改主题作者和日期"
+
+msgid "Change AnD post"
+msgstr "更改帖子作者和日期"
+
+msgid "User %s does not exist"
+msgstr "用户"%s"不存在。"
+
+msgid "Change redirect"
+msgstr "更改已完成。"
+
+msgid "All"
+msgstr "此字段的数据对所有人可见。"
+
+msgid "Not guests"
+msgstr "此字段的数据对除访客外的所有人可见。"
+
+msgid "Admins and mods"
+msgstr "此字段的数据仅对管理员和版主可见。"
+
+msgid "Admins only"
+msgstr "此字段的数据仅对管理员可见。"
+
+msgid "To draft"
+msgstr "保存为草稿"
+
+msgid "Too many censored words"
+msgstr "包含过多被审查的词语。"

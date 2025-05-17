@@ -1,0 +1,136 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: kakadou<m1265861794@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+
+msgid "Details"
+msgstr "详细信息："
+
+msgid "Name"
+msgstr "包名称"
+
+msgid "Description"
+msgstr "描述"
+
+msgid "Release date"
+msgstr "发布日期"
+
+msgid "Homepage"
+msgstr "主页"
+
+msgid "Licence"
+msgstr "许可证"
+
+msgid "Requirements"
+msgstr "要求："
+
+msgid "Authors"
+msgstr "作者："
+
+msgid "php"
+msgstr "PHP 版本"
+
+msgid "forkbb"
+msgstr "ForkBB 版本"
+
+msgid "Not installed"
+msgstr "未安装"
+
+msgid "Disabled"
+msgstr "已禁用"
+
+msgid "Disabled, package changed"
+msgstr "已禁用，包已更改"
+
+msgid "Enabled"
+msgstr "已启用"
+
+msgid "Enabled, package changed"
+msgstr "已启用，但包已更改！"
+
+msgid "Crash"
+msgstr "崩溃，找不到包！"
+
+msgid "Install_"
+msgstr "安装"
+
+msgid "Uninstall_"
+msgstr "卸载"
+
+msgid "Enable_"
+msgstr "启用"
+
+msgid "Disable_"
+msgstr "禁用"
+
+msgid "Update_"
+msgstr "更新"
+
+msgid "Downdate_"
+msgstr "降级"
+
+msgid "Package version"
+msgstr "包版本"
+
+msgid "Extension not found"
+msgstr "未找到扩展。"
+
+msgid "Invalid action"
+msgstr "无效的操作。"
+
+msgid "Redirect install"
+msgstr "扩展已安装。"
+
+msgid "Redirect uninstall"
+msgstr "扩展已卸载。"
+
+msgid "Redirect update"
+msgstr "扩展已更新。"
+
+msgid "Redirect downdate"
+msgstr "扩展版本已降级。"
+
+msgid "Redirect enable"
+msgstr "扩展已启用。"
+
+msgid "Redirect disable"
+msgstr "扩展已禁用。"
+
+msgid "Invalid template type"
+msgstr "无效的模板类型。"
+
+msgid "PRE name not found"
+msgstr "未找到 PRE 名称。"
+
+msgid "Template file '%s' not found"
+msgstr "未找到模板文件 '%s'。"
+
+msgid "An error occurred in updateCommon"
+msgstr "在 updateCommon 中发生错误。"
+
+msgid "Empty"
+msgstr "空"
+
+msgid "Invalid symlink type"
+msgstr "无效的符号链接类型。"
+
+msgid "Bad symlink"
+msgstr "错误的符号链接。"
+
+msgid "Target '%s' not found"
+msgstr "未找到目标 '%s'。"
+
+msgid "Link '%s' already exists"
+msgstr "链接 '%s' 已存在。"
+
+msgid "Error creating symbolic link"
+msgstr "创建符号链接时出错。"

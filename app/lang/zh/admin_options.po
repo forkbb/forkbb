@@ -1,0 +1,514 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: kakadou<m1265861794@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+
+msgid "Must enter title message"
+msgstr "您必须输入版面标题。"
+
+msgid "Invalid e-mail message"
+msgstr "您输入的管理员邮箱地址无效。"
+
+msgid "Invalid webmaster e-mail message"
+msgstr "您输入的站长邮箱地址无效。"
+
+msgid "Timeout error message"
+msgstr ""在线超时"的值必须小于"访问超时"的值。"
+
+msgid "Options updated redirect"
+msgstr "选项已更新。"
+
+msgid "Options head"
+msgstr "选项设置"
+
+msgid "Essentials subhead"
+msgstr "基本设置"
+
+msgid "Board title label"
+msgstr "版面标题"
+
+msgid "Board title help"
+msgstr "论坛的标题（显示在每个页面的顶部）。"
+
+msgid "Board desc label"
+msgstr "版面描述（HTML）"
+
+msgid "Board desc help"
+msgstr "论坛的简短描述（显示在每个页面的顶部）。"
+
+msgid "Timezone label"
+msgstr "默认时区"
+
+msgid "Timezone help"
+msgstr "访客和尝试注册的用户的默认时区。"
+
+msgid "Language label"
+msgstr "默认语言"
+
+msgid "Language help"
+msgstr "访客和尝试注册的用户的默认语言。"
+
+msgid "Default style label"
+msgstr "默认风格"
+
+msgid "Default style help"
+msgstr "访客和尝试注册的用户的默认风格。"
+
+msgid "Timeouts subhead"
+msgstr "时间和超时设置"
+
+msgid "Visit timeout label"
+msgstr "访问超时"
+
+msgid "Visit timeout help"
+msgstr "用户多少秒无操作后更新其最后访问数据（主要影响新消息提示）。"
+
+msgid "Online timeout label"
+msgstr "在线超时"
+
+msgid "Online timeout help"
+msgstr "用户多少秒无操作后从在线用户列表中移除。"
+
+msgid "Redirect time label"
+msgstr "重定向时间"
+
+msgid "Redirect time help"
+msgstr "重定向等待的秒数。如果设为0，将不显示重定向页面。"
+
+msgid "Display subhead"
+msgstr "显示设置"
+
+msgid "Info in posts label"
+msgstr "帖子中的用户信息"
+
+msgid "Info in posts help"
+msgstr "在主题查看页面的用户名下显示发帖者信息。这些信息包括位置、注册日期、发帖数和联系方式（邮箱和网址）。不影响管理员。"
+
+msgid "Post count label"
+msgstr "用户发帖数"
+
+msgid "Post count help"
+msgstr "显示用户发帖数量（影响主题查看、个人资料和用户列表）。不影响管理员和版主。"
+
+msgid "Topic review label"
+msgstr "主题预览"
+
+msgid "Topic review help"
+msgstr "发帖时显示的最大帖子数量（最新优先）。设为0则禁用。"
+
+msgid "Topics per page help"
+msgstr "论坛中每页显示的默认主题数量。用户可以个性化此设置。"
+
+msgid "Posts per page help"
+msgstr "主题中每页显示的默认帖子数量。用户可以个性化此设置。"
+
+msgid "Users per page label"
+msgstr "每页用户数"
+
+msgid "Users per page help"
+msgstr "用户列表中每页显示的用户数量。"
+
+msgid "Features subhead"
+msgstr "功能设置"
+
+msgid "Quick post label"
+msgstr "快速回复"
+
+msgid "Quick post help"
+msgstr "启用后，ForkBB将在主题底部添加快速回复表单。用户可以直接在主题查看页面发帖。"
+
+msgid "Users online label"
+msgstr "在线用户"
+
+msgid "Users online help"
+msgstr "在首页显示当前浏览论坛的访客和注册用户信息。"
+
+msgid "User has posted label"
+msgstr "用户曾发帖标记"
+
+msgid "User has posted help"
+msgstr "此功能在论坛页面的主题前显示一个圆点，表示当前登录用户之前在该主题中发过帖。如果服务器负载较高，请禁用此功能。"
+
+msgid "Topic views label"
+msgstr "主题查看次数"
+
+msgid "Topic views help"
+msgstr "记录主题的查看次数。如果在繁忙的论坛中遇到服务器负载较高，请禁用此功能。"
+
+msgid "Menu items label"
+msgstr "附加菜单项"
+
+msgid "Menu items help"
+msgstr "您可以添加任意数量的新菜单项。每行指定一个项目，格式为：<b>位置</b><wbr>|<b>名称</b><wbr>|<b>链接</b><wbr><i>[|<b>标识符</b>]</i>。"
+
+msgid "Feed subhead"
+msgstr "联合订阅"
+
+msgid "Default feed label"
+msgstr "默认订阅类型"
+
+msgid "Default feed help"
+msgstr "选择要显示的联合订阅类型。注意：选择"无"不会禁用订阅，只是默认隐藏它们。"
+
+msgid "No feeds"
+msgstr "无"
+
+msgid "RSS"
+msgstr "RSS"
+
+msgid "Atom"
+msgstr "Atom"
+
+msgid "Feed TTL label"
+msgstr "订阅缓存时间"
+
+msgid "Feed TTL help"
+msgstr "可以缓存订阅以降低资源使用。"
+
+msgid "No cache"
+msgstr "不缓存"
+
+msgid "%d Minutes"
+msgstr "%d 分钟"
+
+msgid "Reports subhead"
+msgstr "举报设置"
+
+msgid "Reporting method label"
+msgstr "举报方式"
+
+msgid "Internal"
+msgstr "内部"
+
+msgid "By e-mail"
+msgstr "邮件"
+
+msgid "Both"
+msgstr "两者都用"
+
+msgid "Reporting method help"
+msgstr "选择处理主题/帖子举报的方式。您可以选择通过内部举报系统处理主题/帖子举报，发送邮件到邮件列表（见下文），或两者都用。"
+
+msgid "Mailing list label"
+msgstr "邮件列表"
+
+msgid "Mailing list help"
+msgstr "用逗号分隔的邮箱地址列表。举报将发送到这些地址。"
+
+msgid "Avatars subhead"
+msgstr "头像设置"
+
+msgid "Use avatars label"
+msgstr "使用头像"
+
+msgid "Use avatars help"
+msgstr "启用后，用户可以上传头像。"
+
+msgid "Upload directory label"
+msgstr "上传目录"
+
+msgid "Upload directory help"
+msgstr "头像的上传目录（相对于 %s）。PHP必须对此目录有写入权限。"
+
+msgid "Max width label"
+msgstr "最大宽度"
+
+msgid "Max width help"
+msgstr "头像允许的最大宽度（像素）。"
+
+msgid "Max height label"
+msgstr "最大高度"
+
+msgid "Max height help"
+msgstr "头像允许的最大高度（像素）。"
+
+msgid "Max size label"
+msgstr "最大大小"
+
+msgid "Max size help"
+msgstr "头像允许的最大文件大小（字节）。"
+
+msgid "Avatar quality label"
+msgstr "图像质量"
+
+msgid "Avatar quality help"
+msgstr "头像图像质量（0到100之间）。"
+
+msgid "E-mail subhead"
+msgstr "邮件设置"
+
+msgid "Admin e-mail label"
+msgstr "管理员邮箱"
+
+msgid "Admin e-mail help"
+msgstr "论坛管理员的邮箱地址。"
+
+msgid "Webmaster e-mail label"
+msgstr "站长邮箱"
+
+msgid "Webmaster e-mail help"
+msgstr "论坛发送的所有邮件将使用此地址作为发件人。<b>如果指定了SMTP设置（见下文），必须与SMTP设置匹配。</b>"
+
+msgid "Forum subscriptions label"
+msgstr "版块订阅"
+
+msgid "Forum subscriptions help"
+msgstr "允许用户订阅版块（当有人发新主题时收到邮件）。"
+
+msgid "Topic subscriptions label"
+msgstr "主题订阅"
+
+msgid "Topic subscriptions help"
+msgstr "允许用户订阅主题（当有人回复时收到邮件）。"
+
+msgid "SMTP address label"
+msgstr "SMTP服务器地址"
+
+msgid "SMTP address help"
+msgstr "用于发送邮件的外部SMTP服务器地址。如果SMTP服务器不使用默认端口25，可以指定自定义端口号（例如：smtp.gmail.com:465）。留空则使用本地邮件程序。"
+
+msgid "SMTP username label"
+msgstr "SMTP用户名"
+
+msgid "SMTP username help"
+msgstr "SMTP服务器的用户名。仅在SMTP服务器要求时填写。"
+
+msgid "SMTP password label"
+msgstr "SMTP密码"
+
+msgid "SMTP change password help"
+msgstr "如果要更改或删除当前存储的密码，请勾选此项。"
+
+msgid "SMTP password help"
+msgstr "SMTP服务器的密码。仅在SMTP服务器要求时填写。"
+
+msgid "SMTP SSL label"
+msgstr "使用SSL加密SMTP"
+
+msgid "SMTP SSL help"
+msgstr "使用SSL加密SMTP服务器连接。仅在SMTP服务器要求且PHP版本支持SSL时使用。TLS必须设为<b>否</b>。"
+
+msgid "Registration subhead"
+msgstr "注册设置"
+
+msgid "Allow new label"
+msgstr "允许新注册"
+
+msgid "Allow new help"
+msgstr "控制论坛是否接受新用户注册。仅在特殊情况下禁用。"
+
+msgid "Verify label"
+msgstr "验证注册"
+
+msgid "Verify help"
+msgstr "启用后，注册用户将收到一封包含激活链接的邮件。这是避免注册滥用并确保所有用户在个人资料中提供"正确"邮箱地址的有效方式。"
+
+msgid "Report new label"
+msgstr "报告新注册"
+
+msgid "Report new help"
+msgstr "启用后，当有新用户在论坛注册时，ForkBB将通知邮件列表（见上文）中的用户。"
+
+msgid "Use rules label"
+msgstr "使用论坛规则"
+
+msgid "Use rules help"
+msgstr "启用后，用户注册时必须同意一套规则（在下面输入文本）。规则将始终通过页面顶部导航表中的链接提供访问。"
+
+msgid "Rules label"
+msgstr "在此输入您的规则（HTML）"
+
+msgid "Rules help"
+msgstr "在这里您可以输入用户注册时必须查看和接受的任何规则或其他信息。如果您在上面启用了规则，您必须在这里输入内容，否则它将被禁用。"
+
+msgid "E-mail default label"
+msgstr "默认邮箱设置"
+
+msgid "E-mail default help"
+msgstr "选择新用户注册的默认隐私设置。"
+
+msgid "Announcement subhead"
+msgstr "公告设置"
+
+msgid "Display announcement label"
+msgstr "显示公告"
+
+msgid "Display announcement help"
+msgstr "启用此项以在论坛中显示以下消息。"
+
+msgid "Announcement message label"
+msgstr "公告消息（HTML）"
+
+msgid "Announcement message help"
+msgstr ""
+
+msgid "Email max recipients label"
+msgstr "最大收件人数"
+
+msgid "Email max recipients help"
+msgstr "一封邮件的最大收件人数量。取决于您的邮件服务器。"
+
+msgid "All caps message label"
+msgstr "全大写消息"
+
+msgid "All caps message help"
+msgstr "允许消息仅包含大写字母。"
+
+msgid "All caps subject label"
+msgstr "全大写主题"
+
+msgid "All caps subject help"
+msgstr "允许主题仅包含大写字母。"
+
+msgid "Require e-mail label"
+msgstr "要求访客邮箱"
+
+msgid "Require e-mail help"
+msgstr "要求访客在发帖时提供邮箱地址。"
+
+msgid "All caps sigs label"
+msgstr "全大写签名"
+
+msgid "All caps sigs help"
+msgstr "允许签名仅包含大写字母。"
+
+msgid "Polls subhead"
+msgstr "投票设置"
+
+msgid "Allow polls label"
+msgstr "允许投票"
+
+msgid "Max questions label"
+msgstr "最大问题数"
+
+msgid "Max questions help"
+msgstr "一个投票中的最大问题数量。<b>建议设置一次后不要再更改！</b>"
+
+msgid "Max options label"
+msgstr "最大选项数"
+
+msgid "Max options help"
+msgstr "一个问题的最大可能答案数量。<b>建议设置一次后不要再更改！</b>"
+
+msgid "Poll edit time label"
+msgstr "编辑时间"
+
+msgid "Poll edit time help"
+msgstr "投票编辑时间（分钟）。设为0则禁用。"
+
+msgid "Hidden voices label"
+msgstr "隐藏投票数"
+
+msgid "Hidden voices help"
+msgstr "在投票中设置，达到此投票数之前可以隐藏投票结果。"
+
+msgid "Result for guest label"
+msgstr "访客查看结果"
+
+msgid "Result for guest help"
+msgstr "访客可以查看投票结果。"
+
+msgid "The folder for uploading avatars is incorrectly"
+msgstr "头像上传文件夹设置不正确。"
+
+msgid "For PHP, it is forbidden to write in the folder for uploading avatars"
+msgstr "PHP无法写入头像上传文件夹。"
+
+msgid "PM subhead"
+msgstr "私信设置"
+
+msgid "Allow PM label"
+msgstr "允许私信"
+
+msgid "Allow PM help"
+msgstr "各个用户组的设置可在<a href="%2$s">%1$s</a>中找到。"
+
+msgid "Allow oauth label"
+msgstr "OAuth授权"
+
+msgid "Allow oauth help"
+msgstr "允许用户使用第三方资源的账号登录/注册此论坛。"
+
+msgid "Configure providers"
+msgstr "配置提供商"
+
+msgid "Search cache lifetime label"
+msgstr "搜索缓存生命周期"
+
+msgid "Search cache lifetime help"
+msgstr "搜索查询的缓存时间（秒）。"
+
+msgid "Meta desc label"
+msgstr "Meta标签<i>description</i>"
+
+msgid "Meta desc help"
+msgstr "搜索引擎可以使用此meta标签来形成在搜索结果中显示的摘要。"
+
+msgid "New og image label"
+msgstr "新图片"
+
+msgid "New og image help"
+msgstr "Open Graph默认图片。推荐尺寸为<b>1200</b> x <b>630</b>像素。"
+
+msgid "Not uploaded"
+msgstr "未上传"
+
+msgid "Og image label"
+msgstr "Open Graph图片"
+
+msgid "Og image help"
+msgstr "尺寸为<b>%1$s</b> x <b>%2$s</b>像素。"
+
+msgid "Delete og image"
+msgstr "删除Open Graph图片"
+
+msgid "Reaction subhead"
+msgstr "帖子回应设置"
+
+msgid "Allow reaction label"
+msgstr "启用回应系统"
+
+msgid "Reaction type label"
+msgstr "回应类型"
+
+msgid "Reaction type help"
+msgstr "用户可以使用的回应类型。"
+
+msgid "User has reactioned label"
+msgstr "用户已回应标记"
+
+msgid "User has reactioned help"
+msgstr "突出显示用户对显示的帖子已选择的回应。如果服务器负载较高，请禁用此功能。"
+
+msgid "Auto language detection label"
+msgstr "自动语言检测"
+
+msgid "Auto language detection help"
+msgstr "根据访客请求服务器的数据自动检测其语言，如果失败则返回上面指定的默认语言。"
+
+msgid "Cron for email label"
+msgstr "使用Cron"
+
+msgid "Cron for email help"
+msgstr "<b>注意！！！</b>开启前，请在任务计划（cron或类似工具）中添加任务，每隔几分钟运行一次&apos;<code>php cli.php send_mail</code>&apos;。没有此任务，邮件将无法发送。"
+
+msgid "Hide e-mail label"
+msgstr "隐藏邮箱字段"
+
+msgid "Hide e-mail help"
+msgstr "如果访客邮箱不是必填字段，则隐藏该字段。"
+
+msgid "Disable email label"
+msgstr "无需邮箱"
+
+msgid "Disable email help"
+msgstr "如果禁用了注册验证，则注册时不要求提供邮箱。"

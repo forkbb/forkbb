@@ -1,0 +1,205 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: kakadou<m1265861794@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+
+msgid "Forum added redirect"
+msgstr "版块已添加。"
+
+msgid "Forum deleted redirect"
+msgstr "版块已删除。"
+
+msgid "Forums updated redirect"
+msgstr "版块已更新。"
+
+msgid "Forum updated redirect"
+msgstr "版块已更新。"
+
+msgid "Perms reverted redirect"
+msgstr "权限已恢复为默认值。"
+
+msgid "New forum"
+msgstr "新建版块"
+
+msgid "Add forum head"
+msgstr "添加版块"
+
+msgid "Forum label"
+msgstr "版块"
+
+msgid "Delete forum"
+msgstr "删除版块"
+
+msgid "Position label"
+msgstr "位置"
+
+msgid "Update positions"
+msgstr "更新位置"
+
+msgid "Delete forum head"
+msgstr "删除版块"
+
+msgid "Confirm delete"
+msgstr "确认删除版块？"
+
+msgid "I want to delete forum %s"
+msgstr "是的，我要删除版块 <b>%s</b>"
+
+msgid "Delete forum warn"
+msgstr "<b>警告！</b>删除版块将会删除该版块中的所有主题和帖子（如果有的话）！"
+
+msgid "Edit forum head"
+msgstr "编辑版块"
+
+msgid "Forum name label"
+msgstr "版块名称"
+
+msgid "Forum description label"
+msgstr "描述（HTML）"
+
+msgid "Sort by label"
+msgstr "主题排序方式"
+
+msgid "Last post option DESC"
+msgstr "最后回复（最新在前）"
+
+msgid "Last post option ASC"
+msgstr "最后回复（最新在后）"
+
+msgid "Topic start option DESC"
+msgstr "主题发布时间（最新在前）"
+
+msgid "Topic start option ASC"
+msgstr "主题发布时间（最新在后）"
+
+msgid "Subject option ASC"
+msgstr "主题标题（A...Z）"
+
+msgid "Subject option DESC"
+msgstr "主题标题（Z...A）"
+
+msgid "Redirect label"
+msgstr "重定向 URL"
+
+msgid "Redirect help"
+msgstr "仅在空版块中可用。"
+
+msgid "Group permissions info"
+msgstr "在此表单中，您可以为不同用户组设置版块特定的权限。如果您尚未对此版块的用户组权限进行任何更改，下面显示的是基于 <a href=\"%1$s\">%2$s</a> 中设置的默认值。管理员始终具有完全权限，因此不包括在内。与用户组默认权限不同的权限设置标记为红色。如果相关用户组缺少"阅读论坛"权限，则"阅读版块"权限复选框将被禁用。对于重定向版块，只能编辑"阅读版块"权限。"
+
+msgid "Read forum label"
+msgstr "阅读版块"
+
+msgid "Post replies label"
+msgstr "发表回复"
+
+msgid "Post topics label"
+msgstr "发表主题"
+
+msgid "Revert to default"
+msgstr "恢复默认值"
+
+msgid "Parent label"
+msgstr "父级"
+
+msgid "Parent help"
+msgstr "此版块所在的分类或版块。"
+
+msgid "Not selected"
+msgstr "未选择"
+
+msgid "Category prefix"
+msgstr "▶ "
+
+msgid "Forum prefix"
+msgstr ""
+
+msgid "Forum indent"
+msgstr "◦ ◦ "
+
+msgid "Count messages label"
+msgstr "计入用户发帖数"
+
+msgid "Count messages help"
+msgstr "如果选择是，则用户在此版块中的新消息将增加其个人资料中的发帖计数。您可以在 <a href=\"%1$s\">%2$s</a> 中重新计算所有用户的发帖数。"
+
+msgid "<span></span>"
+msgstr "<span></span>"
+
+msgid "Friendly name label"
+msgstr "URL 友好名称"
+
+msgid "Friendly name help"
+msgstr "用于生成此版块 URL 的字符串标识符。可以包含拉丁字母、数字、下划线和连字符。"
+
+msgid "Use solution label"
+msgstr "允许"解决方案""
+
+msgid "Use solution help"
+msgstr "允许在此版块中将帖子标记为主题第一帖中问题/疑问的解决方案。"
+
+msgid "Use custom fields label"
+msgstr "使用自定义字段"
+
+msgid "Use custom fields help"
+msgstr "允许在此版块创建主题时使用自定义字段。不影响现有主题。"
+
+msgid "Customize fields"
+msgstr "自定义字段"
+
+msgid "Custom fields head"
+msgstr "自定义字段"
+
+msgid "Add field"
+msgstr "添加字段"
+
+msgid "Field name label"
+msgstr "字段名称"
+
+msgid "Add field head"
+msgstr "添加字段"
+
+msgid "Edit field head"
+msgstr "编辑字段"
+
+msgid "Field required label"
+msgstr "必填"
+
+msgid "Visibility label"
+msgstr "谁可以看到数据？"
+
+msgid "All"
+msgstr "所有人"
+
+msgid "Not guests"
+msgstr "除访客外的所有人"
+
+msgid "Admins and mods"
+msgstr "管理员、版主和主题作者"
+
+msgid "Admins only"
+msgstr "仅管理员和主题作者"
+
+msgid "Maximum length label"
+msgstr "最大长度"
+
+msgid "Fields updated redirect"
+msgstr "字段已更新。"
+
+msgid "Field deleted redirect"
+msgstr "字段已删除。"
+
+msgid "I want to delete field %s"
+msgstr "是的，我要删除字段 <b>%s</b>"
+
+msgid "Delete field"
+msgstr "删除字段"

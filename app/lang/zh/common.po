@@ -1,0 +1,494 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: kakadou<m1265861794@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+
+msgid "lang_direction"
+msgstr "ltr"
+
+msgid "lang_identifier"
+msgstr "zh"
+
+msgid "lang_decimal_point"
+msgstr "."
+
+msgid "lang_thousands_sep"
+msgstr ","
+
+msgid "lang_locales"
+msgstr "zh|zh_CN|zh_Hans|zh_Hans_CN"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Cancel redirect"
+msgstr "操作已取消。"
+
+msgid "No confirm redirect"
+msgstr "未提供确认。操作已取消。"
+
+msgid "Confirm action"
+msgstr "确认操作"
+
+msgid "Forum rules"
+msgstr "论坛规则"
+
+msgid "Redirecting to index"
+msgstr "正在重定向到首页。"
+
+msgid "Error mail"
+msgstr "发送邮件时出现错误。请稍后重试或联系论坛管理员：<a href=\"mailto:%1$s\">%1$s</a>。"
+
+msgid "Bad request"
+msgstr "错误请求。当前请求包含不正确的数据。"
+
+msgid "Not Found"
+msgstr "未找到。链接不正确或已过期。"
+
+msgid "No permission"
+msgstr "您没有权限访问此页面。"
+
+msgid "Bad token"
+msgstr "令牌无效。请尝试重复该操作。"
+
+msgid "Expired token"
+msgstr "令牌已过期。请尝试重复该操作。"
+
+msgid "Hidden text"
+msgstr "隐藏文本"
+
+msgid "Announcement"
+msgstr "公告："
+
+msgid "Options"
+msgstr "选项"
+
+msgid "Submit"
+msgstr "提交"
+
+msgid "You are banned"
+msgstr "您已被论坛封禁。"
+
+msgid "Your IP is blocked"
+msgstr "您的IP已被论坛封禁。"
+
+msgid "The ban expires %s"
+msgstr "封禁将于%s结束"
+
+msgid "Ban message for you"
+msgstr "管理员或版主留下了以下封禁信息："
+
+msgid "Ban message contact %s"
+msgstr "如有疑问，请联系论坛管理员：<a href=\"mailto:%1$s\">%1$s</a>。"
+
+msgid "Never"
+msgstr "从不"
+
+msgid "Today"
+msgstr "今天"
+
+msgid "Yesterday"
+msgstr "昨天"
+
+msgid "Info"
+msgstr "信息"
+
+msgid "Go back"
+msgstr "返回"
+
+msgid "Maintenance"
+msgstr "维护"
+
+msgid "Redirecting"
+msgstr "重定向中"
+
+msgid "Redirecting..."
+msgstr "<br><a href=\"%s\">重定向中…</a>"
+
+msgid "on"
+msgstr "开启"
+
+msgid "off"
+msgstr "关闭"
+
+msgid "Last post"
+msgstr "最新帖子"
+
+msgid "by %s"
+msgstr "由 %s"
+
+msgid "New posts"
+msgstr "新帖子"
+
+msgid "New posts info"
+msgstr "转到该主题的第一个新帖子"
+
+msgid "Unread posts"
+msgstr "未读帖子"
+
+msgid "Unread posts info"
+msgstr "转到该主题的第一个未读帖子"
+
+msgid "Username"
+msgstr "用户名"
+
+msgid "Passphrase"
+msgstr "密码"
+
+msgid "Email"
+msgstr "电子邮箱"
+
+msgid "Send email"
+msgstr "发送邮件"
+
+msgid "Registered"
+msgstr "注册时间"
+
+msgid "Subject"
+msgstr "主题"
+
+msgid "Message"
+msgstr "消息"
+
+msgid "Topic"
+msgstr "主题"
+
+msgid "Forum"
+msgstr "论坛"
+
+msgid "Stats"
+msgstr "统计"
+
+msgid "Posts"
+msgstr "帖子"
+
+msgid "Replies"
+msgstr "回复"
+
+msgid "%s Reply"
+msgid_plural "%s Replies"
+msgstr[0] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> 回复</span>"
+msgstr[1] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> 回复</span>"
+
+msgid "%s View"
+msgid_plural "%s Views"
+msgstr[0] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> 查看</span>"
+msgstr[1] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> 查看</span>"
+
+msgid "Pages"
+msgstr "页："
+
+msgid "Page %s"
+msgstr "第 %s 页"
+
+msgid "Page %1$s of %2$s"
+msgstr "第 %1$s 页，共 %2$s 页 ·"
+
+msgid "Image link"
+msgstr "图片"
+
+msgid "%s wrote"
+msgstr "%s 写道："
+
+msgid "Mailer"
+msgstr "%s"
+
+msgid "Previous"
+msgstr "上一页"
+
+msgid "Next"
+msgstr "下一页"
+
+msgid "Spacer"
+msgstr "&hellip;"
+
+msgid "Title"
+msgstr "标题"
+
+msgid "Member"
+msgstr "会员"
+
+msgid "Moderator"
+msgstr "版主"
+
+msgid "Administrator"
+msgstr "管理员"
+
+msgid "Banned"
+msgstr "已封禁"
+
+msgid "Guest"
+msgstr "访客"
+
+msgid "Unverified"
+msgstr "未验证"
+
+msgid "Index"
+msgstr "首页"
+
+msgid "Home page"
+msgstr "主页"
+
+msgid "User list"
+msgstr "用户列表"
+
+msgid "List of users"
+msgstr "用户列表"
+
+msgid "Rules"
+msgstr "规则"
+
+msgid "Board rules"
+msgstr "论坛规则"
+
+msgid "Search"
+msgstr "搜索"
+
+msgid "Search topics and posts"
+msgstr "搜索主题和帖子"
+
+msgid "Register"
+msgstr "注册"
+
+msgid "Login"
+msgstr "登录"
+
+msgid "Profile"
+msgstr "个人资料"
+
+msgid "Your profile"
+msgstr "您的个人资料"
+
+msgid "Logout"
+msgstr "退出"
+
+msgid "Admin"
+msgstr "管理"
+
+msgid "Administration functions"
+msgstr "管理功能"
+
+msgid "Title separator"
+msgstr " - "
+
+msgid "PM"
+msgstr "私信"
+
+msgid "PM %s"
+msgstr "<span class=\"f-spantxtpm\">私信 </span><b>(%s)</b>"
+
+msgid "Private messages"
+msgstr "私信"
+
+msgid "Send PM"
+msgstr "发送私信"
+
+msgid "Board footer"
+msgstr "论坛页脚："
+
+msgid "Powered by"
+msgstr "由 <a href=\"https://forkbb.ru\">ForkBB</a> 驱动"
+
+msgid "Debug table"
+msgstr "调试信息："
+
+msgid "Generated in %1$s, %2$s queries"
+msgstr "生成用时 %1$s 秒，执行 %2$s 次查询"
+
+msgid "Memory %1$s, Peak %2$s"
+msgstr "内存使用：%1$s（峰值：%2$s）"
+
+msgid "Query times"
+msgstr "查询时间（秒）"
+
+msgid "Query"
+msgstr "查询"
+
+msgid "The most recent posts at %s board"
+msgstr "\"%s\" 论坛的最新帖子。"
+
+msgid "The most recent posts in %s forum"
+msgstr "\"%s\" 版块的最新帖子。"
+
+msgid "The most recent posts in %s topic"
+msgstr "\"%s\" 主题的最新帖子。"
+
+msgid "RSS reply"
+msgstr "回复："
+
+msgid "RSS active topics feed"
+msgstr "RSS 活跃主题订阅"
+
+msgid "Atom active topics feed"
+msgstr "Atom 活跃主题订阅"
+
+msgid "RSS forum feed"
+msgstr "RSS 论坛订阅"
+
+msgid "Atom forum feed"
+msgstr "Atom 论坛订阅"
+
+msgid "RSS topic feed"
+msgstr "RSS 主题订阅"
+
+msgid "Atom topic feed"
+msgstr "Atom 主题订阅"
+
+msgid "After time"
+msgstr "添加于"
+
+msgid "After time s"
+msgstr " 秒前"
+
+msgid "After time i"
+msgstr " 分钟前"
+
+msgid "After time H"
+msgstr " 小时前"
+
+msgid "After time d"
+msgstr " 天前"
+
+msgid "New reports"
+msgstr "<a href=\"%s\">有新的举报</a>"
+
+msgid "Maintenance mode enabled"
+msgstr "<a href=\"%s\">维护模式已启用</a>"
+
+msgid "Maintenance mode enabled off"
+msgstr "<a href=\"%s\">维护模式被 MAINTENANCE_OFF 参数阻止</a>"
+
+msgid "%s B"
+msgstr "%sB"
+
+msgid "%s KiB"
+msgstr "%sK"
+
+msgid "%s MiB"
+msgstr "%sM"
+
+msgid "%s GiB"
+msgstr "%sG"
+
+msgid "%s TiB"
+msgstr "%sT"
+
+msgid "%s PiB"
+msgstr "%sP"
+
+msgid "%s EiB"
+msgstr "%sE"
+
+msgid "Latest active topics"
+msgstr "最新活跃主题"
+
+msgid "Find latest active topics"
+msgstr "查找最新活跃主题"
+
+msgid "Unanswered topics"
+msgstr "未回复主题"
+
+msgid "Find unanswered topics"
+msgstr "查找未回复主题"
+
+msgid "Topics with your posts"
+msgstr "包含您帖子的主题"
+
+msgid "Find topics with your posts"
+msgstr "查找包含您帖子的主题"
+
+msgid "Male"
+msgstr "男"
+
+msgid "Female"
+msgstr "女"
+
+msgid "Save changes"
+msgstr "保存更改"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Yes"
+msgstr "是"
+
+msgid "No"
+msgstr "否"
+
+msgid "Your passphrase"
+msgstr "您的密码"
+
+msgid "User %s"
+msgstr "%s"
+
+msgid "Unsubscribe"
+msgstr "取消订阅"
+
+msgid "Subscribe"
+msgstr "订阅"
+
+msgid "Post from topic %s"
+msgstr "此帖子移自主题 \"%s\""
+
+msgid "The search may be case sensitive"
+msgstr "对于非基本拉丁字符，搜索可能区分大小写。"
+
+msgid "%s"
+msgstr "%s"
+
+msgid "\"%s\""
+msgstr "&quot;%s&quot;"
+
+msgid "ACTIONS"
+msgstr "操作"
+
+msgid "Main menu"
+msgstr "主菜单"
+
+msgid ":like:"
+msgstr "赞"
+
+msgid ":fire:"
+msgstr "火焰"
+
+msgid ":lol:"
+msgstr "笑"
+
+msgid ":smile:"
+msgstr "微笑"
+
+msgid ":frown:"
+msgstr "皱眉"
+
+msgid ":sad:"
+msgstr "难过"
+
+msgid ":cry:"
+msgstr "哭"
+
+msgid ":angry:"
+msgstr "生气"
+
+msgid ":dislike:"
+msgstr "踩"
+
+msgid ":meh:"
+msgstr "无语"
+
+msgid ":shock:"
+msgstr "震惊"
+
+msgid "Drafts (%s)"
+msgstr "<span class=\"f-spantxtpm\">草稿 </span><b>(%s)</b>"
+
+msgid "Your drafts"
+msgstr "您的草稿"
