@@ -90,10 +90,10 @@ class Parser extends Parserus
         $blackList = 1 === $this->c->user->g_post_links ? null : ['email', 'url', 'img'];
 
         $this->setAttr('isSign', $isSignature)
-             ->setWhiteList($whiteList)
-             ->setBlackList($blackList)
-             ->parse($text, ['strict' => true])
-             ->stripEmptyTags(" \n\t\r\v", true);
+            ->setWhiteList($whiteList)
+            ->setBlackList($blackList)
+            ->parse($text, ['strict' => true])
+            ->stripEmptyTags(" \n\t\r\v", true);
 
         if (1 === $this->c->config->b_make_links) {
             $this->detectUrls();
@@ -116,9 +116,9 @@ class Parser extends Parserus
             $blackList = $this->c->config->a_bb_black_mes;
 
             $this->setAttr('isSign', false)
-                 ->setWhiteList($whiteList)
-                 ->setBlackList($blackList)
-                 ->parse($text);
+                ->setWhiteList($whiteList)
+                ->setBlackList($blackList)
+                ->parse($text);
         }
 
         if (
@@ -132,6 +132,34 @@ class Parser extends Parserus
     }
 
     /**
+     * Удаляет из сообщения $text теги $remove для цитирования
+     * $remove = ['имя тега' => 'текст замены', ...]
+     */
+    public function prepareToQuote(string $text, array $remove = []): string
+    {
+        $whiteList = 1 === $this->c->config->b_message_bbcode ? null : [];
+        $blackList = $this->c->config->a_bb_black_mes;
+
+        $this->setAttr('isSign', false)
+            ->setWhiteList($whiteList)
+            ->setBlackList($blackList)
+            ->parse($text);
+
+        if ($remove) {
+            $arr = $this->getIds(...(\array_keys($remove)));
+
+            if ($arr) {
+                foreach ($arr as $id => $name) {
+                    $this->data[$id]['text'] = $remove[$name];
+                    $this->data[$id]['tag'] = null;
+                }
+            }
+        }
+
+        return \preg_replace('%^(\x20*\n)+|(\n\x20*)+$%D', '', $this->getCode());
+    }
+
+    /**
      * Преобразует бб-коды в html в подписях пользователей
      */
     public function parseSignature(?string $text = null): string
@@ -142,9 +170,9 @@ class Parser extends Parserus
             $blackList = $this->c->config->a_bb_black_sig;
 
             $this->setAttr('isSign', true)
-                 ->setWhiteList($whiteList)
-                 ->setBlackList($blackList)
-                 ->parse($text);
+                ->setWhiteList($whiteList)
+                ->setBlackList($blackList)
+                ->parse($text);
         }
 
         if (1 === $this->c->config->b_smilies_sig) {
