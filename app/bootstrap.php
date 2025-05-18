@@ -73,7 +73,7 @@ if (
     $c->BASE_URL = \str_replace('https://', 'http://', $c->BASE_URL);
 }
 
-$c->FORK_REVISION = 86;
+$c->FORK_REVISION = 87;
 $c->START         = $forkStart;
 $c->PUBLIC_URL    = $c->BASE_URL . $forkPublicPrefix;
 $c->dispatcher    = new EventDispatcher($c);
