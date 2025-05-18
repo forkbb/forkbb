@@ -2090,13 +2090,17 @@
 				editor.createDropDown(caller, 'hide-picker', content);
 			},
 			_dropDown2: function (editor, caller, title, type, callback) {
-				var	content = createElement('div');
+				var	content = createElement('div'),
+					back = function (e) {
+						if(e.type == 'click' || e.keyCode == 13) {
+							callback(find(content, '#idsinglefield')[0].value);
+							editor.closeDropDown(true);
+							e.preventDefault();
+						}
+				};
 
-				on(content, 'click', '.button', function (e) {
-					callback(find(content, '#idsinglefield')[0].value);
-					editor.closeDropDown(true);
-					e.preventDefault();
-				});
+				on(content, 'click', '.button', back);
+				on(content, 'keydown', 'input', back);
 
 				appendChild(content, _tmpl('singlefield', {
 					title: title,
