@@ -2110,17 +2110,19 @@
 				var	editor  = this;
 
 				defaultCmds.hide._dropDown(editor, caller, function (type, caller) {
+					var endPrx = editor.getRangeHelper().selectedHtml() === '' ? '<br />' : '';
+
 					switch (type) {
 						case 'guest':
 						case 'admin':
 						case 'mod':
-							editor.wysiwygEditorInsertHtml('<div class="f-bb-hide f-bb-hide-visible" data-bb="' + type + '">', '<br /></div>');
+							editor.wysiwygEditorInsertHtml('<div class="f-bb-hide f-bb-hide-visible" data-bb="' + type + '">', endPrx + '</div>');
 							break;
 						case 'post':
 							defaultCmds.hide._dropDown2(editor, caller, editor._('Number of posts to view'), 'number', function (num) {
 								num = Number(num);
 								if (num > 0) {
-									editor.wysiwygEditorInsertHtml('<div class="f-bb-hide f-bb-hide-visible" data-bb="' + num + '">', '<br /></div>');
+									editor.wysiwygEditorInsertHtml('<div class="f-bb-hide f-bb-hide-visible" data-bb="' + num + '">', endPrx + '</div>');
 								}
 							});
 							break;
@@ -2128,7 +2130,7 @@
 							defaultCmds.hide._dropDown2(editor, caller, editor._('Spoiler title'), 'text', function (title) {
 								title = stringTrim(title);
 								title = title ? entities(title) : 'Hidden text';
-								editor.wysiwygEditorInsertHtml('<details open><summary>' + title + '</summary><div class="f-bb-s-body">', '<br /></div></details>');
+								editor.wysiwygEditorInsertHtml('<details open><summary>' + title + '</summary><div class="f-bb-s-body">', endPrx + '</div></details>');
 							});
 							break;
 					}
