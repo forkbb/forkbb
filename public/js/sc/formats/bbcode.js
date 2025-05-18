@@ -258,12 +258,6 @@
 		},
 		h6: {
 			txtExec: ['[h6]', '[/h6]']
-		},
-		spoiler: {
-			txtExec: ['[spoiler]', '[/spoiler]']
-		},
-		hide: {
-			txtExec: ['[hide]', '[/hide]']
 		}
 	};
 
@@ -725,10 +719,10 @@
 			isInline: false,
 			quoteType: QuoteType.never,
 			format: function (element, content) {
-				var authorAttr = 'data-author';
-				var	author = '';
-				var cite;
-				var children = element.children;
+				var authorAttr = 'data-author',
+					author = '',
+					cite,
+					children = element.children;
 
 				for (var i = 0; !cite && i < children.length; i++) {
 					if (is(children[i], 'cite')) {
@@ -952,7 +946,9 @@
 			isInline: false,
 //			quoteType: QuoteType.never,
 			format: function (element, content) {
-				var summary,
+				var titleAttr = 'data-title',
+					summary,
+					title,
 					children = element.children;
 
 				for (var i = 0; !summary && i < children.length; i++) {
@@ -961,19 +957,27 @@
 					}
 				}
 
-				if (summary) {
-					element.removeChild(summary);
-					content	= this.elementToBbcode(element);
-					summary = '=' + summary.textContent;
+				if (summary || attr(element, titleAttr)) {
+					title = summary && summary.textContent || attr(element, titleAttr);
 
-					if (/^=['"]?Hidden text['"]?$/.test(summary)) {
-						summary = '';
+					attr(element, titleAttr, title);
+
+					if (summary) {
+						element.removeChild(summary);
+					}
+
+					content	= this.elementToBbcode(element);
+
+					if (/^['"]?Hidden text['"]?$/.test(title)) {
+						title = '';
+					} else {
+						title = '=' + title;
 					}
 				} else {
-					summary = '';
+					title = '';
 				}
 
-				return '[spoiler' + summary + ']' + content + '[/spoiler]';
+				return '[spoiler' + title + ']' + content + '[/spoiler]';
 			},
 			html: function (token, attrs, content) {
 				if (attrs.defaultattr) {
