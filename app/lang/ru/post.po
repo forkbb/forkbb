@@ -122,3 +122,6 @@ msgstr "В черновики"
 
 msgid "Too many censored words"
 msgstr "Много слов подвергнуто цензуре."
+
+msgid "To pre-moderation"
+msgstr "На премодерацию"

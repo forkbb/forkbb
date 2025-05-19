@@ -12,7 +12,9 @@ namespace ForkBB\Models\Rules;
 
 use ForkBB\Models\Model;
 use ForkBB\Models\Rules;
+use ForkBB\Models\Forum\Forum;
 use ForkBB\Models\Post\Post;
+use ForkBB\Models\Topic\Topic;
 use ForkBB\Models\User\User;
 use ForkBB\Models\Rules\Profile as ProfileRules;
 
@@ -209,5 +211,25 @@ class Users extends Rules
     protected function getuseDraft(): bool
     {
         return ! $this->user->isGuest;
+    }
+
+    /**
+     * Определяет нужна ли отправка на премодерацию
+     */
+    public function forPreModeration(Model $model): bool
+    {
+        if (
+            $this->user->isAdmMod
+            || 1 !== $this->c->config->b_premoderation
+        ) {
+            return false;
+        } elseif (
+            $model instanceof Forum
+            || $model instanceof Topic
+        ) {
+            return (bool) $model->forPreModeration;
+        } else {
+            return false;
+        }
     }
 }

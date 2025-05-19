@@ -113,7 +113,13 @@ class Antispam extends Admin
                     'value'   => $config->b_premoderation,
                     'values'  => $yn,
                     'caption' => 'Use pre-moderation label',
-                    'help'    => ['Use pre-moderation help', __('User groups'), $this->c->Router->link('AdminGroups'), __('Forums'), $this->c->Router->link('AdminForums')],
+                    'help'    => [
+                        'Use pre-moderation help',
+                        __('User groups'),
+                        $this->c->Router->link('AdminGroups'),
+                        __('Forums'),
+                        $this->c->Router->link('AdminForums')
+                    ],
                 ],
             ],
         ];

@@ -145,3 +145,6 @@ msgstr "Ir a la solución"
 
 msgid "To draft"
 msgstr "To draft"
+
+msgid "To pre-moderation"
+msgstr "To pre-moderation"

@@ -122,3 +122,6 @@ msgstr "保存为草稿"
 
 msgid "Too many censored words"
 msgstr "包含过多被审查的词语。"
+
+msgid "To pre-moderation"
+msgstr "To pre-moderation"

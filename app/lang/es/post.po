@@ -122,3 +122,6 @@ msgstr "To draft"
 
 msgid "Too many censored words"
 msgstr "Too many censored words."
+
+msgid "To pre-moderation"
+msgstr "To pre-moderation"

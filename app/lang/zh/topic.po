@@ -145,3 +145,6 @@ msgstr "查看解决方案"
 
 msgid "To draft"
 msgstr "保存为草稿"
+
+msgid "To pre-moderation"
+msgstr "To pre-moderation"

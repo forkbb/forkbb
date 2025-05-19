@@ -26,6 +26,7 @@ trait PostFormTrait
 
         unset($args['_vars']);
 
+        $preMod    = $this->userRules->forPreModeration($model);
         $notPM     = $this->fIndex !== self::FI_PM;
         $autofocus = $quick ? null : true;
         $form      = [
@@ -48,6 +49,10 @@ trait PostFormTrait
                 ],
             ],
         ];
+
+        if ($preMod) {
+            $form['btns']['submit']['value'] = __('To pre-moderation');
+        }
 
         if (
             ! $quick
