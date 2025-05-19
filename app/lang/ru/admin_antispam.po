@@ -32,3 +32,9 @@ msgstr "Использовать javascript"
 
 msgid "Use javascript help"
 msgstr "Добавить в формы вычисляемое через javascript поле. Формы: регистрация, сообщение гостя, первое сообщение пользователя."
+
+msgid "Use pre-moderation label"
+msgstr "Использовать премодерацию"
+
+msgid "Use pre-moderation help"
+msgstr "Предварительно отправлять новые темы/сообщения на модерацию. Отдельные настройки смотрите в <a href="%2$s">%1$s</a>, <a href="%4$s">%3$s</a> и отдельных темах."

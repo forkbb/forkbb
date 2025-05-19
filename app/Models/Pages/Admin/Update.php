@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '8.0.0';
     const REV_MIN_FOR_UPDATE         = 53;
-    const LATEST_REV_WITH_DB_CHANGES = 87;
+    const LATEST_REV_WITH_DB_CHANGES = 88;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
     const CONFIG_FILE                = 'main.php';
@@ -1478,6 +1478,20 @@ class Update extends Admin
             $this->c->DB->exec($query, $vars);
         }
         // bbcode
+
+        return null;
+    }
+
+    /**
+     * rev.87 to rev.88
+     */
+    protected function stageNumber87(array $args): ?int
+    {
+        $config = $this->c->config;
+
+        $config->b_premoderation ??= 0;
+
+        $config->save();
 
         return null;
     }

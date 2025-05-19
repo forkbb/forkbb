@@ -1689,6 +1689,7 @@ class Install extends Admin
             ),
             'b_show_user_reaction'    => 0,
             'i_about_me_topic_id'     => 0,
+            'b_premoderation'         => 0,
         ];
 
         foreach ($forkConfig as $name => $value) {

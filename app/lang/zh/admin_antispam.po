@@ -32,3 +32,9 @@ msgstr "使用 JavaScript"
 
 msgid "Use javascript help"
 msgstr "在表单中添加一个由 JavaScript 计算的字段。适用表单：注册、访客留言、用户首次发帖。"
+
+msgid "Use pre-moderation label"
+msgstr "Use pre-moderation"
+
+msgid "Use pre-moderation help"
+msgstr "Pre-submit new topics/posts for moderation. See <a href="%2$s">%1$s</a>, <a href="%4$s">%3$s</a> and individual topics for specific settings."

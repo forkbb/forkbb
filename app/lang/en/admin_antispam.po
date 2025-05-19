@@ -32,3 +32,9 @@ msgstr "Use javascript"
 
 msgid "Use javascript help"
 msgstr "Add a javascript-calculated field to the forms. Forms: registration, guest message, user's first message."
+
+msgid "Use pre-moderation label"
+msgstr "Use pre-moderation"
+
+msgid "Use pre-moderation help"
+msgstr "Pre-submit new topics/posts for moderation. See <a href="%2$s">%1$s</a>, <a href="%4$s">%3$s</a> and individual topics for specific settings."

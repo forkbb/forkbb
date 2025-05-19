@@ -35,6 +35,7 @@ class Antispam extends Admin
                     'token'           => 'token:AdminAntispam',
                     'b_ant_hidden_ch' => 'required|integer|in:0,1',
                     'b_ant_use_js'    => 'required|integer|in:0,1',
+                    'b_premoderation' => 'required|integer|in:0,1',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
@@ -106,6 +107,13 @@ class Antispam extends Admin
                     'values'  => $yn,
                     'caption' => 'Use javascript label',
                     'help'    => 'Use javascript help',
+                ],
+                'b_premoderation' => [
+                    'type'    => 'radio',
+                    'value'   => $config->b_premoderation,
+                    'values'  => $yn,
+                    'caption' => 'Use pre-moderation label',
+                    'help'    => ['Use pre-moderation help', __('User groups'), $this->c->Router->link('AdminGroups'), __('Forums'), $this->c->Router->link('AdminForums')],
                 ],
             ],
         ];
