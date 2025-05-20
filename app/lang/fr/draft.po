@@ -53,3 +53,15 @@ msgstr "Deleted draft"
 
 msgid "Delete  draft"
 msgstr "Delete draft"
+
+msgid "Post in pre-moderation"
+msgstr "This post is in pre-moderation."
+
+msgid "Topic in pre-moderation"
+msgstr "This topic is in pre-moderation."
+
+msgid "Post pre-moderation redirect"
+msgstr "Your post has been sent for pre-moderation."
+
+msgid "Topic pre-moderation redirect"
+msgstr "Your topic has been sent for pre-moderation."

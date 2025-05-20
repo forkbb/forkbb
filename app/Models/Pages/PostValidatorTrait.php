@@ -232,6 +232,18 @@ trait PostValidatorTrait
             $ruleDraft = 'absent';
         }
 
+        if (
+            $model instanceof Model
+            && true === $this->userRules->forPreModeration($model)
+        ) {
+            $ruleSubmit = 'absent';
+            $rulePreMod = 'string';
+
+        } else {
+            $ruleSubmit = 'string|check_timeout';
+            $rulePreMod = 'absent';
+        }
+
         $ruleMessage = ($about ? '' : 'required|') . 'string:trim|max:' . $this->c->MAX_POST_SIZE . ($executive ? '' : '|noURL') . '|check_message';
 
         $v = $this->c->Validator->reset()
@@ -252,8 +264,9 @@ trait PostValidatorTrait
                 'subscribe'    => $ruleSubscribe,
                 'terms'        => 'absent',
                 'preview'      => 'string',
-                'submit'       => 'string|check_timeout',
+                'submit'       => $ruleSubmit,
                 'draft'        => $ruleDraft,
+                'pre_mod'      => $rulePreMod,
                 'message'      => $ruleMessage,
             ])->addAliases([
                 'email'        => 'Email',

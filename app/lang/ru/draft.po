@@ -53,3 +53,15 @@ msgstr "Удаляемый черновик"
 
 msgid "Delete  draft"
 msgstr "Удалить черновик"
+
+msgid "Post in pre-moderation"
+msgstr "Это сообщение находится на премодерации."
+
+msgid "Topic in pre-moderation"
+msgstr "Эта тема находится на премодерации."
+
+msgid "Post pre-moderation redirect"
+msgstr "Ваше сообщение отправлено на премодерацию."
+
+msgid "Topic pre-moderation redirect"
+msgstr "Ваша тема отправлена на премодерацию."

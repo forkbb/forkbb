@@ -118,7 +118,10 @@ class Post extends Page
                 if (null !== $v->submit) {
                     return $this->endPost($forum, $v);
 
-                } elseif (null !== $v->draft) {
+                } elseif (
+                    null !== $v->draft
+                    || null !== $v->pre_mod
+                ) {
                     return $this->endDraft($forum, $v);
                 }
             }
@@ -195,7 +198,10 @@ class Post extends Page
                 if (null !== $v->submit) {
                     return $this->endPost($topic, $v);
 
-                } elseif (null !== $v->draft) {
+                } elseif (
+                    null !== $v->draft
+                    || null !== $v->pre_mod
+                ) {
                     return $this->endDraft($topic, $v);
                 }
             }
@@ -266,8 +272,10 @@ class Post extends Page
         $draft->subject      = $v->subject ?? '';
         $draft->message      = $v->message;
         $draft->hide_smilies = $v->hide_smilies ? 1 : 0;
-        $draft->form_data    = $v->getData(false, ['token', 'subject', 'message', 'hide_smilies', 'preview', 'submit', 'draft']);
+        $draft->form_data    = $v->getData(false, ['token', 'subject', 'message', 'hide_smilies', 'preview', 'submit', 'draft', 'pre_mod', 'nekot']);
         $draft->poster_ip    = $this->user->ip;
+        $draft->user_agent   = \mb_substr($this->user->userAgent, 0, 255, 'UTF-8');
+        $draft->pre_mod      = null !== $v->pre_mod ? 1 : 0;
 
         if ($this->draft instanceof Draft) {
             $this->c->drafts->update($draft);
@@ -283,7 +291,13 @@ class Post extends Page
         $this->c->users->update($this->user);
         $this->c->Lang->load('draft');
 
-        return $this->c->Redirect->url($draft->link)->message('Draft redirect', FORK_MESS_SUCC);
+        $message = match (true) {
+            0 === $draft->pre_mod => 'Draft redirect',
+            $draft->topic_id > 0  => 'Post pre-moderation redirect',
+            default               => 'Topic pre-moderation redirect',
+        };
+
+        return $this->c->Redirect->url($draft->link)->message($message, FORK_MESS_SUCC);
     }
 
     /**

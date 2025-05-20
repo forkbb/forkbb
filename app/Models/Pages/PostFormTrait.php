@@ -36,23 +36,29 @@ trait PostFormTrait
                 'token' => $this->c->Csrf->create($marker, $args),
             ],
             'sets'    => [],
-            'btns'    => [
-                'submit' => [
-                    'type'  => 'submit',
-                    'class' => $this->draft instanceof Draft ? ['f-opacity'] : null,
-                    'value' => __($model instanceof Forum ? 'Create topic' : 'Submit'),
-                ],
-                'preview' => [
-                    'type'  => 'submit',
-                    'value' => __('Preview'),
-                    'class' => ['f-opacity'],
-                ],
-            ],
+            'btns'    => [],
         ];
 
         if ($preMod) {
-            $form['btns']['submit']['value'] = __('To pre-moderation');
+            $form['btns']['pre_mod'] = [
+                'type'  => 'submit',
+                'class' => $this->draft instanceof Draft && 0 === $this->draft->pre_mod ? ['f-opacity'] : null,
+                'value' => __('To pre-moderation'),
+            ];
+
+        } else {
+            $form['btns']['submit'] = [
+                'type'  => 'submit',
+                'class' => $this->draft instanceof Draft ? ['f-opacity'] : null,
+                'value' => __($model instanceof Forum ? 'Create topic' : 'Submit'),
+            ];
         }
+
+        $form['btns']['preview'] = [
+            'type'  => 'submit',
+            'value' => __('Preview'),
+            'class' => ['f-opacity'],
+        ];
 
         if (
             ! $quick
@@ -74,7 +80,7 @@ trait PostFormTrait
         ) {
             $form['btns']['draft'] = [
                 'type'  => 'submit',
-                'class' => $this->draft instanceof Draft ? null : ['f-opacity'],
+                'class' => $this->draft instanceof Draft && 0 === $this->draft->pre_mod  ? null : ['f-opacity'],
                 'value' => __('To draft'),
             ];
         }
