@@ -227,7 +227,7 @@ class Users extends Rules
             $model instanceof Forum
             || $model instanceof Topic
         ) {
-            return (bool) $model->forPreModeration;
+            return 1 === $this->user->g_premoderation; //(bool) $model->forPreModeration;
         } else {
             return false;
         }
