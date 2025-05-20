@@ -979,6 +979,8 @@ class Install extends Admin
                 'subject'      => ['VARCHAR(255)', false, ''],
                 'message'      => ['MEDIUMTEXT', false],
                 'hide_smilies' => ['TINYINT(1)', false, 0],
+                'pre_mod'      => ['TINYINT(1)', false, 0],
+                'user_agent'   => ['VARCHAR(255)', false, ''],
                 'form_data'    => ['MEDIUMTEXT', false],
             ],
             'PRIMARY KEY' => ['id'],
@@ -986,6 +988,7 @@ class Install extends Admin
                 'poster_id_idx' => ['poster_id'],
                 'multi1_idx'    => ['topic_id', 'poster_id'],
                 'multi2_idx'    => ['forum_id', 'poster_id'],
+                'pre_mod_idx'   => ['pre_mod'],
             ],
             'ENGINE' => $this->DBEngine,
         ];
