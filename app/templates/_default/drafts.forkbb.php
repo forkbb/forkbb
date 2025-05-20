@@ -78,6 +78,10 @@
           </div>
         </address>
         <div class="f-post-body">
+        @if (1 === $post->pre_mod)
+            @php $iswev = [FORK_MESS_INFO => [$post->topic_id ? 'Post in pre-moderation' : 'Topic in pre-moderation']]; @endphp
+            @include ('layouts/iswev')
+        @endif
           <div class="f-post-main">
             {!! $post->html() !!}
           </div>
