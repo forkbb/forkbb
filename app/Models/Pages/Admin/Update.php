@@ -1493,6 +1493,8 @@ class Update extends Admin
 
         $config->save();
 
+        $this->c->DB->addField('::groups', 'g_premoderation', 'TINYINT(1)', false, 0);
+
         return null;
     }
 }

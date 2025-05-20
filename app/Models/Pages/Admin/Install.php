@@ -910,6 +910,7 @@ class Install extends Admin
                 'g_up_limit_mb'          => ['INT(10) UNSIGNED', false, 0],
                 'g_use_reaction'         => ['TINYINT(1)', false, 1],
                 'g_use_about_me'         => ['TINYINT(1)', false, 1],
+                'g_premoderation'        => ['TINYINT(1)', false, 0],
             ],
             'PRIMARY KEY' => ['g_id'],
             'ENGINE' => $this->DBEngine,

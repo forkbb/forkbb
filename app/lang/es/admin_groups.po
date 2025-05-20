@@ -335,3 +335,9 @@ msgstr "Use &apos;About me&apos;"
 
 msgid "Use about me help"
 msgstr "Allow users of this group to use the &apos;About Me&apos; field in profile."
+
+msgid "Use pre-moderation label"
+msgstr "Subject to pre-moderation"
+
+msgid "Use pre-moderation help"
+msgstr "Pre-submit new topics/posts from users of this group for moderation."

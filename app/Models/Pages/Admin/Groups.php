@@ -256,6 +256,7 @@ class Groups extends Admin
                     'g_search_users'         => 'required|integer|in:0,1',
                     'g_post_flood'           => 'required|integer|min:0|max:32767',
                     'g_search_flood'         => 'required|integer|min:0|max:32767',
+                    'g_premoderation'        => 'required|integer|in:0,1',
                 ]);
 
                 if (
@@ -366,8 +367,7 @@ class Groups extends Admin
     public function save(Group $group, Group $baseGroup, array $data): Page
     {
         if (
-            ! $group->groupAdmin
-            && isset($data['g_moderator'])
+            isset($data['g_moderator'])
             && 0 === $data['g_moderator']
         ) {
             $data['g_mod_edit_users']       = 0;
@@ -375,6 +375,13 @@ class Groups extends Admin
             $data['g_mod_change_passwords'] = 0;
             $data['g_mod_promote_users']    = 0;
             $data['g_mod_ban_users']        = 0;
+        }
+
+        if (
+            isset($data['g_moderator'])
+            && 1 === $data['g_moderator']
+        ) {
+            $data['g_premoderation'] = 0;
         }
 
         if (
@@ -562,6 +569,13 @@ class Groups extends Admin
                 'values'  => $yn,
                 'caption' => 'Read board label',
                 'help'    => 'Read board help',
+            ];
+            $fieldset['g_premoderation'] = [
+                'type'    => 'radio',
+                'value'   => $group->g_premoderation,
+                'values'  => $yn,
+                'caption' => 'Use pre-moderation label',
+                'help'    => 'Use pre-moderation help',
             ];
             $fieldset['g_view_users'] = [
                 'type'    => 'radio',

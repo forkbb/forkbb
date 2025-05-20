@@ -335,3 +335,9 @@ msgstr "使用"关于我""
 
 msgid "Use about me help"
 msgstr "允许该用户组的用户在资料中使用"关于我"字段。"
+
+msgid "Use pre-moderation label"
+msgstr "Subject to pre-moderation"
+
+msgid "Use pre-moderation help"
+msgstr "Pre-submit new topics/posts from users of this group for moderation."

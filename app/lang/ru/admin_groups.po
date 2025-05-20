@@ -335,3 +335,9 @@ msgstr "Использовать &apos;Обо мне&apos;"
 
 msgid "Use about me help"
 msgstr "Разрешить пользователям этой группы использовать поле &apos;Обо мне&apos; в своем профиле."
+
+msgid "Use pre-moderation label"
+msgstr "Подвергать премодерации"
+
+msgid "Use pre-moderation help"
+msgstr "Предварительно отправлять новые темы/сообщения пользователей этой группы на модерацию."
