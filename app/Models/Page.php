@@ -16,17 +16,18 @@ use function \ForkBB\__;
 
 abstract class Page extends Model
 {
-    const FI_INDEX = 'index';
-    const FI_USERS = 'userlist';
-    const FI_RULES = 'rules';
-    const FI_SRCH  = 'search';
-    const FI_REG   = 'register';
-    const FI_LOGIN = 'login';
-    const FI_PROFL = 'profile';
-    const FI_PM    = 'pm';
-    const FI_ADMIN = 'admin';
-    const FI_LGOUT = 'logout';
-    const FI_DRAFT = 'drafts';
+    const FI_INDEX  = 'index';
+    const FI_USERS  = 'userlist';
+    const FI_RULES  = 'rules';
+    const FI_SRCH   = 'search';
+    const FI_REG    = 'register';
+    const FI_LOGIN  = 'login';
+    const FI_PROFL  = 'profile';
+    const FI_PM     = 'pm';
+    const FI_ADMIN  = 'admin';
+    const FI_LGOUT  = 'logout';
+    const FI_DRAFT  = 'drafts';
+    const FI_PREMOD = 'premod';
 
     /**
      * Заголовки страницы
@@ -265,6 +266,14 @@ abstract class Page extends Model
             }
 
             if ($this->user->isAdmMod) {
+                if (1 === $this->c->config->b_premoderation) {
+                    $navUser[self::FI_PREMOD] = [
+                        $r->link('Premod'),
+                        'Pre-moderation',
+                        'Queue of new topics and posts for moderation',
+                    ];
+                }
+
                 $navUser[self::FI_ADMIN] = [
                     $r->link('Admin'),
                     'Admin',

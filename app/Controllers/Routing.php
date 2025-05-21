@@ -681,6 +681,15 @@ class Routing
                 'Moderate:action',
                 'Moderate'
             );
+
+            if (1 === $config->b_premoderation) {
+                $r->add(
+                    $r::DUO,
+                    '/premoderation[/{page|i:[1-9]\d*}]',
+                    'Premod:action',
+                    'Premod'
+                );
+            }
         }
 
         // только админ

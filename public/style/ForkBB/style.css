@@ -662,6 +662,10 @@ body,
   content: "\f044";
 }
 
+#fork-nav-premod .f-menu-a::before {
+  content: "\f00c";
+}
+
 #fork-nav-admin .f-menu-a::before {
   content: "\f7d9";
 }

@@ -504,3 +504,9 @@ msgstr "Only admins and forum moderators can see this content."
 
 msgid "bb hide %s posts"
 msgstr "This content is visible to users with %s or more posts."
+
+msgid "Pre-moderation"
+msgstr "Pre-moderation"
+
+msgid "Queue of new topics and posts for moderation"
+msgstr "Queue of new topics and posts for moderation"
