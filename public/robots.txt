@@ -11,3 +11,4 @@ Disallow: /forum/*/new/topic
 Disallow: /topic/*/new/reply
 Disallow: /userlist
 Disallow: /draft
+Disallow: /premod
