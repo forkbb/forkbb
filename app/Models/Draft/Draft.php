@@ -66,7 +66,16 @@ class Draft extends DataModel
      */
     protected function getuser(): User
     {
-        $user = $this->c->users->load($this->poster_id);
+        if (
+            $this->poster_id < 1
+            || ! ($user = $this->c->users->load($this->poster_id)) instanceof User
+        ) {
+            $form = $this->form_data;
+            $user = $this->c->users->guest([
+                'username' => $form['username'] ?? '<No name>',
+                'email'    => $form['email'] ?? '',
+            ]);
+        }
 
         if (! $user instanceof User) {
             throw new RuntimeException("No user data in draft number {$this->id}");
