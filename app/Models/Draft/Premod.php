@@ -14,6 +14,7 @@ use ForkBB\Models\DataModel;
 use ForkBB\Models\Forum\Forum;
 use ForkBB\Models\Topic\Topic;
 use ForkBB\Models\User\User;
+use PDO;
 use RuntimeException;
 
 class Premod extends DataModel
@@ -25,6 +26,8 @@ class Premod extends DataModel
 
     public function init(): Premod
     {
+        $this->setModelAttrs([]);
+
         if ($this->c->user->isAdmin) {
             $query = 'SELECT d.id
                 FROM ::drafts AS d
@@ -56,7 +59,7 @@ class Premod extends DataModel
     /**
      * Размер очереди премодерации
      */
-    public function count(): int
+    protected function getcount(): int
     {
         return \count($this->idList);
     }
@@ -66,7 +69,7 @@ class Premod extends DataModel
      */
     public function numPages(): int
     {
-        return (int) \ceil($this->count() / $this->c->user->disp_posts);
+        return (int) \ceil($this->count / $this->c->user->disp_posts);
     }
 
     /**
@@ -81,14 +84,23 @@ class Premod extends DataModel
             return [];
         }
 
-        $result = $this->c->drafts->loadByIds($ids);
+        $userIds = [];
+        $result  = $this->c->drafts->loadByIds($ids);
 
         foreach ($result as $draft) {
             ++$offset;
 
             if ($draft instanceof Draft) {
                 $draft->__postNumber = $offset;
+
+                if ($draft->poster_id > 0) {
+                    $userIds[$draft->poster_id] = $draft->poster_id;
+                }
             }
+        }
+
+        if (! empty($userIds)) {
+            $this->c->users->loadByIds($userIds);
         }
 
         return $result;
