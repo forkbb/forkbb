@@ -686,8 +686,8 @@ class Routing
                 $r->add(
                     $r::DUO,
                     '/premoderation[/{page|i:[1-9]\d*}]',
-                    'Premod:action',
-                    'Premod'
+                    'Premoderation:view',
+                    'Premoderation'
                 );
             }
         }

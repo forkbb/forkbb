@@ -1506,6 +1506,12 @@ class Update extends Admin
             'drafts'
         );
 
+        $coreConfig->add(
+            'multiple=>Premoderation',
+            '\\ForkBB\\Models\\Pages\\Premoderation::class',
+            'Drafts'
+        );
+
         $coreConfig->save();
 
         return null;
