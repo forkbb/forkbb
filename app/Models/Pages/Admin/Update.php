@@ -1498,6 +1498,16 @@ class Update extends Admin
         $this->c->DB->addField('::drafts', 'user_agent', 'VARCHAR(255)', false, '', null, 'pre_mod');
         $this->c->DB->addIndex('::drafts', 'pre_mod_idx', ['pre_mod']);
 
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'shared=>premod',
+            '\\ForkBB\\Models\\Draft\\Premod::class',
+            'drafts'
+        );
+
+        $coreConfig->save();
+
         return null;
     }
 }

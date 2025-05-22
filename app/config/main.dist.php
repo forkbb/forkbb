@@ -174,6 +174,7 @@ return [
         'topics'        => \ForkBB\Models\Topic\Topics::class,
         'posts'         => \ForkBB\Models\Post\Posts::class,
         'drafts'        => \ForkBB\Models\Draft\Drafts::class,
+        'premod'        => \ForkBB\Models\Draft\Premod::class,
         'polls'         => \ForkBB\Models\Poll\Polls::class,
         'reports'       => \ForkBB\Models\Report\Reports::class,
         'user'          => '@users:current',
