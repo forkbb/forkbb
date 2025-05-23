@@ -861,6 +861,7 @@ class Install extends Admin
                 'no_sum_mess'       => ['TINYINT(1)', false, 0],
                 'parent_forum_id'   => ['INT(10) UNSIGNED', false, 0],
                 'use_solution'      => ['TINYINT(1)', false, 0],
+                'premoderation'     => ['TINYINT', false, 0],
                 'use_custom_fields' => ['TINYINT(1)', false, 0],
                 'custom_fields'     => ['TEXT', true],
             ],

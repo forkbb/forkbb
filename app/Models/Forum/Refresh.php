@@ -40,7 +40,7 @@ class Refresh extends Action
             ];
             $query = 'SELECT f.cat_id, c.cat_name, f.id, f.forum_name, f.friendly_name, f.redirect_url, f.parent_forum_id,
                     f.moderators, f.no_sum_mess, f.disp_position, f.sort_by, f.use_solution, f.use_custom_fields,
-                    fp.post_topics, fp.post_replies
+                    f.premoderation, fp.post_topics, fp.post_replies
                 FROM ::categories AS c
                 INNER JOIN ::forums AS f ON c.id=f.cat_id
                 LEFT JOIN ::forum_perms AS fp ON (fp.group_id=?i:gid AND fp.forum_id=f.id)
