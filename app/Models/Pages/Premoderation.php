@@ -40,7 +40,7 @@ class Premoderation extends Page
         $this->numPages   = $premod->numPages();
         $this->pagination = $this->c->Func->paginate($this->numPages, $this->numPage, 'Premoderation');
         $this->useMediaJS = true;
-        $this->nameTpl    = 'drafts';
+        $this->nameTpl    = 'premod';
         $this->identifier = 'search-result';
         $this->fIndex     = self::FI_PREMOD;
         $this->onlinePos  = 'premod';
