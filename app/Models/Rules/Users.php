@@ -223,11 +223,45 @@ class Users extends Rules
             || 1 !== $this->c->config->b_premoderation
         ) {
             return false;
+
         } elseif (
             $model instanceof Forum
             || $model instanceof Topic
         ) {
-            return 1 === $this->user->g_premoderation; //(bool) $model->forPreModeration;
+            $tFlag = false;
+
+            if ($model instanceof Topic) {
+                switch ($model->premoderation) {
+                    case -1:
+                        return false;
+
+                    case 1:
+                        return true;
+
+                    default:
+                        $model = $model->parent;
+                        $tFlag = true;
+                }
+            }
+
+            if ($model instanceof Forum) {
+                switch ($model->premoderation) {
+                    case -1:
+                        return false;
+
+                    case 1:
+                        return $tFlag ? true : false;
+
+                    case 2:
+                        return $tFlag ? false : true;
+
+                    case 3:
+                        return true;
+                }
+            }
+
+            return 1 === $this->user->g_premoderation;
+
         } else {
             return false;
         }
