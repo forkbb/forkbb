@@ -203,3 +203,21 @@ msgstr "Oui, je veux supprimer ce champ <b>%s</b>"
 
 msgid "Delete field"
 msgstr "Supprimer le champ"
+
+msgid "Pre-moderation label"
+msgstr "Pre-moderation"
+
+msgid "No "
+msgstr "No (turned off)"
+
+msgid "Default "
+msgstr "By default"
+
+msgid "Replies "
+msgstr "Only replies"
+
+msgid "New topics "
+msgstr "Only new topics"
+
+msgid "New topics and replies "
+msgstr "New topics and replies"

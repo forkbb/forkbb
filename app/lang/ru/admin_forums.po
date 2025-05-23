@@ -203,3 +203,21 @@ msgstr "Да, я хочу удалить поле <b>%s</b>"
 
 msgid "Delete field"
 msgstr "Удалить поле"
+
+msgid "Pre-moderation label"
+msgstr "Премодерация"
+
+msgid "No "
+msgstr "Нет (выключена)"
+
+msgid "Default "
+msgstr "По умолчанию"
+
+msgid "Replies "
+msgstr "Только ответы"
+
+msgid "New topics "
+msgstr "Только новые темы"
+
+msgid "New topics and replies "
+msgstr "Новые темы и ответы"

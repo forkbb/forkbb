@@ -203,3 +203,21 @@ msgstr "是的，我要删除字段 <b>%s</b>"
 
 msgid "Delete field"
 msgstr "删除字段"
+
+msgid "Pre-moderation label"
+msgstr "Pre-moderation"
+
+msgid "No "
+msgstr "No (turned off)"
+
+msgid "Default "
+msgstr "By default"
+
+msgid "Replies "
+msgstr "Only replies"
+
+msgid "New topics "
+msgstr "Only new topics"
+
+msgid "New topics and replies "
+msgstr "New topics and replies"

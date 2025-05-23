@@ -203,3 +203,21 @@ msgstr "Yes, I want to delete the field <b>%s</b>"
 
 msgid "Delete field"
 msgstr "Delete field"
+
+msgid "Pre-moderation label"
+msgstr "Pre-moderation"
+
+msgid "No "
+msgstr "No (turned off)"
+
+msgid "Default "
+msgstr "By default"
+
+msgid "Replies "
+msgstr "Only replies"
+
+msgid "New topics "
+msgstr "Only new topics"
+
+msgid "New topics and replies "
+msgstr "New topics and replies"

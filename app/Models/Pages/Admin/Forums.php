@@ -369,6 +369,7 @@ class Forums extends Admin
                     'parent'               => 'required|integer|in:' . \implode(',', $this->listOfIndexes),
                     'sort_by'              => 'required|integer|in:0,1,2,4,5,6',
                     'redirect_url'         => 'string:trim|max:255|regex:%^(?:https?://.+)?$%', //???? это поле может быть отключено в форме
+                    'premoderation'        => 'required|integer|in:-1,0,1,2,3',
                     'no_sum_mess'          => 'required|integer|in:0,1',
                     'use_solution'         => 'required|integer|in:0,1',
                     'perms.*.read_forum'   => 'checkbox',
@@ -391,6 +392,7 @@ class Forums extends Admin
             $forum->redirect_url  = $v->redirect_url ?? '';
             $forum->no_sum_mess   = $v->no_sum_mess;
             $forum->use_solution  = $v->use_solution;
+            $forum->premoderation = $v->premoderation;
 
             if ($forum->id > 0) {
                 $forum->use_custom_fields = $forum->redirect_url || empty($forum->custom_fields) ? 0 : $v->use_custom_fields;
@@ -516,6 +518,18 @@ class Forums extends Admin
                     'caption'   => 'Redirect label',
                     'help'      => 'Redirect help',
                     'disabled'  => $forum->num_topics || $forum->subforums ? true : null,
+                ],
+                'premoderation' => [
+                    'type'    => 'select',
+                    'options' => [
+                        -1 => __('No '),
+                        0 => __('Default '),
+                        1 => __('Replies '),
+                        2 => __('New topics '),
+                        3 => __('New topics and replies '),
+                    ],
+                    'value'   => $forum->premoderation,
+                    'caption' => 'Pre-moderation label',
                 ],
                 'no_sum_mess' => [
                     'type'    => 'radio',
