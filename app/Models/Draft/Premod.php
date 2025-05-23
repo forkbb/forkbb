@@ -94,7 +94,10 @@ class Premod extends DataModel
                 $draft->__postNumber = $offset;
 
                 if ($draft->poster_id > 0) {
+
                     $userIds[$draft->poster_id] = $draft->poster_id;
+                } else {
+                    $draft->user; // создание гостя до передачи данных в шаблон
                 }
             }
         }
