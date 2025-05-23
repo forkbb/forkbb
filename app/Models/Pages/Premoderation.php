@@ -27,7 +27,7 @@ class Premoderation extends Page
         $premod = $this->c->premod->init();
 
         if ($premod->count < 1) {
-            return $this->c->Message->message('No drafts');
+            return $this->c->Message->message('Pre-moderation queue is empty', true, 199);
         }
 
         $this->numPage = $args['page'] ?? 1;

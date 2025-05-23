@@ -65,3 +65,6 @@ msgstr "Ваше сообщение отправлено на премодера
 
 msgid "Topic pre-moderation redirect"
 msgstr "Ваша тема отправлена на премодерацию."
+
+msgid "Pre-moderation queue is empty"
+msgstr "Очередь премодерации пуста."

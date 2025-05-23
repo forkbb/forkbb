@@ -65,3 +65,6 @@ msgstr "Your post has been sent for pre-moderation."
 
 msgid "Topic pre-moderation redirect"
 msgstr "Your topic has been sent for pre-moderation."
+
+msgid "Pre-moderation queue is empty"
+msgstr "The pre-moderation queue is empty."
