@@ -152,4 +152,20 @@ class Forums extends Manager
 
         return $this;
     }
+
+    /**
+     * Возвращает список номеров разделов в которых $uid модератор
+     */
+    public function fidsForMod(int $uid): array
+    {
+        $list = [];
+
+        foreach ($this->forumList as $cur)  {
+            if (isset($cur['id'], $cur['moderators'][$uid])) {
+                $list[$cur['id']] = $cur['id'];
+            }
+        }
+
+        return $list;
+    }
 }
