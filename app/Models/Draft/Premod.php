@@ -37,6 +37,7 @@ class Premod extends DataModel
             $this->idList = $this->c->DB->query($query)->fetchAll(PDO::FETCH_COLUMN);
 
         } else {
+            $fids  = $this->c->forums->fidsForMod($this->c->user->id);
             $list  = [];
             $query = 'SELECT d.id, d.forum_id as fid, t.forum_id as tfid
                 FROM ::drafts AS d
@@ -47,7 +48,9 @@ class Premod extends DataModel
             $stmt = $this->c->DB->query($query);
 
             while (false !== ($row = $stmt->fetch())) {
-                $list[] = $row['id'];                    //????
+                if (isset($fids[$row['fid'] ?: $row['tfid']])) {
+                    $list[] = $row['id'];
+                }
             }
 
             $this->idList = $list;
