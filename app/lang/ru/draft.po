@@ -68,3 +68,12 @@ msgstr "Ваша тема отправлена на премодерацию."
 
 msgid "Pre-moderation queue is empty"
 msgstr "Очередь премодерации пуста."
+
+msgid "Execute"
+msgstr "Выполнить"
+
+msgid "Skip"
+msgstr "Пропустить"
+
+msgid "Publish"
+msgstr "Опубликовать"

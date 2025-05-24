@@ -85,9 +85,11 @@
             <div class="f-post-btns">
               <small>{!! __('ACTIONS') !!}</small>
               <small>-</small>
-              <a class="f-btn f-postedit" title="{{ __('Edit') }}" href="{{ $post->link }}" rel="nofollow"><span>{!! __('Edit') !!}</span></a>
-              <small>-</small>
-              <a class="f-btn f-postdelete" title="{{ __('Delete') }}" href="{{ $post->linkDelete }}" rel="nofollow"><span>{!! __('Delete') !!}</span></a>
+              <label class="f-flblr"><input id="id-draft-{!! (int) $post->id !!}-0" name="draft[{!! (int) $post->id !!}]" class="f-yradio" type="radio" form="id-form-action" value="-1">{!! __('Delete') !!}</label>
+              <span>|</span>
+              <label class="f-flblr"><input id="id-draft-{!! (int) $post->id !!}-1" name="draft[{!! (int) $post->id !!}]" class="f-yradio" type="radio" form="id-form-action" value="0" checked>{!! __('Skip') !!}</label>
+              <span>|</span>
+              <label class="f-flblr"><input id="id-draft-{!! (int) $post->id !!}-2" name="draft[{!! (int) $post->id !!}]" class="f-yradio" type="radio" form="id-form-action" value="1">{!! __('Publish') !!}</label>
             </div>
           </aside>
         </div>
@@ -106,4 +108,13 @@
 @yield ('crumbs')
     </div>
     <!-- PRE linksAAfter -->
+@if ($form = $p->formAction)
+    <!-- PRE modBefore -->
+    <div id="fork-premod-action">
+      <div class="f-fdiv">
+    @include ('layouts/form')
+      </div>
+    </div>
+    <!-- PRE modAfter -->
+@endif
     <!-- PRE end -->

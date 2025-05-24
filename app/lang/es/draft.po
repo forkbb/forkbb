@@ -68,3 +68,12 @@ msgstr "Your topic has been sent for pre-moderation."
 
 msgid "Pre-moderation queue is empty"
 msgstr "The pre-moderation queue is empty."
+
+msgid "Execute"
+msgstr "Execute"
+
+msgid "Skip"
+msgstr "Skip"
+
+msgid "Publish"
+msgstr "Publish"
