@@ -146,6 +146,7 @@ class Premoderation extends Page
 
             if (! empty($forPublish)) {
                 $this->c->Online->calc($this); // для подписок
+                $this->c->forums->loadTree(0); // актуальные данные по разделам
 
                 foreach ($this->c->drafts->loadByIds($forPublish) as $draft) {
                     $this->publish($draft);
