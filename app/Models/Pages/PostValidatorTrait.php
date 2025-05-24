@@ -236,12 +236,13 @@ trait PostValidatorTrait
             $model instanceof Model
             && true === $this->userRules->forPreModeration($model)
         ) {
-            $ruleSubmit = 'absent';
-            $rulePreMod = 'string';
+            $ruleSubmit    = 'absent';
+            $rulePreMod    = 'string';
+            $ruleSubscribe = 'absent';
 
         } else {
-            $ruleSubmit = 'string|check_timeout';
-            $rulePreMod = 'absent';
+            $ruleSubmit    = 'string|check_timeout';
+            $rulePreMod    = 'absent';
         }
 
         $ruleMessage = ($about ? '' : 'required|') . 'string:trim|max:' . $this->c->MAX_POST_SIZE . ($executive ? '' : '|noURL') . '|check_message';

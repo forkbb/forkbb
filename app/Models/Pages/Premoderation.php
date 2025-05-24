@@ -299,23 +299,6 @@ class Premoderation extends Page
 
         $this->c->users->update($user);
 
-/*
-        if (1 === $this->c->config->b_topic_subscriptions) { // ????
-            if (
-                ! empty($form['subscribe'])
-                && ! $topic->is_subscribed
-            ) {
-                $this->c->subscriptions->subscribe($this->user, $topic);
-
-            } elseif (
-                empty($form['subscribe'])
-                && $topic->is_subscribed
-            ) {
-                $this->c->subscriptions->unsubscribe($this->user, $topic);
-            }
-        }
-*/
-
         if ($merge) {
             $this->c->search->index($lastPost, 'merge');
 

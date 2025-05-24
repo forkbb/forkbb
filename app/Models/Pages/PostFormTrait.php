@@ -221,6 +221,7 @@ trait PostFormTrait
 
             if (
                 ! $edit
+                && ! $preMod
                 && 1 === $this->c->config->b_topic_subscriptions
                 && $this->user->email_confirmed
             ) {
