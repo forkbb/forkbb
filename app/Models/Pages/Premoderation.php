@@ -271,9 +271,9 @@ class Premoderation extends Page
         $this->c->forums->update($forum->calcStat());
 
         // синхронизация вложений
-        if ($this->userRules->useUpload) {
+        //if ($this->userRules->useUpload) {
             $this->c->attachments->syncWithPost($merge ? $lastPost : $post);
-        }
+        //}
 
         // обновление данных текущего пользователя
         if (
