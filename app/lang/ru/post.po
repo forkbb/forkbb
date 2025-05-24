@@ -125,3 +125,15 @@ msgstr "Много слов подвергнуто цензуре."
 
 msgid "To pre-moderation"
 msgstr "На премодерацию"
+
+msgid "Pre-moderation replies"
+msgstr "Премодерация ответов:"
+
+msgid "No "
+msgstr "Нет"
+
+msgid "Default "
+msgstr "По умолчанию"
+
+msgid "Yes "
+msgstr "Да"

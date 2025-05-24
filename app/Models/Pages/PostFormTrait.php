@@ -26,6 +26,7 @@ trait PostFormTrait
 
         unset($args['_vars']);
 
+        $power     = $this->user->isAdmin || $this->user->isModerator($model);
         $preMod    = $this->userRules->forPreModeration($model);
         $notPM     = $this->fIndex !== self::FI_PM;
         $autofocus = $quick ? null : true;
@@ -181,10 +182,7 @@ trait PostFormTrait
         $fieldset  = [];
 
         if ($notPM) {
-            if (
-                $this->user->isAdmin
-                || $this->user->isModerator($model)
-            ) {
+            if ($power) {
                 if ($first) {
                     $fieldset['stick_topic'] = [
                         'type'    => 'checkbox',
@@ -253,6 +251,25 @@ trait PostFormTrait
                 'type'    => 'checkbox',
                 'label'   => 'Hide smilies',
                 'checked' => (bool) ($vars['hide_smilies'] ?? false),
+            ];
+        }
+
+        if (
+            $power
+            && 1 === $this->c->config->b_premoderation
+            && ! $preMod
+            && $notPM
+            && $first
+        ) {
+            $fieldset['premoderation'] = [
+                'type'    => 'radio',
+                'values'  => [
+                    -1 => __('No '),
+                    0  => __('Default '),
+                    1  => __('Yes '),
+                ],
+                'value'   => $vars['premoderation'] ?? 0,
+                'caption' => 'Pre-moderation replies',
             ];
         }
 

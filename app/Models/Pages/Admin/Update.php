@@ -1495,6 +1495,7 @@ class Update extends Admin
 
         $this->c->DB->addField('::groups', 'g_premoderation', 'TINYINT(1)', false, 0);
         $this->c->DB->addField('::forums', 'premoderation', 'TINYINT', false, 0, null, 'use_solution');
+        $this->c->DB->addField('::topics', 'premoderation', 'TINYINT', false, 0);
         $this->c->DB->addField('::drafts', 'pre_mod', 'TINYINT(1)', false, 0, null, 'hide_smilies');
         $this->c->DB->addField('::drafts', 'user_agent', 'VARCHAR(255)', false, '', null, 'pre_mod');
         $this->c->DB->addIndex('::drafts', 'pre_mod_idx', ['pre_mod']);

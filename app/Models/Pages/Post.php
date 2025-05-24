@@ -307,10 +307,10 @@ class Post extends Page
     {
         $this->c->Online->calc($this); // для подписок
 
-        $now       = \time();
-        $username  = $this->user->isGuest ? $v->username : $this->user->username;
-        $merge     = false;
-        $executive = $this->user->isAdmin || $this->user->isModerator($model);
+        $now      = \time();
+        $username = $this->user->isGuest ? $v->username : $this->user->username;
+        $merge    = false;
+        $power    = $this->user->isAdmin || $this->user->isModerator($model);
 
         // подготовка к объединению/сохранению сообщения
         if (null === $v->subject) {
@@ -326,7 +326,7 @@ class Post extends Page
                     || 0 === $topic->poll_type
                 )
             ) {
-                if ($executive) {
+                if ($power) {
                     if ($v->merge_post) {
                         $merge = true;
                     }
@@ -351,6 +351,7 @@ class Post extends Page
             $topic->last_post      = $now;
             $topic->sticky         = $v->stick_topic ? 1 : 0;
             $topic->stick_fp       = $v->stick_fp ? 1 : 0;
+            $topic->premoderation  = $v->premoderation ?? 0;
 
             if ($this->customFieldsLevel > 0) {
                 $topic->cf_data  = $this->setCFData($forum->custom_fields, $this->customFieldsLevel, $v->cf_data);

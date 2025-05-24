@@ -22,7 +22,7 @@ trait PostValidatorTrait
     /**
      * Дополнительная проверка subject
      */
-    public function vCheckSubject(Validator $v, string $subject, $attr, bool $executive): string
+    public function vCheckSubject(Validator $v, string $subject, $attr, bool $power): string
     {
         // после цензуры заголовок темы путой
         if ('' == $this->c->censorship->censor($subject, $this->censorCount)) {
@@ -37,7 +37,7 @@ trait PostValidatorTrait
 
         // заголовок темы только заглавными буквами
         } elseif (
-            ! $executive
+            ! $power
             && 1 !== $this->c->config->b_subject_all_caps
             && \preg_match('%\p{Lu}%u', $subject)
             && ! \preg_match('%\p{Ll}%u', $subject)
@@ -51,7 +51,7 @@ trait PostValidatorTrait
     /**
      * Дополнительная проверка message
      */
-    public function vCheckMessage(Validator $v, string $message, $attr, bool $executive): string
+    public function vCheckMessage(Validator $v, string $message, $attr, bool $power): string
     {
         if ('' === $message) {
             return '';
@@ -84,7 +84,7 @@ trait PostValidatorTrait
         // текст сообщения только заглавными буквами
         if (
             true === $prepare
-            && ! $executive
+            && ! $power
             && 1 !== $this->c->config->b_message_all_caps
         ) {
             $text = $this->c->Parser->getText();
@@ -128,7 +128,8 @@ trait PostValidatorTrait
 
         $this->attachmentsProc($marker, $args);
 
-        $notPM = $this->fIndex !== self::FI_PM;
+        $notPM  = $this->fIndex !== self::FI_PM;
+        $preMod = $this->userRules->forPreModeration($model);
 
         if ($this->user->isGuest) {
             if (1 === $this->c->config->b_hide_guest_email_fld) {
@@ -184,18 +185,18 @@ trait PostValidatorTrait
                 $ruleEditPost   = 'absent';
             }
 
-            $executive          = true;
+            $power              = true;
 
         } else {
             $ruleStickTopic     = 'absent';
             $ruleStickFP        = 'absent';
             $ruleMergePost      = 'absent:1';
             $ruleEditPost       = 'absent';
-            $executive          = false;
+            $power              = false;
         }
 
         if ($first) {
-            $ruleSubject = 'required|string:trim,spaces|min:1|max:' . $this->c->MAX_SUBJ_LENGTH . '|' . ($executive ? '' : 'noURL|') . 'check_subject';
+            $ruleSubject = 'required|string:trim,spaces|min:1|max:' . $this->c->MAX_SUBJ_LENGTH . '|' . ($power ? '' : 'noURL|') . 'check_subject';
 
         } else {
             $ruleSubject = 'absent';
@@ -234,7 +235,7 @@ trait PostValidatorTrait
 
         if (
             $model instanceof Model
-            && true === $this->userRules->forPreModeration($model)
+            && $preMod
         ) {
             $ruleSubmit    = 'absent';
             $rulePreMod    = 'string';
@@ -245,7 +246,21 @@ trait PostValidatorTrait
             $rulePreMod    = 'absent';
         }
 
-        $ruleMessage = ($about ? '' : 'required|') . 'string:trim|max:' . $this->c->MAX_POST_SIZE . ($executive ? '' : '|noURL') . '|check_message';
+        if (
+            $power
+            && 1 === $this->c->config->b_premoderation
+            && ! $preMod
+            && $notPM
+            && $first
+        ) {
+            $rulePremoderation = 'required|integer|in:-1,0,1';
+
+        } else {
+            $rulePremoderation = 'absent';
+        }
+
+
+        $ruleMessage = ($about ? '' : 'required|') . 'string:trim|max:' . $this->c->MAX_POST_SIZE . ($power ? '' : '|noURL') . '|check_message';
 
         $v = $this->c->Validator->reset()
             ->addValidators([
@@ -253,31 +268,32 @@ trait PostValidatorTrait
                 'check_message'  => [$this, 'vCheckMessage'],
                 'check_timeout'  => [$this, 'vCheckTimeout'],
             ])->addRules([
-                'token'        => 'token:3600:' . $marker,
-                'email'        => $ruleEmail,
-                'username'     => $ruleUsername,
-                'subject'      => $ruleSubject,
-                'stick_topic'  => $ruleStickTopic,
-                'stick_fp'     => $ruleStickFP,
-                'merge_post'   => $ruleMergePost,
-                'hide_smilies' => $ruleHideSmilies,
-                'edit_post'    => $ruleEditPost,
-                'subscribe'    => $ruleSubscribe,
-                'terms'        => 'absent',
-                'preview'      => 'string',
-                'submit'       => $ruleSubmit,
-                'draft'        => $ruleDraft,
-                'pre_mod'      => $rulePreMod,
-                'message'      => $ruleMessage,
+                'token'         => 'token:3600:' . $marker,
+                'email'         => $ruleEmail,
+                'username'      => $ruleUsername,
+                'subject'       => $ruleSubject,
+                'stick_topic'   => $ruleStickTopic,
+                'stick_fp'      => $ruleStickFP,
+                'merge_post'    => $ruleMergePost,
+                'hide_smilies'  => $ruleHideSmilies,
+                'edit_post'     => $ruleEditPost,
+                'subscribe'     => $ruleSubscribe,
+                'terms'         => 'absent',
+                'premoderation' => $rulePremoderation,
+                'preview'       => 'string',
+                'submit'        => $ruleSubmit,
+                'draft'         => $ruleDraft,
+                'pre_mod'       => $rulePreMod,
+                'message'       => $ruleMessage,
             ])->addAliases([
-                'email'        => 'Email',
-                'username'     => 'Username',
-                'subject'      => 'Subject',
-                'message'      => 'Message',
+                'email'         => 'Email',
+                'username'      => 'Username',
+                'subject'       => 'Subject',
+                'message'       => 'Message',
             ])->addArguments([
                 'token'                 => $args,
-                'subject.check_subject' => $executive,
-                'message.check_message' => $executive,
+                'subject.check_subject' => $power,
+                'message.check_message' => $power,
                 'email.email'           => $this->user,
             ])->addMessages([
                 'username.login' => 'Login format',

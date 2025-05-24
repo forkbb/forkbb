@@ -125,3 +125,15 @@ msgstr "Too many censored words."
 
 msgid "To pre-moderation"
 msgstr "To pre-moderation"
+
+msgid "Pre-moderation replies"
+msgstr "Pre-moderation of replies:"
+
+msgid "No "
+msgstr "No"
+
+msgid "Default "
+msgstr "By default"
+
+msgid "Yes "
+msgstr "Yes"

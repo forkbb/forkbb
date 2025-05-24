@@ -1129,6 +1129,7 @@ class Install extends Admin
                 'toc'            => ['TEXT', true],
                 'cf_level'       => ['TINYINT UNSIGNED', false, 0],
                 'cf_data'        => ['TEXT', true],
+                'premoderation'  => ['TINYINT', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
             'INDEXES' => [

@@ -92,12 +92,13 @@ class Edit extends Page
 
         } else {
             $args['_vars'] = [
-                'message'      => $post->message,
-                'subject'      => $topic->subject,
-                'hide_smilies' => $post->hide_smilies,
-                'stick_topic'  => $topic->sticky,
-                'stick_fp'     => $topic->stick_fp,
-                'edit_post'    => $post->edit_post,
+                'message'       => $post->message,
+                'subject'       => $topic->subject,
+                'hide_smilies'  => $post->hide_smilies,
+                'stick_topic'   => $topic->sticky,
+                'stick_fp'      => $topic->stick_fp,
+                'edit_post'     => $post->edit_post,
+                'premoderation' => $topic->premoderation,
             ];
         }
 
@@ -158,7 +159,7 @@ class Edit extends Page
     protected function endEdit(Post $post, Validator $v): Page
     {
         $now       = \time();
-        $executive = $this->user->isAdmin || $this->user->isModerator($post);
+        $power     = $this->user->isAdmin || $this->user->isModerator($post);
         $topic     = $post->parent;
         $firstPost = $post->id === $topic->first_post_id;
         $calcPost  = false;
@@ -201,7 +202,7 @@ class Edit extends Page
 
         // редактирование без ограничений
         if (
-            $executive
+            $power
             && (bool) $post->edit_post !== (bool) $v->edit_post
         ) {
             $post->edit_post     = $v->edit_post ? 1 : 0;
@@ -219,7 +220,7 @@ class Edit extends Page
 
             // выделение темы
             if (
-                $executive
+                $power
                 && (bool) $topic->sticky !== (bool) $v->stick_topic
             ) {
                 $topic->sticky   = $v->stick_topic ? 1 : 0;
@@ -227,10 +228,17 @@ class Edit extends Page
 
             // закрепление первого сообшения
             if (
-                $executive
+                $power
                 && (bool) $topic->stick_fp !== (bool) $v->stick_fp
             ) {
                 $topic->stick_fp = $v->stick_fp ? 1 : 0;
+            }
+
+            if (
+                $power
+                && null !== $v->premoderation
+            ) {
+                $topic->premoderation = $v->premoderation;
             }
 
             // опрос

@@ -2361,6 +2361,10 @@ body,
   height: 15rem;
 }
 
+#id-dl-premoderation .f-ycaption {
+  font-weight: normal;
+}
+
 @media screen and (min-width: 50rem) {
   #fork #id-fs-uesm {
     display: flex;
