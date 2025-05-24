@@ -17,6 +17,8 @@ use function \ForkBB\__;
 
 class Premoderation extends Page
 {
+    use PostCFTrait;
+
     /**
      * Отображает очередь премодерации
      */
@@ -143,10 +145,193 @@ class Premoderation extends Page
             $drafts = $this->c->drafts->loadByIds($forDelete);
 
             if (! empty($forPublish)) {
-                //????
+                $this->c->Online->calc($this); // для подписок
+
+                foreach ($this->c->drafts->loadByIds($forPublish) as $draft) {
+                    $this->publish($draft);
+                }
             }
 
             $this->c->drafts->delete(...$drafts);
+        }
+    }
+
+
+    /**
+     * Создает тему/сообщение
+     */
+    protected function publish(Draft $draft): void
+    {
+        $now   = \time();
+        $form  = $draft->form_data;
+        $user  = $draft->user;
+        $topic = $draft->parent;
+        $forum = $topic->parent;
+        $merge = false;
+
+        // подготовка к объединению/сохранению сообщения
+        if ($draft->topic_id > 0) {
+            $createTopic = false;
+
+            if (
+                ! $user->isGuest
+                && $topic->last_poster_id === $user->id
+                && (
+                    $topic->first_post_id !== $topic->last_post_id
+                    || 0 === $topic->poll_type
+                )
+            ) {
+                $merge = true;
+            }
+
+        // создание темы
+        } else {
+            $createTopic = true;
+
+            $topic->id             = null;
+            $topic->poster         = $user->username;
+            $topic->poster_id      = $user->id;
+            $topic->last_poster    = $user->username;
+            $topic->last_poster_id = $user->id;
+            $topic->posted         = $now;
+            $topic->last_post      = $now;
+            $topic->sticky         = empty($form['stick_topic']) ? 0 : 1;
+            $topic->stick_fp       = empty($form['stick_fp']) ? 0 : 1;
+
+            if (! empty($form['cf_data'])) {
+                $topic->cf_data  = $this->setCFData($forum->custom_fields, 4, $form['cf_data']);
+                $topic->cf_level = $this->setCFLevel($topic->cf_data);
+            }
+
+            $this->c->topics->insert($topic);
+        }
+
+        // попытка объеденить новое сообщение с крайним в теме
+        if ($merge) {
+            $lastPost  = $this->c->posts->load($topic->last_post_id, $topic->id);
+            $newLength = \mb_strlen($lastPost->message . $draft->message, 'UTF-8');
+
+            if ($newLength < $this->c->MAX_POST_SIZE - 100) {
+                $lastPost->message   = $lastPost->message . "\n[after=" . ($now - $topic->last_post) . "]\n" . $draft->message; //????
+                $lastPost->edited    = $now;
+                $lastPost->editor    = $this->user->username;
+                $lastPost->editor_id = $this->user->id;
+
+                $this->c->posts->update($lastPost);
+
+            } else {
+                $merge = false;
+            }
+        }
+
+        // создание нового сообщения
+        if (! $merge) {
+            $post = $this->c->posts->create();
+
+            $post->poster       = $user->username;
+            $post->poster_id    = $user->id;
+            $post->poster_ip    = $draft->poster_ip;
+            $post->poster_email = $user->isGuest ? $user->email : '';
+            $post->message      = $draft->message;
+            $post->hide_smilies = $draft->hide_smilies ? 1 : 0;
+            $post->posted       = $now;
+            $post->user_agent   = $draft->user_agent;
+            $post->topic_id     = $topic->id;
+
+            $this->c->posts->insert($post);
+        }
+
+        if ($createTopic) {
+            $topic->forum_id      = $forum->id;
+            $topic->first_post_id = $post->id;
+
+            if (! empty($form['poll_enable'])) {
+                $topic->poll_type  = $form['poll']['duration'] > 0 ? 1000 + $form['poll']['duration'] : 1; // ???? перенести в модель poll?
+                $topic->poll_time  = $now;
+                $topic->poll_term  = $form['poll']['hide_result'] ? $this->c->config->i_poll_term : 0;
+
+                $poll = $this->c->polls->create([
+                    'tid'      => $topic->id,
+                    'question' => $form['poll']['question'],
+                    'answer'   => $form['poll']['answer'],
+                    'type'     => $form['poll']['type'],
+                ]);
+
+                $this->c->polls->insert($poll);
+            }
+        }
+
+        // изменить (возможно!?) оглавление темы
+        $this->c->Parser->prepare($draft->message);
+        $topic->addPostToToc($merge ? $lastPost : $post, $merge);
+
+        // обновление данных в теме и разделе
+        $this->c->topics->update($topic->calcStat());
+        $this->c->forums->update($forum->calcStat());
+
+        // синхронизация вложений
+        if ($this->userRules->useUpload) {
+            $this->c->attachments->syncWithPost($merge ? $lastPost : $post);
+        }
+
+        // обновление данных текущего пользователя
+        if (
+            ! $merge
+            && ! $user->isGuest
+        ) {
+            if (0 == $forum->no_sum_mess) {
+                $user->num_posts = $user->num_posts + 1;
+
+                if (
+                    $user->g_promote_next_group > 0
+                    && $user->num_posts >= $user->g_promote_min_posts
+                ) {
+                    $user->group_id = $user->g_promote_next_group;
+                }
+            }
+
+            if ($createTopic) {
+                $user->num_topics = $user->num_topics + 1;
+            }
+        }
+
+        $user->last_post = $now;
+
+        $this->c->users->update($user);
+
+/*
+        if (1 === $this->c->config->b_topic_subscriptions) { // ????
+            if (
+                ! empty($form['subscribe'])
+                && ! $topic->is_subscribed
+            ) {
+                $this->c->subscriptions->subscribe($this->user, $topic);
+
+            } elseif (
+                empty($form['subscribe'])
+                && $topic->is_subscribed
+            ) {
+                $this->c->subscriptions->unsubscribe($this->user, $topic);
+            }
+        }
+*/
+
+        if ($merge) {
+            $this->c->search->index($lastPost, 'merge');
+
+        } else {
+            $this->c->search->index($post);
+
+            if ($createTopic) {
+                if (1 === $this->c->config->b_forum_subscriptions) { // ????
+                    $this->c->subscriptions->send($post, $topic);
+                }
+
+            } else {
+                if (1 === $this->c->config->b_topic_subscriptions) { // ????
+                    $this->c->subscriptions->send($post);
+                }
+            }
         }
     }
 }
