@@ -77,3 +77,6 @@ msgstr "Пропустить"
 
 msgid "Publish"
 msgstr "Опубликовать"
+
+msgid "Selected posts processed redirect"
+msgstr "Выбранные сообщения обработаны."

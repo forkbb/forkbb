@@ -77,3 +77,6 @@ msgstr "Skip"
 
 msgid "Publish"
 msgstr "Publish"
+
+msgid "Selected posts processed redirect"
+msgstr "The selected posts have been processed."

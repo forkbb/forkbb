@@ -26,12 +26,33 @@ class Premoderation extends Page
 
         $premod = $this->c->premod->init();
 
-        if ('POST' === $method) {
-            exit("<pre>\n" . \print_r($_POST, true));
+        if ($premod->count < 1) {
+            return $this->c->Message->message('Pre-moderation queue is empty', false, 199);
         }
 
-        if ($premod->count < 1) {
-            return $this->c->Message->message('Pre-moderation queue is empty', true, 199);
+        if ('POST' === $method) {
+            $v = $this->c->Validator->reset()
+                ->addValidators([
+                ])->addRules([
+                    'token'   => 'token:Premoderation',
+                    'page'    => 'integer|min:1|max:9999999999',
+                    'draft'   => 'required|array',
+                    'draft.*' => 'required|integer|in:-1,0,1',
+                    'confirm' => 'required|integer|in:1',
+                    'execute' => 'string',
+                ])->addAliases([
+                ])->addArguments([
+                ])->addMessages([
+                    'confirm' => 'No confirm redirect',
+                ]);
+
+            if ($v->validation($_POST)) {
+                $this->actions($v->draft);
+
+                return $this->c->Redirect->page('Premoderation', ['page' => $v->page])->message('Selected posts processed redirect', FORK_MESS_SUCC);
+            }
+
+            $this->fIswev = $v->getErrors();
         }
 
         $this->numPage = $args['page'] ?? 1;
@@ -91,5 +112,41 @@ class Premoderation extends Page
                 ],
             ],
         ];
+    }
+
+    protected function actions(array $list): void
+    {
+        $forDelete  = [];
+        $forPublish = [];
+        $available  = \array_flip($this->c->premod->idList);
+
+        foreach ($list as $id => $action) {
+            if (
+                empty($action)
+                || ! isset($available[$id])
+            ) {
+                continue;
+            }
+
+            switch ($action) {
+                case 1:
+                    $forPublish[$id] = $id;
+                                             // публикуемые черновики тоже удаляем
+                case -1:
+                    $forDelete[$id] = $id;
+
+                    break;
+            }
+        }
+
+        if (! empty($forDelete)) {
+            $drafts = $this->c->drafts->loadByIds($forDelete);
+
+            if (! empty($forPublish)) {
+                //????
+            }
+
+            $this->c->drafts->delete(...$drafts);
+        }
     }
 }
