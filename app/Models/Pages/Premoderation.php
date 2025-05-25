@@ -29,59 +29,61 @@ class Premoderation extends Page
         $premod = $this->c->premod->init();
 
         if ($premod->count < 1) {
-            return $this->c->Message->message('Pre-moderation queue is empty', false, 199);
-        }
+            $this->infoMessage = 'Pre-moderation queue is empty';
 
-        if ('POST' === $method) {
-            $v = $this->c->Validator->reset()
-                ->addValidators([
-                ])->addRules([
-                    'token'   => 'token:Premoderation',
-                    'page'    => 'integer|min:1|max:9999999999',
-                    'draft'   => 'required|array',
-                    'draft.*' => 'required|integer|in:-1,0,1',
-                    'confirm' => 'required|integer|in:1',
-                    'execute' => 'string',
-                ])->addAliases([
-                ])->addArguments([
-                ])->addMessages([
-                    'confirm' => 'No confirm redirect',
-                ]);
+        } else {
+            if ('POST' === $method) {
+                $v = $this->c->Validator->reset()
+                    ->addValidators([
+                    ])->addRules([
+                        'token'   => 'token:Premoderation',
+                        'page'    => 'integer|min:1|max:9999999999',
+                        'draft'   => 'required|array',
+                        'draft.*' => 'required|integer|in:-1,0,1',
+                        'confirm' => 'required|integer|in:1',
+                        'execute' => 'string',
+                    ])->addAliases([
+                    ])->addArguments([
+                    ])->addMessages([
+                        'confirm' => 'No confirm redirect',
+                    ]);
 
-            if ($v->validation($_POST)) {
-                $this->actions($v->draft);
+                if ($v->validation($_POST)) {
+                    $this->actions($v->draft);
 
-                return $this->c->Redirect->page('Premoderation', ['page' => $v->page])->message('Selected posts processed redirect', FORK_MESS_SUCC);
+                    return $this->c->Redirect->page('Premoderation', ['page' => $v->page])->message('Selected posts processed redirect', FORK_MESS_SUCC);
+                }
+
+                $this->fIswev = $v->getErrors();
             }
 
-            $this->fIswev = $v->getErrors();
+            $this->numPage = $args['page'] ?? 1;
+            $this->drafts  = $premod->view($this->numPage);
+
+            if (empty($this->drafts)) {
+                $this->infoMessage = 'Page missing';
+
+            } else {
+                $this->numPages   = $premod->numPages();
+                $this->pagination = $this->c->Func->paginate($this->numPages, $this->numPage, 'Premoderation');
+                $this->useMediaJS = true;
+                $this->formAction = $this->formAction();
+
+                $this->c->Parser; // предзагрузка
+
+                $this->c->Lang->load('search');
+            }
         }
 
-        $this->numPage = $args['page'] ?? 1;
-        $this->drafts  = $premod->view($this->numPage);
-
-        if (empty($this->drafts)) {
-            return $this->c->Message->message('Page missing', false, 404);
-        }
-
-        $this->numPages   = $premod->numPages();
-        $this->pagination = $this->c->Func->paginate($this->numPages, $this->numPage, 'Premoderation');
-        $this->useMediaJS = true;
         $this->nameTpl    = 'premod';
         $this->identifier = 'search-result';
         $this->fIndex     = self::FI_PREMOD;
         $this->onlinePos  = 'premod';
         $this->robots     = 'noindex';
         $this->crumbs     = $this->crumbs([$this->c->Router->link('Premoderation'), 'Pre-moderation']);
-        $this->formAction = $this->formAction();
-
-        $this->c->Parser; // предзагрузка
-
-        $this->c->Lang->load('search');
 
         return $this;
     }
-
 
     /**
      * Создает массив данных для формы

@@ -37,14 +37,18 @@
 @endif
     </div>
     <!-- PRE linksBAfter -->
+@if ($p->infoMessage)
+    @php $iswev = [FORK_MESS_INFO => [$p->infoMessage]]; @endphp
+    @include ('layouts/iswev')
+@else
     <!-- PRE mainBefore -->
     <section id="fork-topic-ins" class="f-main">
       <h2>{!! __('Post list') !!}</h2>
-@foreach ($p->drafts as $id => $post)
-    @empty ($post->id)
-        @php $iswev = [FORK_MESS_ERR => [['Draft %s failed to load', $id]]]; @endphp
-        @include ('layouts/iswev')
-    @else
+    @foreach ($p->drafts as $id => $post)
+        @empty ($post->id)
+            @php $iswev = [FORK_MESS_ERR => [['Draft %s failed to load', $id]]]; @endphp
+            @include ('layouts/iswev')
+        @else
       <article id="p{!! (int) $post->id !!}" class="f-post f-post-search @if (FORK_GEN_MAN == $post->user->gender) f-user-male @elseif (FORK_GEN_FEM == $post->user->gender) f-user-female @endif @if ($post->user->online) f-user-online @endif">
         <header class="f-post-header">
           <h3 class="f-phead-h3">
@@ -57,18 +61,18 @@
         <address class="f-post-user">
           <div class="f-post-usticky">
             <ul hidden class="f-user-info-first">
-        @if ($p->userRules->viewUsers && $post->user->link)
+            @if ($p->userRules->viewUsers && $post->user->link)
               <li class="f-username"><a href="{{ $post->user->link }}">{{ $post->user->username }}</a></li>
-        @else
+            @else
               <li class="f-username">{{ $post->user->username }}</li>
-        @endif
+            @endif
             </ul>
             <ul class="f-user-info">
-        @if ($p->userRules->viewUsers && $post->user->link)
+            @if ($p->userRules->viewUsers && $post->user->link)
               <li class="f-username"><a href="{{ $post->user->link }}">{{ $post->user->username }}</a></li>
-        @else
+            @else
               <li class="f-username">{{ $post->user->username }}</li>
-        @endif
+            @endif
               <li class="f-usertitle">{{ $post->user->title() }}</li>
             </ul>
             <ul class="f-post-search-info">
@@ -85,36 +89,37 @@
             <div class="f-post-btns">
               <small>{!! __('ACTIONS') !!}</small>
               <small>-</small>
-              <label class="f-flblr"><input id="id-draft-{!! (int) $post->id !!}-0" name="draft[{!! (int) $post->id !!}]" class="f-yradio" type="radio" form="id-form-action" value="-1">{!! __('Delete') !!}</label>
+              <label class="f-flblr"><input id="id-draft-{!! (int) $post->id !!}--1" name="draft[{!! (int) $post->id !!}]" class="f-yradio" type="radio" form="id-form-action" value="-1">{!! __('Delete') !!}</label>
               <span>|</span>
-              <label class="f-flblr"><input id="id-draft-{!! (int) $post->id !!}-1" name="draft[{!! (int) $post->id !!}]" class="f-yradio" type="radio" form="id-form-action" value="0" checked>{!! __('Skip') !!}</label>
+              <label class="f-flblr"><input id="id-draft-{!! (int) $post->id !!}-0" name="draft[{!! (int) $post->id !!}]" class="f-yradio" type="radio" form="id-form-action" value="0" checked>{!! __('Skip') !!}</label>
               <span>|</span>
-              <label class="f-flblr"><input id="id-draft-{!! (int) $post->id !!}-2" name="draft[{!! (int) $post->id !!}]" class="f-yradio" type="radio" form="id-form-action" value="1">{!! __('Publish') !!}</label>
+              <label class="f-flblr"><input id="id-draft-{!! (int) $post->id !!}-1" name="draft[{!! (int) $post->id !!}]" class="f-yradio" type="radio" form="id-form-action" value="1">{!! __('Publish') !!}</label>
             </div>
           </aside>
         </div>
       </article>
-    @endempty
-@endforeach
+        @endempty
+    @endforeach
     </section>
     <!-- PRE mainAfter -->
     <!-- PRE linksABefore -->
     <div class="f-nav-links">
-@if ($p->pagination)
+    @if ($p->pagination)
       <div class="f-nlinks-a">
-    @yield ('pagination')
+        @yield ('pagination')
       </div>
-@endif
-@yield ('crumbs')
+    @endif
+    @yield ('crumbs')
     </div>
     <!-- PRE linksAAfter -->
-@if ($form = $p->formAction)
+    @if ($form = $p->formAction)
     <!-- PRE modBefore -->
     <div id="fork-premod-action">
       <div class="f-fdiv">
-    @include ('layouts/form')
+        @include ('layouts/form')
       </div>
     </div>
     <!-- PRE modAfter -->
+    @endif
 @endif
     <!-- PRE end -->
