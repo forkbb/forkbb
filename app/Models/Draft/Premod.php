@@ -11,11 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Draft;
 
 use ForkBB\Models\DataModel;
-use ForkBB\Models\Forum\Forum;
-use ForkBB\Models\Topic\Topic;
-use ForkBB\Models\User\User;
 use PDO;
-use RuntimeException;
 
 class Premod extends DataModel
 {

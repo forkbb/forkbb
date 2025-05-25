@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\Pages;
 
-use ForkBB\Core\Validator;
 use ForkBB\Models\Draft\Draft;
 use ForkBB\Models\Page;
 use function \ForkBB\__;
