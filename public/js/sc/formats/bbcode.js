@@ -1032,7 +1032,7 @@
 	each([1,2,3,4,5,6], function (i, n) {
 		var handler = {
 			tags: {
-				p: {
+				div: {
 					class: 'f-bb-h' + n
 				}
 			},
