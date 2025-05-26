@@ -12,9 +12,12 @@ namespace ForkBB\Models\Draft;
 
 use ForkBB\Models\DataModel;
 use PDO;
+use RuntimeExceptio;
 
 class Premod extends DataModel
 {
+    const CACHE_KEY = 'premod';
+
     /**
      * Ключ модели для контейнера
      */
@@ -24,33 +27,38 @@ class Premod extends DataModel
     {
         $this->setModelAttrs([]);
 
-        if ($this->c->user->isAdmin) {
-            $query = 'SELECT d.id
-                FROM ::drafts AS d
-                WHERE d.pre_mod=1
-                ORDER BY d.id';
+        $admin = $this->c->user->isAdmin;
+        $list  = [];
+        $count = [];
 
-            $this->idList = $this->c->DB->query($query)->fetchAll(PDO::FETCH_COLUMN);
-
-        } else {
-            $fids  = $this->c->forums->fidsForMod($this->c->user->id);
-            $list  = [];
-            $query = 'SELECT d.id, d.forum_id as fid, t.forum_id as tfid
-                FROM ::drafts AS d
-                LEFT JOIN ::topics AS t ON t.id=d.topic_id
-                WHERE d.pre_mod=1
-                ORDER BY d.id';
-
-            $stmt = $this->c->DB->query($query);
-
-            while (false !== ($row = $stmt->fetch())) {
-                if (isset($fids[$row['fid'] ?: $row['tfid']])) {
-                    $list[] = $row['id'];
-                }
-            }
-
-            $this->idList = $list;
+        if (! $admin) {
+            $this->fidsForMod = $fids = $this->c->forums->fidsForMod($this->c->user->id);
         }
+
+        $query = 'SELECT d.id, d.forum_id as fid, t.forum_id as tfid
+            FROM ::drafts AS d
+            LEFT JOIN ::topics AS t ON t.id=d.topic_id
+            WHERE d.pre_mod=1
+            ORDER BY d.id';
+
+        $stmt = $this->c->DB->query($query);
+
+        while (false !== ($row = $stmt->fetch())) {
+            $fid = $row['fid'] ?: $row['tfid'];
+
+            $count[$fid] ??= 0;
+            ++$count[$fid];
+
+            if (
+                $admin
+                || isset($fids[$fid])
+            ) {
+                $list[] = $row['id'];
+            }
+        }
+
+        $this->idList        = $list;
+        $this->countByForums = $count;
 
         return $this;
     }
@@ -106,5 +114,53 @@ class Premod extends DataModel
         }
 
         return $result;
+    }
+
+    /**
+     * Возвращает размер очереди премодерации на основе кэша
+     * Создает кэш
+     */
+    protected function getqueueSize(): int
+    {
+        if (\is_array($this->countByForums)) {
+            $count = $this->countByForums;
+
+        } elseif (! \is_array($count = $this->c->Cache->get(self::CACHE_KEY))) {
+            $this->init();
+
+            $count = $this->countByForums;
+
+            if (true !== $this->c->Cache->set(self::CACHE_KEY, $count)) {
+                throw new RuntimeException('Unable to write value to cache - ' . self::CACHE_KEY);
+            }
+        }
+
+        if ($this->c->user->isAdmin) {
+            return \array_sum($count);
+
+        } else {
+            $fids = $this->fidsForMod ?? $this->c->forums->fidsForMod($this->c->user->id);
+            $sum  = 0;
+
+            foreach ($count as $key => $value) {
+                if (isset($fids[$key])) {
+                    $sum += $value;
+                }
+            }
+
+            return $sum;
+        }
+    }
+
+    /**
+     * Сбрасывает кеш
+     */
+    public function reset(): Premod
+    {
+        if (true !== $this->c->Cache->delete(self::CACHE_KEY)) {
+            throw new RuntimeException('Unable to remove key from cache - ' . self::CACHE_KEY);
+        }
+
+        return $this;
     }
 }
