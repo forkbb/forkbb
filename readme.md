@@ -1,4 +1,4 @@
-# ForkBB rev.87 Alpha Readme
+# ForkBB rev.88 Alpha Readme
 
 ## About
 
