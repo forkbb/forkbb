@@ -266,11 +266,16 @@ abstract class Page extends Model
             }
 
             if ($this->user->isAdmMod) {
-                if (1 === $this->c->config->b_premoderation) {
+                if (
+                    1 === $this->c->config->b_premoderation
+                    && $this->c->premod->queueSize > 0
+                ) {
                     $navUser[self::FI_PREMOD] = [
                         $r->link('Premoderation'),
-                        'Pre-moderation',
+                        ['Pre-moderation (%s)', $this->c->premod->queueSize],
                         'Queue of new topics and posts for moderation',
+                        null,
+                        ['pmnew'],
                     ];
                 }
 

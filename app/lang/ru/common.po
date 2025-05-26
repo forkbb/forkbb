@@ -512,3 +512,6 @@ msgstr "Премодерация"
 
 msgid "Queue of new topics and posts for moderation"
 msgstr "Очередь новых тем и сообщений на модерацию"
+
+msgid "Pre-moderation (%s)"
+msgstr "<span class="f-spantxtpm">Премод. </span><b>(%s)</b>"
