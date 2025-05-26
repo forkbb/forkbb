@@ -205,19 +205,19 @@ msgid "Delete field"
 msgstr "Supprimer le champ"
 
 msgid "Pre-moderation label"
-msgstr "Pre-moderation"
+msgstr "Pré-moderation"
 
 msgid "No "
-msgstr "No (turned off)"
+msgstr "Non (désactivée)"
 
 msgid "Default "
-msgstr "By default"
+msgstr "Par défaut"
 
 msgid "Replies "
-msgstr "Only replies"
+msgstr "Seulement sur les réponses"
 
 msgid "New topics "
-msgstr "Only new topics"
+msgstr "Seulement sur les sujets"
 
 msgid "New topics and replies "
-msgstr "New topics and replies"
+msgstr "Nouveaux sujets et réponses"

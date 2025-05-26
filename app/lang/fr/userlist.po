@@ -25,7 +25,7 @@ msgid "User group"
 msgstr "Groupe utilisateur"
 
 msgid "All users"
-msgstr "< Tout >"
+msgstr "Tous les utilisateurs"
 
 msgid "User_list"
 msgstr "Classement/utilisateurs trouvés"

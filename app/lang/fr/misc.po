@@ -19,7 +19,7 @@ msgid "Mark forum read redirect"
 msgstr "Toutes les discussions du forum spécifié ont été marquées comme lues."
 
 msgid "Form email disabled"
-msgstr "L’utilisateur que vous essayez de joindre a désactivé l’envoi de mail  via le forum."
+msgstr "L’utilisateur que vous essayez de joindre a désactivé l’envoi de mail via le forum."
 
 msgid "Email sent redirect"
 msgstr "Email envoyé."

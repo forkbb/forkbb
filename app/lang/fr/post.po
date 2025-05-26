@@ -37,7 +37,7 @@ msgid "Post new topic"
 msgstr "Créer une nouvelle discussion"
 
 msgid "Hide smilies"
-msgstr "Ne jamais montrer les smyleys en images dans ce message"
+msgstr "Ne jamais montrer les smileys en images dans ce message"
 
 msgid "New subscribe"
 msgstr "S’abonner à cette discussion"
@@ -46,7 +46,7 @@ msgid "Stay subscribed"
 msgstr "Rester abonné à cette discussion"
 
 msgid "Topic review"
-msgstr "Apreçu de la discussion (dernier message en premier)"
+msgstr "Aperçu de la discussion (dernier message en premier)"
 
 msgid "Preview"
 msgstr "Aperçu"
@@ -112,28 +112,28 @@ msgid "Not guests"
 msgstr "Les données de ce champs sont visibles par tous sauf les invités."
 
 msgid "Admins and mods"
-msgstr "Le données de ce champ sont visible par les administrateurs et moodérateurs seulement."
+msgstr "Le données de ce champ sont visible par les administrateurs et modérateurs seulement."
 
 msgid "Admins only"
 msgstr "Les données de ce champ sont visibles par les administrateurs uniquement."
 
 msgid "To draft"
-msgstr "To draft"
+msgstr "Vers brouillons"
 
 msgid "Too many censored words"
-msgstr "Too many censored words."
+msgstr "Trop de mots censurés."
 
 msgid "To pre-moderation"
-msgstr "To pre-moderation"
+msgstr "Vers pré-moderation"
 
 msgid "Pre-moderation replies"
-msgstr "Pre-moderation of replies:"
+msgstr "Pré-moderation des réponses:"
 
 msgid "No "
-msgstr "No"
+msgstr "Non"
 
 msgid "Default "
-msgstr "By default"
+msgstr "Par défaut"
 
 msgid "Yes "
-msgstr "Yes"
+msgstr "Oui"

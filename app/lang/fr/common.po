@@ -488,28 +488,28 @@ msgid ":shock:"
 msgstr "Choqué"
 
 msgid "Drafts (%s)"
-msgstr "<span class="f-spantxtpm">Drafts </span><b>(%s)</b>"
+msgstr "<span class="f-spantxtpm">Brouillons </span><b>(%s)</b>"
 
 msgid "Your drafts"
-msgstr "Your drafts"
+msgstr "Vos brouillons"
 
 msgid "bb hide"
-msgstr "Guests cannot see this content."
+msgstr "Les visiteurs ne peuvent voir ce contenu."
 
 msgid "bb hide admin"
-msgstr "Only admins can see this content."
+msgstr "Seuls les administrateurs peuvent voir ce contenu."
 
 msgid "bb hide mod"
-msgstr "Only admins and forum moderators can see this content."
+msgstr "Seuls les administrateurs et modérateurs du forum peuvent voir ce contenu."
 
 msgid "bb hide %s posts"
-msgstr "This content is visible to users with %s or more posts."
+msgstr "Ce contenu est visible pour les utilisateurs totalisant %s ou plus de messages."
 
 msgid "Pre-moderation"
 msgstr "Pre-moderation"
 
 msgid "Queue of new topics and posts for moderation"
-msgstr "Queue of new topics and posts for moderation"
+msgstr "Liste des nouveaux sujets et messages pour modération"
 
 msgid "Pre-moderation (%s)"
 msgstr "<span class="f-spantxtpm">Pre-moderation </span><b>(%s)</b>"

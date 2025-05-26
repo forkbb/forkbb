@@ -64,7 +64,7 @@ msgid "Delete posts"
 msgstr "Effacer leurs messages et sujets de discussion"
 
 msgid "Delete warning"
-msgstr "<b>Attention!</b> Utilisateurs et messages effacés ne peuvent être restaurés. Si vous ne choisissez pas d’effacer les messages liés à l’utlisateur, ceux ci ne seront plus effaçables que manuellement ensuite."
+msgstr "<b>ATTENTION!</b> Utilisateurs et messages effacés ne peuvent être restaurés. Si vous ne choisissez pas d’effacer les messages liés à l’utlisateur, ceux ci ne seront plus effaçables que manuellement ensuite."
 
 msgid "Users delete redirect"
 msgstr "Utilisateurs effacés."
@@ -277,4 +277,4 @@ msgid "Number of users posts"
 msgstr "Nombre de messages et discussion utilisateurs"
 
 msgid "Drafts label"
-msgstr "Drafts"
+msgstr "Brouillons"

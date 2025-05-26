@@ -108,7 +108,7 @@ msgid "Merge posts"
 msgstr "Combiner avec la précedente (si votre)"
 
 msgid "Message %s was not found in the database"
-msgstr "Le message №%s n’a pas été trouvé dans la base de données"
+msgstr "Le message %s n’a pas été trouvé dans la base de données"
 
 msgid "Admin note"
 msgstr "Note de l’administration"
@@ -144,7 +144,7 @@ msgid "Go to solution"
 msgstr "Aller à la solution"
 
 msgid "To draft"
-msgstr "To draft"
+msgstr "Vers brouillons"
 
 msgid "To pre-moderation"
-msgstr "To pre-moderation"
+msgstr "Vers pré-moderation"

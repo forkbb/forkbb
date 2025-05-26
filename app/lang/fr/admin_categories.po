@@ -22,7 +22,7 @@ msgid "I want to delete the category %s"
 msgstr "Oui, je veux effacer la catégorie <b>%s</b>"
 
 msgid "Delete category warn"
-msgstr "<b>WARNING!</b> Effacer une catégorie effacera tous les forums, sujets et messages dans cette catégorie!"
+msgstr "<b>ATTENTION!</b> Effacer une catégorie effacera tous les forums, sujets et messages dans cette catégorie!"
 
 msgid "Categories updated redirect"
 msgstr "Categories mises à jour."

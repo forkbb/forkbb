@@ -184,7 +184,7 @@ msgid "Reports subhead"
 msgstr "Signalements"
 
 msgid "Reporting method label"
-msgstr "méthode de signalement"
+msgstr "Méthode de signalement"
 
 msgid "Internal"
 msgstr "Interne"
@@ -496,19 +496,19 @@ msgid "Auto language detection help"
 msgstr "Détecter automatiquement le langage de l’invité en se basant sur les données de sa requête au serveur, ou retourner le langage par défaut si la détection échoue."
 
 msgid "Cron for email label"
-msgstr "Use Cron"
+msgstr "Utilisation de  Cron"
 
 msgid "Cron for email help"
-msgstr "<b>ATTENTION!!!</b> Before turning on, add the task to your task planner (cron or analog), which will run &apos;<code>php cli.php send_mail</code>&apos; every few minutes. Without this task, emails will not be sent."
+msgstr "<b>ATTENTION!!!</b> Avant d'activer, ajouter la tache au planificateur de taches (cron or analogue), qui lancera &apos;<code>php cli.php send_mail</code>&apos; toutes les quelques minutes. Sans cette tache, les emails ne seront pas envoyés."
 
 msgid "Hide e-mail label"
-msgstr "Hide email field"
+msgstr "Cacher le champ de l'email"
 
 msgid "Hide e-mail help"
-msgstr "Hide the guest email address field if it is not a required field."
+msgstr "Cacher le champ de l'adresse invité pas si celui si n'est pas requis."
 
 msgid "Disable email label"
-msgstr "Without email"
+msgstr "Sans email"
 
 msgid "Disable email help"
-msgstr "Do not ask for email upon registration if verify registrations is disabled."
+msgstr "Ne pas demander d'email à l'enregistrement si la vérification par mail est désactivée."

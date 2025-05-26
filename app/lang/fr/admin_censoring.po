@@ -28,7 +28,7 @@ msgid "Censor words help"
 msgstr "Activer ceci pour censurer des mots spécifiques sur le forum."
 
 msgid "Censor words count label"
-msgstr "Limit"
+msgstr "Limites"
 
 msgid "Censor words count help"
-msgstr "If more words are replaced in a message/topic than specified here, such message/topic will not be published/saved. Set to 0 to disable."
+msgstr "Si plus de mots sont remplacés dans un message ou sujet que spécifié ici, le message ou sujet ne sera pas publié/sauvegardé. Mettre à 0 pour désactiver."
