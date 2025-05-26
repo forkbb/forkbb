@@ -258,6 +258,42 @@
 		},
 		h6: {
 			txtExec: ['[h6]', '[/h6]']
+		},
+		hide: {
+			txtExec: function (caller, selected) {
+				var	editor  = this;
+
+				getEditorCommand('hide')._dropDown(editor, caller, function (type, caller) {
+					var endPrx = editor.getRangeHelper().selectedHtml() === '' ? '<br />' : '';
+
+					switch (type) {
+						case 'guest':
+							editor.insertText('[hide]', '[/hide]');
+							break;
+						case 'admin':
+							editor.insertText('[hide=admin]', '[/hide]');
+							break;
+						case 'mod':
+							editor.insertText('[hide=mod]', '[/hide]');
+							break;
+						case 'post':
+							getEditorCommand('hide')._dropDown2(editor, caller, editor._('Number of posts to view'), 'number', function (num) {
+								num = Number(num);
+								if (num > 0) {
+									editor.insertText('[hide=' + num + ']', '[/hide]');
+								}
+							});
+							break;
+						case 'spoiler':
+							getEditorCommand('hide')._dropDown2(editor, caller, editor._('Spoiler title'), 'text', function (title) {
+								title = title.trim();
+								editor.insertText('[spoiler' + (title ? '=' + title : '') + ']', '[/spoiler]');
+							});
+							break;
+						}
+					}
+				);
+			}
 		}
 	};
 
