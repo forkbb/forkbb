@@ -39,6 +39,7 @@ class Delete extends Action
         $isTopic     = 0;
         $isDraft     = 0;
         $uidsUpdate  = [];
+        $resetPremod = false;
 
         foreach ($args as $arg) {
             if ($arg instanceof User) {
@@ -70,6 +71,10 @@ class Delete extends Action
                 $isDraft          = 1;
 
                 $uidsUpdate[$arg->poster_id] = $arg->poster_id;
+
+                if (1 === $arg->pre_mod) {
+                    $resetPremod = true;
+                }
             }
         }
 
@@ -155,6 +160,10 @@ class Delete extends Action
                 ), 0) WHERE ::users.id IN (?ai:ids)';
 
             $this->c->DB->exec($query, $vars);
+        }
+
+        if ($resetPremod) {
+            $this->c->premod->reset();
         }
     }
 }
