@@ -34,10 +34,14 @@ class Save extends Action
         $values = $draft->getModelAttrs();
         $fields = $this->c->dbMap->drafts;
         $set = $vars = [];
+        $resetPremod = false;
 
         foreach ($modified as $name) {
             if (! isset($fields[$name])) {
                 continue;
+
+            } elseif ('pre_mod' === $name) {
+                $resetPremod = true;
             }
 
             $vars[] = $values[$name];
@@ -57,6 +61,10 @@ class Save extends Action
 
         $this->c->DB->exec($query, $vars);
         $draft->resModified();
+
+        if ($resetPremod) {
+            $this->c->premod->reset();
+        }
 
         return $draft;
     }
@@ -98,6 +106,10 @@ class Save extends Action
         $draft->id = (int) $this->c->DB->lastInsertId();
 
         $draft->resModified();
+
+        if (1 === $draft->pre_mod) {
+            $this->c->premod->reset();
+        }
 
         return $draft->id;
     }
