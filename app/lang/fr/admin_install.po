@@ -96,8 +96,8 @@ msgstr "Email de l'administrateur"
 msgid "Info 10"
 msgstr "Veuillez entrer une adresse mail valide."
 
-msgid "Installation du forum"
-msgstr "<b>Board setup</b>"
+msgid "Board setup"
+msgstr "<b>Installation du forum</b>"
 
 msgid "Info 11"
 msgstr "Réglages de votre forum. Vous pouvez changer cela plus tard."

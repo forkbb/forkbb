@@ -28,10 +28,10 @@ msgid "User is ban"
 msgstr "L’utilisateur %s est banni."
 
 msgid "Must enter message"
-msgstr "ous devez entrer, au minimum, soit un nom d’utilisateur, soit une adresse IP, soit une adresse électronique."
+msgstr "Vous devez entrer, au minimum, soit un nom d’utilisateur, soit une adresse IP, soit une adresse électronique."
 
 msgid "Cannot ban guest message"
-msgstr "L’utilisqteur invité ne peut être banni."
+msgstr "L’utilisateur invité ne peut être banni."
 
 msgid "Invalid IP message (%s)"
 msgstr "Vous avez entré une IP/plage d’IP invalide.(%s)."
@@ -61,7 +61,7 @@ msgid "Edit ban head"
 msgstr "Editer bannissement"
 
 msgid "Edit ban subhead"
-msgstr "Edit sous-titre de bannissement "
+msgstr "Editer le sous-titre de bannissement "
 
 msgid "Username label"
 msgstr "Utilisateur"

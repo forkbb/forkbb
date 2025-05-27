@@ -22,7 +22,7 @@ msgid "Bad agree"
 msgstr "Le formulaire est obsolète. Veuillez reprendre l’<a href=\"%s\">enregistrement</a> à nouveau."
 
 msgid "Reg cancel"
-msgstr "Vous n’avez pas accepter les règles du forum."
+msgstr "Vous n’avez pas accepté les règles du forum."
 
 msgid "Agree"
 msgstr "Agréer"

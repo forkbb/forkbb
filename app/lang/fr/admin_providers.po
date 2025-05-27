@@ -13,7 +13,7 @@ msgstr ""
 "Language: fr\n"
 
 msgid "OAuth authorization disabled"
-msgstr "OAuth authorisation <a href=\"%s\">disabled</a>."
+msgstr "Authentification tierce <a href=\"%s\">désactivée</a>."
 
 msgid "Providers"
 msgstr "Fournisseurs"
@@ -43,10 +43,10 @@ msgid "google"
 msgstr "Google"
 
 msgid "Callback label"
-msgstr "Callback URI"
+msgstr "URI de redirection"
 
 msgid "Callback help"
-msgstr "The URI that the user is returned to after they have granted or denied access to the application (corresponds to the redirect_uri of the OAuth protocol). It must be specified when registering your application on the provider's server."
+msgstr "L'URI vers laquelle l'utilisateur est redirigé après avoir acquis ou pas l'accès à l'application (correspond à redirect_uri du protocole OAuth ). Ceci doit être spécifié à l'enregistrement de votre application sur le fournisseur de service."
 
 msgid "ID label"
 msgstr "Identité Client(ID)"
@@ -94,7 +94,7 @@ msgid "No new regs"
 msgstr "Ce forum n’accepte pas de nouveaux enregistrements."
 
 msgid "Email message"
-msgstr "This email received from %s appartient à un utilisateur enregistré.<br>Peut être êtes vous enregistré via un autre fournisseur ou erreur identifiant + mot de passe?"
+msgstr "Cet email reçu de %s appartient à un utilisateur enregistré.<br>Peut être êtes vous enregistré via un autre fournisseur ou erreur identifiant + mot de passe?"
 
 msgid "Already linked to you"
 msgstr "Ce compte est déjà lié à votre utilisateur."

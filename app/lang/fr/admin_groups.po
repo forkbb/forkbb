@@ -325,7 +325,7 @@ msgid "Delete profile help"
 msgstr "Autorise les utilisateurs de ce groupe à supprimer leur profil (<b>Les messages utilisateurs ne seront pas effacés</b>)."
 
 msgid "Use reaction label"
-msgstr "Utiliser les reactions"
+msgstr "Utiliser les réactions"
 
 msgid "Use reaction help"
 msgstr "Autoriser les utilisateurs de ce groupe à utliser les réactions pour noter les messages."
@@ -337,7 +337,7 @@ msgid "Use about me help"
 msgstr "Autoriser les utilisateurs de ce groupe à utiliser le champ &apos;A propos de moi&apos; dans leur profil."
 
 msgid "Use pre-moderation label"
-msgstr "Subject to pre-moderation"
+msgstr "Sujets de pré-moderation"
 
 msgid "Use pre-moderation help"
-msgstr "Pre-submit new topics/posts from users of this group for moderation."
+msgstr "Soumettre les nouveaux sujets et messages des utilisateurs de ce groupe pour modération préalable."

@@ -13,13 +13,13 @@ msgstr ""
 "Language: fr\n"
 
 msgid "Drafts"
-msgstr "Drafts"
+msgstr "Brouillons"
 
 msgid "No drafts"
-msgstr "No drafts"
+msgstr "Pas de brouillons"
 
 msgid "Page missing"
-msgstr "Page missing"
+msgstr "Page manquante"
 
 msgid "Delete"
 msgstr "Effacer"
@@ -28,7 +28,7 @@ msgid "Edit"
 msgstr "Modifier"
 
 msgid "Draft %s failed to load"
-msgstr "Draft %s failed to load. The parent topic/forum is probably unavailable."
+msgstr "Le brouillon %s n'a pu être chargé. Le forum ou discussion rattaché n'est problement plus existant."
 
 msgid "[Draft] Post a reply"
 msgstr "[Draft] Répondre"
@@ -37,46 +37,46 @@ msgid "[Draft] Post new topic"
 msgstr "[Draft] Créer une nouvelle discussion"
 
 msgid "Draft redirect"
-msgstr "Draft saved."
+msgstr "Brouillon enregistré."
 
 msgid "Draft del redirect"
-msgstr "Draft deleted."
+msgstr "Brouillon effacé."
 
 msgid "Delete draft"
-msgstr "Delete draft"
+msgstr "Effacer le brouillon"
 
 msgid "Confirm delete draft"
-msgstr "Confirm delete draft"
+msgstr "Confirmer l'effacement du brouillon"
 
 msgid "Delete draft info"
-msgstr "Deleted draft"
+msgstr "Brouillon effacé"
 
 msgid "Delete  draft"
-msgstr "Delete draft"
+msgstr "Effacer le brouillon"
 
 msgid "Post in pre-moderation"
-msgstr "This post is in pre-moderation."
+msgstr "Ce message est en pré-moderation."
 
 msgid "Topic in pre-moderation"
-msgstr "This topic is in pre-moderation."
+msgstr "Cette discussion pré-moderation."
 
 msgid "Post pre-moderation redirect"
-msgstr "Your post has been sent for pre-moderation."
+msgstr "Votre message a été envoyé en pré-moderation."
 
 msgid "Topic pre-moderation redirect"
-msgstr "Your topic has been sent for pre-moderation."
+msgstr "Votre sujet a été envoyé pour pré-moderation."
 
 msgid "Pre-moderation queue is empty"
-msgstr "The pre-moderation queue is empty."
+msgstr "La file de pré-modération est vide."
 
 msgid "Execute"
-msgstr "Execute"
+msgstr "Executer"
 
 msgid "Skip"
-msgstr "Skip"
+msgstr "Passer"
 
 msgid "Publish"
-msgstr "Publish"
+msgstr "Publier"
 
 msgid "Selected posts processed redirect"
-msgstr "The selected posts have been processed."
+msgstr "Les messages séléctionnés ont été traités."

@@ -22,7 +22,7 @@ msgid "NA"
 msgstr "N/A"
 
 msgid "Welcome to admin"
-msgstr "Bienvenue sur le panneau d’administration ForkBB. Vous pouvez depuis ici controler des aspect vitaux du forum. En fonction de si vous êtes administrateur ou un modérateur vous pouvez:"
+msgstr "Bienvenue sur le panneau d’administration ForkBB. Vous pouvez depuis ici controler des aspects vitaux du forum. En fonction de si vous êtes administrateur ou un modérateur vous pouvez:"
 
 msgid "Welcome 1"
 msgstr "Organiser les catégories et les discussions."
@@ -55,7 +55,7 @@ msgid "About head"
 msgstr "A propos de ForkBB"
 
 msgid "ForkBB version label"
-msgstr "Revision"
+msgstr "Révision"
 
 msgid "ForkBB version data"
 msgstr "%s"
