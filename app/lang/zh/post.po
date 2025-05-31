@@ -124,16 +124,16 @@ msgid "Too many censored words"
 msgstr "包含过多被审查的词语。"
 
 msgid "To pre-moderation"
-msgstr "To pre-moderation"
+msgstr "提交审核"
 
 msgid "Pre-moderation replies"
-msgstr "Pre-moderation of replies:"
+msgstr "审核回复:"
 
 msgid "No "
-msgstr "No"
+msgstr "否"
 
 msgid "Default "
-msgstr "By default"
+msgstr "默认"
 
 msgid "Yes "
-msgstr "Yes"
+msgstr "是"
