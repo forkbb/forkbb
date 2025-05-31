@@ -205,19 +205,19 @@ msgid "Delete field"
 msgstr "删除字段"
 
 msgid "Pre-moderation label"
-msgstr "Pre-moderation"
+msgstr "审核设置"
 
 msgid "No "
-msgstr "No (turned off)"
+msgstr "关闭"
 
 msgid "Default "
-msgstr "By default"
+msgstr "默认"
 
 msgid "Replies "
-msgstr "Only replies"
+msgstr "仅回复"
 
 msgid "New topics "
-msgstr "Only new topics"
+msgstr "仅新主题"
 
 msgid "New topics and replies "
-msgstr "New topics and replies"
+msgstr "新主题及回复"
