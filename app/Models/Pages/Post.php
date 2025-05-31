@@ -297,7 +297,18 @@ class Post extends Page
             default               => 'Topic pre-moderation redirect',
         };
 
-        return $this->c->Redirect->url($draft->link)->message($message, FORK_MESS_SUCC);
+        if (0 === $draft->pre_mod) {
+            $timeout = 0;
+
+        } else {
+            $timeout = $this->c->config->i_redirect_delay;
+
+            if ($timeout < 5) {
+                $timeout = 5;
+            }
+        }
+
+        return $this->c->Redirect->url($draft->link)->message($message, FORK_MESS_SUCC, $timeout);
     }
 
     /**
