@@ -55,28 +55,28 @@ msgid "Delete  draft"
 msgstr "删除草稿"
 
 msgid "Post in pre-moderation"
-msgstr "This post is in pre-moderation."
+msgstr "此帖子正在等待审核。"
 
 msgid "Topic in pre-moderation"
-msgstr "This topic is in pre-moderation."
+msgstr "此主题正在等待审核。"
 
 msgid "Post pre-moderation redirect"
-msgstr "Your post has been sent for pre-moderation."
+msgstr "您的帖子已提交进行审核。"
 
 msgid "Topic pre-moderation redirect"
-msgstr "Your topic has been sent for pre-moderation."
+msgstr "您的主题已提交进行审核。"
 
 msgid "Pre-moderation queue is empty"
-msgstr "The pre-moderation queue is empty."
+msgstr "审核队列当前为空。"
 
 msgid "Execute"
-msgstr "Execute"
+msgstr "执行"
 
 msgid "Skip"
-msgstr "Skip"
+msgstr "跳过"
 
 msgid "Publish"
-msgstr "Publish"
+msgstr "发布"
 
 msgid "Selected posts processed redirect"
-msgstr "The selected posts have been processed."
+msgstr "所选帖子已处理。"

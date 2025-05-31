@@ -494,22 +494,22 @@ msgid "Your drafts"
 msgstr "您的草稿"
 
 msgid "bb hide"
-msgstr "Guests cannot see this content."
+msgstr "访客无法查看此内容。"
 
 msgid "bb hide admin"
-msgstr "Only admins can see this content."
+msgstr "仅管理员可以查看此内容。"
 
 msgid "bb hide mod"
-msgstr "Only admins and forum moderators can see this content."
+msgstr "仅管理员和版主可以查看此内容。"
 
 msgid "bb hide %s posts"
-msgstr "This content is visible to users with %s or more posts."
+msgstr "拥有 %s 个及以上帖子的用户可以查看此内容。"
 
 msgid "Pre-moderation"
-msgstr "Pre-moderation"
+msgstr "审核"
 
 msgid "Queue of new topics and posts for moderation"
-msgstr "Queue of new topics and posts for moderation"
+msgstr "待审核的新主题和帖子队列"
 
 msgid "Pre-moderation (%s)"
-msgstr "<span class="f-spantxtpm">Pre-moderation </span><b>(%s)</b>"
+msgstr "<span class="f-spantxtpm">审核 </span><b>(%s)</b>"
