@@ -145,7 +145,7 @@ msgid "Topic views help"
 msgstr "Garder la trace du nombre de vue cumulée par un sujet. Désactiver ceci si vous expérimentez des surcharges serveur dans un forum très fréquenté."
 
 msgid "Menu items label"
-msgstr "Objets de menu additionnels"
+msgstr "Objets de menus additionnels"
 
 msgid "Menu items help"
 msgstr "Vous pouvez ajouter de nouveaux objets dans le menu. Chaque ligne défini un objet du format: <b>Position</b><wbr>|<b>Name</b><wbr>|<b>Link</b><wbr><i>[|<b>Identifier</b>]</i>."
@@ -472,19 +472,19 @@ msgid "Delete og image"
 msgstr "Effacer image pour Open Graph"
 
 msgid "Reaction subhead"
-msgstr "Reactions aux messages"
+msgstr "Réactions aux messages"
 
 msgid "Allow reaction label"
-msgstr "Activer le système de reaction"
+msgstr "Activer le système de réaction"
 
 msgid "Reaction type label"
 msgstr "Types de réactions"
 
 msgid "Reaction type help"
-msgstr "Types de reactions disponibles pour l’utilisateur."
+msgstr "Types de réactions disponibles pour l’utilisateur."
 
 msgid "User has reactioned label"
-msgstr "L’utilisateur à réagi"
+msgstr "L’utilisateur a réagi"
 
 msgid "User has reactioned help"
 msgstr "Surligner les réactions que l’utilisateur a sélectionné pour le message affiché. Désactiver si vous expérimentez des surcharges serveur."
@@ -505,7 +505,7 @@ msgid "Hide e-mail label"
 msgstr "Cacher le champ de l'email"
 
 msgid "Hide e-mail help"
-msgstr "Cacher le champ de l'adresse invité pas si celui si n'est pas requis."
+msgstr "Cacher le champ de l'adresse invité si celui si n'est pas requis."
 
 msgid "Disable email label"
 msgstr "Sans email"

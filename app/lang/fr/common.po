@@ -239,7 +239,7 @@ msgid "Home page"
 msgstr "Page d’accueil"
 
 msgid "User list"
-msgstr "liste d’utilisateur"
+msgstr "liste d’utilisateurs"
 
 msgid "List of users"
 msgstr "liste d’utilisateurs"
