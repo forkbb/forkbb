@@ -76,7 +76,7 @@ msgid "Delete group"
 msgstr "Effacer groupe"
 
 msgid "Group settings info"
-msgstr "Les options ci dessous et permissions sont les valeurs par défaut de ces groupes d'ultilisateur. Ces options s\'appliquent si aucune  permission spécifique au forum n'est en effet."
+msgstr "Les options ci dessous et permissions sont les valeurs par défaut de ces groupes d'utilisateur. Ces options s'appliquent si aucune  permission spécifique au forum n'est en effet."
 
 msgid "Group title label"
 msgstr "Titre du groupe"
@@ -121,7 +121,7 @@ msgid "Rename users help"
 msgstr "Si les privilèges de modérateurs sont activés, autoriser les utilisateurs de ce groupe à renommer les utilisateurs."
 
 msgid "Change passwords label"
-msgstr "Autoriser les moderateurs à changer les mots de passe"
+msgstr "Autoriser les modérateurs à changer les mots de passe"
 
 msgid "Change passwords help"
 msgstr "Si les privilèges de modérateurs sont activés, autoriser les utilisateurs de ce groupe à changer les mots de passe utilisateurs."

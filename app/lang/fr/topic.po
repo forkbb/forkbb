@@ -96,7 +96,7 @@ msgid "User info"
 msgstr "Informations utilisateur"
 
 msgid "Visitors online"
-msgstr "Utilisateurs enreegistré en ligne sur cette discussion: <b>%1$s</b>, invités: <b>%2$s</b>."
+msgstr "Utilisateurs enregistrés en ligne sur cette discussion: <b>%1$s</b>, invités: <b>%2$s</b>."
 
 msgid "Online users"
 msgstr "En ligne:"
