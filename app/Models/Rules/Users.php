@@ -216,7 +216,7 @@ class Users extends Rules
     /**
      * Определяет нужна ли отправка на премодерацию
      */
-    public function forPreModeration(Model $model): bool
+    public function forPreModeration(?Model $model): bool
     {
         if (
             $this->user->isAdmMod
