@@ -941,6 +941,10 @@ class Routing
                 list($page, $action) = \explode(':', $route[1], 2);
                 $page = $this->c->$page->$action($route[2], $method);
 
+                if (1 === $this->c->config->b_censoring) {
+                    $this->c->censorship; // предзагрузка цензуры
+                }
+
                 break;
             case $r::NOT_FOUND:
                 // ... 404 Not Found
