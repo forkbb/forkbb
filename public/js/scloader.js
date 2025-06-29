@@ -14,6 +14,8 @@ ForkBB.editor = (function (doc, win) {
 
     var instance,
         nameSelector = ".f-username",
+        quoteSelector = ".f-postquote",
+        postSelector = "article",
         dataName = "data-SCEditorConfig",
         emotName = "data-smiliesEnabled",
         linkName = "data-linkEnabled",
@@ -34,6 +36,54 @@ ForkBB.editor = (function (doc, win) {
                 "table|code,mono,quote,hide|horizontalrule,image,email,link,unlink|" +
                 "emoticon,date,time|maximize,source"
         };
+
+    function getHTMLOfSelection() {
+        var selection = window.getSelection();
+
+        if (selection.rangeCount > 0) {
+            var range = selection.getRangeAt(0),
+                container = document.createElement('div');
+
+            container.appendChild(range.cloneContents());
+
+            return container.innerHTML;
+        } else {
+            return '';
+        }
+    }
+
+    function quoteSelected(e)
+    {
+        var selection = getHTMLOfSelection();
+
+        if (selection) {
+            var user = e.target.closest(postSelector).querySelectorAll(nameSelector)[0],
+                name = user.textContent,
+                mode = instance.inSourceMode();
+
+            if (user.innerHTML.indexOf("<a>@</a>") > -1 && name.indexOf("@") == 0) {
+                name = name.slice(1);
+            }
+
+            selection = "<blockquote><cite>" + name + "</cite>" + selection + "</blockquote>";
+
+            if (mode) {
+                instance.sourceMode(false);
+            } else { // перевод курсора в конец поля sceditor O_o
+                instance.sourceMode(true);
+                instance.sourceMode(false);
+            }
+
+            instance.wysiwygEditorInsertHtml(selection);
+
+            if (mode) {
+                instance.sourceMode(true);
+            }
+
+            elForScroll.scrollIntoView({behavior: "smooth", block: "end"});
+            e.preventDefault();
+        }
+    }
 
     function initEditor()
     {
@@ -99,6 +149,14 @@ ForkBB.editor = (function (doc, win) {
                 elForScroll.scrollIntoView({behavior: "smooth", block: "end"});
             });
             node.insertBefore(a, node.firstChild);
+        }
+
+        var quotes = doc.querySelectorAll(quoteSelector);
+
+        for (var node of quotes) {
+            node.addEventListener("click", function (e) {
+                quoteSelected(e);
+            });
         }
 
         if (textarea.form && textarea.form.elements.username) {
