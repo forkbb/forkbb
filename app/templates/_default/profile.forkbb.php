@@ -1,6 +1,6 @@
 @include ('layouts/crumbs')
 @section ('avatar')<img class="f-avatar-img" src="{{ $p->curUser->avatar }}" alt="{{ $p->curUser->username }}"> @endsection
-@section ('signature') @if ($p->signatureSection){!! $p->curUser->htmlSign !!} @endif @endsection
+@section ('signature') @if ($p->signatureSection)<div class="f-post-body"><div class="f-post-sign">{!! $p->curUser->htmlSign !!}</div></div> @endif @endsection
 @section ('about_me') @if ($p->aboutMePost)<div class="f-post-body"><div class="f-post-main">{!! $p->aboutMePost->html() !!}</div></div> @endif @endsection
 @extends ('layouts/main')
     <!-- PRE start -->
