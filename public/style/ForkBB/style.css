@@ -2085,9 +2085,47 @@ body,
 /* bbcode */
 /**********/
 #fork .f-post-body img {
+  display: inline-block;
   max-width: 100%;
   height: auto;
   vertical-align: middle;
+}
+
+#fork .f-bb-img-cont {
+  display: inline-block;
+  position: relative;
+}
+
+#fork .f-bb-img-chk {
+  appearance: none;
+}
+
+#fork .f-bb-img-chk:focus {
+  box-shadow: none;
+}
+
+#fork .f-bb-img-chk::before {
+  position: absolute;
+  display: block;
+  top: 0;
+  inset-inline-start: 0;
+  cursor: zoom-in;
+  font-family: "fa";
+  font-weight: 900;
+  font-size: 1.25rem;
+  line-height: 1;
+  content: "\f065"; /*"\f424";*/
+  color: var(--c-fprimary);
+  -webkit-text-stroke: 0.0625rem var(--bg-fprimary);
+}
+
+#fork .f-bb-img-chk:checked::before {
+  content: "\f066"; /*"\f422";*/
+  cursor: zoom-out;
+}
+
+#fork .f-bb-img-chk:not(:checked) + img {
+  max-height: 8rem;
 }
 
 #fork .f-bb-header {
@@ -2278,13 +2316,13 @@ body,
   border-bottom-width: 0.0625rem;
 }
 
-#fork .f-bbivert:not(:first-child) {
+/* #fork .f-bbivert:not(:first-child) {
   margin-top: 0.5rem;
 }
 
 #fork .f-bbivert:not(:last-child) {
   margin-bottom: 0.5rem;
-}
+} */
 
 #fork .f-bb-hide {
   padding: 0.3125rem;

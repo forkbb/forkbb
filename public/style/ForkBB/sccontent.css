@@ -314,6 +314,10 @@ img {
   height: auto;
 }
 
+img:not([data-sceditor-emoticon]) {
+  max-height: 8rem;
+}
+
 span.f-bb-mono {
   border: 0.0625rem solid var(--br-bbcode);
   background-color: var(--bg-bbcode);
@@ -350,7 +354,7 @@ span.f-bb-hashtag {
   border-bottom-width: 0.0625rem;
 }
 
-code:not(:first-child),
+/* code:not(:first-child),
 blockquote:not(:first-child),
 table:not(:first-child),
 img:not(:first-child),
@@ -364,7 +368,7 @@ table:not(:last-child),
 img:not(:last-child),
 details:not(:last-child) {
   margin-bottom: 0.5rem;
-}
+} */
 
 ::selection {
   /*color: var(--c-sel);*/
@@ -423,4 +427,8 @@ h6 {
 
 .f-bb-hide-visible {
   border-inline-start-color: green;
+}
+
+input {
+  display: none;
 }
