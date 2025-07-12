@@ -2112,7 +2112,7 @@ body,
   cursor: zoom-in;
   font-family: "fa";
   font-weight: 900;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   line-height: 1;
   content: "\f065"; /*"\f424";*/
   color: var(--c-fprimary);
