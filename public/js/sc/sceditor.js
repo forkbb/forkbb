@@ -7566,6 +7566,11 @@
 				data.text = data['text/plain'];
 				data.html = sanitize(data['text/html']);
 
+				// Visman - удаление color и background-color при copy-paste
+				data.html = data.html.replace(/(<\w+\s+[^<>]*?style=")([^"<>]+)/gi, function (match, p1, p2, offset) {
+					return p1 + p2.replace(/(?:background-)?color:\s*[^\s;];?/gi, "");
+				});
+
 				handlePasteData(data);
 			// If contentsFragment exists then we are already waiting for a
 			// previous paste so let the handler for that handle this one too
