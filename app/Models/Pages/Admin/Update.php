@@ -1522,7 +1522,7 @@ class Update extends Admin
     /**
      * rev.88 to rev.89
      */
-    protected function stageNumber87(array $args): ?int
+    protected function stageNumber88(array $args): ?int
     {
         // bbcode
         $queryI  = 'INSERT INTO ::bbcode (bb_tag, bb_edit, bb_delete, bb_structure)
