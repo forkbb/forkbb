@@ -1518,4 +1518,39 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.88 to rev.89
+     */
+    protected function stageNumber87(array $args): ?int
+    {
+        // bbcode
+        $queryI  = 'INSERT INTO ::bbcode (bb_tag, bb_edit, bb_delete, bb_structure)
+            VALUES(?s:tag, 1, 0, ?s:structure)';
+        $queryU  = 'UPDATE ::bbcode
+            SET bb_edit=1, bb_delete=0, bb_structure=?s:structure
+            WHERE bb_tag=?s:tag';
+        $bbcodes = include $this->c->DIR_CONFIG . '/defaultBBCode.php';
+
+        $tagsUpd = ['img'];
+        $tagsUpd = \array_flip($tagsUpd);
+
+        foreach ($bbcodes as $bbcode) {
+            if (! isset($tagsUpd[$bbcode['tag']])) {
+                continue;
+            }
+
+            $vars = [
+                ':tag'       => $bbcode['tag'],
+                ':structure' => \json_encode($bbcode, FORK_JSON_ENCODE),
+            ];
+            $exist = $this->c->DB->query('SELECT 1 FROM ::bbcode WHERE bb_tag=?s:tag', $vars)->fetchColumn();
+            $query = empty($exist) ? $queryI : $queryU;
+
+            $this->c->DB->exec($query, $vars);
+        }
+        // bbcode
+
+        return null;
+    }
 }
