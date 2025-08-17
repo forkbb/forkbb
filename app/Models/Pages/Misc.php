@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\Pages;
 
+use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Forum\Forum;
 use ForkBB\Models\Post\Post;
@@ -189,5 +190,117 @@ class Misc extends Page
         $this->c->Lang->load('misc');
 
         return $this->c->Redirect->url($post->link)->message($message, $status);
+    }
+
+    /**
+     * Методы admix => время действия токена
+     */
+    protected array $admixActions = [
+        'upload' => 3600,
+    ];
+
+    /**
+     * Точка входа для запросов admix
+     */
+    public function admix(array $args): Page
+    {
+        if (empty($this->admixActions[$args['action']])) {
+            return $this->admixReturnMessage(['error' => 'Bad action']);
+
+        } elseif (! $this->c->Csrf->verify($args['token'], 'Admix', $args, $this->admixActions[$args['action']])) {
+            return $this->admixReturnMessage(['error' => $this->c->Csrf->getError()]);
+        }
+
+        $method = 'admix' . \ucfirst($args['action']);
+
+        return $this->$method();
+    }
+
+    protected function admixReturnMessage(array $data): Page
+    {
+        $this->nameTpl      = "layouts/plain_raw";
+        $this->onlinePos    = null;
+        $this->onlineDetail = null;
+        $this->plainRaw     = \json_encode($data, FORK_JSON_ENCODE);
+
+        $this->header('Content-type', 'application/json; charset=utf-8', true);
+
+        return $this;
+    }
+
+    /**
+     * Проверка вложений
+     */
+    public function admixCheckAttach(Validator $v, array $files): array
+    {
+        $exts   = \array_flip(\explode(',', $this->c->user->g_up_ext));
+        $result = [];
+
+        foreach ($files as $file) {
+            if (isset($exts[$file->ext()])) {
+                $result[] = $file;
+
+            } else {
+                $v->addError(['The %s extension is not allowed', $file->ext()]);
+            }
+        }
+
+        return $result;
+    }
+
+    protected function admixUpload(): Page
+    {
+        if (! $this->c->userRules->useUpload) {
+            return $this->admixReturnMessage(['error' => 'No rights to upload']);
+        }
+
+        $v = $this->c->Validator->reset()
+            ->addValidators([
+                'check_attach' => [$this, 'admixCheckAttach'],
+            ])->addRules([
+                'files' => "required|file:multiple|max:{$this->c->user->g_up_size_kb}|check_attach",
+            ])->addAliases([
+            ])->addArguments([
+            ])->addMessages([
+            ]);
+
+        if (! $v->validation($_FILES)) {
+            $this->c->Lang->load('validator');
+
+            $e = $v->getErrors();
+            $e = \array_shift($e);
+            $e = \array_shift($e);
+
+            return $this->admixReturnMessage(['error' => __($e)]);
+        }
+
+        $text    = '';
+        $uploads = [];
+
+        foreach ($v->files as $file) {
+            $data = $this->c->attachments->addFile($file);
+
+            if (\is_array($data)) {
+                $cur = [
+                    'name' => $file->name(),
+                    'url'  => $data['url'],
+                    'img'  => $data['image'] ? true : false,
+                ];
+
+                if ($cur['img']) {
+                    $text .= "\n[img]{$cur['url']}[/img]";
+
+                } else {
+                    $text .= "\n[url={$cur['url']}]{$cur['name']}[/url]";
+                }
+
+                $uploads[] = $cur;
+            }
+        }
+
+        return $this->admixReturnMessage([
+            'text'    => $text,
+            'uploads' => $uploads,
+        ]);
     }
 }

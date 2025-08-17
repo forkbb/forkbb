@@ -424,6 +424,12 @@ class Routing
                     'Misc:solution',
                     'ChSolution'
                 );
+                $r->add(
+                    $r::PST,
+                    '/admix/{action:upload}/{token}',
+                    'Misc:admix',
+                    'Admix'
+                );
             }
 
             if ($user->isAdmin) {

@@ -173,6 +173,9 @@ trait PostFormTrait
                         'help'     => ['%1$s (%2$s max size)', \strtr($this->user->g_up_ext, [',' => ', ']), size($limit)],
                         'accept'   => '.' . \strtr($this->user->g_up_ext, [',' => ',.']),
                         'multiple' => true,
+                        'data'     => [
+                            'd' => $this->c->Router->link('Admix', ['action' => 'upload']),
+                        ],
                     ]
                 ],
             ];

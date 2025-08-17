@@ -48,7 +48,7 @@
                         @case ('password')
                         @case ('file')
                         @case ('datetime-local')
-                <input id="id-{{ $key }}" name="{{ $key }}" class="f-ctrl" type="{{ $cur['type'] }}" @foreach ($cur as $k => $v) @if (\in_array($k, ['autofocus', 'disabled', 'multiple', 'readonly', 'required'], true) && ! empty($v)) {!! $k !!} @elseif (\in_array($k, ['accept', 'autocapitalize', 'autocomplete', 'max', 'maxlength', 'min', 'minlength', 'pattern', 'placeholder', 'step', 'title', 'value'], true)) {!! $k !!}="{{ $v }}" @endif @endforeach>
+                <input id="id-{{ $key }}" name="{{ $key }}" class="f-ctrl" type="{{ $cur['type'] }}" @foreach ($cur as $k => $v) @if (\in_array($k, ['autofocus', 'disabled', 'multiple', 'readonly', 'required'], true) && ! empty($v)) {!! $k !!} @elseif (\in_array($k, ['accept', 'autocapitalize', 'autocomplete', 'max', 'maxlength', 'min', 'minlength', 'pattern', 'placeholder', 'step', 'title', 'value'], true)) {!! $k !!}="{{ $v }}" @elseif ('data' === $k) @foreach ($v as $kd => $vd) data-{{ $kd }}="{{ $vd }}" @endforeach  @endif @endforeach>
                             @break
                         @case ('textarea')
                 <textarea id="id-{{ $key }}" name="{{ $key }}" class="f-ctrl f-ytxtarea" @foreach ($cur as $k => $v) @if (\in_array($k, ['autofocus', 'disabled', 'readonly', 'required'], true) && ! empty($v)) {!! $k !!} @elseif (\in_array($k, ['maxlength', 'placeholder', 'rows', 'title'], true)) {!! $k !!}="{{ $v }}" @elseif ('data' === $k) @foreach ($v as $kd => $vd) data-{{ $kd }}="{{ $vd }}" @endforeach @endif @endforeach>{{ $cur['value'] or '' }}</textarea>

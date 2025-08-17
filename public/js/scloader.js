@@ -166,6 +166,42 @@ ForkBB.editor = (function (doc, win) {
                 initField(textarea.form.elements.email);
             }
         }
+
+        if (textarea.form && (node = textarea.form.querySelector('input[type=file]'))) {
+            node.addEventListener("change", function (e) {
+                var target = e.target;
+
+                if (target.files.length > 0) {
+                    var formData = new FormData();
+
+                    for (var i = 0; i < target.files.length; i++) {
+                        formData.append("files[]", target.files[i]);
+                    }
+
+                    fetch(target.getAttribute("data-d"), {
+                        method: "POST",
+                        body: formData,
+                    }).then(function (response) {
+                        if (!response.ok) {
+                            throw new Error("HTTP Error: " + response.status);
+                        }
+
+                        return response.json();
+                    }).then(function (data) {
+                        if (data.error) {
+                            throw new Error(data.error);
+                        }
+
+//                        console.log(data);
+                        instance.insert("", data.text);
+                    }).catch(function (e) {
+                        alert(e);
+                    });
+                }
+
+                target.value = '';
+            });
+        }
     }
 
     function initField(node)
