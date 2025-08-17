@@ -225,7 +225,7 @@ trait PostValidatorTrait
             $notPM
             && ! $edit
             && ! $about
-            && $this->c->userRules->useDraft
+            && $this->userRules->useDraft
         ) {
             $ruleDraft = 'string|check_timeout';
 
