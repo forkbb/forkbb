@@ -1551,6 +1551,16 @@ class Update extends Admin
         }
         // bbcode
 
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'multiple=>Admix',
+            '\\ForkBB\\Models\\Pages\\Admix::class',
+            'Premoderation'
+        );
+
+        $coreConfig->save();
+
         return null;
     }
 }

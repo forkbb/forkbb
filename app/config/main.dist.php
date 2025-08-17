@@ -409,6 +409,7 @@ return [
         'Reaction'           => \ForkBB\Models\Pages\Reaction::class,
         'Drafts'             => \ForkBB\Models\Pages\Drafts::class,
         'Premoderation'      => \ForkBB\Models\Pages\Premoderation::class,
+        'Admix'              => \ForkBB\Models\Pages\Admix::class,
         'AdminIndex'         => \ForkBB\Models\Pages\Admin\Index::class,
         'AdminStatistics'    => \ForkBB\Models\Pages\Admin\Statistics::class,
         'AdminOptions'       => \ForkBB\Models\Pages\Admin\Options::class,

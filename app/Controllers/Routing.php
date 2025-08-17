@@ -427,7 +427,7 @@ class Routing
                 $r->add(
                     $r::PST,
                     '/admix/{action:upload}/{token}',
-                    'Misc:admix',
+                    'Admix:admix',
                     'Admix'
                 );
             }

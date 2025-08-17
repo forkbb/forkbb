@@ -198,7 +198,6 @@ ForkBB.editor = (function (doc, win) {
                             throw new Error(data.error);
                         }
 
-//                        console.log(data);
                         instance.insert("", data.text);
                     }).catch(function (e) {
                         alert(e);
