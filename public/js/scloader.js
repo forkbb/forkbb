@@ -175,6 +175,12 @@ ForkBB.editor = (function (doc, win) {
                     var formData = new FormData();
 
                     for (var i = 0; i < target.files.length; i++) {
+                        if (node.form.children.MAX_FILE_SIZE && node.form.children.MAX_FILE_SIZE.value < target.files[i].size) {
+                            alert(target.files[i].name + " file too large");
+
+                            return;
+                        }
+
                         formData.append("files[]", target.files[i]);
                     }
 
