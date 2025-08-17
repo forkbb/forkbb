@@ -197,13 +197,6 @@ trait PostFormTrait
                         'label'   => 'Stick first post',
                         'checked' => (bool) ($vars['stick_fp'] ?? false),
                     ];
-
-                } elseif (! $edit) {
-                    $fieldset['merge_post'] = [
-                        'type'    => 'checkbox',
-                        'label'   => 'Merge posts',
-                        'checked' => (bool) ($vars['merge_post'] ?? true),
-                    ];
                 }
 
                 if (
@@ -220,28 +213,44 @@ trait PostFormTrait
                 }
             }
 
-            if (
-                ! $edit
-                && ! $preMod
-                && 1 === $this->c->config->b_topic_subscriptions
-                && $this->user->email_confirmed
-            ) {
-                $subscribed = ! $first && $model->is_subscribed;
-
-                if ($quick) {
-                    if (
-                        $subscribed
-                        || $this->user->auto_notify
-                    ) {
-                        $form['hidden']['subscribe'] = '1';
-                    }
-
-                } else {
-                    $fieldset['subscribe'] = [
+            if (! $edit) {
+                if (
+                    ! $first
+                    && ! $this->user->isGuest
+                    && (
+                        $power
+                        || $model->last_post + $this->user->g_force_merge_interval < \time()
+                    )
+                ) {
+                    $fieldset['merge_post'] = [
                         'type'    => 'checkbox',
-                        'label'   => $subscribed ? 'Stay subscribed' : 'New subscribe',
-                        'checked' => (bool) ($vars['subscribe'] ?? ($subscribed || $this->user->auto_notify)),
+                        'label'   => 'Merge posts',
+                        'checked' => (bool) ($vars['merge_post'] ?? true),
                     ];
+                }
+
+                if (
+                    ! $preMod
+                    && 1 === $this->c->config->b_topic_subscriptions
+                    && $this->user->email_confirmed
+                ) {
+                    $subscribed = ! $first && $model->is_subscribed;
+
+                    if ($quick) {
+                        if (
+                            $subscribed
+                            || $this->user->auto_notify
+                        ) {
+                            $form['hidden']['subscribe'] = '1';
+                        }
+
+                    } else {
+                        $fieldset['subscribe'] = [
+                            'type'    => 'checkbox',
+                            'label'   => $subscribed ? 'Stay subscribed' : 'New subscribe',
+                            'checked' => (bool) ($vars['subscribe'] ?? ($subscribed || $this->user->auto_notify)),
+                        ];
+                    }
                 }
             }
         }

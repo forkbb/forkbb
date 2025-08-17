@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '8.0.0';
     const REV_MIN_FOR_UPDATE         = 53;
-    const LATEST_REV_WITH_DB_CHANGES = 88;
+    const LATEST_REV_WITH_DB_CHANGES = 89;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
     const CONFIG_FILE                = 'main.php';
@@ -1560,6 +1560,8 @@ class Update extends Admin
         );
 
         $coreConfig->save();
+
+        $this->c->DB->addField('::groups', 'g_force_merge_interval', 'INT(10)', false, 2592000, null, 'g_deledit_interval');
 
         return null;
     }

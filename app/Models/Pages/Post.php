@@ -337,7 +337,10 @@ class Post extends Page
                     || 0 === $topic->poll_type
                 )
             ) {
-                if ($power) {
+                if (
+                    $power
+                    || $topic->last_post + $this->user->g_force_merge_interval < $now
+                ) {
                     if ($v->merge_post) {
                         $merge = true;
                     }

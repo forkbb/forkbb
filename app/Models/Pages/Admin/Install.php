@@ -902,6 +902,7 @@ class Install extends Admin
                 'g_email_flood'          => ['SMALLINT(6)', false, 60],
                 'g_report_flood'         => ['SMALLINT(6)', false, 60],
                 'g_deledit_interval'     => ['INT(10)', false, 0],
+                'g_force_merge_interval' => ['INT(10)', false, 2592000],
                 'g_pm'                   => ['TINYINT(1)', false, 1],
                 'g_pm_limit'             => ['INT(10) UNSIGNED', false, 100],
                 'g_sig_length'           => ['SMALLINT UNSIGNED', false, 400],

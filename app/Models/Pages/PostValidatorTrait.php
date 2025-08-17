@@ -190,7 +190,20 @@ trait PostValidatorTrait
         } else {
             $ruleStickTopic     = 'absent';
             $ruleStickFP        = 'absent';
-            $ruleMergePost      = 'absent:1';
+
+            if (
+                $notPM
+                && ! $this->user->isGuest
+                && ! $first
+                && ! $edit
+                && $model->last_post + $this->user->g_force_merge_interval < \time()
+            ) {
+                $ruleMergePost  = 'checkbox';
+
+            } else {
+                $ruleMergePost  = 'absent:1';
+            }
+
             $ruleEditPost       = 'absent';
             $power              = false;
         }
