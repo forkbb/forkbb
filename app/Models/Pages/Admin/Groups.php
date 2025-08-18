@@ -296,6 +296,7 @@ class Groups extends Admin
                         'g_send_email'           => 'required|integer|in:0,1',
                         'g_email_flood'          => 'required|integer|min:0|max:32767',
                         'g_report_flood'         => 'required|integer|min:0|max:32767',
+                        'g_force_merge_interval' => 'required|integer|min:0|max:4294967295',
                         'g_sig_length'           => 'required|integer|min:0|max:16000',
                         'g_sig_lines'            => 'required|integer|min:0|max:255',
                         'g_pm'                   => 'required|integer|in:0,1',
@@ -774,6 +775,14 @@ class Groups extends Admin
                     'value'   => $group->g_report_flood,
                     'caption' => 'Report flood label',
                     'help'    => 'Report flood help',
+                ];
+                $fieldset['g_force_merge_interval'] = [
+                    'type'    => 'number',
+                    'min'     => '0',
+                    'max'     => '4294967295',
+                    'value'   => $group->g_force_merge_interval,
+                    'caption' => 'Merge interval label',
+                    'help'    => 'Merge interval help',
                 ];
 
             }

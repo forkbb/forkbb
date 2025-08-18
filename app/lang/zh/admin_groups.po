@@ -341,3 +341,9 @@ msgstr "接受审核"
 
 msgid "Use pre-moderation help"
 msgstr "该用户组用户发布的新主题/帖子需先提交审核。"
+
+msgid "Merge interval label"
+msgstr "Merge interval"
+
+msgid "Merge interval help"
+msgstr "The number of seconds during which a user's new message is forcibly merged with their previous message (assuming their previous message is the last one in the topic).<br>版主在其负责的区域内不受此限制。"

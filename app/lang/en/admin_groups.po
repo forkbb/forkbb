@@ -341,3 +341,9 @@ msgstr "Subject to pre-moderation"
 
 msgid "Use pre-moderation help"
 msgstr "Pre-submit new topics/posts from users of this group for moderation."
+
+msgid "Merge interval label"
+msgstr "Merge interval"
+
+msgid "Merge interval help"
+msgstr "The number of seconds during which a user's new message is forcibly merged with their previous message (assuming their previous message is the last one in the topic).<br>Moderators have no restrictions in the zone of responsibility."
