@@ -73,7 +73,7 @@ $errorHandler->setContainer($c);
 require __DIR__ . '/functions.php';
 \ForkBB\_init($c);
 
-$c->FORK_REVISION = 88;
+$c->FORK_REVISION = 89;
 $c->START         = $_SERVER['REQUEST_TIME_FLOAT'] ?? \microtime(true);
 $c->PUBLIC_URL    = $c->BASE_URL . '/public';
 
