@@ -220,4 +220,24 @@ class Parser extends Parserus
 
         return \mb_strtoupper($first, 'UTF-8') . $other;
     }
+
+    /**
+     * Просматривает сам элемент $id и всех его родителей на совпадение имени тега с $tag
+     * Если совпадение найдено, вернёт номер тега в $this->data
+     * Если совпадение не найдено, вернёт -1
+     */
+    public function closestId(string $tag, int $id): int
+    {
+        do {
+            $cur = $this->data[$id];
+
+            if ($tag === $cur['tag']) {
+                return $id;
+            }
+
+            $id = $cur['parent'];
+        } while (\is_int($id));
+
+        return -1;
+    }
 }
