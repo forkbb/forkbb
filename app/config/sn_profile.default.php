@@ -17,7 +17,31 @@ return [
     'github' => [
         'title' => 'GitHub',
         'urls'  => [
-            'github\.com/([\w\-]+)' => 'https://github.com/$1',
+            'github\.com/([a-zA-Z0-9_\-]+)' => 'https://github.com/$1',
+        ],
+    ],
+    'mastodon' => [
+        'title' => 'Mastodon',
+        'urls'  => [
+            'mastodon\.social/@([a-z0-9_.]+)' => 'https://mastodon.social/@$1',
+        ],
+    ],
+    'reddit' => [
+        'title' => 'Reddit',
+        'urls'  => [
+            'reddit\.com/u(?:ser)?/([a-zA-Z0-9_\-]+)' => 'https://www.reddit.com/user/$1/'
+        ],
+    ],
+    'telegram' => [
+        'title' => 'Telegram',
+        'urls'  => [
+            't\.me/([a-z0-9_]+)' => 'https://t.me/$1',
+        ],
+    ],
+    'tiktok' => [
+        'title' => 'TikTok',
+        'urls'  => [
+            'tiktok\.com/@([a-z0-9_.]+)' => 'https://www.tiktok.com/@$1',
         ],
     ],
 

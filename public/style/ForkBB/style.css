@@ -1939,13 +1939,29 @@ body,
 }
 
 .f-social-link .f-psfont::before {
-  content: "\f08e";
+  font-family: "fab";
+  font-weight: 400;
+  content: "?";
 }
 
 .f-sn-github .f-psfont::before {
-  font-family: "fab";
-  font-weight: 400;
   content: "\f09b";
+}
+
+.f-sn-telegram .f-psfont::before {
+  content: "\f2c6";
+}
+
+.f-sn-tiktok .f-psfont::before {
+  content: "\e07b";
+}
+
+.f-sn-reddit .f-psfont::before {
+  content: "\f1a1";
+}
+
+.f-sn-mastodon .f-psfont::before {
+  content: "\f4f6";
 }
 
 .f-email .f-psfont::before {
