@@ -428,3 +428,6 @@ msgstr "Lieu"
 
 msgid "Locale info"
 msgstr "Affecte les formats heure et date, dépendant de la langue."
+
+msgid "SN profile %s"
+msgstr "Link to social network profile %s"

@@ -428,3 +428,6 @@ msgstr "Locale"
 
 msgid "Locale info"
 msgstr "Affects time and date formats. Dependent on language."
+
+msgid "SN profile %s"
+msgstr "Link to social network profile %s"
