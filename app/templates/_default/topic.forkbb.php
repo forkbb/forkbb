@@ -168,6 +168,13 @@
             @if ($post->user->url)
               <li class="f-user-contacts f-website"><a href="{{ $post->user->censorUrl }}" title="{{ __('Website title') }}" rel="ugc"><span class="f-psfont">{!! __('Website') !!}</span></a></li>
             @endif
+            @for ($snI = 1; $snI < 6; $snI++)
+                @php $snF = "sn_profile{$snI}"; @endphp
+                @if ($post->user->$snF)
+                    @php list($snK, $snV) = \explode("\n", $post->user->$snF, 2); $snT = $p->snsGetTitle($snK); @endphp
+              <li class="f-user-contacts f-social-link f-sn-{{ $snK}}"><a href="{{ $snV }}" title="{{ $snT }}" rel="ugc"><span class="f-psfont"><span>{{ $snT }}</span></span></a></li>
+                @endif
+            @endfor
             @if ($post->user->linkEmail)
               <li class="f-user-contacts f-email"><a href="{{ $post->user->linkEmail }}" title="{{ __('Email title') }}" rel="ugc"><span class="f-psfont">{!! __('Email ') !!}</span></a></li>
             @endif

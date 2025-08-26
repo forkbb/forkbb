@@ -747,4 +747,19 @@ abstract class Page extends Model
 
         return $returnEmpty ? '' : $this->c->PUBLIC_URL . $path;
     }
+
+    /**
+     * Список соц.сетей (после обращения к методу snsGetTitle)
+     */
+    protected ?array $snsArray;
+
+    /**
+     * Возвращает титул для кода соц.сети или 'Unknown'
+     */
+    public function snsGetTitle(string $key): string
+    {
+        $this->snsArray ??= include "{$this->c->DIR_CONFIG}/{$this->c->SN_PROFILE}";
+
+        return $this->snsArray[$key]['title'] ?? 'Unknown';
+    }
 }

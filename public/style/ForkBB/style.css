@@ -123,6 +123,15 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'fab';
+  font-style: normal;
+  font-weight: 400;
+  src: url("../font/fa/fa-brands-400.v.60702.woff2") format("woff2");
+  font-display: swap;
+}
+
+
 html,
 body,
 #fork,
@@ -1927,6 +1936,16 @@ body,
 
 .f-website .f-psfont::before {
   content: "\f015";
+}
+
+.f-social-link .f-psfont::before {
+  content: "\f08e";
+}
+
+.f-sn-github .f-psfont::before {
+  font-family: "fab";
+  font-weight: 400;
+  content: "\f09b";
 }
 
 .f-email .f-psfont::before {

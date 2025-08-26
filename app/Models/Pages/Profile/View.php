@@ -253,12 +253,12 @@ class View extends Profile
                 $f = "sn_profile{$i}";
 
                 if ($this->curUser->$f) {
-                    list($t, $v) = \explode("\n", $this->curUser->$f, 2);
+                    list($k, $v) = \explode("\n", $this->curUser->$f, 2);
 
                     $fields[$f] = [
                         'class'   => ['pline'],
                         'type'    => 'link',
-                        'caption' => $this->snGetTitle($t),
+                        'caption' => $this->snsGetTitle($k),
                         'value'   => $v,
                         'href'    => url($v),
                         'rel'     => 'ugc',

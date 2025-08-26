@@ -247,9 +247,9 @@ class Edit extends Profile
             return '';
         }
 
-        $this->snGetTitle(''); // загрузка $this->snArray
+        $this->snsGetTitle(''); // загрузка $this->snsArray
 
-        foreach ($this->snArray as $type => $cur) {
+        foreach ($this->snsArray as $type => $cur) {
             foreach ($cur['urls'] as $pattern => $repl) {
                 $result = \preg_replace('%^https?://(?:www\.)?' . $pattern . '.*$%u', $repl, $url, 1, $count);
 
