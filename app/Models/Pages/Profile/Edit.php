@@ -71,9 +71,11 @@ class Edit extends Profile
 
             if ($this->rules->editWebsite) {
                 $ruleWebsite = 'exist|string:trim,empty|max:100|regex:%^https?://[^\x00-\x1F\s]+$%uD';
+                $ruleSN      = 'exist|string:trim,empty|max:200|regex:%^https?://[^\x00-\x1F\s]+$%uD|check_sn';
 
             } else {
                 $ruleWebsite = 'absent';
+                $ruleSN      = 'absent';
             }
 
             if ($this->rules->useSignature) {
@@ -86,6 +88,7 @@ class Edit extends Profile
             $v = $this->c->Validator->reset()
                 ->addValidators([
                     'check_signature' => [$this, 'vCheckSignature'],
+                    'check_sn'        => [$this, 'vCheckSN'],
                 ])->addRules([
                     'token'         => 'token:EditUserProfile',
                     'username'      => $ruleUsername,
@@ -98,6 +101,11 @@ class Edit extends Profile
                     'location'      => 'exist|string:trim|max:30|noURL:1',
                     'email_setting' => 'required|integer|in:0,1,2',
                     'url'           => $ruleWebsite,
+                    'sn_profile1'   => $ruleSN,
+                    'sn_profile2'   => $ruleSN,
+                    'sn_profile3'   => $ruleSN,
+                    'sn_profile4'   => $ruleSN,
+                    'sn_profile5'   => $ruleSN,
                     'signature'     => $ruleSignature,
                     'save'          => 'required|string',
                 ])->addAliases([
@@ -111,6 +119,11 @@ class Edit extends Profile
                     'location'      => 'Location',
                     'email_setting' => 'Email settings label',
                     'url'           => 'Website',
+                    'sn_profile1'   => ['SN profile %s', '1'],
+                    'sn_profile2'   => ['SN profile %s', '2'],
+                    'sn_profile3'   => ['SN profile %s', '3'],
+                    'sn_profile4'   => ['SN profile %s', '4'],
+                    'sn_profile5'   => ['SN profile %s', '5'],
                     'signature'     => 'Signature',
                 ])->addArguments([
                     'token'             => $args,
@@ -223,6 +236,33 @@ class Edit extends Profile
         }
 
         return $signature;
+    }
+
+    /**
+     * Дополнительная проверка соц.сети
+     */
+    public function vCheckSN(Validator $v, string $url): string
+    {
+        if (empty($url)) {
+            return '';
+        }
+
+        $this->snGetTitle(''); // загрузка $this->snArray
+
+        foreach ($this->snArray as $type => $cur) {
+            foreach ($cur['urls'] as $pattern => $repl) {
+                $result = \preg_replace('%^https?://(?:www\.)?' . $pattern . '.*$%u', $repl, $url, 1, $count);
+
+                if (
+                    1 === $count
+                    && \is_string($result)
+                ) {
+                    return "{$type}\n{$result}";
+                }
+            }
+        }
+
+        return '';
     }
 
     /**
@@ -482,18 +522,52 @@ class Edit extends Profile
                 'value'     => $this->curUser->url,
             ];
 
-        } elseif (
-            $this->rules->viewWebsite
-            && $this->curUser->url
-        ) {
-            $fields['url'] = [
-                'id'      => 'website',
-                'class'   => ['pline'],
-                'type'    => 'link',
-                'caption' => 'Website',
-                'value'   => $this->curUser->censorUrl,
-                'href'    => $this->curUser->censorUrl,
-            ];
+            for ($i = 1; $i < 6; $i++) {
+                $f = "sn_profile{$i}";
+
+                if ($this->curUser->$f) {
+                    list(, $v) = \explode("\n", $this->curUser->$f, 2);
+
+                } else {
+                    $v = '';
+                }
+
+                $fields[$f] = [
+                    'type'      => 'text',
+                    'maxlength' => '200',
+                    'caption'   => ['SN profile %s', "{$i}"],
+                    'value'     => $v,
+                ];
+            }
+
+        } elseif ($this->rules->viewWebsite) {
+            if ($this->curUser->url) {
+                $fields['url'] = [
+                    'id'      => 'website',
+                    'class'   => ['pline'],
+                    'type'    => 'link',
+                    'caption' => 'Website',
+                    'value'   => $this->curUser->censorUrl,
+                    'href'    => $this->curUser->censorUrl,
+                ];
+            }
+
+            for ($i = 1; $i < 6; $i++) {
+                $f = "sn_profile{$i}";
+
+                if ($this->curUser->$f) {
+                    list(, $v) = \explode("\n", $this->curUser->$f, 2);
+
+                    $fields[$f] = [
+                        'id'      => 'website',
+                        'class'   => ['pline'],
+                        'type'    => 'link',
+                        'caption' => ['SN profile %s', "{$i}"],
+                        'value'   => $v,
+                        'href'    => $v,
+                    ];
+                }
+            }
         }
 
         $form['sets']['contacts'] = [

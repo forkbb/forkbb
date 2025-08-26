@@ -236,19 +236,35 @@ class View extends Profile
             }
         }
 
-        if (
-            $this->rules->viewWebsite
-            && $this->curUser->url
-        ) {
-            $fields['url'] = [
-                'id'      => 'website',
-                'class'   => ['pline'],
-                'type'    => 'link',
-                'caption' => 'Website',
-                'value'   => $this->curUser->censorUrl,
-                'href'    => url($this->curUser->censorUrl),
-                'rel'     => 'ugc',
-            ];
+        if ($this->rules->viewWebsite) {
+            if ($this->curUser->url) {
+                $fields['url'] = [
+                    'id'      => 'website',
+                    'class'   => ['pline'],
+                    'type'    => 'link',
+                    'caption' => 'Website',
+                    'value'   => $this->curUser->censorUrl,
+                    'href'    => url($this->curUser->censorUrl),
+                    'rel'     => 'ugc',
+                ];
+            }
+
+            for ($i = 1; $i < 6; $i++) {
+                $f = "sn_profile{$i}";
+
+                if ($this->curUser->$f) {
+                    list($t, $v) = \explode("\n", $this->curUser->$f, 2);
+
+                    $fields[$f] = [
+                        'class'   => ['pline'],
+                        'type'    => 'link',
+                        'caption' => $this->snGetTitle($t),
+                        'value'   => $v,
+                        'href'    => url($v),
+                        'rel'     => 'ugc',
+                    ];
+                }
+            }
         }
 
         if (! empty($fields)) {

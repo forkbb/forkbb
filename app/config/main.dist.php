@@ -76,6 +76,7 @@ return [
         'WtoHyphen' => true,
         'file'      => 'translit.default.php',
     ],
+    'SN_PROFILE' => 'sn_profile.default.php',
 
     'shared' => [
         '%DIR_ROOT%'   => \realpath(__DIR__ . '/../..'),

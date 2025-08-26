@@ -191,4 +191,19 @@ abstract class Profile extends Page
             ]
         );
     }
+
+    /**
+     * Список соц.сетей (после обращения к методу snGetTitle)
+     */
+    protected ?array $snArray;
+
+    /**
+     * Возвращает титул для кода соц.сети или 'Unknown'
+     */
+    protected function snGetTitle(string $type): string
+    {
+        $this->snArray ??= include "{$this->c->DIR_CONFIG}/{$this->c->SN_PROFILE}";
+
+        return $this->snArray[$type]['title'] ?? 'Unknown';
+    }
 }

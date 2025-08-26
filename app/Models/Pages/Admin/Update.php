@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '8.0.0';
     const REV_MIN_FOR_UPDATE         = 53;
-    const LATEST_REV_WITH_DB_CHANGES = 89;
+    const LATEST_REV_WITH_DB_CHANGES = 90;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
     const CONFIG_FILE                = 'main.php';
@@ -1562,6 +1562,36 @@ class Update extends Admin
         $coreConfig->save();
 
         $this->c->DB->addField('::groups', 'g_force_merge_interval', 'INT(10)', false, 2592000, null, 'g_deledit_interval');
+
+        return null;
+    }
+
+    /**
+     * rev.89 to rev.90
+     */
+    protected function stageNumber89(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'SN_PROFILE',
+            '\'sn_profile.default.php\'',
+            'FRIENDLY_URL'
+        );
+
+        $coreConfig->save();
+
+        $this->c->DB->dropField('::users', 'jabber');
+        $this->c->DB->dropField('::users', 'icq');
+        $this->c->DB->dropField('::users', 'msn');
+        $this->c->DB->dropField('::users', 'aim');
+        $this->c->DB->dropField('::users', 'yahoo');
+
+        $this->c->DB->addField('::users', 'sn_profile1', 'VARCHAR(255)', false, '', null, 'url');
+        $this->c->DB->addField('::users', 'sn_profile2', 'VARCHAR(255)', false, '', null, 'sn_profile1');
+        $this->c->DB->addField('::users', 'sn_profile3', 'VARCHAR(255)', false, '', null, 'sn_profile2');
+        $this->c->DB->addField('::users', 'sn_profile4', 'VARCHAR(255)', false, '', null, 'sn_profile3');
+        $this->c->DB->addField('::users', 'sn_profile5', 'VARCHAR(255)', false, '', null, 'sn_profile4');
 
         return null;
     }
