@@ -278,3 +278,6 @@ msgstr "Number of users posts and topics"
 
 msgid "Drafts label"
 msgstr "Drafts"
+
+msgid "SN profile %s"
+msgstr "Social network profile %s"

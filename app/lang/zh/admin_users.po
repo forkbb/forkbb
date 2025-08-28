@@ -278,3 +278,6 @@ msgstr "用户的帖子和主题数量"
 
 msgid "Drafts label"
 msgstr "草稿"
+
+msgid "SN profile %s"
+msgstr "Social network profile %s"

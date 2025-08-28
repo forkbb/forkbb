@@ -278,3 +278,6 @@ msgstr "Numero de mensajes y temas de usuarios."
 
 msgid "Drafts label"
 msgstr "Drafts"
+
+msgid "SN profile %s"
+msgstr "Social network profile %s"

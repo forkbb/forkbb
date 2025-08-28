@@ -278,3 +278,6 @@ msgstr "Количество сообщений и тем пользовател
 
 msgid "Drafts label"
 msgstr "Черновиков"
+
+msgid "SN profile %s"
+msgstr "Профиль в соц.сети %s"

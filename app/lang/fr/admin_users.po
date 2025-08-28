@@ -278,3 +278,6 @@ msgstr "Nombre de messages et discussion utilisateurs"
 
 msgid "Drafts label"
 msgstr "Brouillons"
+
+msgid "SN profile %s"
+msgstr "Social network profile %s"

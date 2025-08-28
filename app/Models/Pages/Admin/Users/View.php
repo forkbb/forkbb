@@ -70,6 +70,11 @@ class View extends Users
                         'realname'        => 'string:null|max:40',
                         'gender'          => 'integer|in:' . FORK_GEN_NOT . ',' . FORK_GEN_MAN . ',' . FORK_GEN_FEM,
                         'url'             => 'string:null|max:100',
+                        'sn_profile1'     => 'string:null|max:200',
+                        'sn_profile2'     => 'string:null|max:200',
+                        'sn_profile3'     => 'string:null|max:200',
+                        'sn_profile4'     => 'string:null|max:200',
+                        'sn_profile5'     => 'string:null|max:200',
                         'location'        => 'string:null|max:30',
                         'signature'       => 'string:null|max:512',
                         'admin_note'      => 'string:null|max:30',
@@ -230,6 +235,18 @@ class View extends Users
             'caption'   => 'Website label',
             'value'     => $data['url'] ?? null,
         ];
+
+        for ($i = 1; $i < 6; $i++) {
+            $f = "sn_profile{$i}";
+
+            $fields[$f] = [
+                'type'      => 'text',
+                'maxlength' => '200',
+                'caption'   => ['SN profile %s', "{$i}"],
+                'value'     => $data[$f] ?? null,
+            ];
+        }
+
         $fields['location'] = [
             'type'      => 'text',
             'maxlength' => '30',
