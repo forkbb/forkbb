@@ -14,6 +14,12 @@ declare(strict_types=1);
 
 return [
     // Список профилей социальных сетей для соответствующих полей профиля пользователя
+    'flickr' => [
+        'title' => 'Flickr',
+        'urls' => [
+            'flickr\.com/(?:people|photos)/([a-zA-Z0-9@-]+)/' => 'https://www.flickr.com/people/$1/',
+        ],
+    ],
     'github' => [
         'title' => 'GitHub',
         'urls'  => [
@@ -30,6 +36,13 @@ return [
         'title' => 'Reddit',
         'urls'  => [
             'reddit\.com/u(?:ser)?/([a-zA-Z0-9_\-]+)' => 'https://www.reddit.com/user/$1/'
+        ],
+    ],
+    'stackoverflow' => [
+        'title' => 'StackOverflow',
+        'urls'  => [
+            'stackoverflow\.com/users/([0-9]+)/([^,\\/+:\s]+)' => 'https://stackoverflow.com/users/$1/$2',
+            'ru\.stackoverflow\.com/users/([0-9]+)/([^,\\/+:\s]+)' => 'https://ru.stackoverflow.com/users/$1/$2',
         ],
     ],
     'telegram' => [

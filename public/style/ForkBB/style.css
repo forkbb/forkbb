@@ -1964,6 +1964,14 @@ body,
   content: "\f4f6";
 }
 
+.f-sn-stackoverflow .f-psfont::before {
+  content: "\f16c";
+}
+
+.f-sn-flickr .f-psfont::before {
+  content: "\f16e";
+}
+
 .f-email .f-psfont::before {
   content: "\f0e0"; /*\40*/
 }
