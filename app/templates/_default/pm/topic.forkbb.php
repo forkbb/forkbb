@@ -104,7 +104,7 @@
             @for ($snI = 1; $snI < 6; $snI++)
                 @php $snF = "sn_profile{$snI}"; @endphp
                 @if ($post->user->$snF)
-                    @php list($snK, $snV) = \explode("\n", $post->user->$snF, 2); $snT = $p->snsGetTitle($snK); @endphp
+                    @php list($snK, $snT, $snV) = \explode("\n", $post->user->$snF, 3); @endphp
               <li class="f-user-contacts f-social-link f-sn-{{ $snK}}"><a href="{{ $snV }}" title="{{ $snT }}" rel="ugc"><span class="f-psfont"><span>{{ $snT }}</span></span></a></li>
                 @endif
             @endfor

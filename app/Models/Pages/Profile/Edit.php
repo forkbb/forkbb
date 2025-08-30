@@ -239,6 +239,11 @@ class Edit extends Profile
     }
 
     /**
+     * Список соц.сетей
+     */
+    protected ?array $snsArray;
+
+    /**
      * Дополнительная проверка соц.сети
      */
     public function vCheckSN(Validator $v, string $url): string
@@ -247,7 +252,7 @@ class Edit extends Profile
             return '';
         }
 
-        $this->snsGetTitle(''); // загрузка $this->snsArray
+        $this->snsArray ??= include "{$this->c->DIR_CONFIG}/{$this->c->SN_PROFILE}";
 
         foreach ($this->snsArray as $type => $cur) {
             foreach ($cur['urls'] as $pattern => $repl) {
@@ -257,7 +262,7 @@ class Edit extends Profile
                     1 === $count
                     && \is_string($result)
                 ) {
-                    return "{$type}\n{$result}";
+                    return "{$type}\n{$cur['title']}\n{$result}";
                 }
             }
         }
@@ -526,7 +531,7 @@ class Edit extends Profile
                 $f = "sn_profile{$i}";
 
                 if ($this->curUser->$f) {
-                    list(, $v) = \explode("\n", $this->curUser->$f, 2);
+                    list(, , $v) = \explode("\n", $this->curUser->$f, 3);
 
                 } else {
                     $v = '';
@@ -556,7 +561,7 @@ class Edit extends Profile
                 $f = "sn_profile{$i}";
 
                 if ($this->curUser->$f) {
-                    list(, $v) = \explode("\n", $this->curUser->$f, 2);
+                    list(, , $v) = \explode("\n", $this->curUser->$f, 3);
 
                     $fields[$f] = [
                         'id'      => 'website',
