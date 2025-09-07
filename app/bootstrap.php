@@ -16,33 +16,8 @@ use ForkBB\Core\EventDispatcher;
 use ForkBB\Models\Page;
 use RuntimeException;
 
-\error_reporting(\E_ALL ^ \E_NOTICE);
-\ini_set('display_errors', '0');
-\ini_set('log_errors', '1');
+require __DIR__ . '/functions.php';
 
-\setlocale(\LC_ALL, 'C');
-\mb_language('uni');
-\mb_internal_encoding('UTF-8');
-\mb_substitute_character(0xFFFD);
-
-define('FORK_GROUP_UNVERIFIED', 0);
-define('FORK_GROUP_ADMIN', 1);
-define('FORK_GROUP_MOD', 2);
-define('FORK_GROUP_GUEST', 3);
-define('FORK_GROUP_MEMBER', 4);
-
-define('FORK_MESS_INFO', 'i');
-define('FORK_MESS_SUCC', 's');
-define('FORK_MESS_WARN', 'w');
-define('FORK_MESS_ERR',  'e');
-define('FORK_MESS_VLD',  'v');
-
-define('FORK_GEN_NOT', 0);
-define('FORK_GEN_MAN', 1);
-define('FORK_GEN_FEM', 2);
-
-define('FORK_JSON_ENCODE', \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR);
-define('FORK_SFID', 2147483647);
 define('FORK_CLI', false);
 
 $loader       = require __DIR__ . '/../vendor/autoload.php';
@@ -59,8 +34,6 @@ if (\is_file(__DIR__ . '/config/main.php')) {
 $c->autoloader = $loader;
 
 $errorHandler->setContainer($c);
-
-require __DIR__ . '/functions.php';
 \ForkBB\_init($c);
 
 // https or http?
@@ -73,11 +46,9 @@ if (
     $c->BASE_URL = \str_replace('https://', 'http://', $c->BASE_URL);
 }
 
-$c->FORK_REVISION = 89;
-$c->START         = $forkStart;
-$c->PUBLIC_URL    = $c->BASE_URL . $forkPublicPrefix;
-$c->dispatcher    = new EventDispatcher($c);
-$controllers      = ['Primary', 'Routing'];
+$c->PUBLIC_URL = $c->BASE_URL . $forkPublicPrefix;
+$c->dispatcher = new EventDispatcher($c);
+$controllers   = ['Primary', 'Routing'];
 
 foreach ($controllers as $controller) {
     $page = $c->{$controller};

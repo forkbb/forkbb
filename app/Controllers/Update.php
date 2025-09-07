@@ -43,22 +43,21 @@ class Update
             'AdminUpdate'
         );
 
-        $uri = $_SERVER['REQUEST_URI'];
+        $uri = FORK_URI;
 
         if (false !== ($pos = \strpos($uri, '?'))) {
             $uri = \substr($uri, 0, $pos);
         }
 
         $uri    = \rawurldecode($uri);
-        $method = $_SERVER['REQUEST_METHOD'];
-        $route  = $r->route($method, $uri);
+        $route  = $r->route(FORK_RMETHOD, $uri);
         $page   = null;
 
         switch ($route[0]) {
             case $r::OK:
                 // ... 200 OK
                 list($page, $action) = \explode(':', $route[1], 2);
-                $page = $this->c->$page->$action($route[2], $method);
+                $page = $this->c->$page->$action($route[2], FORK_RMETHOD);
 
                 break;
             default:

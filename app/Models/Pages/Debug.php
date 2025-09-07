@@ -42,9 +42,8 @@ class Debug extends Page
             $this->numQueries = 0;
         }
 
-        $this->nameTpl    = 'layouts/debug';
-        $this->onlinePos  = null;
-        $this->start      = $this->c->START;
+        $this->nameTpl   = 'layouts/debug';
+        $this->onlinePos = null;
 
         return $this;
     }

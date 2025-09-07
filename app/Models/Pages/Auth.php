@@ -113,7 +113,7 @@ class Auth extends Page
             $this->httpStatus = 400;
         }
 
-        $ref = $this->c->Secury->replInvalidChars($_SERVER['HTTP_REFERER'] ?? '');
+        $ref = $this->c->Secury->replInvalidChars(FORK_REF);
 
         $this->identifier   = 'login';
         $this->hhsLevel     = 'secure';

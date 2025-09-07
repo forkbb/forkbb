@@ -8,7 +8,6 @@
 
 declare(strict_types=1);
 
-$forkStart        = $_SERVER['REQUEST_TIME_FLOAT'] ?? \microtime(true);
 $forkPublicPrefix = '/public';
 
 require __DIR__ . '/app/bootstrap.php';

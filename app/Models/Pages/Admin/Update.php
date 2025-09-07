@@ -163,7 +163,7 @@ class Update extends Admin
                     null === $e
                     && \version_compare(\PHP_VERSION, self::PHP_MIN, '<')
                 ) {
-                    $e = __(['You are running error', 'PHP', \PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN]);
+                    $e = __(['You are running error', 'PHP', \PHP_VERSION, FORK_REVISION, self::PHP_MIN]);
                 }
 
                 // база не от ForkBB или старая ревизия
@@ -383,9 +383,9 @@ class Update extends Admin
                 }
 
                 ++$stage;
-            } while ($stage < $this->c->FORK_REVISION);
+            } while ($stage < FORK_REVISION);
 
-            $this->c->config->i_fork_revision = $this->c->FORK_REVISION;
+            $this->c->config->i_fork_revision = FORK_REVISION;
 
             $this->c->config->save();
 
@@ -1278,7 +1278,7 @@ class Update extends Admin
         $this->c->DB->addField('::groups', 'g_use_about_me', 'TINYINT(1)', false, 1);
 
         $now     = \time();
-        $ip      = \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: '0.0.0.0';
+        $ip      = \filter_var(FORK_ADDR, \FILTER_VALIDATE_IP) ?: '0.0.0.0';
         $topicId = 1;
 
         $this->c->DB->exec('INSERT INTO ::posts (poster, poster_id, poster_ip, message, posted, topic_id) VALUES(?s, ?i, ?s, ?s, ?i, ?i)', ['ForkBB', 0, $ip, 'Start', $now, $topicId]);

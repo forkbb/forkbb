@@ -22,8 +22,8 @@ class Current extends Action
      */
     public function current(): User
     {
-        $ip   = \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: '0.0.0.0';
-        $ua   = \trim($this->c->Secury->replInvalidChars($_SERVER['HTTP_USER_AGENT'] ?? ''));
+        $ip   = \filter_var(FORK_ADDR, \FILTER_VALIDATE_IP) ?: '0.0.0.0';
+        $ua   = \trim($this->c->Secury->replInvalidChars(FORK_UA));
         $id   = (int) $this->c->Cookie->uId;
         $bot  = $id > 0 ? false : $this->isBot($ua);
         $user = $this->load($id, $ip);
@@ -116,6 +116,7 @@ class Current extends Action
         'wordpress'  => ['', '%(wordpress)%i'],
         'compatible' => ['%compatible(?!;\ msie)%', '%compatible[;) (]+([\w ./!-]+)%i']
     ];
+    protected array $scup           = ['"Android"' => 'Android', '"Chrome OS"' => 'CrOS', '"Chromium OS"' => 'CrOS', '"iOS"' => 'like Mac OS X', '"Linux"' => 'Linux', '"macOS"' => 'Macintosh', '"Windows"' => 'Windows', '"Unknown"' => ''];
 
     /**
      * Определяет бота
@@ -124,27 +125,34 @@ class Current extends Action
     protected function isBot(string $agent): ?string
     {
         $status = (int) (
-            empty($_SERVER['HTTP_ACCEPT_ENCODING'])
-            || empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])
+            empty(FORK_ENC)
+            || empty(FORK_LNG)
             || (
                 ':' === $this->c->BASE_URL[5]
                 && (
-                    empty($_SERVER['HTTP_SEC_FETCH_DEST'])
-                    || empty($_SERVER['HTTP_SEC_FETCH_MODE'])
-                    || empty($_SERVER['HTTP_SEC_FETCH_SITE'])
+                    empty(FORK_SFD)
+                    || empty(FORK_SFM)
+                    || empty(FORK_SFS)
                 )
             )
             || (
-                empty($_SERVER['HTTP_ACCEPT'])
+                empty(FORK_ACC)
                 && (
-                    empty($_SERVER['HTTP_SEC_FETCH_DEST'])
-                    || 'empty' !== $_SERVER['HTTP_SEC_FETCH_DEST']
+                    empty(FORK_SFD)
+                    || 'empty' !== FORK_SFD
                 )
             )
             || (
-                isset($_SERVER['HTTP_REFERER'][0])
-                && ! \str_starts_with($_SERVER['HTTP_REFERER'], 'https://')
-                && ! \str_starts_with($_SERVER['HTTP_REFERER'], 'http://')
+                ! empty(FORK_REF)
+                && ! \str_starts_with(FORK_REF, 'https://')
+                && ! \str_starts_with(FORK_REF, 'http://')
+            )
+            || (
+                null !== FORK_SCUP
+                && (
+                    ! isset($this->scup[FORK_SCUP])
+                    || false === \strpos(FORK_UA, $this->scup[FORK_SCUP])
+                )
             )
         );
 
@@ -228,11 +236,11 @@ class Current extends Action
      */
     protected function getLangFromHTTP(): string
     {
-        if (! empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+        if (! empty(FORK_LNG)) {
             $langs = $this->c->Func->getLangs();
             $main  = [];
 
-            foreach ($this->c->Func->langParse($_SERVER['HTTP_ACCEPT_LANGUAGE']) as $entry) {
+            foreach ($this->c->Func->langParse(FORK_LNG) as $entry) {
                 $arr = \explode('-', $entry, 2);
 
                 if (isset($arr[1])) {

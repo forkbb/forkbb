@@ -55,7 +55,7 @@ class Email extends Page
 
         $data = [
             'redirect' => $this->c->Router->validate(
-                $this->c->Secury->replInvalidChars($_SERVER['HTTP_REFERER'] ?? ''),
+                $this->c->Secury->replInvalidChars(FORK_REF),
                 'Index'
             ),
         ];

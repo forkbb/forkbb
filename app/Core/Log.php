@@ -96,8 +96,8 @@ class Log implements LoggerInterface
     {
         $ext     = $context['headers'] ?? null;
         $headers = [
-            'REMOTE_ADDR'     => $_SERVER['REMOTE_ADDR'] ?? null,
-            'HTTP_USER_AGENT' => $_SERVER['HTTP_USER_AGENT'] ?? null,
+            'REMOTE_ADDR'     => FORK_ADDR,
+            'HTTP_USER_AGENT' => FORK_UA,
         ];
 
         if (null === $ext) {

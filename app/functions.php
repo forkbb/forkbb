@@ -14,6 +14,50 @@ use ForkBB\Core\Container;
 use IntlDateFormatter;
 use InvalidArgumentException;
 
+\error_reporting(\E_ALL ^ \E_NOTICE);
+\ini_set('display_errors', '0');
+\ini_set('log_errors', '1');
+
+define('FORK_START', $_SERVER['REQUEST_TIME_FLOAT'] ?? \microtime(true));
+define('FORK_REVISION', 89);
+
+\setlocale(\LC_ALL, 'C');
+\mb_language('uni');
+\mb_internal_encoding('UTF-8');
+\mb_substitute_character(0xFFFD);
+
+define('FORK_GROUP_UNVERIFIED', 0);
+define('FORK_GROUP_ADMIN', 1);
+define('FORK_GROUP_MOD', 2);
+define('FORK_GROUP_GUEST', 3);
+define('FORK_GROUP_MEMBER', 4);
+
+define('FORK_MESS_INFO', 'i');
+define('FORK_MESS_SUCC', 's');
+define('FORK_MESS_WARN', 'w');
+define('FORK_MESS_ERR',  'e');
+define('FORK_MESS_VLD',  'v');
+
+define('FORK_GEN_NOT', 0);
+define('FORK_GEN_MAN', 1);
+define('FORK_GEN_FEM', 2);
+
+define('FORK_JSON_ENCODE', \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR);
+define('FORK_SFID', 2147483647);
+define('FORK_CTYPE', $_SERVER['CONTENT_TYPE'] ?? '');
+define('FORK_ADDR', $_SERVER['REMOTE_ADDR'] ?? '');
+define('FORK_RMETHOD', $_SERVER['REQUEST_METHOD'] ?? '');
+define('FORK_URI', $_SERVER['REQUEST_URI'] ?? '');
+define('FORK_ACC', $_SERVER['HTTP_ACCEPT'] ?? '');
+define('FORK_ENC', $_SERVER['HTTP_ACCEPT_ENCODING'] ?? '');
+define('FORK_LNG', $_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '');
+define('FORK_REF', $_SERVER['HTTP_REFERER'] ?? '');
+define('FORK_SFD', $_SERVER['HTTP_SEC_FETCH_DEST'] ?? '');
+define('FORK_SFM', $_SERVER['HTTP_SEC_FETCH_MODE'] ?? '');
+define('FORK_SFS', $_SERVER['HTTP_SEC_FETCH_SITE'] ?? '');
+define('FORK_UA', $_SERVER['HTTP_USER_AGENT'] ?? '');
+define('FORK_SCUP', $_SERVER['HTTP_SEC_CH_UA_PLATFORM'] ?? null);
+
 /**
  * Инициализирует другие функции (передача контейнера)
  */

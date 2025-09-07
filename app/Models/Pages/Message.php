@@ -67,7 +67,7 @@ class Message extends Page
                 $status > 399
                 && 4 & $this->c->DEBUG
             ) {
-                $this->c->Log->debug("Status {$status}: {$_SERVER['REQUEST_URI']}", [
+                $this->c->Log->debug('Status ' . $status . ': ' . FORK_URI, [
                     'user'    => $this->user->fLog(),
                     'message' => $message,
                     'headers' => true,
@@ -93,7 +93,7 @@ class Message extends Page
      */
     protected function boardNavigation(): void
     {
-        if ($this->c->config->i_fork_revision >= $this->c->FORK_REVISION) {
+        if ($this->c->config->i_fork_revision >= FORK_REVISION) {
             parent::boardNavigation();
         }
     }

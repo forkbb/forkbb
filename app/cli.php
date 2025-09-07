@@ -17,10 +17,7 @@ use ForkBB\Models\Page;
 use RuntimeException;
 use function \ForkBB\__;
 
-\error_reporting(\E_ALL ^ \E_NOTICE);
-\ini_set('display_errors', '1');
-\ini_set('log_errors', '1');
-//\ini_set('error_log', __DIR__ . '/cache/error_log.txt');
+require __DIR__ . '/functions.php';
 
 if (\PHP_SAPI !== 'cli') {
     \error_log('cli.php SAPI = ' . \PHP_SAPI);
@@ -28,29 +25,6 @@ if (\PHP_SAPI !== 'cli') {
     exit('This script wants to be run from the console. [' . \PHP_SAPI . ']' . \PHP_EOL);
 }
 
-\setlocale(\LC_ALL, 'C');
-\mb_language('uni');
-\mb_internal_encoding('UTF-8');
-\mb_substitute_character(0xFFFD);
-
-define('FORK_GROUP_UNVERIFIED', 0);
-define('FORK_GROUP_ADMIN', 1);
-define('FORK_GROUP_MOD', 2);
-define('FORK_GROUP_GUEST', 3);
-define('FORK_GROUP_MEMBER', 4);
-
-define('FORK_MESS_INFO', 'i');
-define('FORK_MESS_SUCC', 's');
-define('FORK_MESS_WARN', 'w');
-define('FORK_MESS_ERR',  'e');
-define('FORK_MESS_VLD',  'v');
-
-define('FORK_GEN_NOT', 0);
-define('FORK_GEN_MAN', 1);
-define('FORK_GEN_FEM', 2);
-
-define('FORK_JSON_ENCODE', \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR);
-define('FORK_SFID', 2147483647);
 define('FORK_CLI', true);
 
 $loader       = require __DIR__ . '/../vendor/autoload.php';
@@ -69,13 +43,9 @@ if (\is_file(__DIR__ . '/config/main.php')) {
 $c->autoloader = $loader;
 
 $errorHandler->setContainer($c);
-
-require __DIR__ . '/functions.php';
 \ForkBB\_init($c);
 
-$c->FORK_REVISION = 89;
-$c->START         = $_SERVER['REQUEST_TIME_FLOAT'] ?? \microtime(true);
-$c->PUBLIC_URL    = $c->BASE_URL . '/public';
+$c->PUBLIC_URL = $c->BASE_URL . '/public';
 
 \array_shift($argv);
 $command = \array_shift($argv);

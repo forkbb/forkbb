@@ -42,7 +42,7 @@ class Sitemap extends Page
             };
         }
 
-        $d = \number_format(\microtime(true) - $this->c->START, 3);
+        $d = \number_format(\microtime(true) - FORK_START, 3);
 
         $this->c->Log->debug("{$this->nameTpl} : {$args['id']} : time = {$d}", [
             'user'    => $this->user->fLog(),

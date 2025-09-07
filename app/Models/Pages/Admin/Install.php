@@ -100,7 +100,7 @@ class Install extends Admin
 
         // версия PHP
         if (\version_compare(\PHP_VERSION, self::PHP_MIN, '<')) {
-            $this->fIswev = [FORK_MESS_ERR, ['You are running error', 'PHP', \PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN]];
+            $this->fIswev = [FORK_MESS_ERR, ['You are running error', 'PHP', \PHP_VERSION, FORK_REVISION, self::PHP_MIN]];
         }
 
         // типы БД
@@ -449,9 +449,8 @@ class Install extends Admin
             ],
         ];
 
-        $this->nameTpl    = 'layouts/install';
-        $this->onlinePos  = null;
-        $this->rev        = $this->c->FORK_REVISION;
+        $this->nameTpl   = 'layouts/install';
+        $this->onlinePos = null;
 
         return $this;
     }
@@ -582,7 +581,7 @@ class Install extends Admin
         }
 
         if (\version_compare($version, $versionNeed, '<')) {
-            $v->addError(['You are running error', $progName, $version, $this->c->FORK_REVISION, $versionNeed]);
+            $v->addError(['You are running error', $progName, $version, FORK_REVISION, $versionNeed]);
 
             return $dbhost;
         }
@@ -1581,7 +1580,7 @@ class Install extends Admin
 
         // заполнение config
         $forkConfig = [
-            'i_fork_revision'         => $this->c->FORK_REVISION,
+            'i_fork_revision'         => FORK_REVISION,
             'o_board_title'           => $v->title,
             'o_board_desc'            => $v->descr,
             'o_default_timezone'      => \date_default_timezone_get(),
@@ -1704,7 +1703,7 @@ class Install extends Admin
         }
 
         // заполнение users, categories, forums, topics, posts
-        $ip      = \filter_var($_SERVER['REMOTE_ADDR'] ?? '', \FILTER_VALIDATE_IP) ?: '0.0.0.0';
+        $ip      = \filter_var(FORK_ADDR, \FILTER_VALIDATE_IP) ?: '0.0.0.0';
         $topicId = 1;
 
         $this->c->DB->exec('INSERT INTO ::users (group_id, username, username_normal, password, email, email_normal, language, style, num_posts, last_post, registered, registration_ip, last_visit, signature, num_topics) VALUES (?i, ?s, ?s, ?s, ?s, ?s, ?s, ?s, 1, ?i, ?i, ?s, ?i, \'\', 1)', [FORK_GROUP_ADMIN, $v->username, $this->c->users->normUsername($v->username), \password_hash($v->password, \PASSWORD_DEFAULT), $v->email, $this->c->NormEmail->normalize($v->email), $v->defaultlang, $v->defaultstyle, $now, $now, $ip, $now]);

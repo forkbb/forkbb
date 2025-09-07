@@ -34,7 +34,7 @@ class Reaction extends Page
      */
     public function reaction(array $args, string $method): Page
     {
-        $responseAsJSON = ($_SERVER['HTTP_ACCEPT'] ?? '') === 'application/json';
+        $responseAsJSON = FORK_ACC === 'application/json';
 
         if (! $this->c->Csrf->verify($args['token'], 'Reaction', $args)) {
             if (true === $responseAsJSON) {

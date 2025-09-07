@@ -59,12 +59,12 @@ class Test
         }
 
         $index  = 0;
-        $isPost = 'POST' === $_SERVER['REQUEST_METHOD'];
+        $isPost = 'POST' === FORK_RMETHOD;
 
-        if (empty($_SERVER['HTTP_USER_AGENT'])) {
+        if (empty(FORK_UA)) {
             $index += 1;
 
-        } elseif (\preg_match('%\b(msie|trident|opera|presto)\b%i', $_SERVER['HTTP_USER_AGENT'])) {
+        } elseif (\preg_match('%\b(msie|trident|opera|presto)\b%i', FORK_UA)) {
             $v->addError('Old browser', FORK_MESS_WARN);
 
             $this->log('Old browser');
@@ -73,10 +73,10 @@ class Test
         }
 
         if (
-            empty($_SERVER['HTTP_ACCEPT'])
-            || false === \strpos($_SERVER['HTTP_ACCEPT'], 'text/html')
-            || empty($_SERVER['HTTP_ACCEPT_ENCODING'])
-            || empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])
+            empty(FORK_ACC)
+            || false === \strpos(FORK_ACC, 'text/html')
+            || empty(FORK_ENC)
+            || empty(FORK_LNG)
             || (
                 $isPost
                 && empty($_SERVER['HTTP_ORIGIN'])
@@ -87,17 +87,17 @@ class Test
 
         if (
             $this->multi
-            && ! empty($_SERVER["CONTENT_TYPE"])
-            && ! \str_starts_with($_SERVER["CONTENT_TYPE"], 'multipart/')
+            && ! empty(FORK_CTYPE)
+            && ! \str_starts_with(FORK_CTYPE, 'multipart/')
         ) {
             $index += 4;
         }
 
-        if (! empty($_SERVER['HTTP_REFERER'])) {
-            $ref = $this->c->Router->validate($_SERVER['HTTP_REFERER'], 'Index');
+        if (! empty(FORK_REF)) {
+            $ref = $this->c->Router->validate(FORK_REF, 'Index');
             $ref = \strstr($ref, '#', true) ?: $ref;
 
-            if ($ref !== $_SERVER['HTTP_REFERER']) {
+            if ($ref !== FORK_REF) {
                 $inc = 3;
 
                 if (
@@ -106,7 +106,7 @@ class Test
                 ) {
                     foreach ($this->config['referers'] as $ref) {
                         if (false === \strpos($ref, '*')) {
-                            if ($ref === $_SERVER['HTTP_REFERER']) {
+                            if ($ref === FORK_REF) {
                                 $inc = 0;
 
                                 break;
@@ -116,7 +116,7 @@ class Test
                             $ref = \preg_quote($ref, '%');
                             $ref = \str_replace('\\*', '.*?', $ref);
 
-                            if (\preg_match("%^{$ref}$%D", $_SERVER['HTTP_REFERER'])) {
+                            if (\preg_match("%^{$ref}$%D", FORK_REF)) {
                                 $inc = 0;
 
                                 break;

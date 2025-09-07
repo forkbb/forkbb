@@ -34,7 +34,7 @@
 @if (! $p->fIswev[FORK_MESS_ERR])
     @if ($form = $p->form2)
     <section class="f-install">
-      <h2>{!! __(['Install', $p->rev]) !!}</h2>
+      <h2>{!! __(['Install', FORK_REVISION]) !!}</h2>
       <div class="f-fdiv">
         @include ('layouts/form')
       </div>

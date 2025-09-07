@@ -28,9 +28,9 @@ class Primary
     public function check(): ?Page
     {
         if (
-            isset($_SERVER['HTTP_ACCEPT'][5])
-            && false === \strpos($_SERVER['HTTP_ACCEPT'], 'text/')
-            && false !== \strpos($_SERVER['HTTP_ACCEPT'], 'image/')
+            isset(FORK_ACC[5])
+            && false === \strpos(FORK_ACC, 'text/')
+            && false !== \strpos(FORK_ACC, 'image/')
         ) {
             if (! $this->c->isInit('user')) {
                 $this->c->user = $this->c->users->create(['id' => 0, 'group_id' => FORK_GROUP_GUEST]);
@@ -55,7 +55,7 @@ class Primary
             }
         }
 
-        if ($this->c->config->i_fork_revision < $this->c->FORK_REVISION) {
+        if ($this->c->config->i_fork_revision < FORK_REVISION) {
             $confChange = [
                 'multiple' => [
                     'CtrlRouting' => \ForkBB\Controllers\Update::class,
