@@ -85,7 +85,7 @@ class Attachments extends Model
 
         if (true !== $status) {
             $this->c->Log->warning("Attachments Failed processing {$p1}/{$p2}/{$p3}.{$ext}", [
-                'user'    => $this->user->fLog(),
+                'user'    => $this->c->user->fLog(),
                 'error'   => $file->error(),
             ]);
 
@@ -168,7 +168,7 @@ class Attachments extends Model
 
                 } else {
                     $this->c->Log->warning("Attachments Sync Path do not match id={$id}", [
-                        'user'       => $this->user->fLog(),
+                        'user'       => $this->c->user->fLog(),
                         'pathInDB'   => $path,
                         'pathInPost' => $attInPost[$id],
                     ]);
@@ -179,7 +179,7 @@ class Attachments extends Model
 
             if (! empty($attInPost)) {
                 $this->c->Log->warning("Attachments Sync Unknown paths id={$id}", [
-                    'user'       => $this->user->fLog(),
+                    'user'       => $this->c->user->fLog(),
                     '$attInPost' => $attInPost,
                 ]);
             }
@@ -216,7 +216,11 @@ class Attachments extends Model
                     ':pid' => $post->id,
                     ':ids' => $ids,
                 ];
-                $query = "DELETE FROM {$table} WHERE pid=?i:pid AND id NOT IN (?ai:ids)";
+                $query = "DELETE FROM {$table} WHERE pid=?i:pid";
+
+                if (! empty($ids)) {
+                    $query .= ' AND id NOT IN (?ai:ids)';
+                }
 
                 $this->c->DB->exec($query, $vars);
             }
