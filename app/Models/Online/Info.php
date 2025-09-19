@@ -48,6 +48,7 @@ class Info extends Method
         $s                     = 0;
 
         foreach ($this->model->bots as $bot => $arr) {
+            $bot    = (string) $bot;
             $count  = \count($arr);
             $s     += $count;
             $info[] = [
