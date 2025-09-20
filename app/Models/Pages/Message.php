@@ -18,17 +18,17 @@ class Message extends Page
      * Флаг для отключения записи данных в таблицу ::online
      * и невыполнения метода prepare() страницы
      */
-    protected bool $noOnlinePos = false;
+    protected ?bool $noOnlinePos = false;
 
     /**
      * Подготавливает данные для шаблона
      */
-    public function message(string|array $message, bool $back = true, int $status = 400, array $headers = [], bool $noOnlinePos = false): Page
+    public function message(string|array $message, bool $back = true, int $status = 400, array $headers = [], ?bool $noOnlinePos = false): Page
     {
         $this->identifier   = 'message';
         $this->nameTpl      = 'message';
         $this->noOnlinePos  = $noOnlinePos;
-        $this->onlinePos    = $noOnlinePos ? null : 'info-' . $status;
+        $this->onlinePos    = true === $noOnlinePos ? null : 'info-' . $status;
         $this->onlineDetail = null;
         $this->httpStatus   = \max(200, $status);
         $this->titles       = 'Info';
