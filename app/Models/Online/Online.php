@@ -102,7 +102,7 @@ class Online extends Model
         $delGuests = [];
 
         if ($detail) {
-            $query = 'SELECT o.user_id, o.ident, o.logged, o.o_position, o.o_name
+            $query = 'SELECT o.user_id, o.ident, o.logged, o.o_position, o.o_name, o.o_misc
                 FROM ::online AS o';
 
         } else {
@@ -150,13 +150,23 @@ class Online extends Model
             if ($cur['user_id'] > 0) {
                 $users[$cur['user_id']] = $cur['o_name'];
 
-            // гость
-            } elseif ('' == $cur['o_name']) {
-                $guests[] = $cur['ident'];
-
-            // бот
             } else {
-                $bots[$cur['o_name']][] = $cur['ident'];
+                $name  = '' === $cur['o_name'] ? 'Unknown' : $cur['o_name'];
+
+                if (128 & $cur['o_misc']) {
+                    $bots["[Blocked] {$name}"][] = $cur['ident'];
+
+                // бот
+                } elseif (64 & $cur['o_misc']) {
+                    $bots[$name][] = $cur['ident'];
+
+                // гость
+                } elseif (48 === (48 & $cur['o_misc'])) {
+                    $guests[] = $cur['ident'];
+
+                } else {
+                    $bots["[ ? ] {$name}"][] = $cur['ident'];
+                }
             }
         }
 
@@ -229,14 +239,69 @@ class Online extends Model
      */
     protected function updateUser(string $position): void
     {
+        $user = $this->c->user;
+
+        if ($user->isGuest) {
+            $ident = $user->ip;
+            $name  = $user->botName;
+            $misc  = $old = $user->o_misc ?? 0;
+
+            if (
+                false === FORK_CLI
+                && empty(128 & $misc)
+            ) {
+                if ($user->logged > 0) {
+                    $bBot  = (bool) (64 & $misc);
+                    $count = 15 & $misc;
+
+                    if (
+                        $count > 1
+                        || ($bBot xor '' !== $name)
+                    ) {
+                        $misc = 128;
+
+                    } elseif ('' !== $name) {
+                        $misc = 64;
+
+                    } elseif (
+                        (48 !== (48 & $misc))
+                        && $this->c->curReqVisible > 0
+                    ) {
+                        if ($count < 2) {
+                            $this->c->curReqVisible = 2;
+                        }
+
+                        ++$misc;
+                    }
+
+                } else {
+                    if ('' !== $name) {
+                        $misc = 64;
+
+                    } elseif ($this->c->curReqVisible > 0) {
+                        ++$misc;
+                        $this->c->curReqVisible = 2;
+                    }
+                }
+            }
+
+        } else {
+            $ident = '';
+            $name  = $user->username;
+            $misc  = $old = 0;
+        }
+
         // Может быть делать меньше обновлений?
-        if ($this->c->user->logged > 0) {
-            $diff = \time() - $this->c->user->logged;
+        if (
+            $old === $misc
+            && $user->logged > 0
+        ) {
+            $diff = \time() - $user->logged;
 
             if (
                 $diff < 3
                 || (
-                    $position === $this->c->user->o_position
+                    $position === $user->o_position
                     && $diff < $this->c->config->i_timeout_online / 10
                 )
             ) {
@@ -244,19 +309,19 @@ class Online extends Model
             }
         }
 
-        $guest = $this->c->user->isGuest;
         $vars  = [
-            ':id'     => $this->c->user->id,
-            ':ident'  => $guest ? $this->c->user->ip : '',
+            ':id'     => $user->id,
+            ':ident'  => $ident,
             ':logged' => \time(),
             ':pos'    => $position,
-            ':name'   => $guest ? (string) $this->c->user->isBot : $this->c->user->username,
+            ':name'   => $name,
+            ':misc'   => $misc,
         ];
 
-        if ($this->c->user->logged > 0) {
-            if ($guest) {
+        if ($user->logged > 0) {
+            if ($user->isGuest) {
                 $query = 'UPDATE ::online
-                    SET logged=?i:logged, o_position=?s:pos, o_name=?s:name
+                    SET logged=?i:logged, o_position=?s:pos, o_name=?s:name, o_misc=?i:misc
                     WHERE user_id=0 AND ident=?s:ident';
 
             } else {
@@ -267,16 +332,16 @@ class Online extends Model
 
         } else {
             $query = match ($this->c->DB->getType()) {
-                'mysql' => 'INSERT IGNORE INTO ::online (user_id, ident, logged, o_position, o_name)
-                    VALUES (?i:id, ?s:ident, ?i:logged, ?s:pos, ?s:name)',
+                'mysql' => 'INSERT IGNORE INTO ::online (user_id, ident, logged, o_position, o_name, o_misc)
+                    VALUES (?i:id, ?s:ident, ?i:logged, ?s:pos, ?s:name, ?i:misc)',
 
-                'sqlite', 'pgsql' => 'INSERT INTO ::online (user_id, ident, logged, o_position, o_name)
-                    VALUES (?i:id, ?s:ident, ?i:logged, ?s:pos, ?s:name)
+                'sqlite', 'pgsql' => 'INSERT INTO ::online (user_id, ident, logged, o_position, o_name, o_misc)
+                    VALUES (?i:id, ?s:ident, ?i:logged, ?s:pos, ?s:name, ?i:misc)
                     ON CONFLICT(user_id, ident) DO NOTHING',
 
-                default => 'INSERT INTO ::online (user_id, ident, logged, o_position, o_name)
+                default => 'INSERT INTO ::online (user_id, ident, logged, o_position, o_name, o_misc)
                     SELECT tmp.*
-                    FROM (SELECT ?i:id AS f1, ?s:ident AS f2, ?i:logged AS f3, ?s:pos AS f4, ?s:name AS f5) AS tmp
+                    FROM (SELECT ?i:id AS f1, ?s:ident AS f2, ?i:logged AS f3, ?s:pos AS f4, ?s:name AS f5, ?i:misc AS f6) AS tmp
                     WHERE NOT EXISTS (
                         SELECT 1
                         FROM ::online
@@ -309,6 +374,46 @@ class Online extends Model
                 FROM ::online
                 WHERE user_id=?i:id';
         }
+
+        $this->c->DB->exec($query, $vars);
+    }
+
+    /**
+     * Прописывает флаги текущего гостя
+     */
+    public function flags(string $name): void
+    {
+        $user = $this->c->user;
+        $misc = $new = $user->o_misc ?? 0;
+
+        if (
+            ! $user->isGuest
+            || 0 === (15 & $misc)
+        ) {
+            return;
+
+        } elseif ('style' === $name) {
+            $new = 16 | $new;
+
+        } elseif (
+            'img' === $name
+            && 16 === (16 & $misc)
+        ) {
+            $new = 32 | $new;
+        }
+
+        if ($new === $misc) {
+            return;
+        }
+
+        $vars  = [
+            ':ident' => $user->ip,
+            ':misc'  => $new,
+        ];
+
+        $query = 'UPDATE ::online
+            SET o_misc=?i:misc
+            WHERE user_id=0 AND ident=?s:ident';
 
         $this->c->DB->exec($query, $vars);
     }

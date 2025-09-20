@@ -31,6 +31,7 @@ class Primary
             isset(FORK_ACC[5])
             && false === \strpos(FORK_ACC, 'text/')
             && false !== \strpos(FORK_ACC, 'image/')
+            && false === \str_ends_with(FORK_URI, '/admix/img.gif')
         ) {
             if (! $this->c->isInit('user')) {
                 $this->c->user = $this->c->users->create(['id' => 0, 'group_id' => FORK_GROUP_GUEST]);
@@ -66,6 +67,13 @@ class Primary
             $this->c->config($confChange);
 
             return null;
+        }
+
+        if (
+            $this->c->user->isGuest
+            && 128 & $this->c->user->o_misc
+        ) {
+            return $this->c->Message->message('Temporary IP blocking', false, 401, [], null);
         }
 
         if ($this->c->bans->check($this->c->user)) {

@@ -21,6 +21,8 @@ class Ban extends Page
      */
     public function ban(User $user): Page
     {
+        $this->c->curReqVisible = 0;
+
         $this->identifier = 'ban';
         $this->httpStatus = 403;
         $this->nameTpl    = 'ban';

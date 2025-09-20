@@ -513,3 +513,6 @@ msgstr "待审核的新主题和帖子队列"
 
 msgid "Pre-moderation (%s)"
 msgstr "<span class="f-spantxtpm">审核 </span><b>(%s)</b>"
+
+msgid "Temporary IP blocking"
+msgstr "Your IP has been temporarily blocked."

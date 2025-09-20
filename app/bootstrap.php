@@ -46,9 +46,10 @@ if (
     $c->BASE_URL = \str_replace('https://', 'http://', $c->BASE_URL);
 }
 
-$c->PUBLIC_URL = $c->BASE_URL . $forkPublicPrefix;
-$c->dispatcher = new EventDispatcher($c);
-$controllers   = ['Primary', 'Routing'];
+$c->PUBLIC_URL    = $c->BASE_URL . $forkPublicPrefix;
+$c->dispatcher    = new EventDispatcher($c);
+$c->curReqVisible = 1;
+$controllers      = ['Primary', 'Routing'];
 
 foreach ($controllers as $controller) {
     $page = $c->{$controller};

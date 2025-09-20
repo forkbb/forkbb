@@ -81,10 +81,11 @@ class Statistics extends Admin
      */
     public function infoCSS(): Page
     {
-        $this->nameTpl   = 'layouts/plain';
-        $this->plainText = $this->c->Cache->get(self::CACHE_KEY, '');
-        $this->onlinePos = null;
-        $this->c->DEBUG  = 0;
+        $this->nameTpl      = 'layouts/plain';
+        $this->plainText    = $this->c->Cache->get(self::CACHE_KEY, '');
+        $this->onlinePos    = null;
+        $this->onlineDetail = null;
+        $this->c->DEBUG     = 0;
 
         $this->header('Content-type', 'text/css; charset=utf-8');
 

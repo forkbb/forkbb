@@ -25,7 +25,7 @@ class Current extends Action
         $ip   = \filter_var(FORK_ADDR, \FILTER_VALIDATE_IP) ?: '0.0.0.0';
         $ua   = \trim($this->c->Secury->replInvalidChars(FORK_UA));
         $id   = (int) $this->c->Cookie->uId;
-        $bot  = $id > 0 ? false : $this->isBot($ua);
+        $bot  = $id > 0 ? false : $this->botName($ua);
         $user = $this->load($id, $ip);
 
         if (! $user->isGuest) {
@@ -47,12 +47,14 @@ class Current extends Action
         $this->c->Cookie->setUser($user);
 
         if ($user->isGuest) {
-            $user->__isBot    = false === $bot ? $this->isBot($ua) : $bot;
+            $user->__botName  = false === $bot ? $this->botName($ua) : $bot;
+            $user->__isBot    = '' !== $user->botName || 48 !== (48 & $user->o_misc);
             $user->__timezone = $this->c->config->o_default_timezone;
             $user->__language = 1 === $this->c->config->b_default_lang_auto ? $this->getLangFromHTTP() : $this->c->config->o_default_lang;
             $user->__locale   = $user->language;
 
         } else {
+            $user->__botName  = '';
             $user->__isBot    = null;
 
             // Special case: We've timed out, but no other user has browsed the forums since we timed out
@@ -93,7 +95,7 @@ class Current extends Action
             $vars = [
                 ':ip' => $ip,
             ];
-            $query = 'SELECT o.logged, o.last_post, o.last_search, o.o_position
+            $query = 'SELECT o.logged, o.last_post, o.last_search, o.o_position, o.o_misc
                 FROM ::online AS o
                 WHERE o.user_id=0 AND o.ident=?s:ip';
 
@@ -106,7 +108,7 @@ class Current extends Action
         }
     }
 
-    protected array  $brStatus      = [null, 'Unknown', 'Unknown', 'Unknown'];
+    protected array  $brStatus      = ['', 'Unknown', 'Unknown', 'Unknown'];
     protected string $defRegex      = '%(?:^|[ ()])\b([\w .-]*{}[\w/.!-]*)%i';
     protected array  $botSearchList = [
         'bot'        => ['%(?<!cu)bot(?!tle)%'],
@@ -116,50 +118,17 @@ class Current extends Action
         'wordpress'  => ['', '%(wordpress)%i'],
         'compatible' => ['%compatible(?!;\ msie)%', '%compatible[;) (]+([\w ./!-]+)%i']
     ];
-    protected array $scup           = ['"Android"' => 'Android', '"Chrome OS"' => 'CrOS', '"Chromium OS"' => 'CrOS', '"iOS"' => 'like Mac OS X', '"Linux"' => 'Linux', '"macOS"' => 'Macintosh', '"Windows"' => 'Windows', '"Unknown"' => ''];
 
     /**
-     * Определяет бота
-     * Если бот, то возвращает вычисленное имя
+     * Пытается определить бота и вернуть имя или пустую строку
      */
-    protected function isBot(string $agent): ?string
+    protected function botName(string $agent): string
     {
-        $status = (int) (
-            empty(FORK_ENC)
-            || empty(FORK_LNG)
-            || (
-                ':' === $this->c->BASE_URL[5]
-                && (
-                    empty(FORK_SFD)
-                    || empty(FORK_SFM)
-                    || empty(FORK_SFS)
-                )
-            )
-            || (
-                empty(FORK_ACC)
-                && (
-                    empty(FORK_SFD)
-                    || 'empty' !== FORK_SFD
-                )
-            )
-            || (
-                ! empty(FORK_REF)
-                && ! \str_starts_with(FORK_REF, 'https://')
-                && ! \str_starts_with(FORK_REF, 'http://')
-            )
-            || (
-                null !== FORK_SCUP
-                && (
-                    ! isset($this->scup[FORK_SCUP])
-                    || false === \strpos(FORK_UA, $this->scup[FORK_SCUP])
-                )
-            )
-        );
-
         if ('' === $agent) {
-            return $this->brStatus[$status];
+            return $this->brStatus[1];
         }
 
+        $status = 0;
         $agentL = \strtolower($agent);
 
         if (

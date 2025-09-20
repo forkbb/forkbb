@@ -513,3 +513,6 @@ msgstr "Queue of new topics and posts for moderation"
 
 msgid "Pre-moderation (%s)"
 msgstr "<span class="f-spantxtpm">Pre-moderation </span><b>(%s)</b>"
+
+msgid "Temporary IP blocking"
+msgstr "Your IP has been temporarily blocked."

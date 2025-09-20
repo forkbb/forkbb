@@ -515,3 +515,6 @@ msgstr "Очередь новых тем и сообщений на модера
 
 msgid "Pre-moderation (%s)"
 msgstr "<span class="f-spantxtpm">Премод. </span><b>(%s)</b>"
+
+msgid "Temporary IP blocking"
+msgstr "Ваш IP временно заблокирован."

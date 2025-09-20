@@ -20,6 +20,8 @@ class Misc extends Page
 {
     public function opensearch(): Page
     {
+        $this->c->curReqVisible = 0;
+
         $this->nameTpl      = "opensearch";
         $this->onlinePos    = null;
         $this->onlineDetail = null;

@@ -17,6 +17,8 @@ class Maintenance extends Page
 {
     public function __construct(Container $container)
     {
+        $container->curReqVisible = 0;
+
         $container->Lang->load('common', $container->config->o_default_lang);
 
         parent::__construct($container);

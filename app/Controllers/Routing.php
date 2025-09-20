@@ -82,6 +82,20 @@ class Routing
                 );
             }
 
+            if (48 > (240 & $user->o_misc)) {
+                $r->add(
+                    $r::GET,
+                    '/admix/style.css',
+                    'Admix:style',
+                    'AdmixStyle'
+                );
+                $r->add(
+                    $r::GET,
+                    '/admix/img.gif',
+                    'Admix:img'
+                );
+            }
+
         } else {
             // выход
             $r->add(

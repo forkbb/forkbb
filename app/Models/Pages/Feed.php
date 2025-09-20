@@ -42,7 +42,8 @@ class Feed extends Page
      */
     public function view(array $args, string $method): Page
     {
-        $this->c->DEBUG = 0;
+        $this->c->DEBUG         = 0;
+        $this->c->curReqVisible = 0;
 
         if ($this->c->config->i_feed_type < 1) {
             return $this->exit('Bad request');

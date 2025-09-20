@@ -20,6 +20,8 @@ class Redirect extends Page
      */
     public function toIndex(): Page
     {
+        $this->c->curReqVisible = 0;
+
         return $this->page('Index'); //->message('Redirecting to index');
     }
 
@@ -48,6 +50,8 @@ class Redirect extends Page
      */
     public function message(string|array $message, string $status = FORK_MESS_INFO, int $timeout = 0): Page
     {
+        $this->c->curReqVisible = 0;
+
         // переадресация без вывода сообщения
         if (
             $timeout < 1

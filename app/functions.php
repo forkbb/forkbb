@@ -52,11 +52,7 @@ define('FORK_ACC', $_SERVER['HTTP_ACCEPT'] ?? '');
 define('FORK_ENC', $_SERVER['HTTP_ACCEPT_ENCODING'] ?? '');
 define('FORK_LNG', $_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '');
 define('FORK_REF', $_SERVER['HTTP_REFERER'] ?? '');
-define('FORK_SFD', $_SERVER['HTTP_SEC_FETCH_DEST'] ?? '');
-define('FORK_SFM', $_SERVER['HTTP_SEC_FETCH_MODE'] ?? '');
-define('FORK_SFS', $_SERVER['HTTP_SEC_FETCH_SITE'] ?? '');
 define('FORK_UA', $_SERVER['HTTP_USER_AGENT'] ?? '');
-define('FORK_SCUP', $_SERVER['HTTP_SEC_CH_UA_PLATFORM'] ?? null);
 
 /**
  * Инициализирует другие функции (передача контейнера)

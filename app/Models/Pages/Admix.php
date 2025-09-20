@@ -24,18 +24,53 @@ class Admix extends Page
     ];
 
     /**
-     * Возвращает ответ в виде json
+     * Выход
+     */
+    protected function exitPoint(string $cType): Page
+    {
+        $this->c->curReqVisible = 0;
+        $this->c->DEBUG         = 0;
+        $this->nameTpl          = 'layouts/plain_raw';
+        $this->onlinePos        = null;
+        $this->onlineDetail     = null;
+
+        $this->header('Content-type', $cType);
+
+        return $this;
+    }
+
+    /**
+     * Возвращает json
      */
     protected function returnJson(array $data): Page
     {
-        $this->nameTpl      = "layouts/plain_raw";
-        $this->onlinePos    = null;
-        $this->onlineDetail = null;
-        $this->plainRaw     = \json_encode($data, FORK_JSON_ENCODE);
+        $this->plainRaw = \json_encode($data, FORK_JSON_ENCODE);
 
-        $this->header('Content-type', 'application/json; charset=utf-8', true);
+        return $this->exitPoint('application/json; charset=utf-8');
+    }
 
-        return $this;
+    /**
+     * Возвращает css
+     */
+    public function style(): Page
+    {
+        $this->c->Online->flags('style');
+
+        $this->plainRaw = '#fork::after{position:absolute;width:0;height:0;overflow:hidden;z-index:-1;content:url(img.gif);}';
+
+        return $this->exitPoint('text/css; charset=utf-8');
+    }
+
+    /**
+     * Возвращает img
+     */
+    public function img(): Page
+    {
+        $this->c->Online->flags('img');
+
+        $this->plainRaw = "\x47\x49\x46\x38\x37\x61\x1\x0\x1\x0\x80\x0\x0\xfc\x6a\x6c\x0\x0\x0\x2c\x0\x0\x0\x0\x1\x0\x1\x0\x0\x2\x2\x44\x1\x0\x3b";
+
+        return $this->exitPoint('image/gif');
     }
 
     /**
@@ -43,6 +78,8 @@ class Admix extends Page
      */
     public function admix(array $args): Page
     {
+        $this->c->curReqVisible = 0;
+
         if (empty($this->actions[$args['action']])) {
             return $this->returnJson(['error' => 'Bad action']);
 

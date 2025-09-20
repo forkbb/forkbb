@@ -110,6 +110,14 @@ abstract class Page extends Model
             $this->c->users->update($this->user);
         }
 
+        if (2 === $this->c->curReqVisible) {
+            $this->pageHeader('test', 'link', 10001, [
+                'rel'  => 'stylesheet',
+                'type' => 'text/css',
+                'href' => $this->c->Router->link('AdmixStyle'),
+            ]);
+        }
+
         $this->pageHeader('commonJS', 'script', 10000, [
             'src' => $this->publicLink('/js/common.js'),
         ]);
@@ -600,6 +608,7 @@ abstract class Page extends Model
         $list = [
             302 => '302 Moved Temporarily',
             400 => '400 Bad Request',
+            401 => '401 Unauthorized',
             403 => '403 Forbidden',
             404 => '404 Not Found',
             405 => '405 Method Not Allowed',
