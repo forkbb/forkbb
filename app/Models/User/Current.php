@@ -22,26 +22,25 @@ class Current extends Action
      */
     public function current(): User
     {
-        $ip   = \filter_var(FORK_ADDR, \FILTER_VALIDATE_IP) ?: '0.0.0.0';
         $ua   = \trim($this->c->Secury->replInvalidChars(FORK_UA));
         $id   = (int) $this->c->Cookie->uId;
         $bot  = $id > 0 ? false : $this->botName($ua);
-        $user = $this->load($id, $ip);
+        $user = $this->load($id, FORK_ADDR);
 
         if (! $user->isGuest) {
             if (! $this->c->Cookie->verifyUser($user)) {
-                $user = $this->load(0, $ip);
+                $user = $this->load(0, FORK_ADDR);
 
             } elseif ($user->ip_check_type > 0) {
-                $hexIp = \bin2hex(\inet_pton($ip));
+                $hexIp = \bin2hex(\inet_pton(FORK_ADDR));
 
                 if (false === \strpos("|{$user->login_ip_cache}|", "|{$hexIp}|")) {
-                    $user = $this->load(0, $ip);
+                    $user = $this->load(0, FORK_ADDR);
                 }
             }
         }
 
-        $user->__ip        = $ip;
+        $user->__ip        = FORK_ADDR;
         $user->__userAgent = $ua;
 
         $this->c->Cookie->setUser($user);

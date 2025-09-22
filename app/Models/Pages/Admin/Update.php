@@ -1278,10 +1278,9 @@ class Update extends Admin
         $this->c->DB->addField('::groups', 'g_use_about_me', 'TINYINT(1)', false, 1);
 
         $now     = \time();
-        $ip      = \filter_var(FORK_ADDR, \FILTER_VALIDATE_IP) ?: '0.0.0.0';
         $topicId = 1;
 
-        $this->c->DB->exec('INSERT INTO ::posts (poster, poster_id, poster_ip, message, posted, topic_id) VALUES(?s, ?i, ?s, ?s, ?i, ?i)', ['ForkBB', 0, $ip, 'Start', $now, $topicId]);
+        $this->c->DB->exec('INSERT INTO ::posts (poster, poster_id, poster_ip, message, posted, topic_id) VALUES(?s, ?i, ?s, ?s, ?i, ?i)', ['ForkBB', 0, FORK_ADDR, 'Start', $now, $topicId]);
 
         $postId = (int) $this->c->DB->lastInsertId();
 

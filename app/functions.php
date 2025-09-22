@@ -45,7 +45,7 @@ define('FORK_GEN_FEM', 2);
 define('FORK_JSON_ENCODE', \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR);
 define('FORK_SFID', 2147483647);
 define('FORK_CTYPE', $_SERVER['CONTENT_TYPE'] ?? '');
-define('FORK_ADDR', $_SERVER['REMOTE_ADDR'] ?? '');
+define('FORK_ADDR', \filter_var($_SERVER['REMOTE_ADDR'] ?? '', \FILTER_VALIDATE_IP) ?: '0.0.0.0');
 define('FORK_RMETHOD', $_SERVER['REQUEST_METHOD'] ?? '');
 define('FORK_URI', $_SERVER['REQUEST_URI'] ?? '');
 define('FORK_ACC', $_SERVER['HTTP_ACCEPT'] ?? '');
