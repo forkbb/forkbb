@@ -40,7 +40,11 @@
 			var opts = this.opts;
 
 			// Enable for BBCode only
-			if (opts.format && opts.format !== 'bbcode') {
+			if (
+				(opts.format && opts.format !== 'bbcode')
+				|| !sceditor.command.get('orderedlist')
+				|| !sceditor.command.get('bulletlist')
+			) {
 				return;
 			}
 

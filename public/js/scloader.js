@@ -19,6 +19,8 @@ ForkBB.editor = (function (doc, win) {
         dataName = "data-SCEditorConfig",
         emotName = "data-smiliesEnabled",
         linkName = "data-linkEnabled",
+        blackName = "data-blackList",
+        whiteName = "data-whiteList",
         selector = "textarea[" + dataName + "]",
         textarea,
         elForScroll,
@@ -35,6 +37,41 @@ ForkBB.editor = (function (doc, win) {
                 "bulletlist,orderedlist,indent,outdent|" +
                 "table|code,mono,quote,hide|horizontalrule,image,email,link,unlink|" +
                 "emoticon,date,time|maximize,source"
+        },
+        list = {
+            bold: "b",
+            italic: "i",
+            underline: "u",
+            strike: "s",
+            subscript: "sub",
+            superscript: "sup",
+            left: "left",
+            center: "center",
+            right: "right",
+            justify: "justify",
+            h1: "h1",
+            h2: "h2",
+            h3: "h3",
+            h4: "h4",
+            h5: "h5",
+            h6: "h6",
+            font: "font",
+            size: "size",
+            color: "color",
+            background: "background",
+            bulletlist: "list",
+            orderedlist: "list",
+            table: "table",
+            code: "code",
+            mono: "mono",
+            quote: "quote",
+            hide: "hide",
+            spoiler: "spoiler",
+            horizontalrule: "hr",
+            image: "img",
+            email: "email",
+            link: "url",
+            hashtag: "hashtag"
         };
 
     function getHTMLOfSelection() {
@@ -87,7 +124,7 @@ ForkBB.editor = (function (doc, win) {
 
     function initEditor()
     {
-        var conf, smiliesEnabled, linkEnabled;
+        var conf, smiliesEnabled, linkEnabled, blackList, whiteList;
 
         if (
             !Object.assign
@@ -101,21 +138,38 @@ ForkBB.editor = (function (doc, win) {
         options = Object.assign(options, conf);
         smiliesEnabled = "1" == textarea.getAttribute(emotName);
         linkEnabled = "1" == textarea.getAttribute(linkName);
+        blackList = "|" + textarea.getAttribute(blackName) + "|";
+        whiteList = "|" + textarea.getAttribute(whiteName) + "|";
 
         var forDelete = ["youtube", "rtl", "ltr"];
 
         if (!smiliesEnabled) {
-            forDelete = forDelete.concat("emoticon");
+            forDelete.push("emoticon");
         }
         if (!linkEnabled) {
-            forDelete = forDelete.concat("url", "link", "image", "img", "email");
+            forDelete.push("url", "link", "image", "img", "email", "unlink");
+        }
+
+        for (var key in list) {
+            if (
+                ("||" !== whiteList && -1 === whiteList.indexOf("|" + list[key] + "|"))
+                || ("||" !== blackList && -1 !== blackList.indexOf("|" + list[key] + "|"))
+            ) {
+                forDelete.push(key, list[key]);
+
+                if ("list" === list[key]) {
+                    forDelete.push("*", "ul", "ol", "li");
+                } else if ("table" === list[key]) {
+                    forDelete.push("tr", "th" , "td", "caption", "thead", "tbody", "tfoot");;
+                }
+            }
         }
 
         for (var bbcodeForDelete of forDelete) {
             sceditor.command.remove(bbcodeForDelete);
             sceditor.formats.bbcode.remove(bbcodeForDelete);
 
-            options.toolbar = options.toolbar.replace(new RegExp("\\b" + bbcodeForDelete + "\\b", "gi"), "");
+            options.toolbar = options.toolbar.replace(new RegExp("\\b" + bbcodeForDelete.replace("*", "\\*") + "\\b", "gi"), "");
         }
 
         options.toolbar = options.toolbar.replace(/[^\w]*\|[^\w]*/g, "|").replace(/,{2,}/g, ",");

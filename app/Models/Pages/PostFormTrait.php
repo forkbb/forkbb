@@ -422,6 +422,8 @@ trait PostFormTrait
                         'SCEditorConfig' => $scConfig,
                         'smiliesEnabled' => $smiliesEnabled,
                         'linkEnabled'    => $this->user->g_post_links,
+                        'blackList'      => \implode('|', $this->c->config->a_bb_black_mes), // ???? a_bb_black_sig
+                        'whiteList'      => \implode('|', $this->c->config->a_bb_white_mes), // ???? a_bb_white_sig'
                     ];
 
                     $this->pageHeader('sceditor', 'script', 9600, [
