@@ -240,4 +240,15 @@ class Parser extends Parserus
 
         return -1;
     }
+
+    /**
+     * Очищает HTML
+     */
+    public function purifyHTML(string $html): string
+    {
+        $errors = [];
+        $result = $this->c->HTMLCleaner->setConfig()->parse($html, $errors);
+
+        return empty($errors) ? $result : 'Bad HTML';
+    }
 }
