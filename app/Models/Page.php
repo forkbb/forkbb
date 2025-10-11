@@ -606,7 +606,11 @@ abstract class Page extends Model
     protected function httpStatus(): Page
     {
         $list = [
+            301 => '301 Moved Permanently',
             302 => '302 Moved Temporarily',
+            303 => '303 See Other',
+            307 => '307 Temporary Redirect',
+            308 => '308 Permanent Redirect',
             400 => '400 Bad Request',
             401 => '401 Unauthorized',
             403 => '403 Forbidden',
