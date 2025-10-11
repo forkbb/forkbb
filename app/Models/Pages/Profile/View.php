@@ -28,6 +28,9 @@ class View extends Profile
     {
         if (false === $this->initProfile($args['id'])) {
             return $this->c->Message->message('Bad request');
+
+        } elseif ($this->c->Func->friendly($this->curUser->username) !== $args['name']) {
+            return $this->c->Redirect->url($this->curUser->link, 301);
         }
 
         $this->identifier = ['profile', 'profile-view'];

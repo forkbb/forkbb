@@ -29,10 +29,9 @@ class Forum extends Page
 
         if (! $forum instanceof ForumModel) {
             return $this->c->Message->message('Bad request');
-        }
 
         // редирект, если раздел это ссылка
-        if ($forum->redirect_url) {
+        } elseif ($forum->redirect_url) {
             return $this->c->Redirect->url($forum->redirect_url);
         }
 
@@ -42,9 +41,6 @@ class Forum extends Page
             return $this->c->Message->message('Not Found', true, 404);
         }
 
-        $this->identifier = 'forum';
-        $this->nameTpl    = 'forum';
-        $this->onlinePos  = 'forum-' . $args['id'];
         $this->canonical  = $this->c->Router->link(
             'Forum',
             [
@@ -53,6 +49,14 @@ class Forum extends Page
                 'page' => $forum->page,
             ]
         );
+
+        if ($forum->friendly !== $args['name']) {
+            return $this->c->Redirect->url($this->canonical, 301);
+        }
+
+        $this->identifier = 'forum';
+        $this->nameTpl    = 'forum';
+        $this->onlinePos  = 'forum-' . $args['id'];
         $this->model      = $forum;
         $this->topics     = $forum->pageData();
         $this->crumbs     = $this->crumbs($forum);

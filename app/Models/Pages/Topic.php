@@ -99,13 +99,11 @@ class Topic extends Page
 
         if (! $topic instanceof TopicModel) {
             return $this->c->Message->message('Bad request');
-        }
 
-        if ($topic->moved_to) {
+        } elseif ($topic->moved_to) {
             return $this->c->Redirect->url($topic->link);
-        }
 
-        if (! $topic->last_post_id) {
+        } elseif (! $topic->last_post_id) {
             return $this->c->Message->message('Bad request');
         }
 
@@ -126,6 +124,28 @@ class Topic extends Page
             return $this->c->Message->message('Not Found', true, 404);
         }
 
+        $this->canonical    = $this->c->Router->link(
+            'Topic',
+            [
+                'id'   => $topic->id,
+                'name' => $this->c->Func->friendly($topic->name),
+                'page' => $topic->page,
+            ]
+        );
+
+        if (
+            'topic' === $type
+            && $this->c->Func->friendly($topic->name) !== $args['name']
+        ) {
+            return $this->c->Redirect->url($this->canonical, 301);
+
+        } elseif (
+            'post' === $type
+            && $this->user->isGuest
+        ) {
+            return $this->c->Redirect->url($this->canonical . "#p{$args['id']}", 301); // ????
+        }
+
         $this->posts        = $topic->pageData();
 
         if (empty($this->posts)) {             // ???? зацикливание?
@@ -144,14 +164,6 @@ class Topic extends Page
         $this->nameTpl      = 'topic';
         $this->onlinePos    = 'topic-' . $topic->id;
         $this->onlineDetail = true;
-        $this->canonical    = $this->c->Router->link(
-            'Topic',
-            [
-                'id'   => $topic->id,
-                'name' => $this->c->Func->friendly($topic->name),
-                'page' => $topic->page,
-            ]
-        );
         $this->model        = $topic;
         $this->crumbs       = $this->crumbs($topic);
         $this->online       = $this->c->Online->calc($this)->info();
