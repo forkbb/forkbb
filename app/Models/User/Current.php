@@ -124,7 +124,10 @@ class Current extends Action
     protected function botName(string $agent): string
     {
         if ('' === $agent) {
-            return $this->brStatus[1];
+            return $this->brStatus[0];
+
+        } elseif (\str_ends_with($agent, ',gzip(gfe)')) {
+            return 'Google Translate';
         }
 
         $status = 0;
