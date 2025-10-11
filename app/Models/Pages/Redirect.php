@@ -28,9 +28,10 @@ class Redirect extends Page
     /**
      * Задает адрес перехода
      */
-    public function page(string $marker, array $args = []): Page
+    public function page(string $marker, array $args = [], int $httpStatus = 302): Page
     {
-        $this->link = $this->c->Router->link($marker, $args);
+        $this->link          = $this->c->Router->link($marker, $args);
+        $this->curHttpStatus = $httpStatus;
 
         return $this;
     }
@@ -38,9 +39,10 @@ class Redirect extends Page
     /**
      * Задает ссылку для перехода
      */
-    public function url(string $url): Page
+    public function url(string $url, int $httpStatus = 302): Page
     {
-        $this->link = $url;
+        $this->link          = $url;
+        $this->curHttpStatus = $httpStatus;
 
         return $this;
     }
@@ -79,7 +81,7 @@ class Redirect extends Page
             $this->timeout < 1
             || null === $this->nameTpl
         ) {
-            $this->httpStatus = 302;
+            $this->httpStatus = $this->curHttpStatus ?? 302;
             $this->nameTpl    = null;
 
             $this->header('Location', $this->link);
