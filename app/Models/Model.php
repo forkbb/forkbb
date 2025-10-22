@@ -137,7 +137,7 @@ class Model
             return $this->zAttrsCalc[$name] = $this->c->censorship->censor($this->zAttrs[$root]);
         }
 
-        $x = \ord($name);
+        $x = \ord($name[0]);
 
         if ($x > 90 || $x < 65) {
             return null;
