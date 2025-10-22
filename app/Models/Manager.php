@@ -47,7 +47,7 @@ class Manager
      */
     public function __get(string $name): mixed
     {
-        $x = \ord($name);
+        $x = \ord($name[0]);
 
         if ($x > 90 || $x < 65) {
             return 'repository' === $name ? $this->repository : null;
