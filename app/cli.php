@@ -138,7 +138,7 @@ switch ($command) {
         $c->Log->debug('CLI test done', [
             'PHP'     => \PHP_VERSION,
             'SAPI'    => \PHP_SAPI,
-            'time'    => \number_format(\microtime(true) - $c->START, 3, '.', ''),
+            'time'    => \number_format(\microtime(true) - FORK_START, 3, '.', ''),
             'user'    => $c->user->fLog(),
             'headers' => false,
         ]);
@@ -171,7 +171,7 @@ switch ($command) {
             )
         ) {
             $c->Log->debug('CLI send_mail. Tasks completed: ' . (false === $result ? 'false' : $result), [
-                'time'    => \number_format(\microtime(true) - $c->START, 3, '.', ''),
+                'time'    => \number_format(\microtime(true) - FORK_START, 3, '.', ''),
                 'headers' => false,
             ]);
         }
