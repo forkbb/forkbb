@@ -291,7 +291,7 @@ abstract class Driver extends Model
             $this->respHttpCode    = \curl_getinfo($ch, \CURLINFO_RESPONSE_CODE);
         }
 
-        \curl_close($ch);
+//        \curl_close($ch);
 
         return $result;
     }

@@ -1323,7 +1323,7 @@ class Files
             $this->error = 'cURL error: ' . \curl_error($ch);
         }
 
-        \curl_close($ch);
+//        \curl_close($ch);
 
         return false !== $result;
     }
