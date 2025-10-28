@@ -30,10 +30,8 @@ class Event extends stdClass
         return $this->propagationStopped;
     }
 
-    public function stopPropagation(): bool
+    public function stopPropagation(): void
     {
         $this->propagationStopped = true;
-
-        return true;
     }
 }
