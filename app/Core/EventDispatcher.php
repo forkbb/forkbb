@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Core;
 
 use ForkBB\Core\Container;
+use ForkBB\Core\Event;
 
 class EventDispatcher
 {
@@ -46,5 +47,9 @@ class EventDispatcher
         }
 
         return $this;
+    }
+
+    public function dispatch(Event $event): void
+    {
     }
 }
