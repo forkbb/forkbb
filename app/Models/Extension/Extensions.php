@@ -645,7 +645,7 @@ class Extensions extends Manager
             }
 
             if (! empty($cur['config'])) {
-                $config = \array_merge($config, $cur['config']);
+                $config = \array_merge_recursive($config, $cur['config']);
             }
 
             if (! empty($cur['events'])) {
