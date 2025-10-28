@@ -168,6 +168,7 @@ class Extensions extends Manager
                 'extra.autoload.*.prefix'    => 'required|string',
                 'extra.autoload.*.path'      => 'required|string',
                 'extra.config'               => 'array',
+                'extra.actions'              => 'string',
             ])->addAliases([
             ])->addArguments([
             ])->addMessages([
@@ -228,6 +229,27 @@ class Extensions extends Manager
     }
 
     /**
+     * Выполняет метод $action для расширения $ext если в настройках этого расширения указан extra.actions
+     */
+    protected function extraActions(Extension $ext, string $action): bool
+    {
+        $data = $ext->prepareData();
+
+        if (empty($data['actions'])) {
+            return true;
+        }
+
+        foreach ($data['autoload'] as $prefix => $paths) {
+            $this->c->autoloader->addPsr4($prefix, $paths);
+        }
+
+        $class   = $data['actions'];
+        $actions = new $class($this->c);
+
+        return $actions->{$action}();
+    }
+
+    /**
      * Устанавливает расширение
      */
     public function install(Extension $ext): bool
@@ -272,6 +294,12 @@ class Extensions extends Manager
             return false;
         }
 
+        if (true !== $this->extraActions($ext, 'install')) {
+            $this->error = 'The install method from extra.actions failed';
+
+            return false;
+        }
+
         $this->updateIndividual();
 
         $this->c->DB->exec($query, $vars);
@@ -286,6 +314,14 @@ class Extensions extends Manager
     {
         if (true !== $ext->canUninstall) {
             $this->error = 'Invalid action';
+
+            return false;
+        }
+
+        $result = $ext->prepare();
+
+        if (true !== $result) {
+            $this->error = $result;
 
             return false;
         }
@@ -310,6 +346,12 @@ class Extensions extends Manager
 
         if (true !== $this->updateCommon($ext)) {
             $this->error = 'An error occurred in updateCommon';
+
+            return false;
+        }
+
+        if (true !== $this->extraActions($ext, 'uninstall')) {
+            $this->error = 'The uninstall method from extra.actions failed';
 
             return false;
         }
@@ -388,6 +430,12 @@ class Extensions extends Manager
             return false;
         }
 
+        if (true !== $this->extraActions($ext, 'updown')) {
+            $this->error = 'The updown method from extra.actions failed';
+
+            return false;
+        }
+
         if ($oldStatus) {
             if (true !== $this->setSymlinks($ext)) {
                 $this->error = 'Error creating symbolic link';
@@ -414,6 +462,14 @@ class Extensions extends Manager
             return false;
         }
 
+        $result = $ext->prepare();
+
+        if (true !== $result) {
+            $this->error = $result;
+
+            return false;
+        }
+
         $vars = [
             ':name' => $ext->name,
         ];
@@ -429,6 +485,12 @@ class Extensions extends Manager
 
         if (true !== $this->setSymlinks($ext)) {
             $this->error = 'Error creating symbolic link';
+
+            return false;
+        }
+
+        if (true !== $this->extraActions($ext, 'enable')) {
+            $this->error = 'The enable method from extra.actions failed';
 
             return false;
         }
@@ -451,6 +513,14 @@ class Extensions extends Manager
             return false;
         }
 
+        $result = $ext->prepare();
+
+        if (true !== $result) {
+            $this->error = $result;
+
+            return false;
+        }
+
         $vars = [
             ':name' => $ext->name,
         ];
@@ -463,6 +533,12 @@ class Extensions extends Manager
             'dbData'   => $ext->dbData,
             'fileData' => $ext->fileData,
         ]);
+
+        if (true !== $this->extraActions($ext, 'disable')) {
+            $this->error = 'The disable method from extra.actions failed';
+
+            return false;
+        }
 
         $this->removeSymlinks($ext);
         $this->updateIndividual();
