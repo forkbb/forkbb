@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Controllers;
 
 use ForkBB\Core\Container;
+use ForkBB\Core\Event;
 use ForkBB\Models\Page;
 
 class Routing
@@ -950,15 +951,21 @@ class Routing
             $uri = \substr($uri, 0, $pos);
         }
 
-        $uri    = \rawurldecode(\strtr($uri, '+', ' '));
-        $route  = $r->route(FORK_RMETHOD, $uri);
+        $event         = new Event('Controllers\Routing:routing:beforeRoute');
+        $event->router = $r;
+        $event->uri    = \rawurldecode(\strtr($uri, '+', ' '));
+        $event->method = FORK_RMETHOD;
+
+        $this->c->dispatcher->dispatch($event);
+
+        $route  = $r->route($event->method, $event->uri);
         $page   = null;
 
         switch ($route[0]) {
             case $r::OK:
                 // ... 200 OK
                 list($page, $action) = \explode(':', $route[1], 2);
-                $page = $this->c->$page->$action($route[2], FORK_RMETHOD);
+                $page = $this->c->$page->$action($route[2], $event->method);
 
                 if (1 === $this->c->config->b_censoring) {
                     $this->c->censorship; // предзагрузка цензуры

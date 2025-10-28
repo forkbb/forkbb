@@ -12,6 +12,7 @@ namespace ForkBB;
 
 use ForkBB\Core\Container;
 use ForkBB\Core\ErrorHandler;
+use ForkBB\Core\Event;
 use ForkBB\Core\EventDispatcher;
 use ForkBB\Models\Page;
 use RuntimeException;
@@ -46,12 +47,15 @@ if (
     $c->BASE_URL = \str_replace('https://', 'http://', $c->BASE_URL);
 }
 
-$c->PUBLIC_URL    = $c->BASE_URL . $forkPublicPrefix;
-$c->dispatcher    = new EventDispatcher($c);
-$c->curReqVisible = 1;
-$controllers      = ['Primary', 'Routing'];
+$c->PUBLIC_URL      = $c->BASE_URL . $forkPublicPrefix;
+$c->curReqVisible   = 1;
+$c->dispatcher      = new EventDispatcher($c);
+$event              = new Event('bootstrap:start');
+$event->controllers = ['Primary', 'Routing'];
 
-foreach ($controllers as $controller) {
+$c->dispatcher->dispatch($event);
+
+foreach ($event->controllers as $controller) {
     $page = $c->{$controller};
 
     if ($page instanceof Page) {

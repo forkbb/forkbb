@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models;
 
 use ForkBB\Core\Container;
+use ForkBB\Core\Event;
 use ForkBB\Models\Model;
 use function \ForkBB\__;
 
@@ -128,6 +129,10 @@ abstract class Page extends Model
             ]);
         }
 
+        $event       = new Event('Models\Page:prepare:after');
+        $event->page = $this;
+
+        $this->c->dispatcher->dispatch($event);
         $this->boardNavigation();
         $this->iswevMessages();
     }
@@ -328,8 +333,14 @@ abstract class Page extends Model
             }
         }
 
-        $this->fNavigation     = $navGen;
-        $this->fNavigationUser = $navUser;
+        $event          = new Event('Models\Page:boardNavigation:after');
+        $event->navGen  = $navGen;
+        $event->navUser = $navUser;
+
+        $this->c->dispatcher->dispatch($event);
+
+        $this->fNavigation     = $event->navGen;
+        $this->fNavigationUser = $event->navUser;
     }
 
     /**
@@ -721,7 +732,14 @@ abstract class Page extends Model
         // главная страница
         $result[] = [$this->c->Router->link('Index'), 'Index', null, 'index', $active, $ext];
 
-        return \array_reverse($result);
+        $event         = new Event('Models\Page:crumbs:after');
+        $event->list   = $result;
+        $event->active = $active;
+        $event->ext    = $ext;
+
+        $this->c->dispatcher->dispatch($event);
+
+        return \array_reverse($event->list);
     }
 
     /**
