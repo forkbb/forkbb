@@ -243,6 +243,10 @@ class Extension extends Model
             $this->prepareData['actions'] = $this->fileData['extra']['actions'];
         }
 
+        if ($this->fileData['extra']['events']) {
+            $this->prepareData['events'] = $this->fileData['extra']['events'];
+        }
+
         return true;
     }
 

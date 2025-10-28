@@ -41,6 +41,7 @@ class Extensions extends Manager
     protected string $preFile;
     protected string $autoFile;
     protected string $configFile;
+    protected string $eventsFile;
 
     /**
      * Возвращает action (или свойство) по его имени
@@ -59,6 +60,7 @@ class Extensions extends Manager
         $this->preFile    = $this->c->DIR_CONFIG . '/ext/pre.php';
         $this->autoFile   = $this->c->DIR_CONFIG . '/ext/auto.php';
         $this->configFile = $this->c->DIR_CONFIG . '/ext/config.php';
+        $this->eventsFile = $this->c->DIR_CONFIG . '/ext/events.php';
 
         $this->fromDB();
 
@@ -169,6 +171,10 @@ class Extensions extends Manager
                 'extra.autoload.*.path'      => 'required|string',
                 'extra.config'               => 'array',
                 'extra.actions'              => 'string',
+                'extra.events'               => 'array',
+                'extra.events.*.name'        => 'required|string',
+                'extra.events.*.priority'    => 'required|integer',
+                'extra.events.*.listener'    => 'required|string',
             ])->addAliases([
             ])->addArguments([
             ])->addMessages([
@@ -620,6 +626,7 @@ class Extensions extends Manager
         $newPre     = [];
         $auto       = [];
         $config     = [];
+        $events     = [];
 
         // выделение данных
         foreach ($this->repository as $ext) {
@@ -639,6 +646,10 @@ class Extensions extends Manager
 
             if (! empty($cur['config'])) {
                 $config = \array_merge($config, $cur['config']);
+            }
+
+            if (! empty($cur['events'])) {
+                $events = \array_merge($events, $cur['events']);
             }
         }
 
@@ -670,6 +681,19 @@ class Extensions extends Manager
         foreach (\array_merge($this->diffPre($oldPre, $newPre), $this->diffPre($newPre, $oldPre)) as $template) {
             $this->c->View->delete($template);
         }
+
+        // события
+        \uasort($events, function (array $a, array $b) {
+            return $b['priority'] <=> $a['priority'];
+        });
+
+        $result = [];
+
+        foreach ($events as $cur) {
+            $result[$cur['name']][] = $cur['listener'];
+        }
+
+        $this->putData($this->eventsFile, $result);
 
         return true;
     }
