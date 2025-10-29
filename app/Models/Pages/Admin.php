@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Core\Container;
+use ForkBB\Core\Event;
 use ForkBB\Models\Page;
 use function \ForkBB\__;
 
@@ -88,7 +89,12 @@ abstract class Admin extends Page
             ];
         }
 
-        return $nav;
+        $event      = new Event('Pages\Admin:aNavigation:after');
+        $event->nav = $nav;
+
+        $this->c->dispatcher->dispatch($event);
+
+        return $event->nav;
     }
 
     /**
