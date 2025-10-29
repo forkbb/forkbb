@@ -79,6 +79,8 @@ class Extensions extends Admin
             return $this->c->Message->message($this->c->extensions->error);
         }
 
+        $this->c->dbMap->reset();
+
         return $this->c->Redirect->page('AdminExtensions', ['#' => $ext->id])->message("Redirect {$action}", FORK_MESS_SUCC);
     }
 }
