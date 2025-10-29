@@ -32,7 +32,7 @@ class Insensitive extends Method
             $result = 'Ok' === $this->c->DB->query($query)->fetchColumn();
 
             if (true !== $this->c->Cache->set(self::CACHE_KEY, $result)) {
-                throw new RuntimeException('Unable to write value to cache - case_insensitive');
+                throw new RuntimeException('Unable to write value to cache - ' . self::CACHE_KEY);
             }
         }
 

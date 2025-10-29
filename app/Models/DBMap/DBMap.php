@@ -33,7 +33,7 @@ class DBMap extends Model
             $map = $this->c->DB->getMap();
 
             if (true !== $this->c->Cache->set(self::CACHE_KEY, $map)) {
-                throw new RuntimeException('Unable to write value to cache - db_map');
+                throw new RuntimeException('Unable to write value to cache - ' . self::CACHE_KEY);
             }
         }
 
@@ -48,7 +48,7 @@ class DBMap extends Model
     public function reset(): DBMap
     {
         if (true !== $this->c->Cache->delete(self::CACHE_KEY)) {
-            throw new RuntimeException('Unable to remove key from cache - db_map');
+            throw new RuntimeException('Unable to remove key from cache - ' . self::CACHE_KEY);
         }
 
         return $this;

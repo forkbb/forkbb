@@ -147,7 +147,7 @@ class Forums extends Manager
     public function reset(): Forums
     {
         if (true !== $this->c->Cache->delete(self::CACHE_KEY)) {
-            throw new RuntimeException('Unable to remove key from cache - forums_mark');
+            throw new RuntimeException('Unable to remove key from cache - ' . self::CACHE_KEY);
         }
 
         return $this;

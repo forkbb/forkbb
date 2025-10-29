@@ -35,7 +35,7 @@ class BanList extends Model
             $list = $this->load();
 
             if (true !== $this->c->Cache->set(self::CACHE_KEY, $list)) {
-                throw new RuntimeException('Unable to write value to cache - banlist');
+                throw new RuntimeException('Unable to write value to cache - ' . self::CACHE_KEY);
             }
         }
 
@@ -103,7 +103,7 @@ class BanList extends Model
     public function reset(): BanList
     {
         if (true !== $this->c->Cache->delete(self::CACHE_KEY)) {
-            throw new RuntimeException('Unable to remove key from cache - banlist');
+            throw new RuntimeException('Unable to remove key from cache - ' . self::CACHE_KEY);
         }
 
         return $this;

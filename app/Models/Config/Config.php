@@ -34,7 +34,7 @@ class Config extends DataModel
             $config = $this->load();
 
             if (true !== $this->c->Cache->set(self::CACHE_KEY, $config)) {
-                throw new RuntimeException('Unable to write value to cache - config');
+                throw new RuntimeException('Unable to write value to cache - ' . self::CACHE_KEY);
             }
         }
 
@@ -49,7 +49,7 @@ class Config extends DataModel
     public function reset(): Config
     {
         if (true !== $this->c->Cache->delete(self::CACHE_KEY)) {
-            throw new RuntimeException('Unable to remove key from cache - config');
+            throw new RuntimeException('Unable to remove key from cache - ' . self::CACHE_KEY);
         }
 
         return $this;

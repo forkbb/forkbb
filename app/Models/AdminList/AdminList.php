@@ -34,7 +34,7 @@ class AdminList extends Model
             $this->list = \array_flip($this->c->users->adminsIds());
 
             if (true !== $this->c->Cache->set(self::CACHE_KEY, $this->list)) {
-                throw new RuntimeException('Unable to write value to cache - admins');
+                throw new RuntimeException('Unable to write value to cache - ' . self::CACHE_KEY);
             }
         }
 
@@ -47,7 +47,7 @@ class AdminList extends Model
     public function reset(): AdminList
     {
         if (true !== $this->c->Cache->delete(self::CACHE_KEY)) {
-            throw new RuntimeException('Unable to remove key from cache - admins');
+            throw new RuntimeException('Unable to remove key from cache - ' . self::CACHE_KEY);
         }
 
         return $this;

@@ -93,7 +93,7 @@ class StopwordList extends Model
         $stopwords = \array_flip($stopwords);
 
         if (true !== $this->c->Cache->set(self::CACHE_KEY, ['id' => $id, 'stopwords' => $stopwords])) {
-            throw new RuntimeException('Unable to write value to cache - stopwords');
+            throw new RuntimeException('Unable to write value to cache - ' . self::CACHE_KEY);
         }
 
         $this->list = $stopwords;

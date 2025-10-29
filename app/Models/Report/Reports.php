@@ -103,7 +103,7 @@ class Reports extends Manager
             $last  = (int) $this->c->DB->query($query)->fetchColumn();
 
             if (true !== $this->c->Cache->set(self::CACHE_KEY, $last)) {
-                throw new RuntimeException('Unable to write value to cache - report');
+                throw new RuntimeException('Unable to write value to cache - ' . self::CACHE_KEY);
             }
         }
 

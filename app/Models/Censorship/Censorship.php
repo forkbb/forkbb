@@ -35,7 +35,7 @@ class Censorship extends Model
                 $list = $this->refresh();
 
                 if (true !== $this->c->Cache->set(self::CACHE_KEY, $list)) {
-                    throw new RuntimeException('Unable to write value to cache - censorship');
+                    throw new RuntimeException('Unable to write value to cache - ' . self::CACHE_KEY);
                 }
             }
 
@@ -65,7 +65,7 @@ class Censorship extends Model
     public function reset(): Censorship
     {
         if (true !== $this->c->Cache->delete(self::CACHE_KEY)) {
-            throw new RuntimeException('Unable to remove key from cache - censorship');
+            throw new RuntimeException('Unable to remove key from cache - ' . self::CACHE_KEY);
         }
 
         return $this;

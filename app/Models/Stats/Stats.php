@@ -34,7 +34,7 @@ class Stats extends Model
             $list = $this->c->users->stats();
 
             if (true !== $this->c->Cache->set(self::CACHE_KEY, $list)) {
-                throw new RuntimeException('Unable to write value to cache - stats');
+                throw new RuntimeException('Unable to write value to cache - ' . self::CACHE_KEY);
             }
         }
 
@@ -55,7 +55,7 @@ class Stats extends Model
     public function reset(): Stats
     {
         if (true !== $this->c->Cache->delete(self::CACHE_KEY)) {
-            throw new RuntimeException('Unable to remove key from cache - stats');
+            throw new RuntimeException('Unable to remove key from cache - ' . self::CACHE_KEY);
         }
 
         return $this;
