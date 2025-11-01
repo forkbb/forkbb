@@ -146,11 +146,22 @@ class Topic extends DataModel
 
         } else {
             return $this->c->Router->link(
+                'Topic',
+                [
+                    'id'   => $this->moved_to ?: $this->id,
+                    'name' => $this->friendly,
+                    'page' => $this->numPages,
+                    '#'    => 'p' . $this->last_post_id,
+                ]
+            );
+            /*
+            return $this->c->Router->link(
                 'ViewPost',
                 [
                     'id' => $this->last_post_id,
                 ]
             );
+            */
         }
     }
 
