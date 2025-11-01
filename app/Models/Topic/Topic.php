@@ -56,6 +56,14 @@ class Topic extends DataModel
     }
 
     /**
+     * Возвращает название для формирования URL
+     */
+    protected function getfriendly(): ?string
+    {
+        return $this->c->Func->friendly($this->name);
+    }
+
+    /**
      * Статус возможности ответа в теме
      */
     protected function getcanReply(): bool
@@ -107,7 +115,7 @@ class Topic extends DataModel
             'Topic',
             [
                 'id'   => $this->moved_to ?: $this->id,
-                'name' => $this->c->Func->friendly($this->name),
+                'name' => $this->friendly,
             ]
         );
     }
@@ -340,7 +348,7 @@ class Topic extends DataModel
                 'Topic',
                 [
                     'id'   => $this->id,
-                    'name' => $this->c->Func->friendly($this->name),
+                    'name' => $this->friendly,
                 ]
             );
         }
