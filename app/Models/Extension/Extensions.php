@@ -759,7 +759,7 @@ class Extensions extends Manager
 
         foreach ($symlinks as $target => $link) {
             if (\is_link($link)) {
-                \is_file($link) ? \unlink($link) : \rmdir($link);
+                'Windows' === \PHP_OS_FAMILY ? \rmdir($link) : \unlink($link);
             }
         }
 
