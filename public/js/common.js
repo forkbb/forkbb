@@ -14,6 +14,7 @@ ForkBB.common = (function (doc, win) {
 
     var nav = win.navigator,
         selectorBack = ".f-go-back",
+        selectorZoomImg = ".f-bb-img-chk",
         hlClass = "f-highlighted",
         shlClass = "f-search-highlight";
 
@@ -24,6 +25,20 @@ ForkBB.common = (function (doc, win) {
         for (var i = 0; i < backs.length; i++) {
             backs[i].addEventListener("click", function (event) {
                 win.history.back();
+                event.preventDefault();
+
+                return false;
+            });
+        }
+    }
+
+    function initZoomImg()
+    {
+        var backs = doc.querySelectorAll(selectorZoomImg);
+
+        for (var i = 0; i < backs.length; i++) {
+            backs[i].addEventListener("click", function (event) {
+                event.target.classList.toggle("zoomOn");
                 event.preventDefault();
 
                 return false;
@@ -204,6 +219,7 @@ ForkBB.common = (function (doc, win) {
     return {
         init : function () {
             initGoBack();
+            initZoomImg();
             initForm();
 
             if (typeof DOMTokenList !== "undefined") {

@@ -2139,14 +2139,6 @@ body,
   position: relative;
 }
 
-#fork .f-bb-img-chk {
-  appearance: none;
-}
-
-#fork .f-bb-img-chk:focus {
-  box-shadow: none;
-}
-
 #fork .f-bb-img-chk::before {
   position: absolute;
   display: block;
@@ -2162,12 +2154,12 @@ body,
   -webkit-text-stroke: 0.0625rem var(--bg-fprimary);
 }
 
-#fork .f-bb-img-chk:checked::before {
+#fork .f-bb-img-chk.zoomOn::before {
   content: "\f066"; /*"\f422";*/
   cursor: zoom-out;
 }
 
-#fork .f-bb-img-chk:not(:checked) + img {
+#fork .f-bb-img-chk:not(.zoomOn) + img {
   max-height: 8rem;
 }
 

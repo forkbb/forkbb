@@ -524,12 +524,12 @@ if (! isset($attrs['Def'])) {
 // тег в подписи
 if ($parser->attr('isSign')) {
     if ($parser->attr('showImgSign')) {
-        return '<span class="f-bb-img-cont"><input type="checkbox" class="f-bb-img-chk"><img src="' . $body . '" alt="' . $attrs['Def'] . '" loading="lazy" class="sigimage f-bbivert"></span>';
+        return '<span class="f-bb-img-cont"><span class="f-bb-img-chk"></span><img src="' . $body . '" alt="' . $attrs['Def'] . '" loading="lazy" class="sigimage f-bbivert"></span>';
     }
 } else {
     // тег в теле сообщения
     if ($parser->attr('showImg')) {
-        return '<span class="f-bb-img-cont"><input type="checkbox" class="f-bb-img-chk"><img src="' . $body . '" alt="' . $attrs['Def'] . '" loading="lazy" class="postimg f-bbivert"></span>';
+        return '<span class="f-bb-img-cont"><span class="f-bb-img-chk"></span><img src="' . $body . '" alt="' . $attrs['Def'] . '" loading="lazy" class="postimg f-bbivert"></span>';
     }
 }
 
