@@ -43,7 +43,7 @@
     <!-- PRE subforumsBefore -->
     <section id="fork-subforums">
       <ol class="f-ftlist">
-        <li id="id-subforums{{ $p->model->id }}" class="f-category">
+        <li id="id-subforums{!! (int) $p->model->id !!}" class="f-category">
           <h2 class="f-ftch2">{{ __(['Sub forum', 2]) }}</h2>
           <ol class="f-table">
             <li hidden class="f-row f-thead" value="0">
@@ -89,7 +89,7 @@
     @foreach ($p->topics as $id => $topic)
         @if (empty($topic->id))
             @php $iswev = [FORK_MESS_ERR => [['Topic %s was not found in the database', $id]]]; @endphp
-          <li id="topic-{{ $id }}" class="f-row">
+          <li id="topic-{!! (int) $id !!}" class="f-row">
             @include ('layouts/iswev')
           </li>
         @elseif ($topic->moved_to)
