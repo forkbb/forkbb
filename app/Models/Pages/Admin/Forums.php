@@ -104,7 +104,7 @@ class Forums extends Admin
                 ->addRules([
                     'token'                => 'token:AdminForums',
                     'form'                 => 'required|array',
-                    'form.*.disp_position' => 'required|integer|min:0|max:9999999999',
+                    'form.*.disp_position' => 'required|integer|min:0|max:2147483647',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
@@ -193,7 +193,7 @@ class Forums extends Admin
                     'class'   => ['position', 'forum'],
                     'type'    => 'number',
                     'min'     => '0',
-                    'max'     => '9999999999',
+                    'max'     => '2147483647',
                     'value'   => $forum->disp_position,
                     'caption' => 'Position label',
                 ];

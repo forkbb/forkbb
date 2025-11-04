@@ -42,7 +42,7 @@ class Categories extends Admin
                 $v->addRules([
                     'form'                 => 'required|array',
                     'form.*.cat_name'      => 'required|string:trim|max:80',
-                    'form.*.disp_position' => 'required|integer|min:0|max:9999999999',
+                    'form.*.disp_position' => 'required|integer|min:0|max:2147483647',
                 ]);
             }
 
@@ -109,7 +109,7 @@ class Categories extends Admin
                 'class'   => ['position', 'category'],
                 'type'    => 'number',
                 'min'     => '0',
-                'max'     => '9999999999',
+                'max'     => '2147483647',
                 'value'   => $row['disp_position'],
                 'caption' => 'Category position label',
             ];

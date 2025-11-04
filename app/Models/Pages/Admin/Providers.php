@@ -46,7 +46,7 @@ class Providers extends Admin
             $v = $this->c->Validator->reset()
                 ->addRules([
                     'token'           => 'token:AdminProviders',
-                    'form.*.pr_pos'   => 'required|integer|min:0|max:9999999999',
+                    'form.*.pr_pos'   => 'required|integer|min:0|max:2147483647',
                     'form.*.pr_allow' => 'checkbox',
                 ])->addAliases([
                 ])->addArguments([
@@ -106,7 +106,7 @@ class Providers extends Admin
                 'class'   => ['position', 'provider'],
                 'type'    => 'number',
                 'min'     => '0',
-                'max'     => '9999999999',
+                'max'     => '2147483647',
                 'value'   => $provider->pos,
                 'caption' => 'Position label',
             ];

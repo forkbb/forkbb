@@ -286,7 +286,7 @@ class Groups extends Admin
                 } else {
                     $v->addRules([
                         'g_promote_next_group'   => 'required|integer|min:0|not_in:' . $notNext,
-                        'g_promote_min_posts'    => 'required|integer|min:0|max:9999999999',
+                        'g_promote_min_posts'    => 'required|integer|min:0|max:2147483647',
                         'g_edit_posts'           => 'required|integer|in:0,1',
                         'g_delete_posts'         => 'required|integer|in:0,1',
                         'g_delete_topics'        => 'required|integer|in:0,1',
@@ -488,7 +488,7 @@ class Groups extends Admin
                 $fieldset['g_promote_min_posts'] = [
                     'type'    => 'number',
                     'min'     => '0',
-                    'max'     => '9999999999',
+                    'max'     => '2147483647',
                     'value'   => $group->g_promote_min_posts,
                     'caption' => 'Number for promotion label',
                     'help'    => 'Number for promotion help',
