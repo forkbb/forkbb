@@ -736,6 +736,16 @@ class Extensions extends Manager
         $symlinks = $data[$ext->name]['symlinks'] ?? [];
 
         foreach ($symlinks as $target => $link) {
+            if (\is_link($link)) {
+                $this->c->Log->debug('Symlink exists. It will be deleted and recreated.', [
+                    'link'       => $link,
+                    'target'     => \readlink($link),
+                    'new target' => $target,
+                ]);
+
+                'Windows' === \PHP_OS_FAMILY ? \rmdir($link) : \unlink($link);
+            }
+
             $level  = $this->c->ErrorHandler->logOnly(\E_WARNING);
             $result = \symlink($target, $link);
 
