@@ -33,7 +33,7 @@ class Moderate extends Page
         'open'    => self::INFORUM + self::INTOPIC + self::TOTOPIC,
         'close'   => self::INFORUM + self::INTOPIC + self::TOTOPIC,
         'delete'  => self::INFORUM + self::INTOPIC + self::IFTOTPC,
-        'move'    => self::INFORUM + self::INTOPIC + self::IFTOTPC,
+        'move'    => self::INFORUM + self::INTOPIC + self::TOTOPIC,
         'merge'   => self::INFORUM,
         'cancel'  => self::INFORUM + self::INTOPIC + self::TOTOPIC + self::IFTOTPC,
         'unstick' => self::INFORUM + self::INTOPIC + self::TOTOPIC,
