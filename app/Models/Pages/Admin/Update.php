@@ -1600,6 +1600,12 @@ class Update extends Admin
      */
     protected function stageNumber90(array $args): ?int
     {
+        $config = $this->c->config;
+
+        $config->b_block_hidden_bots ??= 1;
+
+        $config->save();
+
         // bbcode
         $queryI  = 'INSERT INTO ::bbcode (bb_tag, bb_edit, bb_delete, bb_structure)
             VALUES(?s:tag, 1, 0, ?s:structure)';

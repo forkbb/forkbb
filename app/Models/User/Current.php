@@ -46,15 +46,17 @@ class Current extends Action
         $this->c->Cookie->setUser($user);
 
         if ($user->isGuest) {
-            $user->__botName  = false === $bot ? $this->botName($ua) : $bot;
-            $user->__isBot    = '' !== $user->botName || 48 !== (48 & $user->o_misc);
-            $user->__timezone = $this->c->config->o_default_timezone;
-            $user->__language = 1 === $this->c->config->b_default_lang_auto ? $this->getLangFromHTTP() : $this->c->config->o_default_lang;
-            $user->__locale   = $user->language;
+            $user->__botName     = false === $bot ? $this->botName($ua) : $bot;
+            $user->__isBot       = '' !== $user->botName || 48 !== (48 & $user->o_misc);
+            $user->__isHiddenBot = 128 === (128 & $user->o_misc);
+            $user->__timezone    = $this->c->config->o_default_timezone;
+            $user->__language    = 1 === $this->c->config->b_default_lang_auto ? $this->getLangFromHTTP() : $this->c->config->o_default_lang;
+            $user->__locale      = $user->language;
 
         } else {
-            $user->__botName  = '';
-            $user->__isBot    = null;
+            $user->__botName     = '';
+            $user->__isBot       = null;
+            $user->__isHiddenBot = false;
 
             // Special case: We've timed out, but no other user has browsed the forums since we timed out
             if (

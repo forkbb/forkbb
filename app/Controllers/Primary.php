@@ -70,8 +70,8 @@ class Primary
         }
 
         if (
-            $this->c->user->isGuest
-            && 128 & $this->c->user->o_misc
+            $this->c->user->isHiddenBot
+            && 1 === $this->c->config->b_block_hidden_bots
         ) {
             return $this->c->Message->message('Temporary IP blocking', false, 401, [], null);
         }

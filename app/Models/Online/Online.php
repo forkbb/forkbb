@@ -154,7 +154,12 @@ class Online extends Model
                 $name  = '' === $cur['o_name'] ? 'Unknown' : $cur['o_name'];
 
                 if (128 & $cur['o_misc']) {
-                    $bots["[Blocked] {$name}"][] = $cur['ident'];
+                    if (1 === $this->c->config->b_block_hidden_bots) {
+                        $bots["[Blocked] {$name}"][] = $cur['ident'];
+
+                    } else {
+                        $bots["[Hidden Bot] {$name}"][] = $cur['ident'];
+                    }
 
                 // бот
                 } elseif (64 & $cur['o_misc']) {
