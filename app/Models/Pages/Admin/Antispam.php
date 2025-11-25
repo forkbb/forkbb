@@ -32,10 +32,11 @@ class Antispam extends Admin
             $v = $this->c->Validator->reset()
                 ->addValidators([
                 ])->addRules([
-                    'token'           => 'token:AdminAntispam',
-                    'b_ant_hidden_ch' => 'required|integer|in:0,1',
-                    'b_ant_use_js'    => 'required|integer|in:0,1',
-                    'b_premoderation' => 'required|integer|in:0,1',
+                    'token'               => 'token:AdminAntispam',
+                    'b_ant_hidden_ch'     => 'required|integer|in:0,1',
+                    'b_ant_use_js'        => 'required|integer|in:0,1',
+                    'b_premoderation'     => 'required|integer|in:0,1',
+                    'b_block_hidden_bots' => 'required|integer|in:0,1',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
@@ -87,9 +88,7 @@ class Antispam extends Admin
             ],
         ];
 
-        $yn     = [1 => __('Yes'), 0 => __('No')];
-        $langs  = $this->c->Func->getNameLangs();
-        $styles = $this->c->Func->getStyles();
+        $yn = [1 => __('Yes'), 0 => __('No')];
 
         $form['sets']['general'] = [
             'legend' => 'General subhead',
@@ -120,6 +119,19 @@ class Antispam extends Admin
                         __('Forums'),
                         $this->c->Router->link('AdminForums')
                     ],
+                ],
+            ],
+        ];
+
+        $form['sets']['hidden_bots'] = [
+            'legend' => 'Hidden bots subhead',
+            'fields' => [
+                'b_block_hidden_bots' => [
+                    'type'    => 'radio',
+                    'value'   => $config->b_block_hidden_bots,
+                    'values'  => $yn,
+                    'caption' => 'Temporarily block label',
+                    'help'    => 'Temporarily block help',
                 ],
             ],
         ];

@@ -38,3 +38,12 @@ msgstr "Use pre-moderation"
 
 msgid "Use pre-moderation help"
 msgstr "Pre-submit new topics/posts for moderation. See <a href="%2$s">%1$s</a>, <a href="%4$s">%3$s</a> and individual topics for specific settings."
+
+msgid "Hidden bots subhead"
+msgstr "Hidden bots"
+
+msgid "Temporarily block label"
+msgstr "Temporarily block"
+
+msgid "Temporarily block help"
+msgstr "Temporarily block IP addresses for detected hidden bots (which impersonate browsers but only load HTML code). Blocking is enabled on the third visit to the forum pages. Blocking is disabled after the visit timeout."
