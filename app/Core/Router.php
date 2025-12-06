@@ -197,7 +197,7 @@ class Router
         }
 
         if ($this->length) {
-            if (0 === \strpos($uri, $this->prefix)) {
+            if (true === \str_starts_with($uri, $this->prefix)) {
                 $uri = \substr($uri, $this->length);
 
             } else {
@@ -337,9 +337,7 @@ class Router
             $anchor = '';
         }
 
-        if (false === \strpbrk($route, '{}[]')) {
-            $data = null;
-
+        if (false === \strpos($route, '{')) { // false === \strpbrk($route, '{}[]')
             if (\is_array($method)) {
                 foreach ($method as $m) {
                     $this->statical[$route][$m] = [$handler, $marker];
@@ -349,14 +347,17 @@ class Router
                 $this->statical[$route][$method] = [$handler, $marker];
             }
 
+            if (null !== $marker) {
+                $this->links[$marker] = $link;
+            }
+
         } else {
             $data = $this->parse($route);
 
             if (null === $data) {
                 throw new InvalidArgumentException("Wrong route: {$route}");
-            }
 
-            if (\is_array($method)) {
+            } elseif (\is_array($method)) {
                 foreach ($method as $m) {
                     $this->dynamic[$data[0]][$data[1]][$m] = [$handler, $data[2], $marker];
                 }
@@ -364,14 +365,9 @@ class Router
             } else {
                 $this->dynamic[$data[0]][$data[1]][$method] = [$handler, $data[2], $marker];
             }
-        }
 
-        if ($marker) {
-            if ($data) {
+            if (null !== $marker) {
                 $this->links[$marker] = [$data[3] . $anchor, $data[4]];
-
-            } else {
-                $this->links[$marker] = $link;
             }
         }
     }
