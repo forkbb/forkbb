@@ -116,26 +116,19 @@ class Cookie extends Model
         $ckUser = $this->get(self::NAME);
 
         if (
-            ! \is_string($ckUser)
-            || ! \preg_match('%^(\-)?([1-9]\d{0,9})_(\d{10})_([a-f\d]{32,128})_([a-f\d]{32,128})$%Di', $ckUser, $ms)
+            \is_string($ckUser)
+            && \preg_match('%^(\-)?([1-9]\d{0,9})_(\d{10})_([a-f\d]{32,128})_([a-f\d]{32,128})$%Di', $ckUser, $ms)
+            && \time() <= $ms[3]
+            && \hash_equals(
+                $this->c->Secury->hmac($ms[1] . $ms[2] . $ms[3] . $ms[4], $this->key1),
+                $ms[5]
+            )
         ) {
-            return;
+            $this->uRemember = empty($ms[1]);
+            $this->uId       = (int) $ms[2];
+            $this->uExpire   = (int) $ms[3];
+            $this->uHash     = $ms[4];
         }
-
-        if (
-            \time() > $ms[3]
-            || ! \hash_equals(
-                    $this->c->Secury->hmac($ms[1] . $ms[2] . $ms[3] . $ms[4], $this->key1),
-                    $ms[5]
-                )
-        ) {
-            return;
-        }
-
-        $this->uRemember = empty($ms[1]);
-        $this->uId       = (int) $ms[2];
-        $this->uExpire   = (int) $ms[3];
-        $this->uHash     = $ms[4];
     }
 
     /**
@@ -145,9 +138,9 @@ class Cookie extends Model
     {
         return $this->uId === (int) $user->id
             && \hash_equals(
-                   (string) $this->uHash,
-                   $this->c->Secury->hmac($user->password . $this->uExpire, $this->key2)
-               );
+                (string) $this->uHash,
+                $this->c->Secury->hmac($user->password . $this->uExpire, $this->key2)
+            );
     }
 
     /**
