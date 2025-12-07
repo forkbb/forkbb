@@ -23,6 +23,7 @@ class Primary
      * Проверка на запрос изображения
      * Проверка на обслуживание
      * Проверка на обновление
+     * Проверка на скрытого бота
      * Проверка на бан
      */
     public function check(): ?Page
@@ -38,25 +39,22 @@ class Primary
             }
 
             return $this->c->Message->message('Not Found', false, 404, [], true);
-        }
 
-        if (
+        } elseif (
             1 === $this->c->config->b_maintenance
             && ! $this->c->MAINTENANCE_OFF
-        ) {
-            if (
-                ! isset($this->c->admins->list[$this->c->Cookie->uId])
+            && (
+                ! isset($this->c->admins->list[(int) $this->c->Cookie->uId])
                 || ! isset($this->c->admins->list[$this->c->user->id])
-            ) {
-                if (! $this->c->isInit('user')) {
-                    $this->c->user = $this->c->users->create(['id' => 0, 'group_id' => FORK_GROUP_GUEST]);
-                }
-
-                return $this->c->Maintenance;
+            )
+        ) {
+            if (! $this->c->isInit('user')) {
+                $this->c->user = $this->c->users->create(['id' => 0, 'group_id' => FORK_GROUP_GUEST]);
             }
-        }
 
-        if ($this->c->config->i_fork_revision < FORK_REVISION) {
+            return $this->c->Maintenance;
+
+        } elseif ($this->c->config->i_fork_revision < FORK_REVISION) {
             $confChange = [
                 'multiple' => [
                     'CtrlRouting' => \ForkBB\Controllers\Update::class,
@@ -67,19 +65,21 @@ class Primary
             $this->c->config($confChange);
 
             return null;
-        }
 
-        if (
+        } elseif (
             $this->c->user->isHiddenBot
             && 1 === $this->c->config->b_block_hidden_bots
         ) {
             return $this->c->Message->message('Temporary IP blocking', false, 401, [], null);
-        }
 
-        if ($this->c->bans->check($this->c->user)) {
+        } elseif (
+            ! $this->c->user->isAdmin
+            && $this->c->bans->check($this->c->user)
+        ) {
             return $this->c->Ban->ban($this->c->user);
-        }
 
-        return null;
+        } else {
+            return null;
+        }
     }
 }
