@@ -393,6 +393,6 @@ EOT;
      */
     protected function e(string $arg): string
     {
-        return \htmlspecialchars($arg, \ENT_HTML5 | \ENT_QUOTES | \ENT_SUBSTITUTE, 'UTF-8');
+        return \htmlspecialchars($arg, FORK_ENT, 'UTF-8');
     }
 }

@@ -123,7 +123,7 @@ switch ($command) {
                 }
             }
 
-            $tpl = \html_entity_decode($tpl . '---' . \PHP_EOL, \ENT_HTML5 | \ENT_QUOTES | \ENT_SUBSTITUTE, 'UTF-8');
+            $tpl = \html_entity_decode($tpl . '---' . \PHP_EOL, FORK_ENT, 'UTF-8');
         }
 
         break;

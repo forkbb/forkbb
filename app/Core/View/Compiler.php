@@ -120,7 +120,7 @@ class Compiler
                     ? \substr($matches[0], 1)
                     : '<?= \\htmlspecialchars((string) '
                         . $this->compileEchoDefaults($matches[2])
-                        . ', \\ENT_HTML5 | \\ENT_QUOTES | \\ENT_SUBSTITUTE, \'UTF-8\', false) ?>'
+                        . ', FORK_ENT, \'UTF-8\', false) ?>'
                         . $whitespace;
             },
             $value
@@ -150,7 +150,7 @@ class Compiler
                     ? \substr($matches[0], 1)
                     : '<?= \\htmlspecialchars((string) '
                         . $this->compileEchoDefaults($matches[2])
-                        . ', \\ENT_HTML5 | \\ENT_QUOTES | \\ENT_SUBSTITUTE, \'UTF-8\') ?>'
+                        . ', FORK_ENT, \'UTF-8\') ?>'
                         . $whitespace;
             },
             $value
@@ -165,13 +165,15 @@ class Compiler
     protected function compileTransformations(string $value): string
     {
         if (\str_starts_with($value, '<?xml ')) {
-            $value = \str_replace(' \\ENT_HTML5 | \\ENT_QUOTES | \\ENT_SUBSTITUTE,', ' \\ENT_XML1,', $value);
+            $value = \str_replace(' FORK_ENT,', ' \\ENT_XML1,', $value);
         }
 
         $perfix = <<<'EOD'
 <?php
 
 declare(strict_types=1);
+
+namespace ForkBB;
 
 use function \ForkBB\{__, num, dt, size, url};
 

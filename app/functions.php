@@ -43,6 +43,7 @@ define('FORK_GEN_MAN', 1);
 define('FORK_GEN_FEM', 2);
 
 define('FORK_JSON_ENCODE', \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR);
+define('FORK_ENT', \ENT_HTML5 | \ENT_QUOTES | \ENT_SUBSTITUTE);
 define('FORK_SFID', 2147483647);
 define('FORK_CTYPE', $_SERVER['CONTENT_TYPE'] ?? '');
 define('FORK_ADDR', \filter_var($_SERVER['REMOTE_ADDR'] ?? '', \FILTER_VALIDATE_IP) ?: '0.0.0.0');
@@ -119,7 +120,7 @@ function __(string|array $arg): string
  */
 function e(string $arg): string
 {
-    return \htmlspecialchars($arg, \ENT_HTML5 | \ENT_QUOTES | \ENT_SUBSTITUTE, 'UTF-8');
+    return \htmlspecialchars($arg, FORK_ENT, 'UTF-8');
 }
 
 /**
