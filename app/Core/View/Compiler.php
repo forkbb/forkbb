@@ -166,6 +166,7 @@ class Compiler
     {
         if (\str_starts_with($value, '<?xml ')) {
             $value = \str_replace(' FORK_ENT,', ' \\ENT_XML1,', $value);
+            $value = \str_replace('<?xml ', '<?= \'<\' . \'?\' ?>xml ', $value);
         }
 
         $perfix = <<<'EOD'
