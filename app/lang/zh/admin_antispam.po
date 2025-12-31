@@ -40,10 +40,10 @@ msgid "Use pre-moderation help"
 msgstr "在提交新主题/帖子前需通过审核。具体设置请参阅 <a href="%2$s">%1$s</a>、<a href="%4$s">%3$s</a> 以及各个主题的独立设置。"
 
 msgid "Hidden bots subhead"
-msgstr "Hidden bots"
+msgstr "隐藏机器人"
 
 msgid "Temporarily block label"
-msgstr "Temporarily block"
+msgstr "临时封锁"
 
 msgid "Temporarily block help"
-msgstr "Temporarily block IP addresses for detected hidden bots (which impersonate browsers but only load HTML code). Blocking is enabled on the third visit to the forum pages. Blocking is disabled after the visit timeout."
+msgstr "对检测到的隐藏机器人临时封锁其 IP 地址（这些机器人会伪装成浏览器，但只加载 HTML 代码）。当同一 IP 第三次访问论坛页面时将启用封锁；在访问超时后，封锁将自动解除。"

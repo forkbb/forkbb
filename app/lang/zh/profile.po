@@ -430,4 +430,4 @@ msgid "Locale info"
 msgstr "影响时间和日期格式。依赖于语言设置。"
 
 msgid "SN profile %s"
-msgstr "Link to social network profile %s"
+msgstr "关联的其他社交平台链接 %s"

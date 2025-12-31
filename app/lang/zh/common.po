@@ -515,4 +515,4 @@ msgid "Pre-moderation (%s)"
 msgstr "<span class="f-spantxtpm">审核 </span><b>(%s)</b>"
 
 msgid "Temporary IP blocking"
-msgstr "Your IP has been temporarily blocked."
+msgstr "您的 IP 地址已被临时封锁。"

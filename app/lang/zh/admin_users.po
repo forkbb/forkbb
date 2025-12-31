@@ -280,4 +280,4 @@ msgid "Drafts label"
 msgstr "草稿"
 
 msgid "SN profile %s"
-msgstr "Social network profile %s"
+msgstr "其他社交平台 %s"
