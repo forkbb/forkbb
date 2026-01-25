@@ -280,7 +280,7 @@ class Poll extends DataModel
 
         foreach (\array_keys($this->question) as $q) {
             if ($this->type[$q] > 1) {
-                $count = \count($vote[$q]);
+                $count = \count($vote[$q] ?? []);
 
                 if (0 == $count) {
                     return __(['No vote on question %s', $q]);
