@@ -34,6 +34,32 @@ class Poll extends Page
 
         $this->c->Lang->load('poll');
 
+        if ($topic->poll->canPreview) {
+            $v = $this->c->Validator->reset()
+                ->addValidators([
+                ])->addRules([
+                    'token'   => 'token:Poll',
+                    'preview' => 'required|string',
+                ])->addAliases([
+                ])->addArguments([
+                    'token'   => $args,
+                ])->addMessages([
+                ]);
+
+            if ($v->validation($_POST)) {
+                $this->identifier   = 'topic';
+                $this->nameTpl      = 'poll_preview';
+                $this->onlinePos    = 'topic-' . $topic->id;
+                $this->model        = $topic;
+                $this->crumbs       = $this->crumbs($topic);
+                $this->robots       = 'noindex';
+
+                $topic->poll->onReviewMode();
+
+                return $this;
+            }
+        }
+
         $v = $this->c->Validator->reset()
             ->addValidators([
             ])->addRules([

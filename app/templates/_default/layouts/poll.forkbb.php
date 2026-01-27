@@ -43,6 +43,9 @@
 @if ($poll->canVote)
                 <p class="f-poll-btns">
                   <button class="f-btn" type="submit" name="vote" value="{{ __('Vote') }}" title="{{ __('Vote') }}"><span>{!! __('Vote') !!}</span></button>
+    @if ($poll->canPreview)
+                  <button class="f-btn" type="submit" name="preview" value="{{ __('Preview') }}" title="{{ __('Preview') }}"><span>{!! __('Preview') !!}</span></button>
+    @endif
                 </p>
                 <!-- PRE formEnd -->
               </form>

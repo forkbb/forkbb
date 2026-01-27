@@ -141,6 +141,16 @@ class Poll extends DataModel
     }
 
     /**
+     * Статус предпросмотра результата
+     */
+    protected function getcanPreview(): bool
+    {
+        return $this->canVote
+            && \max($this->total) > 0
+            && $this->parent->poster_id === $this->c->user->id;
+    }
+
+    /**
      * Статус возможности видеть результат
      */
     protected function getcanSeeResult(): bool
@@ -154,6 +164,15 @@ class Poll extends DataModel
                 || $this->parent->poll_term < \max($this->total)
                 || ! $this->isOpen
             );
+    }
+
+    /**
+     * Включает флаги для режима просмотра результата
+     */
+    public function onReviewMode(): void
+    {
+        $this->zAttrsCalc['canVote']      = false;
+        $this->zAttrsCalc['canSeeResult'] = true;
     }
 
     /**
