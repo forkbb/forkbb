@@ -373,6 +373,14 @@ body.sceditor-maximize {
   cursor: pointer;
   margin: 2px;
 }
+#fork .sceditor-emojis span {
+  padding: 0;
+  cursor: pointer;
+  margin: 2px;
+}
+#fork .sceditor-emojis > div > div:not(:last-child) {
+  margin-bottom: 6px;
+}
 #fork .sceditor-more {
   border-top: 1px solid #bbb;
   display: block;

@@ -416,7 +416,7 @@ trait PostFormTrait
                             'dropdown' => \array_flip($smilies),
                             'hidden'   => $hidden,
                         ],
-                        'plugins' => 'alternative-lists,undo',
+                        'plugins' => 'alternative-lists,undo,emojis',
                     ]);
                     $cur['data'] = [
                         'SCEditorConfig' => $scConfig,
@@ -440,6 +440,9 @@ trait PostFormTrait
                     ]);
                     $this->pageHeader('scundo', 'script', 9550, [
                         'src' => $this->publicLink('/js/sc/plugins/undo.js'),
+                    ]);
+                    $this->pageHeader('scundo', 'script', 9550, [
+                        'src' => $this->publicLink('/js/sc/plugins/emojis.js'),
                     ]);
                     $this->pageHeader('sclanguage', 'script', 9550, [
                         'src' => $this->publicLink('/js/sc/languages/' . __('lang_identifier') . '.js'),
