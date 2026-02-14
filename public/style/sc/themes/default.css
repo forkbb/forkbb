@@ -356,12 +356,11 @@ body.sceditor-maximize {
 #fork div.sceditor-format {
   padding: 6px 0;
 }
-#fork div.sceditor-color-picker {
-  padding: 4px;
-}
+#fork div.sceditor-color-picker,
 #fork div.sceditor-emoticons,
-#fork div.sceditor-more-emoticons {
-  padding: 0;
+#fork div.sceditor-more-emoticons,
+#fork div.sceditor-emojis {
+  padding: 4px;
 }
 #fork .sceditor-pastetext textarea {
   border: 1px solid #bbb;
@@ -373,13 +372,14 @@ body.sceditor-maximize {
   cursor: pointer;
   margin: 2px;
 }
-#fork .sceditor-emojis span {
-  padding: 0;
+#fork .sceditor-emojis .sceditor-option {
   cursor: pointer;
-  margin: 2px;
 }
-#fork .sceditor-emojis > div > div:not(:last-child) {
-  margin-bottom: 6px;
+#fork .sceditor-emojis-div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  line-height: 1.4;
 }
 #fork .sceditor-more {
   border-top: 1px solid #bbb;
