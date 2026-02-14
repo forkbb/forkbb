@@ -7133,6 +7133,17 @@
 				e.stopPropagation();
 			});
 
+			// Visman - пересчитать положение выпадающего меню
+			var pW = menuItem.offsetParent.offsetWidth,
+				dL = menuItem.offsetLeft,
+				dW = dropdown.offsetWidth,
+				dH = dropdown.offsetHeight;
+
+			if (pW - dW - dL < 20) {
+				dL = dW > dL ? 0 : dL - dW;
+				dropdown.style.left = dL + 'px';
+			}
+
 			if (dropdown) {
 				var first = find(dropdown, 'input,textarea')[0];
 				if (first) {
