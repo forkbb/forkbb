@@ -29,37 +29,29 @@
 				emojis = editor.opts.emojis || [],
 				perLine = Math.sqrt(Object.keys(emojis).length);
 
+			content.className = "sceditor-emojis-div";
+
 			if (!emojis.length) {
 				const pickerOptions = { onEmojiSelect: handleSelect };
 				const picker = new EmojiMart.Picker(pickerOptions);
 
 				content.appendChild(picker);
 			} else {
-				var line = document.createElement('div');
-
 				sceditor.utils.each(emojis,
 					function (_, emoji) {
 						const emojiElem = document.createElement('span');
 
 						emojiElem.className = 'sceditor-option';
-						//emojiElem.style = 'cursor:pointer';
 
 						emojiElem.appendChild(document.createTextNode(emoji));
 
-						emojiElem.addEventListener('click',
-							function (e) {
-								editor.closeDropDown(true);
-								editor.insert(e.target.textContent /*innerHTML*/);
-								e.preventDefault();
-							});
+						emojiElem.addEventListener('click', function (e) {
+							editor.closeDropDown(true);
+							editor.insert(e.target.textContent);
+							e.preventDefault();
+						});
 
-						if (line.children.length >= perLine) {
-							line = document.createElement('div');
-						}
-
-						content.appendChild(line);
-
-						line.appendChild(emojiElem);
+						content.appendChild(emojiElem);
 					});
 			}
 
