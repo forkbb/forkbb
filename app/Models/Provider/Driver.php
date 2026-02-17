@@ -333,6 +333,10 @@ abstract class Driver extends Model
             $this->error = "Failed file_get_contents for {$url}";
 
         } else {
+            if (\function_exists('\\http_get_last_response_headers')) {
+                $http_response_header = \http_get_last_response_headers();
+            }
+
             $this->respContentType = $this->parseHeader($http_response_header, 'Content-Type:\s*(.+)');
             $this->respHttpCode    = (int) $this->parseHeader($http_response_header, 'HTTP/[0-9.]+\s+([0-9]+)');
         }
