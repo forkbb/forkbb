@@ -15,11 +15,12 @@ use RuntimeException;
 
 class GitHub extends Driver
 {
-    protected string $origName = 'github';
-    protected string $authURL  = 'https://github.com/login/oauth/authorize';
-    protected string $tokenURL = 'https://github.com/login/oauth/access_token';
-    protected string $userURL  = 'https://api.github.com/user';
-    protected string $scope    = 'read:user';
+    protected string $origName   = 'github';
+    protected string $authURL    = 'https://github.com/login/oauth/authorize';
+    protected string $formAction = 'https://github.com/login';
+    protected string $tokenURL   = 'https://github.com/login/oauth/access_token';
+    protected string $userURL    = 'https://api.github.com/user';
+    protected string $scope      = 'read:user';
 
     /**
      * Запрашивает информацию о пользователе

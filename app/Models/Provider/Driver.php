@@ -24,6 +24,7 @@ abstract class Driver extends Model
 
     protected string $origName;
     protected string $authURL;
+    protected string $formAction;
     protected string $tokenURL;
     protected string $userURL;
     protected string $scope;
@@ -356,6 +357,14 @@ abstract class Driver extends Model
         }
 
         return '';
+    }
+
+    /**
+     * Возвращает ссылку или ссылки через пробел для директивы form-action в CSP
+     */
+    protected function getformAction(): string
+    {
+        return $this->formAction;
     }
 
     /**

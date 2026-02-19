@@ -15,11 +15,12 @@ use RuntimeException;
 
 class Google extends Driver    // Not tested. Google banned the registration of new applications for my country.
 {
-    protected string $origName = 'google';
-    protected string $authURL  = 'https://accounts.google.com/o/oauth2/v2/auth';
-    protected string $tokenURL = 'https://oauth2.googleapis.com/token';
-    protected string $userURL  = 'https://www.googleapis.com/oauth2/v2/userinfo';
-    protected string $scope    = 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile';
+    protected string $origName   = 'google';
+    protected string $authURL    = 'https://accounts.google.com/o/oauth2/v2/auth';
+    protected string $formAction = 'https://accounts.google.com/o/oauth2/v2/auth';
+    protected string $tokenURL   = 'https://oauth2.googleapis.com/token';
+    protected string $userURL    = 'https://www.googleapis.com/oauth2/v2/userinfo';
+    protected string $scope      = 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile';
 
     /**
      * Запрашивает информацию о пользователе

@@ -608,7 +608,7 @@ abstract class Page extends Model
             $csp .= $directive . ' ' . \implode(' ', \array_keys($parts)) . ';';
         }
 
-        return $csp;
+        return \rtrim($csp, ';');
     }
 
     /**

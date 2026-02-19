@@ -15,11 +15,12 @@ use RuntimeException;
 
 class Yandex extends Driver
 {
-    protected string $origName = 'yandex';
-    protected string $authURL  = 'https://oauth.yandex.ru/authorize';
-    protected string $tokenURL = 'https://oauth.yandex.ru/token';
-    protected string $userURL  = 'https://login.yandex.ru/info?format=json';
-    protected string $scope    = ''; // 'login:info login:email login:avatar'; // разрешает не передавать
+    protected string $origName   = 'yandex';
+    protected string $authURL    = 'https://oauth.yandex.ru/authorize';
+    protected string $formAction = 'https://oauth.yandex.ru/authorize https://passport.yandex.ru';
+    protected string $tokenURL   = 'https://oauth.yandex.ru/token';
+    protected string $userURL    = 'https://login.yandex.ru/info?format=json';
+    protected string $scope      = ''; // 'login:info login:email login:avatar'; // разрешает не передавать
 
     /**
      * Запрашивает информацию о пользователе

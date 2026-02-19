@@ -83,6 +83,8 @@ class Providers extends Manager
 
     /**
      * Возращает список имён активных провайдеров
+     * Ключ содержит имя провайдера
+     * Значение содержит ссылку (ссылки через пробел) для form-action в CSP
      */
     public function active(): array
     {
@@ -103,6 +105,16 @@ class Providers extends Manager
             ) {
                 $result[$cur['pr_name']] = $cur['pr_name'];
             }
+        }
+
+        if (! empty($result)) {
+            $this->init();
+
+            foreach ($result as &$cur) {
+                $cur = $this->get($cur)->formAction;
+            }
+
+            unset($cur);
         }
 
         return $result;

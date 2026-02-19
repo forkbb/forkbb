@@ -38,11 +38,15 @@ trait RegLogTrait
 
         $btns = [];
 
-        foreach ($list as $name) {
+        $this->addRulesToCSP(['form-action' => '\'self\'']);
+
+        foreach ($list as $name => $formAction) {
             $btns[$name] = [
                 'type'  => 'submit',
                 'value' => __([$message, __($name)]),
             ];
+
+            $this->addRulesToCSP(['form-action' => $formAction]);
         }
 
         $args = ['type' => $type];

@@ -39,7 +39,7 @@ class RegLog extends Page
             'token' => 'token:RegLogRedirect',
         ];
 
-        foreach ($list as $name) {
+        foreach ($list as $name => $formAction) {
             $rules[$name] = 'string';
         }
 
@@ -52,7 +52,13 @@ class RegLog extends Page
             return $this->c->Message->message('Bad request');
         }
 
-        return $this->c->Redirect->url($this->c->providers->init()->get(\array_key_first($form))->linkAuth($args['type']));
+        $driver   = $this->c->providers->init()->get(\array_key_first($form));
+        $redirect = $this->c->Redirect;
+
+        $redirect->addRulesToCSP(['form-action' => '\'self\'']);
+        $redirect->addRulesToCSP(['form-action' => $driver->formAction]);
+
+        return $redirect->url($driver->linkAuth($args['type']));
     }
 
     /**
