@@ -26,8 +26,7 @@
 		var emojisCmd = function (caller) {
 			const editor = this,
 				content = document.createElement('div'),
-				emojis = editor.opts.emojis || [],
-				perLine = Math.sqrt(Object.keys(emojis).length);
+				emojis = editor.opts.emojis || [];
 
 			content.className = "sceditor-emojis-div";
 
