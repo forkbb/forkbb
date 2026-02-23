@@ -24,6 +24,7 @@ ForkBB.editor = (function (doc, win) {
         selector = "textarea[" + dataName + "]",
         textarea,
         elForScroll,
+        imgToEmot = {},
         options = {
             format: "bbcode",
             icons: "monocons",
@@ -103,7 +104,7 @@ ForkBB.editor = (function (doc, win) {
                 name = name.slice(1);
             }
 
-            selection = "<blockquote><cite>" + name + "</cite>" + selection + "</blockquote>";
+            selection = "<blockquote><cite>" + name + "</cite>" + ForkBB.editor.imgToEmoticon(selection) + "</blockquote>";
 
             if (mode) {
                 instance.sourceMode(false);
@@ -263,6 +264,14 @@ ForkBB.editor = (function (doc, win) {
                 target.value = '';
             });
         }
+
+        for (var s in options.emoticons) {
+            for (var i in options.emoticons[s]) {
+                if (!imgToEmot[options.emoticons[s][i]]) {
+                    imgToEmot[options.emoticons[s][i]] = i;
+                }
+            }
+        }
     }
 
     function initField(node)
@@ -287,6 +296,11 @@ ForkBB.editor = (function (doc, win) {
         },
         getInstance : function () {
             return instance;
+        },
+        imgToEmoticon : function(str) {
+            return str.replace(/<img[^<>]+?\/img\/sm\/([^<>"]+)"[^<>]*>/gi, function (match, p1) {
+                return imgToEmot[p1] ? imgToEmot[p1] : match;
+            })
         }
     };
 }(document, window));
