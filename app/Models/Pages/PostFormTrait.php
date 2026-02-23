@@ -409,7 +409,7 @@ trait PostFormTrait
 
                     $scConfig = \json_encode([
                         'style'         => $this->publicLink("/style/{$this->user->style}/sccontent.css", true)
-                                            ?: $this->publicLink('/style/sc/themes/content/default.css'),
+                                            ?: $this->publicLink('/style/other/sc/content/default.css'),
                         'locale'        => __('lang_identifier'),
                         'emoticonsRoot' => $this->c->PUBLIC_URL . '/img/sm/',
                         'emoticons'     => [
@@ -453,7 +453,7 @@ trait PostFormTrait
                     $this->pageHeader('scdefaultstyle', 'link', 9500, [
                         'rel'  => 'stylesheet',
                         'type' => 'text/css',
-                        'href' => $this->publicLink("/style/sc/themes/default.css"),
+                        'href' => $this->publicLink("/style/other/sc/default.css"),
                     ]);
 
                     if ($this->user->g_post_links) {
