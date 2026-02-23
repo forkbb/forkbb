@@ -298,7 +298,7 @@ ForkBB.editor = (function (doc, win) {
             return instance;
         },
         imgToEmoticon : function(str) {
-            return str.replace(/<img[^<>]+?\/img\/sm\/([^<>"]+)"[^<>]*>/gi, function (match, p1) {
+            return str.replace(/<img\s[^<>]+?\/img\/sm\/([^<>"]+)"[^<>]*>/gi, function (match, p1) {
                 return imgToEmot[p1] ? imgToEmot[p1] : match;
             })
         }
