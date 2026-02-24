@@ -40,6 +40,6 @@
 !/public/img/sm/yikes.png
 !/public/upload/index.html
 /public/style/GreenFork
-/public/style/portal-extension
+/public/style/other/portal-extension
 /public/upload/**/*
 !.gitkeep
