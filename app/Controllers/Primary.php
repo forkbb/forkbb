@@ -73,8 +73,9 @@ class Primary
             return $this->c->Message->message('Temporary IP blocking', false, 401, [], null);
 
         } elseif (
-            ! $this->c->user->isAdmin
-            && $this->c->bans->check($this->c->user)
+            //! $this->c->user->isAdmin
+            //&&
+            $this->c->bans->check($this->c->user)
         ) {
             return $this->c->Ban->ban($this->c->user);
 
