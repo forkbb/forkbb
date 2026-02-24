@@ -594,7 +594,10 @@ abstract class Page extends Model
                 $parent      = $directive;
             }
 
-            if (isset($oldDirRules['\'none\''])) {
+            if (
+                empty($oldDirRules)
+                || isset($oldDirRules['\'none\''])
+            ) {
                 $rules[$directive] = $addDirRules;
 
             } else {
