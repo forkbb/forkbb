@@ -19,10 +19,10 @@ msgid "Long email"
 msgstr "The email address you entered is too long."
 
 msgid "Passphrase help"
-msgstr "The passphrase should be at least 16 characters long, with multiple words separated by spaces, and it is case sensitive."
+msgstr "The passphrase should be at least 16 characters long, with multiple words separated by spaces, and it is case sensitive.<br>Examples (<b><span class=\"f-admin-note\">do not use!!!</span></b>):<br>1. <i>Lion roams loudly across the savannah</i><br>2. <i>Blue Elephant Drinks Tea 2026!</i><br>3. <i>queeN oN thronE eatS cakE</i>"
 
 msgid "Pass format"
-msgstr "The passphrase should be at least 16 characters long, with multiple words separated by spaces."
+msgstr "The passphrase should be at least 16 characters long, with multiple words separated by spaces. This is a phrase that is easy to remember, not a random string of characters."
 
 msgid "Login format"
 msgstr "The username must begin with a letter. May contain letters, numbers, spaces, dots, dashes and underscores."
