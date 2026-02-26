@@ -21,6 +21,10 @@ class Check extends Method
      */
     public function check(User $user): bool
     {
+        if ($user->isAdmin) {
+            return false;
+        }
+
         $now = \time();
 
         // удаление просроченных банов
@@ -74,7 +78,7 @@ class Check extends Method
             }
 
         // проверка пользователя
-        } elseif (! $user->isAdmin) {
+        } else {
             $id = $this->model->banFromName($user->username);
 
             if ($id > 0) {
