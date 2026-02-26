@@ -354,22 +354,6 @@ span.f-bb-hashtag {
   border-bottom-width: 0.0625rem;
 }
 
-/* code:not(:first-child),
-blockquote:not(:first-child),
-table:not(:first-child),
-img:not(:first-child),
-details:not(:first-child) {
-  margin-top: 0.5rem;
-}
-
-code:not(:last-child),
-blockquote:not(:last-child),
-table:not(:last-child),
-img:not(:last-child),
-details:not(:last-child) {
-  margin-bottom: 0.5rem;
-} */
-
 ::selection {
   /*color: var(--c-sel);*/
   background-color: var(--bg-sel);
@@ -431,4 +415,15 @@ h6 {
 
 input {
   display: none;
+}
+
+code,
+blockquote,
+table,
+img,
+details,
+ol,
+ul {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }

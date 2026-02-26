@@ -2221,8 +2221,9 @@ body,
 
 #fork .f-bb-q-header {
   display: block;
-  padding: 0.625rem;
+  padding: 0.3125rem 0.625rem;
   background-color: var(--bg-like-nav);
+  font-style: italic;
 }
 
 #fork .f-bb-q-body {
@@ -2351,13 +2352,10 @@ body,
   border-bottom-width: 0.0625rem;
 }
 
-/* #fork .f-bbivert:not(:first-child) {
+#fork .f-bbivert {
   margin-top: 0.5rem;
-}
-
-#fork .f-bbivert:not(:last-child) {
   margin-bottom: 0.5rem;
-} */
+}
 
 #fork .f-bb-hide {
   padding: 0.3125rem;
