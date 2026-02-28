@@ -1360,3 +1360,11 @@
   display: inline-block;
   padding-inline-end: 0.3125rem;
 }
+
+/*********************/
+#forka .f-admin .f-btns {
+  position: sticky;
+  bottom: 0;
+  background-color: var(--bg-like-nav);
+  border-top: 0.0625rem dotted var(--br-fprimary);
+}
