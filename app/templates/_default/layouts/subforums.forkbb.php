@@ -1,6 +1,6 @@
 @foreach ($forums as $cur)
     @if ($cur->redirect_url)
-            <li id="forum-{{ $cur->id }}" class="f-row f-fredir">
+            <li id="forum-{!! (int) $cur->id !!}" class="f-row f-fredir">
               <div class="f-cell f-cmain">
                 <div class="f-ficon"></div>
                 <div class="f-finfo">
@@ -17,7 +17,7 @@
               </div>
             </li>
     @else
-            <li id="forum-{{ $cur->id }}" class="f-row @if ($cur->tree->newMessages) f-fnew @endif">
+            <li id="forum-{!! (int) $cur->id !!}" class="f-row @if ($cur->tree->newMessages) f-fnew @endif">
               <div class="f-cell f-cmain">
                 <div class="f-ficon"></div>
                 <div class="f-finfo">
