@@ -56,7 +56,7 @@
             <span class="f-sep"><small>»</small></span>
             <span class="f-psh-topic">@if ($post->topic_id)<a href="{{ $post->parent->link }}" title="{{ __('Go to topic') }}">@endif{{ $post->parent->name }}@if ($post->topic_id)</a>@endif</span>
           </h3>
-          <span class="f-post-number">#{{ $post->postNumber }}</span>
+          <span class="f-post-number">#{!! (int) $post->postNumber !!}</span>
         </header>
         <address class="f-post-user">
           <div class="f-post-usticky">

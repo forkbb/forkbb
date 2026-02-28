@@ -26,7 +26,7 @@
         <header class="f-post-header">
           <h3 class="f-phead-h3">@if ($post->postNumber > 1){!! __('Re') !!} @endif{{ $post->parent->name }}</h3>
           <span class="f-post-posted"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></span>
-          <span class="f-post-number"><a href="{{ $post->link }}" rel="bookmark">#{{ $post->postNumber }}</a></span>
+          <span class="f-post-number"><a href="{{ $post->link }}" rel="bookmark">#{!! (int) $post->postNumber !!}</a></span>
         </header>
         <address class="f-post-user">
           <div class="f-post-usticky">
