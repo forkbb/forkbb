@@ -758,4 +758,14 @@ class Topic extends DataModel
 
         return $this->cf_level > $level ? 0 : $level;
     }
+
+    /**
+     * Возвращает номер цвета заголовка, если цвета разрешены
+     */
+    protected function getcolorNum(): int
+    {
+        return 1 === $this->c->config->b_colored_subjects
+            ? (int) $this->subject_color
+            : 0;
+    }
 }

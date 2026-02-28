@@ -17,6 +17,8 @@ use function \ForkBB\{__, size};
 
 trait PostFormTrait
 {
+    const NUM_COLORS = 68;
+
     /**
      * Возвращает данные для построения формы создания темы/сообщения
      */
@@ -77,7 +79,7 @@ trait PostFormTrait
             $notPM
             && ! $edit
             && ! $about
-            && $this->c->userRules->useDraft
+            && $this->userRules->useDraft
         ) {
             $form['btns']['draft'] = [
                 'type'  => 'submit',
@@ -127,6 +129,26 @@ trait PostFormTrait
                 'autofocus' => $autofocus,
             ];
             $autofocus = null;
+
+            if (
+                1 === $this->c->config->b_colored_subjects
+                && $power
+                && $notPM
+            ) {
+                $colors = [0 => __('No')];
+
+                for ($i = 1; $i <= self::NUM_COLORS; $i++) {
+                    $colors[$i] = __(['Color number %s', $i]);
+                }
+
+                $fieldset['subject_color'] = [
+                    'type'    => 'select',
+                    'cprefix' => 'f-color',
+                    'options' => $colors,
+                    'value'   => $vars['subject_color'] ?? null,
+                    'caption' => 'Topic title color label',
+                ];
+            }
         }
 
         $fieldset['message'] = [

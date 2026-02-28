@@ -137,3 +137,9 @@ msgstr "По умолчанию"
 
 msgid "Yes "
 msgstr "Да"
+
+msgid "Topic title color label"
+msgstr "Цвет заголовка"
+
+msgid "Color number %s"
+msgstr "Цвет № %s"

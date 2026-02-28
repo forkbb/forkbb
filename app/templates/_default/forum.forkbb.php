@@ -138,7 +138,7 @@
             @if ($topic->solution > 0)
                   <span class="f-tsolved" title="{{ __('Solved') }}"><small class="f-solvedtxt">{!! __('Solved') !!}</small></span>
             @endif
-                  <a class="f-ftname" href="{{ $topic->link }}">{{ $topic->name }}</a>
+                  <a class="f-ftname @if ($topic->colorNum > 0) f-color{!! (int) $topic->colorNum !!} @endif" href="{{ $topic->link }}">{{ $topic->name }}</a>
             @if ($topic->pagination)
                   <span class="f-tpages">
                 @foreach ($topic->pagination as $cur)

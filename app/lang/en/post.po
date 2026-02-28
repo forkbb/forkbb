@@ -137,3 +137,9 @@ msgstr "By default"
 
 msgid "Yes "
 msgstr "Yes"
+
+msgid "Topic title color label"
+msgstr "Subject color"
+
+msgid "Color number %s"
+msgstr "Color N %s"

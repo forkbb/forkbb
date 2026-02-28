@@ -78,7 +78,7 @@
             </ul>
             <ul class="f-post-search-info">
               <li class="f-psi-forum">{!! __('Forum') !!}: <a href="{{ $post->parent->parent->link }}">{{ $post->parent->parent->forum_name }}</a></li>
-              <li class="f-psi-topic">{!! __('Topic') !!}: <a href="{{ $post->parent->link }}">{{ $post->parent->name }}</a></li>
+              <li class="f-psi-topic">{!! __('Topic') !!}: <a href="{{ $post->parent->link }}" @if ($post->parent->colorNum > 0) class="f-color{!! (int) $post->parent->colorNum !!}" @endif>{{ $post->parent->name }}</a></li>
               <li class="f-psi-reply">{!! __(['%s Reply', $post->parent->num_replies, num($post->parent->num_replies)]) !!}</li>
         @if ($post->parent->showViews)
               <li class="f-psi-view">{!! __(['%s View', $post->parent->num_views, num($post->parent->num_views)]) !!}</li>

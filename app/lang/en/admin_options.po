@@ -512,3 +512,9 @@ msgstr "Without email"
 
 msgid "Disable email help"
 msgstr "Do not ask for email upon registration if verify registrations is disabled."
+
+msgid "Colored topic titles label"
+msgstr "Colored topic titles"
+
+msgid "Colored topic titles help"
+msgstr "Allow administrators and moderators to set a color from the list for each topic title."

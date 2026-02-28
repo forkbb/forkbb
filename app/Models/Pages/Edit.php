@@ -94,6 +94,7 @@ class Edit extends Page
             $args['_vars'] = [
                 'message'       => $post->message,
                 'subject'       => $topic->subject,
+                'subject_color' => $topic->subject_color,
                 'hide_smilies'  => $post->hide_smilies,
                 'stick_topic'   => $topic->sticky,
                 'stick_fp'      => $topic->stick_fp,
@@ -216,6 +217,10 @@ class Edit extends Page
                 $post->editor    = $this->user->username;
                 $post->editor_id = $this->user->id;
                 $calcForum       = true;
+            }
+
+            if (\is_int($v->subject_color)) {
+                $topic->subject_color = $v->subject_color;
             }
 
             // выделение темы

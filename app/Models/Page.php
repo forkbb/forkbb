@@ -86,12 +86,10 @@ abstract class Page extends Model
 
         $now = \gmdate('D, d M Y H:i:s') . ' GMT';
 
-        $this //->header('Cache-Control', 'no-cache, no-store, must-revalidate')
-            ->header('Cache-Control', 'private, no-cache')
+        $this->header('Cache-Control', 'private, no-cache')
             ->header('Content-Type', 'text/html; charset=utf-8')
             ->header('Date', $now)
             ->header('Last-Modified', $now);
-            //->header('Expires', $now);
     }
 
     /**
@@ -109,6 +107,15 @@ abstract class Page extends Model
             $this->user->u_pm_flash = 0;
 
             $this->c->users->update($this->user);
+        }
+
+        if (1 === $this->c->config->b_colored_subjects) {
+            $this->pageHeader('topicTitlesColors', 'link', 1000, [
+                'rel'  => 'stylesheet',
+                'type' => 'text/css',
+                'href' => $this->publicLink("/style/{$this->user->style}/colors.css", true)
+                    ?: $this->publicLink("/style/other/colors.css"),
+            ]);
         }
 
         if (2 === $this->c->curReqVisible) {

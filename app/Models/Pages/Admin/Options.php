@@ -125,6 +125,7 @@ class Options extends Admin
                     'b_reaction'              => 'required|integer|in:0,1',
                     'a_reaction_types'        => 'required|array|check_type',
                     'b_show_user_reaction'    => 'required|integer|in:0,1',
+                    'b_colored_subjects'      => 'required|integer|in:0,1',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
@@ -505,6 +506,13 @@ class Options extends Admin
                     'values'  => $yn,
                     'caption' => 'Hide e-mail label',
                     'help'    => 'Hide e-mail help',
+                ],
+                'b_colored_subjects' => [
+                    'type'    => 'radio',
+                    'value'   => $config->b_colored_subjects,
+                    'values'  => $yn,
+                    'caption' => 'Colored topic titles label',
+                    'help'    => 'Colored topic titles help',
                 ],
             ],
         ];

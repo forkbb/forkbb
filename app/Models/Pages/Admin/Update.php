@@ -1635,4 +1635,20 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.92 to rev.93
+     */
+    protected function stageNumber92(array $args): ?int
+    {
+        $config = $this->c->config;
+
+        $config->b_colored_subjects ??= 0;
+
+        $config->save();
+
+        $this->c->DB->addField('::topics', 'subject_color', 'TINYINT UNSIGNED', false, 0, null, 'subject');
+
+        return null;
+    }
 }

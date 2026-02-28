@@ -46,11 +46,12 @@ class Post extends Page
         $this->c->Lang->load('draft');
 
         if ('POST' !== $method) {
-            $vars                 = $draft->form_data;
-            $vars['subject']      = $draft->subject;
-            $vars['message']      = $draft->message;
-            $vars['hide_smilies'] = $draft->hide_smilies;
-            $args['_vars']        = $vars;
+            $vars                  = $draft->form_data;
+            $vars['subject']       = $draft->subject;
+            $vars['subject_color'] = $draft->subject_color;
+            $vars['message']       = $draft->message;
+            $vars['hide_smilies']  = $draft->hide_smilies;
+            $args['_vars']         = $vars;
         }
 
         if ($draft->topic_id > 0)  {
@@ -272,7 +273,7 @@ class Post extends Page
         $draft->subject      = $v->subject ?? '';
         $draft->message      = $v->message;
         $draft->hide_smilies = $v->hide_smilies ? 1 : 0;
-        $draft->form_data    = $v->getData(false, ['token', 'subject', 'message', 'hide_smilies', 'preview', 'submit', 'draft', 'pre_mod', 'nekot']);
+        $draft->form_data    = $v->getData(false, ['token', 'subject', 'subject_color', 'message', 'hide_smilies', 'preview', 'submit', 'draft', 'pre_mod', 'nekot']);
         $draft->poster_ip    = $this->user->ip;
         $draft->user_agent   = \mb_substr($this->user->userAgent, 0, 255, 'UTF-8');
         $draft->pre_mod      = null !== $v->pre_mod ? 1 : 0;
@@ -370,6 +371,10 @@ class Post extends Page
             if ($this->customFieldsLevel > 0) {
                 $topic->cf_data  = $this->setCFData($forum->custom_fields, $this->customFieldsLevel, $v->cf_data);
                 $topic->cf_level = $this->setCFLevel($topic->cf_data);
+            }
+
+            if (\is_int($v->subject_color)) {
+                $topic->subject_color = $v->subject_color;
             }
 
             $this->c->topics->insert($topic);

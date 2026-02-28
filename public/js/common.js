@@ -117,10 +117,19 @@ ForkBB.common = (function (doc, win) {
     function initForm()
     {
         var inps = doc.querySelectorAll("input[type=\"hidden\"][name=\"nekot\"]"),
-            regx = new RegExp("(" + ".".repeat([1]+[2]-[3]-[2]-[1]) + ").*");
+            regx = new RegExp("(" + ".".repeat([1]+[2]-[3]-[2]-[1]) + ").*"),
+            sel = doc.getElementById("id-subject_color");
 
         for (var i = 0; i < inps.length; i++) {
             inps[i].value = (inps[i].parentNode.querySelector("input[type=\"hidden\"][name=\"token\"]").value.replace(/\D/g, "").replace(regx, "$1"));
+        }
+
+        if (sel) {
+            sel.addEventListener("change", function() {
+                var option = this.options[this.selectedIndex];
+                this.style.color = win.getComputedStyle(option).color;
+            });
+            sel.dispatchEvent(new Event("change"));
         }
     }
 

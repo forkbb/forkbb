@@ -17,6 +17,8 @@ use function \ForkBB\__;
 
 trait PostValidatorTrait
 {
+    const NUM_COLORS = 68;
+
     protected int $censorCount = 0;
 
     /**
@@ -216,6 +218,18 @@ trait PostValidatorTrait
         }
 
         if (
+            1 === $this->c->config->b_colored_subjects
+            && $power
+            && $notPM
+            && $first
+        ) {
+            $ruleSubjectColor = 'required|integer|min:0|max:' . self::NUM_COLORS;
+
+        } else {
+            $ruleSubjectColor = 'absent';
+        }
+
+        if (
             ! $edit
             && $notPM
             && 1 === $this->c->config->b_topic_subscriptions
@@ -285,6 +299,7 @@ trait PostValidatorTrait
                 'email'         => $ruleEmail,
                 'username'      => $ruleUsername,
                 'subject'       => $ruleSubject,
+                'subject_color' => $ruleSubjectColor,
                 'stick_topic'   => $ruleStickTopic,
                 'stick_fp'      => $ruleStickFP,
                 'merge_post'    => $ruleMergePost,

@@ -1106,6 +1106,7 @@ class Install extends Admin
                 'poster'         => ['VARCHAR(190)', false, ''],
                 'poster_id'      => ['INT(10) UNSIGNED', false, 0],
                 'subject'        => ['VARCHAR(255)', false, ''],
+                'subject_color'  => ['TINYINT UNSIGNED', false, 0],
                 'posted'         => ['INT(10) UNSIGNED', false, 0],
                 'first_post_id'  => ['INT(10) UNSIGNED', false, 0],
                 'last_post'      => ['INT(10) UNSIGNED', false, 0],
@@ -1696,6 +1697,7 @@ class Install extends Admin
             'b_show_user_reaction'    => 0,
             'i_about_me_topic_id'     => 0,
             'b_premoderation'         => 0,
+            'b_colored_subjects'      => 0,
         ];
 
         foreach ($forkConfig as $name => $value) {
