@@ -226,7 +226,7 @@ ForkBB.editor = (function (doc, win) {
 
         if (textarea.form && (node = textarea.form.querySelector('input[type=file]'))) {
             node.addEventListener("change", function (e) {
-                var target = e.target;
+                var target = e.target, arr = [], p;
 
                 if (target.files.length > 0) {
                     var formData = new FormData();
@@ -239,12 +239,20 @@ ForkBB.editor = (function (doc, win) {
                         }
 
                         formData.append("files[]", target.files[i]);
+                        arr.push(target.files[i].name);
                     }
+
+                    p = doc.createElement("p");
+                    p.className = "f-upfiles";
+                    p.innerText = arr.join(', ');
+                    target.parentNode.insertBefore(p, target);
 
                     fetch(target.getAttribute("data-d"), {
                         method: "POST",
                         body: formData,
                     }).then(function (response) {
+                        p.remove();
+
                         if (!response.ok) {
                             throw new Error("HTTP Error: " + response.status);
                         }
