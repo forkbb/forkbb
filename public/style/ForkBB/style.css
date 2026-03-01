@@ -2748,6 +2748,11 @@ body,
   content: "\f105";
 }
 
+#fork .f-post-search .f-post-main {
+  max-height: 100vh;
+  overflow: hidden;
+}
+
 @media screen and (min-width: 50rem) {
   #fork #id-fs-what,
   #fork #id-fs-where,
