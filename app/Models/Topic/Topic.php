@@ -781,7 +781,7 @@ class Topic extends DataModel
             return [];
         }
 
-        $hashtags = \explode(' ', $this->hashtags);
+        $hashtags = \explode(' ', $this->censorHashtags);
         $result   = [];
 
         if (
