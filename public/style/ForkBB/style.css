@@ -3034,6 +3034,14 @@ body,
   width: 100%;
 }
 
+#fork-profile-edit .f-btns,
+#fork-profile-config .f-btns {
+  position: sticky;
+  bottom: 0;
+  background-color: var(--bg-like-nav);
+  border-top: 0.0625rem dotted var(--br-fprimary);
+}
+
 @media screen and (min-width: 40rem) {
   #fork .f-fs-header .f-wrap-usertitle {
     order: 1;
