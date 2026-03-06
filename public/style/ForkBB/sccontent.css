@@ -270,9 +270,14 @@ a, span.f-bb-hashtag {
   transition: color 0.5s, background-color 0.5s;
 }
 
-a:hover, a:focus, span.f-bb-hashtag:hover, span.f-bb-hashtag:focus {
+a:hover, a:focus {
   color: var(--c-a-focus);
   text-decoration: underline;
+}
+
+span.f-bb-hashtag:hover, span.f-bb-hashtag:focus {
+  color: var(--c-a-focus);
+  text-decoration: none;
 }
 
 table {

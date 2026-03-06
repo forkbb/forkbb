@@ -2377,6 +2377,12 @@ body,
 #fork .f-bb-hashtag {
   border-bottom-style: dashed;
   border-bottom-width: 0.0625rem;
+  text-decoration: none;
+}
+
+#fork .f-bb-hashtag:hover,
+#fork .f-bb-hashtag:focus {
+  text-decoration: none;
 }
 
 #fork .f-bbivert {
