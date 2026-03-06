@@ -82,32 +82,32 @@ class Search extends Page
                     'check_forums' => [$this, 'vCheckForums'],
                     'check_author' => [$this, 'vCheckAuthor'],
                 ])->addRules([
-                    'author'   => 'absent:*',
-                    'forums'   => 'absent:*',
-                    'serch_in' => 'absent:0|integer',
-                    'sort_by'  => 'absent:0|integer',
-                    'sort_dir' => 'absent:0|integer',
-                    'show_as'  => 'absent:0|integer',
+                    'author'    => 'absent:*',
+                    'forums'    => 'absent:*',
+                    'search_in' => 'absent:0|integer',
+                    'sort_by'   => 'absent:0|integer',
+                    'sort_dir'  => 'absent:0|integer',
+                    'show_as'   => 'absent:0|integer',
                 ])->addArguments([
 //                    'token' => $args,
                 ])->addAliases([
-                    'keywords' => 'Keyword search',
-                    'author'   => 'Author search',
-                    'forums'   => 'Forum search',
-                    'serch_in' => 'Search in',
-                    'sort_by'  => 'Sort by',
-                    'sort_dir' => 'Sort order',
-                    'show_as'  => 'Show as',
+                    'keywords'  => 'Keyword search',
+                    'author'    => 'Author search',
+                    'forums'    => 'Forum search',
+                    'search_in' => 'Search in',
+                    'sort_by'   => 'Sort by',
+                    'sort_dir'  => 'Sort order',
+                    'show_as'   => 'Show as',
                 ]);
 
             if ($advanced) {
                 $v->addRules([
-                    'author'   => 'required|string:trim|max:190|check_author',
-                    'forums'   => 'check_forums',
-                    'serch_in' => 'required|integer|in:0,1,2',
-                    'sort_by'  => 'required|integer|in:0,1,2,3',
-                    'sort_dir' => 'required|integer|in:0,1',
-                    'show_as'  => 'required|integer|in:0,1',
+                    'author'    => 'required|string:trim|max:190|check_author',
+                    'forums'    => 'check_forums',
+                    'search_in' => 'required|integer|in:0,1,2',
+                    'sort_by'   => 'required|integer|in:0,1,2,3',
+                    'sort_dir'  => 'required|integer|in:0,1',
+                    'show_as'   => 'required|integer|in:0,1',
                 ]);
             }
 
@@ -131,7 +131,7 @@ class Search extends Page
                 'GET' === $method
                 && $v->validation($args)
             ) {
-                $this->searchInValue = $v->serch_in;
+                $this->searchInValue = $v->search_in;
 
                 return $this->action(\array_merge($args, $v->getData(), ['action' => 'search']), $method, $advanced);
             }
@@ -248,7 +248,7 @@ class Search extends Page
                             'size'     => \min(\count($this->listForOptions), 10),
                             'multiple' => true,
                         ],
-                        'serch_in' => [
+                        'search_in' => [
                             'class'   => ['w3'],
                             'type'    => 'select',
                             'options' => [
@@ -256,7 +256,7 @@ class Search extends Page
                                 1 => __('Message only'),
                                 2 => __('Topic only'),
                             ],
-                            'value'   => $v->serch_in ?? 0,
+                            'value'   => $v->search_in ?? 0,
                             'caption' => 'Search in',
                         ],
                         [

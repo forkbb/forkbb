@@ -192,7 +192,7 @@ class Routing
                 );
                 $r->add(
                     $r::GET,
-                    '/search/advanced[/{keywords}/{author}/{forums}/{serch_in:\d}/{sort_by:\d}/{sort_dir:\d}/{show_as:\d}[/{page|i:[1-9]\d*}]]',
+                    '/search/advanced[/{keywords}/{author}/{forums}/{search_in:\d}/{sort_by:\d}/{sort_dir:\d}/{show_as:\d}[/{page|i:[1-9]\d*}]]',
                     'Search:viewAdvanced',
                     'SearchAdvanced'
                 );

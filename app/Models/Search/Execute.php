@@ -38,7 +38,7 @@ class Execute extends Method
         $structure = $this->buildSelect($v, $forumIdxs);
 
         $key = $this->c->user->group_id . '-' .
-               $v->serch_in .
+               $v->search_in .
                $v->sort_by .
                $v->sort_dir .
                $this->model->showAs . '-' .
@@ -306,7 +306,7 @@ class Execute extends Method
 
         $this->model->showAs = $v->show_as;
 
-        switch ($v->serch_in) {
+        switch ($v->search_in) {
             case 1:
                 $out['queryIndxRaw']  = 'SELECT post_id FROM ::search_matches WHERE word_id IN (?p:list) AND subject_match=0';
                 $out['queryLikeRaw']  = "SELECT id FROM ::posts WHERE id IN (?p:list) AND message {$like} ?s:word ESCAPE '#'";
