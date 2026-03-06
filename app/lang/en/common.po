@@ -156,6 +156,9 @@ msgstr "Registered"
 msgid "Subject"
 msgstr "Subject"
 
+msgid "Hashtags"
+msgstr "Hashtags"
+
 msgid "Message"
 msgstr "Message"
 

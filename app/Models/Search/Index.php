@@ -22,10 +22,23 @@ class Index extends Method
     public function index(Post $post, string $mode = 'add'): void
     {
         //???? пост после валидации должен иметь дерево тегов
-        $mesWords = $this->model->words(\mb_strtolower($this->c->Parser->getText(), 'UTF-8'), true);
-        $subWords = $post->id === $post->parent->first_post_id
-            ? $this->model->words(\mb_strtolower($post->parent->subject, 'UTF-8'), true)
-            : [];
+        $mesgWords = $this->model->words(\mb_strtolower($this->c->Parser->getText(), 'UTF-8'), true);
+
+        if ($post->id === $post->parent->first_post_id) {
+            $subj = $post->parent->subject;
+
+            if (
+                1 === $this->c->config->b_topic_hashtags
+                && ! empty($post->parent->hashtags)
+            ) {
+                $subj .= ' #' . \str_replace(' ', ' #', $post->parent->hashtags);
+            }
+
+            $subjWords = $this->model->words(\mb_strtolower($subj, 'UTF-8'), true);
+
+        } else {
+            $subjWords = [];
+        }
 
         if ('add' !== $mode) {
             $vars = [
@@ -38,15 +51,15 @@ class Index extends Method
 
             $stmt = $this->c->DB->query($query, $vars);
 
-            $mesCurWords = [];
-            $subCurWords = [];
+            $mesgCurWords = [];
+            $subjCurWords = [];
 
             while ($row = $stmt->fetch()) {
                 if ($row['subject_match']) {
-                    $subCurWords[$row['word']] = $row['id'];
+                    $subjCurWords[$row['word']] = $row['id'];
 
                 } else {
-                    $mesCurWords[$row['word']] = $row['id'];
+                    $mesgCurWords[$row['word']] = $row['id'];
                 }
             }
         }
@@ -54,20 +67,20 @@ class Index extends Method
         $words = [];
 
         if ('edit' === $mode) {
-            $words['add']['p'] = \array_diff($mesWords, \array_keys($mesCurWords));
-            $words['add']['s'] = \array_diff($subWords, \array_keys($subCurWords));
-            $words['del']['p'] = \array_diff_key($mesCurWords, \array_flip($mesWords));
-            $words['del']['s'] = \array_diff_key($subCurWords, \array_flip($subWords));
+            $words['add']['p'] = \array_diff($mesgWords, \array_keys($mesgCurWords));
+            $words['add']['s'] = \array_diff($subjWords, \array_keys($subjCurWords));
+            $words['del']['p'] = \array_diff_key($mesgCurWords, \array_flip($mesgWords));
+            $words['del']['s'] = \array_diff_key($subjCurWords, \array_flip($subjWords));
 
         } elseif ('merge' === $mode) {
-            $words['add']['p'] = \array_diff($mesWords, \array_keys($mesCurWords));
-            $words['add']['s'] = \array_diff($subWords, \array_keys($subCurWords));
+            $words['add']['p'] = \array_diff($mesgWords, \array_keys($mesgCurWords));
+            $words['add']['s'] = \array_diff($subjWords, \array_keys($subjCurWords));
             $words['del']['p'] = [];
             $words['del']['s'] = [];
 
         } else {
-            $words['add']['p'] = $mesWords;
-            $words['add']['s'] = $subWords;
+            $words['add']['p'] = $mesgWords;
+            $words['add']['s'] = $subjWords;
             $words['del']['p'] = [];
             $words['del']['s'] = [];
         }

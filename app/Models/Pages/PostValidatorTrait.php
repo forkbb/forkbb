@@ -51,6 +51,38 @@ trait PostValidatorTrait
     }
 
     /**
+     * Дополнительная проверка hashtags
+     */
+    public function vCheckHashtags(Validator $v, string $hashtags): string
+    {
+        $hashtags = \str_replace(',' , ' ', $hashtags);
+        $list     = \explode(' ', $hashtags);
+        $result   = [];
+        $error    = false;
+
+        foreach ($list as $tag) {
+            $tag = \ltrim(\trim($tag), '#');
+
+            if ('' === $tag) {
+                continue;
+            }
+
+            if (! \preg_match('%^(?=.{3})[\p{L}\p{N}]+(?:_+[\p{L}\p{N}]+)*$%uD', $tag)) {
+                $error = true;
+            }
+
+            $key          = '#' . \mb_strtolower($tag, 'UTF-8');
+            $result[$key] = $tag;
+        }
+
+        if ($error) {
+            $v->addError('Hashtags format');
+        }
+
+        return \implode(' ', $result);
+    }
+
+    /**
      * Дополнительная проверка message
      */
     public function vCheckMessage(Validator $v, string $message, $attr, bool $power): string
@@ -218,6 +250,17 @@ trait PostValidatorTrait
         }
 
         if (
+            1 === $this->c->config->b_topic_hashtags
+            && $first
+            && $notPM
+        ) {
+            $ruleHashtags = 'string:trim,spaces|check_hashtags|max:255';
+
+        } else {
+            $ruleHashtags = 'absent';
+        }
+
+        if (
             1 === $this->c->config->b_colored_subjects
             && $power
             && $notPM
@@ -294,11 +337,13 @@ trait PostValidatorTrait
                 'check_subject'  => [$this, 'vCheckSubject'],
                 'check_message'  => [$this, 'vCheckMessage'],
                 'check_timeout'  => [$this, 'vCheckTimeout'],
+                'check_hashtags' => [$this, 'vCheckHashtags'],
             ])->addRules([
                 'token'         => 'token:3600:' . $marker,
                 'email'         => $ruleEmail,
                 'username'      => $ruleUsername,
                 'subject'       => $ruleSubject,
+                'hashtags'      => $ruleHashtags,
                 'subject_color' => $ruleSubjectColor,
                 'stick_topic'   => $ruleStickTopic,
                 'stick_fp'      => $ruleStickFP,
@@ -324,7 +369,6 @@ trait PostValidatorTrait
                 'message.check_message' => $power,
                 'email.email'           => $this->user,
             ])->addMessages([
-                'username.login' => 'Login format',
             ]);
 
         if (

@@ -1651,4 +1651,20 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.93 to rev.94
+     */
+    protected function stageNumber93(array $args): ?int
+    {
+        $config = $this->c->config;
+
+        $config->b_topic_hashtags ??= 0;
+
+        $config->save();
+
+        $this->c->DB->addField('::topics', 'hashtags', 'VARCHAR(255)', false, '', null, 'subject_color');
+
+        return null;
+    }
 }

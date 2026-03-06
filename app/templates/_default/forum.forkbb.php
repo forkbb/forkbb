@@ -162,6 +162,17 @@
             @if (false !== $topic->hasUnread || false !== $topic->hasNew)
                   <small>)</small>
             @endif
+            @if ($topic->hashtagsList)
+                  <span class="f-thashtags">
+                @foreach ($topic->hashtagsList as $hashtag => $link)
+                    @if (null === $link)
+                    <span class="f-hashtag">{{ $hashtag }}</span>
+                    @else
+                    <a class="f-hashtag" href="{{ $link }}">{{ $hashtag }}</a>
+                    @endif
+                @endforeach
+                  </span>
+            @endif
                 </p>
                 <p class="f-finfo-p">
                   <span class="f-cmposter">{!! __(['by %s', $topic->poster]) !!}</span>

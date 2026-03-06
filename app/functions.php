@@ -19,7 +19,7 @@ use InvalidArgumentException;
 \ini_set('log_errors', '1');
 
 define('FORK_START', $_SERVER['REQUEST_TIME_FLOAT'] ?? \microtime(true));
-define('FORK_REVISION', 93);
+define('FORK_REVISION', 94);
 
 \setlocale(\LC_ALL, 'C');
 \mb_language('uni');

@@ -49,6 +49,7 @@ class Post extends Page
             $vars                  = $draft->form_data;
             $vars['subject']       = $draft->subject;
             $vars['subject_color'] = $draft->subject_color;
+            $vars['hashtags']      = $draft->hashtags;
             $vars['message']       = $draft->message;
             $vars['hide_smilies']  = $draft->hide_smilies;
             $args['_vars']         = $vars;
@@ -273,7 +274,7 @@ class Post extends Page
         $draft->subject      = $v->subject ?? '';
         $draft->message      = $v->message;
         $draft->hide_smilies = $v->hide_smilies ? 1 : 0;
-        $draft->form_data    = $v->getData(false, ['token', 'subject', 'subject_color', 'message', 'hide_smilies', 'preview', 'submit', 'draft', 'pre_mod', 'nekot']);
+        $draft->form_data    = $v->getData(false, ['token', 'subject', 'subject_color', 'hashtags', 'message', 'hide_smilies', 'preview', 'submit', 'draft', 'pre_mod', 'nekot']);
         $draft->poster_ip    = $this->user->ip;
         $draft->user_agent   = \mb_substr($this->user->userAgent, 0, 255, 'UTF-8');
         $draft->pre_mod      = null !== $v->pre_mod ? 1 : 0;
@@ -375,6 +376,10 @@ class Post extends Page
 
             if (\is_int($v->subject_color)) {
                 $topic->subject_color = $v->subject_color;
+            }
+
+            if (\is_string($v->hashtags)) {
+                $topic->hashtags = $v->hashtags;
             }
 
             $this->c->topics->insert($topic);

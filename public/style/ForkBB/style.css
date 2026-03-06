@@ -48,6 +48,7 @@
   --bg-reaction: hsl(0, 0%, 16%);
   --br-reaction: hsl(0, 0%, 34%);
   --c-post-cf-n: hsl(42, 100%, 50%);
+  --c-hashtag: hsl(0, 0%, 50%);
 }
 
 @media (prefers-color-scheme: light) {
@@ -101,6 +102,7 @@
     --bg-reaction: hsl(0, 0%, 90%);
     --br-reaction: hsl(0, 0%, 66%);
     --c-post-cf-n: hsl(42, 100%, 35%);
+    --c-hashtag: hsl(0, 0%, 50%);
   }
 }
 
@@ -1548,6 +1550,31 @@ body,
 
 #fork .f-ftlist .f-clttime {
   display: inline;
+}
+
+#fork .f-thashtags::before {
+  display: inline-block;
+  font-size: 0.8125rem;
+  color: var(--c-hashtag);
+  content: "#";
+}
+
+#fork .f-hashtag {
+  display: inline-block;
+  font-size: 0.8125rem;
+  color: var(--c-hashtag);
+  text-decoration: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+#fork .f-hashtag:hover,
+#fork .f-hashtag:focus {
+  color: var(--c-fprimary);
+  text-decoration: none;
 }
 
 @media screen and (min-width: 50rem) {

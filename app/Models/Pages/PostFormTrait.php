@@ -131,6 +131,19 @@ trait PostFormTrait
             $autofocus = null;
 
             if (
+                1 === $this->c->config->b_topic_hashtags
+                && $notPM
+            ) {
+                $fieldset['hashtags'] = [
+                    'class'     => ['w0'],
+                    'type'      => 'text',
+                    'maxlength' => 255,
+                    'caption'   => 'Hashtags',
+                    'value'     => $vars['hashtags'] ?? null,
+                ];
+            }
+
+            if (
                 1 === $this->c->config->b_colored_subjects
                 && $power
                 && $notPM

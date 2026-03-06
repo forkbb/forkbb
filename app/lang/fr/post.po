@@ -143,3 +143,6 @@ msgstr "Subject color"
 
 msgid "Color number %s"
 msgstr "Color N %s"
+
+msgid "Hashtags format"
+msgstr "Hashtags can consist of letters and numbers. Underscores may appear within a hashtag. Each hashtag must be at least three characters long."

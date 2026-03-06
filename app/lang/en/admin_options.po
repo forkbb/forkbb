@@ -518,3 +518,9 @@ msgstr "Colored topic titles"
 
 msgid "Colored topic titles help"
 msgstr "Allow administrators and moderators to set a color from the list for each topic title."
+
+msgid "Topic hashtags label"
+msgstr "Topic hashtags"
+
+msgid "Topic hashtags help"
+msgstr "Allow adding hashtags to topics when creating/editing them. These hashtags will appear in topic lists."

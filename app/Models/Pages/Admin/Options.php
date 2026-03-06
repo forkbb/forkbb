@@ -126,6 +126,7 @@ class Options extends Admin
                     'a_reaction_types'        => 'required|array|check_type',
                     'b_show_user_reaction'    => 'required|integer|in:0,1',
                     'b_colored_subjects'      => 'required|integer|in:0,1',
+                    'b_topic_hashtags'        => 'required|integer|in:0,1',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
@@ -513,6 +514,13 @@ class Options extends Admin
                     'values'  => $yn,
                     'caption' => 'Colored topic titles label',
                     'help'    => 'Colored topic titles help',
+                ],
+                'b_topic_hashtags' => [
+                    'type'    => 'radio',
+                    'value'   => $config->b_topic_hashtags,
+                    'values'  => $yn,
+                    'caption' => 'Topic hashtags label',
+                    'help'    => 'Topic hashtags help',
                 ],
             ],
         ];

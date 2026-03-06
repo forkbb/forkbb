@@ -25,7 +25,7 @@ class RebuildIndex extends Action
             ':limit' => $limit,
             ':forum' => FORK_SFID,
         ];
-        $query = 'SELECT p.id, p.message, t.id as topic_id, t.subject, t.first_post_id, t.forum_id
+        $query = 'SELECT p.id, p.message, t.id as topic_id, t.subject, t.hashtags, t.first_post_id, t.forum_id
             FROM ::posts AS p
             INNER JOIN ::topics AS t ON t.id=p.topic_id AND t.forum_id!=?i:forum
             WHERE p.id>=?i:start
@@ -48,6 +48,7 @@ class RebuildIndex extends Action
                 $topic = $this->c->topics->create([
                     'id'            => $row['topic_id'],
                     'subject'       => $row['subject'],
+                    'hashtags'      => $row['hashtags'],
                     'first_post_id' => $row['first_post_id'],
                     'forum_id'      => $row['forum_id'],
                 ]);

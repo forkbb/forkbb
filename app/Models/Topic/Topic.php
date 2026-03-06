@@ -768,4 +768,45 @@ class Topic extends DataModel
             ? (int) $this->subject_color
             : 0;
     }
+
+    /**
+     * Вовзращает список хештегов
+     */
+    protected function gethashtagsList(): array
+    {
+        if (
+            1 !== $this->c->config->b_topic_hashtags
+            || empty($this->hashtags)
+        ) {
+            return [];
+        }
+
+        $hashtags = \explode(' ', $this->hashtags);
+        $result   = [];
+
+        if (
+            1 === $this->c->user->g_search
+            && ! $this->c->user->isBot
+        ) {
+            foreach ($hashtags as $hashtag) {
+                $result[$hashtag] = $this->c->Router->link('SearchAdvanced', [
+                    'keywords'  => "#$hashtag",
+                    'author'    => '*',
+                    'forums'    => '*',
+                    'search_in' => 0,
+                    'sort_by'   => 0,
+                    'sort_dir'  => 0,
+                    'show_as'   => 1,
+                    'page'      => 1,
+                ]);
+            }
+
+        } else {
+            foreach ($hashtags as $hashtag) {
+                $result[$hashtag] = null;
+            }
+        }
+
+        return $result;
+    }
 }

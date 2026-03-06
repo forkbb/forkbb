@@ -156,6 +156,9 @@ msgstr "Дата регистрации"
 msgid "Subject"
 msgstr "Заголовок"
 
+msgid "Hashtags"
+msgstr "Хештеги"
+
 msgid "Message"
 msgstr "Сообщение"
 

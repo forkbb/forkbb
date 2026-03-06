@@ -95,6 +95,7 @@ class Edit extends Page
                 'message'       => $post->message,
                 'subject'       => $topic->subject,
                 'subject_color' => $topic->subject_color,
+                'hashtags'      => $topic->hashtags,
                 'hide_smilies'  => $post->hide_smilies,
                 'stick_topic'   => $topic->sticky,
                 'stick_fp'      => $topic->stick_fp,
@@ -221,6 +222,10 @@ class Edit extends Page
 
             if (\is_int($v->subject_color)) {
                 $topic->subject_color = $v->subject_color;
+            }
+
+            if (\is_string($v->hashtags)) {
+                $topic->hashtags = $v->hashtags;
             }
 
             // выделение темы

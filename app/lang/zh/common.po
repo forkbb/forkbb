@@ -156,6 +156,9 @@ msgstr "注册时间"
 msgid "Subject"
 msgstr "主题"
 
+msgid "Hashtags"
+msgstr "Hashtags"
+
 msgid "Message"
 msgstr "消息"
 
