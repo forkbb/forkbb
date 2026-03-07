@@ -457,12 +457,6 @@ body,
   text-decoration: none;
 }
 
-/*#fork a:active,
-#fork .f-btn:active {
-  color: var(--c-active);
-  background-color: var(--bg-active);
-}*/
-
 #fork .f-inline > dt,
 #fork .f-inline > dd {
   display: inline;
@@ -1502,19 +1496,20 @@ body,
 }
 
 #fork .f-ficon::before {
+  display: inline-block;
   font: 400 1.5rem "fa";
-  content: "\f15b"; /* "\f086"; */
+  content: "\f15b";
   color: var(--c-icon-sub);
 }
 
 #fork .f-fnew .f-ficon::before {
   font-weight: 900;
-  content: "\f15b"; /* "\f086"; */
+  content: "\f15b";
   color: var(--c-icon-new);
 }
 
 #fork .f-fredir .f-ficon::before {
-  content: "\f1d8"; /* "\f0c6"; */
+  content: "\f1d8";
 }
 
 #fork-forum .f-ficon::before {
@@ -1674,6 +1669,7 @@ body,
 }
 
 #fork .f-tpages .f-page {
+  display: inline-block;
   border: 0.0625rem solid var(--br-fprimary);
   padding: 0.0625rem 0.3125rem;
   font-size: 0.875rem;
@@ -1698,29 +1694,33 @@ body,
   background-color: var(--bg-tclosed);
 }
 
+#fork .f-fclosed .f-ficon::before {
+  color: var(--c-tclosed);
+}
+
 #fork .f-tsticky::before {
+  display: inline-block;
   font: 900 0.875rem "fa";
   content: "\f08d";
   color: var(--c-tsticky);
 }
 
-#fork .f-fclosed .f-ficon::before {
-  color: var(--c-tclosed);
-}
-
 #fork .f-tclosed::before {
+  display: inline-block;
   font: 900 0.875rem "fa";
   content: "\f023";
   color: var(--c-tclosed);
 }
 
 #fork .f-tpoll::before {
+  display: inline-block;
   font: 900 0.875rem "fa";
   content: "\f681";
   color: var(--c-tpoll);
 }
 
 #fork .f-tsolved::before {
+  display: inline-block;
   font: 900 0.875rem "fa";
   content: "\f00c";
   color: var(--c-tsolved);
