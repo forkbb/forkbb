@@ -78,12 +78,6 @@ abstract class Page extends Model
         $this->user      = $this->c->user;
         $this->userRules = $this->c->userRules;
 
-        $this->pageHeader('mainStyle', 'link', 10000, [
-            'rel'  => 'stylesheet',
-            'type' => 'text/css',
-            'href' => $this->publicLink("/style/{$this->user->style}/style.css"),
-        ]);
-
         $now = \gmdate('D, d M Y H:i:s') . ' GMT';
 
         $this->header('Cache-Control', 'private, no-cache')
@@ -107,33 +101,6 @@ abstract class Page extends Model
             $this->user->u_pm_flash = 0;
 
             $this->c->users->update($this->user);
-        }
-
-        if (1 === $this->c->config->b_colored_subjects) {
-            $this->pageHeader('topicTitlesColors', 'link', 1000, [
-                'rel'  => 'stylesheet',
-                'type' => 'text/css',
-                'href' => $this->publicLink("/style/{$this->user->style}/colors.css", true)
-                    ?: $this->publicLink("/style/other/colors.css"),
-            ]);
-        }
-
-        if (2 === $this->c->curReqVisible) {
-            $this->pageHeader('test', 'link', 10001, [
-                'rel'  => 'stylesheet',
-                'type' => 'text/css',
-                'href' => $this->c->Router->link('AdmixStyle'),
-            ]);
-        }
-
-        $this->pageHeader('commonJS', 'script', 10000, [
-            'src' => $this->publicLink('/js/common.js'),
-        ]);
-
-        if ($this->useMediaJS) {
-            $this->pageHeader('mediaJS', 'script', 10000, [
-                'src' => $this->publicLink('/js/media.js'),
-            ]);
         }
 
         $event       = new Event('Models\Page:prepare:after');
@@ -415,6 +382,39 @@ abstract class Page extends Model
      */
     protected function getpageHeaders(): array
     {
+        $this->pageHeader('mainStyle', 'link', 10000, [
+            'rel'  => 'stylesheet',
+            'type' => 'text/css',
+            'href' => $this->publicLink("/style/{$this->user->style}/style.css"),
+        ]);
+
+        if (1 === $this->c->config->b_colored_subjects) {
+            $this->pageHeader('topicTitlesColors', 'link', 1000, [
+                'rel'  => 'stylesheet',
+                'type' => 'text/css',
+                'href' => $this->publicLink("/style/{$this->user->style}/colors.css", true)
+                    ?: $this->publicLink("/style/other/colors.css"),
+            ]);
+        }
+
+        if (2 === $this->c->curReqVisible) {
+            $this->pageHeader('test', 'link', 10001, [
+                'rel'  => 'stylesheet',
+                'type' => 'text/css',
+                'href' => $this->c->Router->link('AdmixStyle'),
+            ]);
+        }
+
+        $this->pageHeader('commonJS', 'script', 10000, [
+            'src' => $this->publicLink('/js/common.js'),
+        ]);
+
+        if ($this->useMediaJS) {
+            $this->pageHeader('mediaJS', 'script', 10000, [
+                'src' => $this->publicLink('/js/media.js'),
+            ]);
+        }
+
         if (1 === $this->user->g_search) {
             $this->pageHeader('opensearch', 'link', 0, [
                 'rel'   => 'search',
