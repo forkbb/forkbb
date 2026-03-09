@@ -142,7 +142,7 @@ class AboutMe extends Profile
             $this->c->posts->insert($post);
             $this->c->topics->update($topic->calcStat());
 
-            if ($this->c->userRules->useUpload) {
+            if ($this->userRules->useUpload) {
                 $this->c->attachments->syncWithPost($post);
             }
 
@@ -189,7 +189,7 @@ class AboutMe extends Profile
             $this->c->topics->update($topic);
 
             if ($calcPost) {
-                if ($this->c->userRules->useUpload) {
+                if ($this->userRules->useUpload) {
                     $this->c->attachments->syncWithPost($post, true);
                 }
 

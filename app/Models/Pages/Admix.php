@@ -118,7 +118,7 @@ class Admix extends Page
      */
     protected function admixUpload(): Page
     {
-        if (! $this->c->userRules->useUpload) {
+        if (! $this->userRules->useUpload) {
             return $this->returnJson(['error' => 'No rights to upload']);
         }
 

@@ -65,7 +65,7 @@ class Drafts extends Page
     public function delete(array $args, string $method): Page
     {
         if (
-            ! $this->c->userRules->useDraft
+            ! $this->userRules->useDraft
             || ! ($draft = $this->c->drafts->load($args['did'])) instanceof Draft
             || $draft->poster_id !== $this->user->id
         ) {
