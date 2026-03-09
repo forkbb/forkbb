@@ -103,12 +103,13 @@ abstract class Page extends Model
             $this->c->users->update($this->user);
         }
 
+        $this->boardNavigation();
+        $this->iswevMessages();
+
         $event       = new Event('Models\Page:prepare:after');
         $event->page = $this;
 
         $this->c->dispatcher->dispatch($event);
-        $this->boardNavigation();
-        $this->iswevMessages();
     }
 
     /**
