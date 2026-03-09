@@ -425,6 +425,11 @@ abstract class Page extends Model
             ]);
         }
 
+        $event       = new Event('Models\Page:getpageHeaders:after');
+        $event->page = $this;
+
+        $this->c->dispatcher->dispatch($event);
+
         \uasort($this->pageHeaders, function (array $a, array $b) {
             return $b['weight'] <=> $a['weight'];
         });
