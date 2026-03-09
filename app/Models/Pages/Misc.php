@@ -180,8 +180,8 @@ class Misc extends Page
             }
 
             $topic->solution       = $args['id'];
-            $topic->solution_wa    = $this->c->user->username;
-            $topic->solution_wa_id = $this->c->user->id;
+            $topic->solution_wa    = $this->user->username;
+            $topic->solution_wa_id = $this->user->id;
             $topic->solution_time  = \time();
         }
 

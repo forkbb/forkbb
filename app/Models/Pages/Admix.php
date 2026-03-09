@@ -98,7 +98,7 @@ class Admix extends Page
      */
     public function vCheckAttach(Validator $v, array $files): array
     {
-        $exts   = \array_flip(\explode(',', $this->c->user->g_up_ext));
+        $exts   = \array_flip(\explode(',', $this->user->g_up_ext));
         $result = [];
 
         foreach ($files as $file) {
@@ -126,7 +126,7 @@ class Admix extends Page
             ->addValidators([
                 'check_attach' => [$this, 'vCheckAttach'],
             ])->addRules([
-                'files' => "required|file:multiple|max:{$this->c->user->g_up_size_kb}|check_attach",
+                'files' => "required|file:multiple|max:{$this->user->g_up_size_kb}|check_attach",
             ])->addAliases([
             ])->addArguments([
             ])->addMessages([
