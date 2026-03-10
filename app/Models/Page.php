@@ -45,6 +45,12 @@ abstract class Page extends Model
         parent::__construct($container);
         $container->Lang->load('common');
 
+        $this->config       = $container->config;
+        $this->user         = $container->user;
+        $this->userRules    = $container->userRules;
+        $this->fRootLink    = $container->Router->link('Index'); // ????
+        $this->mDescription = $this->config->s_meta_desc;
+
         $this->identifier   = 'unknown';      # string|array Идентификатор(ы) для установки классов элемента #fork
         $this->fIndex       = self::FI_INDEX; # string       Указатель на активный пункт навигации
         $this->httpStatus   = 200;            # int          HTTP статус ответа для данной страницы
@@ -57,26 +63,6 @@ abstract class Page extends Model
 //      $this->robots       = '';             # string       Переменная для meta name="robots"
 //      $this->canonical    = '';             # string       Переменная для link rel="canonical"
         $this->hhsLevel     = 'common';       # string       Ключ для $c->HTTP_HEADERS (для вывода заголовков HTTP из конфига)
-
-        $this->fTitle       = $container->config->o_board_title;
-        $this->fDescription = $container->config->o_board_desc;
-        $this->fRootLink    = $container->Router->link('Index');
-
-        $this->mDescription = $this->c->config->s_meta_desc;
-
-        if (! empty($this->c->config->a_og_image['file'])) {
-            $this->mOgImage  = $this->c->PUBLIC_URL . '/img/og/' . $this->c->config->a_og_image['file'];
-            $this->mOgImageX = $this->c->config->a_og_image['width'] ?? null;
-            $this->mOgImageY = $this->c->config->a_og_image['height'] ?? null;
-        }
-
-        if (1 === $container->config->b_announcement) {
-            $this->fAnnounce = $container->config->o_announcement_message;
-        }
-
-        // передача текущего юзера и его правил в шаблон
-        $this->user      = $this->c->user;
-        $this->userRules = $this->c->userRules;
 
         $now = \gmdate('D, d M Y H:i:s') . ' GMT';
 
@@ -101,6 +87,12 @@ abstract class Page extends Model
             $this->user->u_pm_flash = 0;
 
             $this->c->users->update($this->user);
+        }
+
+        if (! empty($this->c->config->a_og_image['file'])) {
+            $this->mOgImage  = $this->c->PUBLIC_URL . '/img/og/' . $this->c->config->a_og_image['file'];
+            $this->mOgImageX = $this->c->config->a_og_image['width'] ?? null;
+            $this->mOgImageY = $this->c->config->a_og_image['height'] ?? null;
         }
 
         $this->boardNavigation();
@@ -421,7 +413,7 @@ abstract class Page extends Model
                 'rel'   => 'search',
                 'type'  => 'application/opensearchdescription+xml',
                 'href'  => $this->c->Router->link('OpenSearch'),
-                'title' => $this->fTitle,
+                'title' => $this->config->o_board_title,
             ]);
         }
 

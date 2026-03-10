@@ -27,7 +27,7 @@
         @if ($p->mDescription)
   <meta property="og:description" content="{{! $p->mDescription !}}">
         @endif
-  <meta property="og:site_name" content="{{ $p->fTitle }}">
+  <meta property="og:site_name" content="{{ $p->config->o_board_title }}">
     @endif
 @endif
 @foreach ($p->pageHeaders as $pageHeader)
@@ -45,22 +45,22 @@
     <!-- PRE headerBefore -->
     <header id="fork-header">
 @isset ($h1InHeader)
-      <h1 id="id-fhth1">{{ $p->fTitle }}</h1>
+      <h1 id="id-fhth1">{{ $p->config->o_board_title }}</h1>
 @else
-      <p id="id-fhth1"><a id="id-fhtha" rel="home" href="{{ $p->fRootLink }}">{{ $p->fTitle }}</a></p>
+      <p id="id-fhth1"><a id="id-fhtha" rel="home" href="{{ $p->fRootLink }}">{{ $p->config->o_board_title }}</a></p>
 @endisset
-@if ('' != $p->fDescription)
-      <p id="id-fhtdesc">{!! $p->fDescription !!}</p>
+@if ($p->config->o_board_desc)
+      <p id="id-fhtdesc">{!! $p->config->o_board_desc !!}</p>
 @endif
     </header>
     <!-- PRE headerAfter -->
     <!-- PRE mainBefore -->
     <main id="fork-main">
-@if ($p->fAnnounce)
+@if (1 === $p->config->b_announcement)
     <aside id="fork-announce">
       <!-- PRE announceStart -->
       <p class="f-sim-header">{!! __('Announcement') !!}</p>
-      <p id="id-facontent">{!! $p->fAnnounce !!}</p>
+      <p id="id-facontent">{!! $p->config->o_announcement_message !!}</p>
       <!-- PRE announceEnd -->
     </aside>
 @endif
