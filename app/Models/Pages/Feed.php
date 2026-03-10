@@ -73,6 +73,7 @@ class Feed extends Page
             ];
 
             $items = $this->c->posts->feed($topic);
+
             if (! empty($items)) {
                 foreach ($items as $cur) {
                     $item  = [

@@ -19,7 +19,7 @@
       <p>{!! __('Ban message for you') !!}</p>
       <p><b>{{ $p->ban['message'] }}</b></p>
 @endif
-      <p>{!! __(['Ban message contact %s', $p->adminEmail]) !!}</p>
+      <p>{!! __(['Ban message contact %s', $p->config->o_admin_email]) !!}</p>
     </div>
     <!-- PRE mainAfter -->
     <!-- PRE end -->

@@ -27,7 +27,6 @@ class Maintenance extends Page
         $this->httpStatus         = 503;
         $this->nameTpl            = 'maintenance';
         $this->titles             = 'Maintenance';
-        $this->maintenanceMessage = $this->config->o_maintenance_message;
 
         $this->header('Retry-After', '3600');
     }

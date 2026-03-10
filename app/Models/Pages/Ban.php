@@ -28,7 +28,6 @@ class Ban extends Page
         $this->nameTpl    = 'ban';
         $this->titles     = 'Info';
         $this->ban        = $user->banInfo;
-        $this->adminEmail = $this->config->o_admin_email;
         $this->bannedIp   = $user->isGuest;
 
         return $this;

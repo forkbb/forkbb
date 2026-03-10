@@ -4,7 +4,7 @@
         <section class="f-iswev f-info">
           <h2>Info message</h2>
           <ul>
-            <li class="f-icontent">{!! $p->maintenanceMessage !!}</li>
+            <li class="f-icontent">{!! $p->config->o_maintenance_message !!}</li>
           </ul>
         </section>
       </div>
