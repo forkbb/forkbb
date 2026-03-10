@@ -43,9 +43,9 @@ class Maintenance extends Admin
                 ]);
 
             if ($v->validation($_POST)) {
-                $this->c->config->b_maintenance         = $v->b_maintenance;
-                $this->c->config->o_maintenance_message = $v->o_maintenance_message;
-                $this->c->config->save();
+                $this->config->b_maintenance         = $v->b_maintenance;
+                $this->config->o_maintenance_message = $v->o_maintenance_message;
+                $this->config->save();
 
                 return $this->c->Redirect->page('AdminMaintenance')->message('Data updated redirect', FORK_MESS_SUCC);
             }
@@ -163,7 +163,7 @@ class Maintenance extends Admin
         ];
 
         if (
-            1 !== $this->c->config->b_maintenance
+            1 !== $this->config->b_maintenance
             || $this->c->MAINTENANCE_OFF
         ) {
             $form['sets']['maintenance-only'] = [
@@ -236,7 +236,7 @@ class Maintenance extends Admin
     public function rebuild(array $args, string $method): Page
     {
         if (
-            1 !== $this->c->config->b_maintenance
+            1 !== $this->config->b_maintenance
             || $this->c->MAINTENANCE_OFF
         ) {
             return $this->c->Message->message('Maintenance only');

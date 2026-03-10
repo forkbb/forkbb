@@ -57,7 +57,7 @@ class Redirect extends Page
         // переадресация без вывода сообщения
         if (
             $timeout < 1
-            && $this->c->config->i_redirect_delay < 1
+            && $this->config->i_redirect_delay < 1
         ) {
             return $this;
         }
@@ -66,7 +66,7 @@ class Redirect extends Page
         $this->robots  = 'noindex';
         $this->fIswev  = [$status, $message];
         $this->fIswev  = [$status, ['Redirecting...', $this->link]];
-        $this->timeout = $timeout > 0 ? $timeout : $this->c->config->i_redirect_delay;
+        $this->timeout = $timeout > 0 ? $timeout : $this->config->i_redirect_delay;
 
         return $this;
     }

@@ -48,7 +48,7 @@ class Reaction extends Page
         $nameKey = [];
         $rules   = [];
 
-        foreach ($this->c->config->a_reaction_types as $key => $type) {
+        foreach ($this->config->a_reaction_types as $key => $type) {
             if (true !== $type[1]) {
                 continue;
             }

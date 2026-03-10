@@ -39,10 +39,10 @@ class Censoring extends Admin
                 ]);
 
             if ($v->validation($_POST)) {
-                $this->c->config->b_censoring       = $v->b_censoring;
-                $this->c->config->i_censoring_count = $v->i_censoring_count;
+                $this->config->b_censoring       = $v->b_censoring;
+                $this->config->i_censoring_count = $v->i_censoring_count;
 
-                $this->c->config->save();
+                $this->config->save();
                 $this->c->censorship->save($v->form);
 
                 return $this->c->Redirect->page('AdminCensoring')->message('Data updated redirect', FORK_MESS_SUCC);
@@ -75,7 +75,7 @@ class Censoring extends Admin
                     'fields' => [
                         'b_censoring' => [
                             'type'    => 'radio',
-                            'value'   => $this->c->config->b_censoring,
+                            'value'   => $this->config->b_censoring,
                             'values'  => [1 => __('Yes'), 0 => __('No')],
                             'caption' => 'Censor words label',
                             'help'    => 'Censor words help',
@@ -84,7 +84,7 @@ class Censoring extends Admin
                             'type'    => 'number',
                             'min'     => '0',
                             'max'     => '999',
-                            'value'   => $this->c->config->i_censoring_count,
+                            'value'   => $this->config->i_censoring_count,
                             'caption' => 'Censor words count label',
                             'help'    => 'Censor words count help',
                         ],

@@ -91,7 +91,7 @@ class Userlist extends Page
 
             if (
                 \preg_match('%[\x80-\xFF]%', $v->name)
-                && ! $this->c->config->insensitive()
+                && ! $this->config->insensitive()
             ) {
                 $this->fIswev = [FORK_MESS_INFO, 'The search may be case sensitive'];
             }
@@ -102,15 +102,15 @@ class Userlist extends Page
         $ids    = $this->c->users->filter($filters, $order);
         $number = \count($ids);
         $page   = $args['page'] ?? 1;
-        $pages  = (int) \ceil(($number ?: 1) / $this->c->config->i_disp_users);
+        $pages  = (int) \ceil(($number ?: 1) / $this->config->i_disp_users);
 
         if ($page > $pages) {
             return $this->c->Message->message('Not Found', true, 404);
         }
 
         if ($number) {
-            $this->startNum = ($page - 1) * $this->c->config->i_disp_users;
-            $ids            = \array_slice($ids, $this->startNum, $this->c->config->i_disp_users);
+            $this->startNum = ($page - 1) * $this->config->i_disp_users;
+            $ids            = \array_slice($ids, $this->startNum, $this->config->i_disp_users);
             $this->userList = $this->c->users->loadByIds($ids);
 
             $links = [];

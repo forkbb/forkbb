@@ -141,7 +141,7 @@ class Email extends Profile
                         );
                         $tplData = [
                             'fRootLink' => $this->c->Router->link('Index'),
-                            'fMailer'   => __(['Mailer', $this->c->config->o_board_title]),
+                            'fMailer'   => __(['Mailer', $this->config->o_board_title]),
                             'username'  => $this->curUser->username,
                             'link'      => $link,
                         ];
@@ -153,7 +153,7 @@ class Email extends Profile
                                 ->setFolder($this->c->DIR_LANG)
                                 ->setLanguage($this->curUser->language)
                                 ->setTo($v->new_email, $this->curUser->username)
-                                ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
+                                ->setFrom($this->config->o_webmaster_email, $tplData['fMailer'])
                                 ->setTpl('activate_email.tpl', $tplData)
                                 ->send(9);
                         } catch (MailException $e) {
@@ -182,11 +182,11 @@ class Email extends Profile
                         $this->c->users->update($this->curUser);
 
                         return $this->c->Message
-                            ->message(['Activate email sent', $this->c->config->o_admin_email], false, 200);
+                            ->message(['Activate email sent', $this->config->o_admin_email], false, 200);
 
                     } else {
                         return $this->c->Message
-                            ->message(['Error mail', $this->c->config->o_admin_email], true, 200);
+                            ->message(['Error mail', $this->config->o_admin_email], true, 200);
                     }
                 }
             }

@@ -83,7 +83,7 @@ class Groups extends Admin
                         'basegroup' => [
                             'type'      => 'select',
                             'options'   => $this->groupsNew,
-                            'value'     => $this->c->config->i_default_user_group,
+                            'value'     => $this->config->i_default_user_group,
                             'caption'   => 'New group label',
                             'help'      => 'New group help',
                         ],
@@ -116,7 +116,7 @@ class Groups extends Admin
                         'defaultgroup' => [
                             'type'    => 'select',
                             'options' => $this->groupsDefault,
-                            'value'   => $this->c->config->i_default_user_group,
+                            'value'   => $this->config->i_default_user_group,
                             'caption' => 'Default group label',
                             'help'    => 'Default group help',
                         ],
@@ -152,8 +152,8 @@ class Groups extends Admin
             return $this->view();
         }
 
-        $this->c->config->i_default_user_group = $v->defaultgroup;
-        $this->c->config->save();
+        $this->config->i_default_user_group = $v->defaultgroup;
+        $this->config->save();
 
         return $this->c->Redirect->page('AdminGroups')->message('Default group redirect', FORK_MESS_SUCC);
     }
@@ -262,7 +262,7 @@ class Groups extends Admin
                 if (
                     ! $group->groupGuest
                     && ! $group->groupMember
-                    && $group->g_id !== $this->c->config->i_default_user_group
+                    && $group->g_id !== $this->config->i_default_user_group
                 ) {
                     $v->addRules([
                         'g_moderator'            => 'required|integer|in:0,1',
@@ -395,9 +395,9 @@ class Groups extends Admin
 
         foreach ($data as $attr => $value) {
             if ('a_guest_set' === $attr) {
-                $this->c->config->a_guest_set = $value;
+                $this->config->a_guest_set = $value;
 
-                $this->c->config->save();
+                $this->config->save();
 
             } else {
                 $group->$attr = $value;
@@ -505,7 +505,7 @@ class Groups extends Admin
             if (
                 ! $group->groupGuest
                 && ! $group->groupMember
-                && $group->g_id !== $this->c->config->i_default_user_group
+                && $group->g_id !== $this->config->i_default_user_group
             ) {
                 $fieldset = [];
                 $fieldset['g_moderator'] = [
@@ -677,35 +677,35 @@ class Groups extends Admin
             if ($group->groupGuest) {
                 $fieldset['a_guest_set[show_smilies]'] = [
                     'type'    => 'radio',
-                    'value'   => $this->c->config->a_guest_set['show_smilies'] ?? 0,
+                    'value'   => $this->config->a_guest_set['show_smilies'] ?? 0,
                     'values'  => $yn,
                     'caption' => 'Smilies label',
                     'help'    => 'Smilies info',
                 ];
                 $fieldset['a_guest_set[show_sig]'] = [
                     'type'    => 'radio',
-                    'value'   => $this->c->config->a_guest_set['show_sig'] ?? 0,
+                    'value'   => $this->config->a_guest_set['show_sig'] ?? 0,
                     'values'  => $yn,
                     'caption' => 'Sigs label',
                     'help'    => 'Sigs info',
                 ];
                 $fieldset['a_guest_set[show_avatars]'] = [
                     'type'    => 'radio',
-                    'value'   => $this->c->config->a_guest_set['show_avatars'] ?? 0,
+                    'value'   => $this->config->a_guest_set['show_avatars'] ?? 0,
                     'values'  => $yn,
                     'caption' => 'Avatars label',
                     'help'    => 'Avatars info',
                 ];
                 $fieldset['a_guest_set[show_img]'] = [
                     'type'    => 'radio',
-                    'value'   => $this->c->config->a_guest_set['show_img'] ?? 0,
+                    'value'   => $this->config->a_guest_set['show_img'] ?? 0,
                     'values'  => $yn,
                     'caption' => 'Images label',
                     'help'    => 'Images info',
                 ];
                 $fieldset['a_guest_set[show_img_sig]'] = [
                     'type'    => 'radio',
-                    'value'   => $this->c->config->a_guest_set['show_img_sig'] ?? 0,
+                    'value'   => $this->config->a_guest_set['show_img_sig'] ?? 0,
                     'values'  => $yn,
                     'caption' => 'Images sigs label',
                     'help'    => 'Images sigs info',
@@ -980,7 +980,7 @@ class Groups extends Admin
                     'movegroup' => [
                         'type'    => 'select',
                         'options' => $groups,
-                        'value'   => $this->c->config->i_default_user_group,
+                        'value'   => $this->config->i_default_user_group,
                         'caption' => 'Move users label',
                         'help'    => ['Move users info', $group->g_title, $count],
                     ],

@@ -144,13 +144,13 @@ class Edit extends Profile
 
                 if ($v->upload_avatar instanceof Image) {
                     $name   = $this->c->Secury->randomPass(8);
-                    $path   = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$name}.(webp|jpg|png|gif)";
+                    $path   = $this->c->DIR_PUBLIC . "{$this->config->o_avatars_dir}/{$name}.(webp|jpg|png|gif)";
                     $result = $v->upload_avatar
                         ->rename(true)
                         ->rewrite(false)
-                        ->setQuality($this->c->config->i_avatars_quality ?? 75)
-                        ->resize($this->c->config->i_avatars_width, $this->c->config->i_avatars_height)
-                        ->toFile($path, $this->c->config->i_avatars_size);
+                        ->setQuality($this->config->i_avatars_quality ?? 75)
+                        ->resize($this->config->i_avatars_width, $this->config->i_avatars_height)
+                        ->toFile($path, $this->config->i_avatars_size);
 
                     if (true === $result) {
                         $this->curUser->avatar = $v->upload_avatar->name() . '.' . $v->upload_avatar->ext();
@@ -222,7 +222,7 @@ class Edit extends Profile
             if (
                 true === $prepare
                 && ! $this->user->isAdmin
-                && 1 !== $this->c->config->b_sig_all_caps
+                && 1 !== $this->config->b_sig_all_caps
             ) {
                 $text = $this->c->Parser->getText();
 
@@ -413,10 +413,10 @@ class Edit extends Profile
                 'type'    => 'file',
                 'caption' => 'New avatar',
                 'help'    => ['New avatar info',
-                    num($this->c->config->i_avatars_width),
-                    num($this->c->config->i_avatars_height),
-                    num($this->c->config->i_avatars_size),
-                    size($this->c->config->i_avatars_size)
+                    num($this->config->i_avatars_width),
+                    num($this->config->i_avatars_height),
+                    num($this->config->i_avatars_size),
+                    size($this->config->i_avatars_size)
                 ],
                 'accept'  => $this->accept,
             ];

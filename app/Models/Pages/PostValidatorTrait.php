@@ -32,15 +32,15 @@ trait PostValidatorTrait
 
         // лимит на слова подвергнутые цензуре
         } elseif (
-            $this->c->config->i_censoring_count > 0
-            && $this->censorCount > $this->c->config->i_censoring_count
+            $this->config->i_censoring_count > 0
+            && $this->censorCount > $this->config->i_censoring_count
         ) {
             $v->addError('Too many censored words');
 
         // заголовок темы только заглавными буквами
         } elseif (
             ! $power
-            && 1 !== $this->c->config->b_subject_all_caps
+            && 1 !== $this->config->b_subject_all_caps
             && \preg_match('%\p{Lu}%u', $subject)
             && ! \preg_match('%\p{Ll}%u', $subject)
         ) {
@@ -99,8 +99,8 @@ trait PostValidatorTrait
 
         // лимит на слова подвергнутые цензуре
         } elseif (
-            $this->c->config->i_censoring_count > 0
-            && $this->censorCount > $this->c->config->i_censoring_count
+            $this->config->i_censoring_count > 0
+            && $this->censorCount > $this->config->i_censoring_count
         ) {
             $v->addError('Too many censored words');
 
@@ -119,7 +119,7 @@ trait PostValidatorTrait
         if (
             true === $prepare
             && ! $power
-            && 1 !== $this->c->config->b_message_all_caps
+            && 1 !== $this->config->b_message_all_caps
         ) {
             $text = $this->c->Parser->getText();
 
@@ -166,11 +166,11 @@ trait PostValidatorTrait
         $preMod = $this->userRules->forPreModeration($model);
 
         if ($this->user->isGuest) {
-            if (1 === $this->c->config->b_hide_guest_email_fld) {
+            if (1 === $this->config->b_hide_guest_email_fld) {
                 $ruleEmail    = 'absent';
 
             } else {
-                $ruleEmail    = 1 === $this->c->config->b_force_guest_email ? 'required' : 'exist';
+                $ruleEmail    = 1 === $this->config->b_force_guest_email ? 'required' : 'exist';
                 $ruleEmail   .= '|string:trim,empty|email:noban';
             }
 
@@ -250,7 +250,7 @@ trait PostValidatorTrait
         }
 
         if (
-            1 === $this->c->config->b_topic_hashtags
+            1 === $this->config->b_topic_hashtags
             && $first
             && $notPM
         ) {
@@ -261,7 +261,7 @@ trait PostValidatorTrait
         }
 
         if (
-            1 === $this->c->config->b_colored_subjects
+            1 === $this->config->b_colored_subjects
             && $power
             && $notPM
             && $first
@@ -275,7 +275,7 @@ trait PostValidatorTrait
         if (
             ! $edit
             && $notPM
-            && 1 === $this->c->config->b_topic_subscriptions
+            && 1 === $this->config->b_topic_subscriptions
             && $this->user->email_confirmed
         ) {
             $ruleSubscribe = 'checkbox';
@@ -284,7 +284,7 @@ trait PostValidatorTrait
             $ruleSubscribe = 'absent';
         }
 
-        if (1 === $this->c->config->b_smilies) {
+        if (1 === $this->config->b_smilies) {
             $ruleHideSmilies = 'checkbox';
 
         } else {
@@ -318,7 +318,7 @@ trait PostValidatorTrait
 
         if (
             $power
-            && 1 === $this->c->config->b_premoderation
+            && 1 === $this->config->b_premoderation
             && ! $preMod
             && $notPM
             && $first
@@ -383,7 +383,7 @@ trait PostValidatorTrait
                 'poll.duration'    => 'integer|min:0|max:366',
                 'poll.hide_result' => 'checkbox',
                 'poll.question.*'  => 'string:trim|max:240',
-                'poll.type.*'      => 'integer|min:1|max:' . $this->c->config->i_poll_max_fields,
+                'poll.type.*'      => 'integer|min:1|max:' . $this->config->i_poll_max_fields,
                 'poll.answer.*.*'  => 'string:trim|max:240',
             ]);
         }
@@ -392,7 +392,7 @@ trait PostValidatorTrait
             $this->user->isGuest
             || empty($this->user->last_post)
         ) {
-            if (1 === $this->c->config->b_ant_use_js) {
+            if (1 === $this->config->b_ant_use_js) {
                 $v->addRules(['nekot' => 'exist|string|nekot']);
             }
         }

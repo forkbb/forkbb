@@ -93,7 +93,7 @@ class Message extends Page
      */
     protected function boardNavigation(): void
     {
-        if ($this->c->config->i_fork_revision >= FORK_REVISION) {
+        if ($this->config->i_fork_revision >= FORK_REVISION) {
             parent::boardNavigation();
         }
     }

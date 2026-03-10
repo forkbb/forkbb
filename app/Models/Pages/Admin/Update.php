@@ -169,7 +169,7 @@ class Update extends Admin
                 // база не от ForkBB или старая ревизия
                 if (
                     null === $e
-                    && $this->c->config->i_fork_revision < self::REV_MIN_FOR_UPDATE
+                    && $this->config->i_fork_revision < self::REV_MIN_FOR_UPDATE
                 ) {
                     $e = 'Version mismatch error';
                 }
@@ -186,7 +186,7 @@ class Update extends Admin
                 // проверка доступности базы данных на изменения
                 if (
                     null === $e
-                    && $this->c->config->i_fork_revision < self::LATEST_REV_WITH_DB_CHANGES
+                    && $this->config->i_fork_revision < self::LATEST_REV_WITH_DB_CHANGES
                 ) {
                     $testTable = '::test_tb_for_update';
 
@@ -252,9 +252,9 @@ class Update extends Admin
                     $this->fIswev = [FORK_MESS_ERR, 'Unable to write update lock'];
 
                 } else {
-                    $this->c->config->o_maintenance_message = $v->o_maintenance_message;
+                    $this->config->o_maintenance_message = $v->o_maintenance_message;
 
-                    $this->c->config->save();
+                    $this->config->save();
 
                     return $this->c->Redirect->page('AdminUpdateStage', ['uid' => $uid, 'stage' => 1]);
                 }
@@ -326,7 +326,7 @@ class Update extends Admin
                         ],
                         'o_maintenance_message' => [
                             'type'     => 'textarea',
-                            'value'    => $v->o_maintenance_message ?? $this->c->config->o_maintenance_message,
+                            'value'    => $v->o_maintenance_message ?? $this->config->o_maintenance_message,
                             'caption'  => 'Maintenance message',
                             'help'     => 'Maintenance message info',
                             'required' => true,
@@ -362,7 +362,7 @@ class Update extends Admin
                 return $this->returnMaintenance();
             }
 
-            $stage = \max($args['stage'], $this->c->config->i_fork_revision);
+            $stage = \max($args['stage'], $this->config->i_fork_revision);
 
             do {
                 if (\method_exists($this, 'stageNumber' . $stage)) {
@@ -385,9 +385,9 @@ class Update extends Admin
                 ++$stage;
             } while ($stage < FORK_REVISION);
 
-            $this->c->config->i_fork_revision = FORK_REVISION;
+            $this->config->i_fork_revision = FORK_REVISION;
 
-            $this->c->config->save();
+            $this->config->save();
 
             if (true !== $this->c->Cache->clear()) {
                 throw new RuntimeException('Unable to clear cache');

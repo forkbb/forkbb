@@ -347,7 +347,7 @@ class Bans extends Admin
 
         if (
             $usedLike
-            && ! $this->c->config->insensitive()
+            && ! $this->config->insensitive()
         ) {
             $this->fIswev = [FORK_MESS_INFO, 'The search may be case sensitive'];
         }
@@ -376,14 +376,14 @@ class Bans extends Admin
         }
 
         $page  = $args['page'] ?? 1;
-        $pages = (int) \ceil(($number ?: 1) / $this->c->config->i_disp_users);
+        $pages = (int) \ceil(($number ?: 1) / $this->config->i_disp_users);
 
         if ($page > $pages) {
             return $this->c->Message->message('Not Found', true, 404);
         }
 
-        $startNum = ($page - 1) * $this->c->config->i_disp_users;
-        $idsN     = \array_slice($idsN, $startNum, $this->c->config->i_disp_users);
+        $startNum = ($page - 1) * $this->config->i_disp_users;
+        $idsN     = \array_slice($idsN, $startNum, $this->config->i_disp_users);
         $banList  = $this->c->bans->getList($idsN);
 
         $this->nameTpl    = 'admin/bans_result';

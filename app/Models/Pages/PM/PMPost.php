@@ -296,8 +296,8 @@ class PMPost extends AbstractPM
                 $this->c->Lang->load('common', $this->targetUser->language);
 
                 $tplData = [
-                    'fTitle'     => $this->c->config->o_board_title,
-                    'fMailer'    => __(['Mailer', $this->c->config->o_board_title]),
+                    'fTitle'     => $this->config->o_board_title,
+                    'fMailer'    => __(['Mailer', $this->config->o_board_title]),
                     'pmSubject'  => $topic->subject,
                     'username'   => $this->targetUser->username,
                     'sender'     => $this->user->username,
@@ -310,7 +310,7 @@ class PMPost extends AbstractPM
                     ->setFolder($this->c->DIR_LANG)
                     ->setLanguage($this->targetUser->language)
                     ->setTo($this->targetUser->email, $this->targetUser->username)
-                    ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
+                    ->setFrom($this->config->o_webmaster_email, $tplData['fMailer'])
                     ->setTpl('new_pm.tpl', $tplData)
                     ->send();
 

@@ -76,8 +76,8 @@ abstract class Admin extends Page
         }
         if (
             $this->user->isAdmin
-            || 0 === $this->c->config->i_report_method
-            || 2 === $this->c->config->i_report_method
+            || 0 === $this->config->i_report_method
+            || 2 === $this->config->i_report_method
         ) {
             $nav['reports'] = [$r->link('AdminReports'), 'Reports'];
         }

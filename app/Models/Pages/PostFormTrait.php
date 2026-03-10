@@ -104,13 +104,13 @@ trait PostFormTrait
             ];
             $autofocus = null;
 
-            if (1 !== $this->c->config->b_hide_guest_email_fld) {
+            if (1 !== $this->config->b_hide_guest_email_fld) {
                 $fieldset['email'] = [
-                    'class'          => 1 === $this->c->config->b_force_guest_email ? ['w2'] : ['w2', 'optional'],
+                    'class'          => 1 === $this->config->b_force_guest_email ? ['w2'] : ['w2', 'optional'],
                     'type'           => 'text',
                     'maxlength'      => (string) $this->c->MAX_EMAIL_LENGTH,
                     'caption'        => 'Email',
-                    'required'       => 1 === $this->c->config->b_force_guest_email,
+                    'required'       => 1 === $this->config->b_force_guest_email,
                     'pattern'        => '^.*[^@]@[^@].*$',
                     'value'          => $vars['email'] ?? null,
                     'autocapitalize' => 'off',
@@ -131,7 +131,7 @@ trait PostFormTrait
             $autofocus = null;
 
             if (
-                1 === $this->c->config->b_topic_hashtags
+                1 === $this->config->b_topic_hashtags
                 && $notPM
             ) {
                 $fieldset['hashtags'] = [
@@ -144,7 +144,7 @@ trait PostFormTrait
             }
 
             if (
-                1 === $this->c->config->b_colored_subjects
+                1 === $this->config->b_colored_subjects
                 && $power
                 && $notPM
             ) {
@@ -178,7 +178,7 @@ trait PostFormTrait
             $this->user->isGuest
             || empty($this->user->last_post)
         ) {
-            if (1 === $this->c->config->b_ant_hidden_ch) {
+            if (1 === $this->config->b_ant_hidden_ch) {
                 $fieldset['terms'] = [
                     'class'   => ['w0'],
                     'type'    => 'checkbox',
@@ -187,7 +187,7 @@ trait PostFormTrait
                 ];
             }
 
-            if (1 === $this->c->config->b_ant_use_js) {
+            if (1 === $this->config->b_ant_use_js) {
                 $form['hidden']['nekot'] = '';
             }
         }
@@ -266,7 +266,7 @@ trait PostFormTrait
 
                 if (
                     ! $preMod
-                    && 1 === $this->c->config->b_topic_subscriptions
+                    && 1 === $this->config->b_topic_subscriptions
                     && $this->user->email_confirmed
                 ) {
                     $subscribed = ! $first && $model->is_subscribed;
@@ -292,7 +292,7 @@ trait PostFormTrait
 
         if (
             ! $quick
-            && 1 === $this->c->config->b_smilies
+            && 1 === $this->config->b_smilies
         ) {
             $fieldset['hide_smilies'] = [
                 'type'    => 'checkbox',
@@ -303,7 +303,7 @@ trait PostFormTrait
 
         if (
             $power
-            && 1 === $this->c->config->b_premoderation
+            && 1 === $this->config->b_premoderation
             && ! $preMod
             && $notPM
             && $first
@@ -334,7 +334,7 @@ trait PostFormTrait
         ) {
             $term = $edit && $model->parent->poll_term
                 ? $model->parent->poll_term
-                : $this->c->config->i_poll_term;
+                : $this->config->i_poll_term;
 
             $fieldset = [];
 
@@ -365,7 +365,7 @@ trait PostFormTrait
                 'fields' => $fieldset,
             ];
 
-            for ($qid = 1; $qid <= $this->c->config->i_poll_max_questions; $qid++) {
+            for ($qid = 1; $qid <= $this->config->i_poll_max_questions; $qid++) {
                 $fieldset = [];
 
                 $fieldset["poll[question][{$qid}]"] = [
@@ -378,14 +378,14 @@ trait PostFormTrait
                 $fieldset["poll[type][{$qid}]"] = [
                     'type'     => 'number',
                     'min'      => '1',
-                    'max'      => (string) $this->c->config->i_poll_max_fields,
+                    'max'      => (string) $this->config->i_poll_max_fields,
                     'value'    => $vars['poll']['type'][$qid] ?? 1,
                     'caption'  => 'Answer type label',
                     'help'     => 'Answer type help',
                     'disabled' => $vars['pollNoEdit'] ?? null,
                 ];
 
-                for ($fid = 1; $fid <= $this->c->config->i_poll_max_fields; $fid++) {
+                for ($fid = 1; $fid <= $this->config->i_poll_max_fields; $fid++) {
                     $fieldset["poll[answer][{$qid}][{$fid}]"] = [
                         'type'      => 'text',
                         'maxlength' => '240',
@@ -406,7 +406,7 @@ trait PostFormTrait
             ]);
         }
 
-        if (1 === $this->c->config->b_message_bbcode) {
+        if (1 === $this->config->b_message_bbcode) {
             $form = $this->setSCEditor($form, 'message');
         }
 
@@ -429,7 +429,7 @@ trait PostFormTrait
                     $smilies = $hidden = [];
                     $smiliesEnabled    = '0';
 
-                    if (1 === $this->c->config->b_smilies) {
+                    if (1 === $this->config->b_smilies) {
                         $smiliesEnabled = '1';
 
                         foreach ($this->c->smilies->list as $sm) {
@@ -457,8 +457,8 @@ trait PostFormTrait
                         'SCEditorConfig' => $scConfig,
                         'smiliesEnabled' => $smiliesEnabled,
                         'linkEnabled'    => $this->user->g_post_links,
-                        'blackList'      => \implode('|', $this->c->config->a_bb_black_mes), // ???? a_bb_black_sig
-                        'whiteList'      => \implode('|', $this->c->config->a_bb_white_mes), // ???? a_bb_white_sig'
+                        'blackList'      => \implode('|', $this->config->a_bb_black_mes), // ???? a_bb_black_sig
+                        'whiteList'      => \implode('|', $this->config->a_bb_white_mes), // ???? a_bb_white_sig'
                     ];
 
                     $this->pageHeader('sceditor', 'script', 9600, [

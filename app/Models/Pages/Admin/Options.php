@@ -166,7 +166,7 @@ class Options extends Admin
                     $result = $v->upload_og_image
                         ->rename(true)
                         ->rewrite(false)
-                        ->setQuality($this->c->config->i_avatars_quality ?? 75)
+                        ->setQuality($this->config->i_avatars_quality ?? 75)
                         ->toFile($path);
 
                     if (true === $result) {
@@ -216,8 +216,8 @@ class Options extends Admin
      */
     protected function deleteOgImage(string $folder): void
     {
-        if (! empty($this->c->config->a_og_image['file'])) {
-            $path = $folder . $this->c->config->a_og_image['file'];
+        if (! empty($this->config->a_og_image['file'])) {
+            $path = $folder . $this->config->a_og_image['file'];
 
             if (\is_file($path)) {
                 \unlink($path);
@@ -275,7 +275,7 @@ class Options extends Admin
     public function vCheckType(Validator $v, array $types): array
     {
         $types  = \array_flip($types);
-        $result = $this->c->config->a_reaction_types;
+        $result = $this->config->a_reaction_types;
 
         foreach ($result as &$cur) {
             $cur[1] = isset($types[$cur[0]]);

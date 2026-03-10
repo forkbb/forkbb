@@ -45,7 +45,7 @@ class Feed extends Page
         $this->c->DEBUG         = 0;
         $this->c->curReqVisible = 0;
 
-        if ($this->c->config->i_feed_type < 1) {
+        if ($this->config->i_feed_type < 1) {
             return $this->exit('Bad request');
         }
 
@@ -65,7 +65,7 @@ class Feed extends Page
 
             $feed = [
                 'id'            => $this->c->Router->link('Feed', $args),
-                'title'         => $this->c->config->o_board_title . __('Title separator') . $topic->subject,
+                'title'         => $this->config->o_board_title . __('Title separator') . $topic->subject,
                 'link'          => $topic->link,
                 'description'   => __(['The most recent posts in %s topic', $topic->subject]),
                 'updated'       => $topic->last_post,
@@ -90,7 +90,7 @@ class Feed extends Page
             }
 
         } else {
-            if ($this->c->config->i_feed_ttl > 0) {
+            if ($this->config->i_feed_ttl > 0) {
                 $cacheId = 'feed' . \sha1("{$this->user->group_id}|{$this->user->language}|{$fid}");
 
             } else {
@@ -109,14 +109,14 @@ class Feed extends Page
 
                 $feed = [
                     'id'            => $this->c->Router->link('Feed', $args),
-                    'title'         => $this->c->config->o_board_title,
+                    'title'         => $this->config->o_board_title,
                     'link'          => $forum->link,
                     'updated'       => $forum->tree->last_post,
                     'items'         => [],
                 ];
 
                 if (0 === $fid) {
-                    $feed['description'] = __(['The most recent posts at %s board', $this->c->config->o_board_title]);
+                    $feed['description'] = __(['The most recent posts at %s board', $this->config->o_board_title]);
 
                 } else {
                     $feed['description'] = __(['The most recent posts in %s forum', $forum->forum_name]);
@@ -144,7 +144,7 @@ class Feed extends Page
 
 
                 if (null !== $cacheId) {
-                    if (true !== $this->c->Cache->set($cacheId, $feed, 60 * $this->c->config->i_feed_ttl)) {
+                    if (true !== $this->c->Cache->set($cacheId, $feed, 60 * $this->config->i_feed_ttl)) {
                         throw new RuntimeException('Unable to write value to cache - feed');
                     }
                 }

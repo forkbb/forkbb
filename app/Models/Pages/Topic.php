@@ -172,7 +172,7 @@ class Topic extends Page
 
         if (
             $topic->canReply
-            && 1 === $this->c->config->b_quickpost
+            && 1 === $this->config->b_quickpost
         ) {
             $this->form     = $this->messageForm($topic, 'NewReply', ['id' => $topic->id], false, false, true);
         }
@@ -194,10 +194,10 @@ class Topic extends Page
         $topic->updateVisits();
 
         if (
-            $this->c->config->i_feed_type > 0
+            $this->config->i_feed_type > 0
             && ! $this->user->isBot
         ) {
-            $feedType = 2 === $this->c->config->i_feed_type ? 'atom' : 'rss';
+            $feedType = 2 === $this->config->i_feed_type ? 'atom' : 'rss';
             $this->pageHeader('feed', 'link', 0, [
                 'rel'  => 'alternate',
                 'type' => "application/{$feedType}+xml",
@@ -207,7 +207,7 @@ class Topic extends Page
 
         if (
             $topic->poll_type > 0
-            && 1 === $this->c->config->b_poll_enabled
+            && 1 === $this->config->b_poll_enabled
         ) {
             $this->c->Lang->load('poll');
 

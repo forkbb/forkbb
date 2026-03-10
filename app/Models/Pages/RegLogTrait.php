@@ -22,7 +22,7 @@ trait RegLogTrait
     protected function reglogForm(string $type): array
     {
         if (
-            1 !== $this->c->config->b_oauth_allow
+            1 !== $this->config->b_oauth_allow
             || empty($list = $this->c->providers->active())
         ) {
             return [];

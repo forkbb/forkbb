@@ -71,10 +71,10 @@ class Index extends Page
         }
 
         if (
-            $this->c->config->i_feed_type > 0
+            $this->config->i_feed_type > 0
             && ! $this->user->isBot
         ) {
-            $feedType = 2 === $this->c->config->i_feed_type ? 'atom' : 'rss';
+            $feedType = 2 === $this->config->i_feed_type ? 'atom' : 'rss';
 
             $this->pageHeader('feed', 'link', 0, [
                 'rel'  => 'alternate',

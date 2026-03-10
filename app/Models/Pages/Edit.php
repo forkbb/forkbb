@@ -48,7 +48,7 @@ class Edit extends Page
 
         $this->c->Lang->load('post');
 
-        if (1 === $this->c->config->b_poll_enabled) {
+        if (1 === $this->config->b_poll_enabled) {
             $this->c->Lang->load('poll');
         }
 
@@ -196,7 +196,7 @@ class Edit extends Page
 
         // показ смайлов
         if (
-            1 === $this->c->config->b_smilies
+            1 === $this->config->b_smilies
             && (bool) $post->hide_smilies !== (bool) $v->hide_smilies
         ) {
             $post->hide_smilies  = $v->hide_smilies ? 1 : 0;
@@ -322,7 +322,7 @@ class Edit extends Page
                 $topic->poll_type = $v->poll['duration'] > 0 ? 1000 + $v->poll['duration'] : 1; // ???? перенести в модель poll?
 //                $topic->poll_time  = 0;
                 $topic->poll_term = $v->poll['hide_result']
-                    ? ($topic->poll_term ?: $this->c->config->i_poll_term)
+                    ? ($topic->poll_term ?: $this->config->i_poll_term)
                     : 0;
 
                 $poll->__question = $v->poll['question'];
@@ -344,7 +344,7 @@ class Edit extends Page
         } elseif ($v->poll_enable) {
             $topic->poll_type = $v->poll['duration'] > 0 ? 1000 + $v->poll['duration'] : 1; // ???? перенести в модель poll?
             $topic->poll_time = \time();
-            $topic->poll_term = $v->poll['hide_result'] ? $this->c->config->i_poll_term : 0;
+            $topic->poll_term = $v->poll['hide_result'] ? $this->config->i_poll_term : 0;
 
             $poll = $this->c->polls->create([
                 'tid'      => $topic->id,

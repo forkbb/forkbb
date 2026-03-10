@@ -49,10 +49,10 @@ class Uploads extends Admin
                 $data = $v->getData(false, ['token']);
 
                 foreach ($data as $attr => $value) {
-                    $this->c->config->$attr = $value;
+                    $this->config->$attr = $value;
                 }
 
-                $this->c->config->save();
+                $this->config->save();
 
                 return $this->c->Redirect->page('AdminUploads')->message('Data updated redirect', FORK_MESS_SUCC);
             }

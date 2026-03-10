@@ -79,11 +79,11 @@ class Register extends Page
         if ($this->useOAuth) {
             unset($rules['email'], $rules['password']);
 
-        } elseif (1 === $this->c->config->b_regs_disable_email) {
+        } elseif (1 === $this->config->b_regs_disable_email) {
             unset($rules['email']);
         }
 
-        if (1 === $this->c->config->b_ant_use_js) {
+        if (1 === $this->config->b_ant_use_js) {
             $rules['nekot'] = 'required_with:on|string|nekot';
         }
 
@@ -110,7 +110,7 @@ class Register extends Page
 //                $email    = $this->useOAuth ? $this->provider->userEmail : $v->email;
                 $email    = match (true) {
                     $this->useOAuth                              => $this->provider->userEmail,
-                    1 === $this->c->config->b_regs_disable_email => 'fake' . \time() . \bin2hex(\random_bytes(3)) . '@localhost',
+                    1 === $this->config->b_regs_disable_email => 'fake' . \time() . \bin2hex(\random_bytes(3)) . '@localhost',
                     default                                      => $v->email,
                 };
                 $userInDB = $this->c->users->loadByEmail($email);
@@ -189,7 +189,7 @@ class Register extends Page
 
         if (
             ! $this->useOAuth
-            && 1 !== $this->c->config->b_regs_disable_email
+            && 1 !== $this->config->b_regs_disable_email
         ) {
             $fields['email'] = [
                 'autofocus'      => true,
@@ -198,7 +198,7 @@ class Register extends Page
                 'maxlength'      => (string) $this->c->MAX_EMAIL_LENGTH,
                 'value'          => $v->email,
                 'caption'        => 'Email',
-                'help'           => 1 === $this->c->config->b_regs_verify ? 'Email help2' : 'Email help',
+                'help'           => 1 === $this->config->b_regs_verify ? 'Email help2' : 'Email help',
                 'required'       => true,
                 'pattern'        => '^.*[^@]@[^@].*$',
                 'autocapitalize' => 'off',
@@ -229,7 +229,7 @@ class Register extends Page
             ];
         }
 
-        if (1 === $this->c->config->b_ant_hidden_ch) {
+        if (1 === $this->config->b_ant_hidden_ch) {
             $fields['terms'] = [
                 'type'    => 'checkbox',
                 'label'   => 'I agree to the Terms of Use',
@@ -243,7 +243,7 @@ class Register extends Page
             $form['hidden']['oauth'] = $v->oauth;
         }
 
-        if (1 === $this->c->config->b_ant_use_js) {
+        if (1 === $this->config->b_ant_use_js) {
             $form['hidden']['nekot'] = '';
         }
 
@@ -257,13 +257,13 @@ class Register extends Page
     {
         if (
             ! $this->useOAuth
-            && 1 === $this->c->config->b_regs_verify
+            && 1 === $this->config->b_regs_verify
         ) {
             $groupId = FORK_GROUP_UNVERIFIED;
             $key     = $this->c->Secury->randomPass(31);
 
         } else {
-            $groupId = $this->c->config->i_default_user_group;
+            $groupId = $this->config->i_default_user_group;
             $key     = '';
         }
 
@@ -276,8 +276,8 @@ class Register extends Page
         $user->email_confirmed = $this->useOAuth && $this->provider->userEmailVerifed ? 1 : 0;
         $user->activate_string = $key;
         $user->u_mark_all_read = \time();
-        $user->email_setting   = $this->c->config->i_default_email_setting;
-        $user->timezone        = $this->c->config->o_default_timezone;
+        $user->email_setting   = $this->config->i_default_email_setting;
+        $user->timezone        = $this->config->o_default_timezone;
         $user->language        = $this->user->language;
         $user->locale          = $this->user->language;
         $user->style           = $this->user->style;
@@ -297,12 +297,12 @@ class Register extends Page
 
             if ($image instanceof Image) {
                 $name   = $this->c->Secury->randomPass(8);
-                $path   = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$name}.(webp|jpg|png|gif)";
+                $path   = $this->c->DIR_PUBLIC . "{$this->config->o_avatars_dir}/{$name}.(webp|jpg|png|gif)";
                 $result = $image
                     ->rename(true)
                     ->rewrite(false)
-                    ->resize($this->c->config->i_avatars_width, $this->c->config->i_avatars_height)
-                    ->toFile($path, $this->c->config->i_avatars_size);
+                    ->resize($this->config->i_avatars_width, $this->config->i_avatars_height)
+                    ->toFile($path, $this->config->i_avatars_size);
 
                 if (true === $result) {
                     $user->avatar = $image->name() . '.' . $image->ext();
@@ -339,14 +339,14 @@ class Register extends Page
 
         // уведомление о регистрации
         if (
-            1 === $this->c->config->b_regs_report
-            && '' != $this->c->config->o_mailing_list
+            1 === $this->config->b_regs_report
+            && '' != $this->config->o_mailing_list
         ) {
-            $this->c->Lang->load('common', $this->c->config->o_default_lang);
+            $this->c->Lang->load('common', $this->config->o_default_lang);
 
             $tplData = [
                 'fRootLink' => $this->c->Router->link('Index'),
-                'fMailer'   => __(['Mailer', $this->c->config->o_board_title]),
+                'fMailer'   => __(['Mailer', $this->config->o_board_title]),
                 'username'  => $user->username,
                 'userLink'  => $user->link,
             ];
@@ -354,11 +354,11 @@ class Register extends Page
             try {
                 $this->c->Mail
                     ->reset()
-                    ->setMaxRecipients((int) $this->c->config->i_email_max_recipients)
+                    ->setMaxRecipients((int) $this->config->i_email_max_recipients)
                     ->setFolder($this->c->DIR_LANG)
-                    ->setLanguage($this->c->config->o_default_lang)
-                    ->setTo($this->c->config->o_mailing_list)
-                    ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
+                    ->setLanguage($this->config->o_default_lang)
+                    ->setTo($this->config->o_mailing_list)
+                    ->setFrom($this->config->o_webmaster_email, $tplData['fMailer'])
                     ->setTpl('new_user.tpl', $tplData)
                     ->send(8);
             } catch (MailException $e) {
@@ -375,7 +375,7 @@ class Register extends Page
         // отправка письма активации аккаунта
         if (
             ! $this->useOAuth
-            && 1 === $this->c->config->b_regs_verify
+            && 1 === $this->config->b_regs_verify
         ) {
             $this->c->Csrf->setHashExpiration(259200); // ???? хэш действует 72 часа
 
@@ -387,9 +387,9 @@ class Register extends Page
                 ]
             );
             $tplData = [
-                'fTitle'    => $this->c->config->o_board_title,
+                'fTitle'    => $this->config->o_board_title,
                 'fRootLink' => $this->c->Router->link('Index'),
-                'fMailer'   => __(['Mailer', $this->c->config->o_board_title]),
+                'fMailer'   => __(['Mailer', $this->config->o_board_title]),
                 'username'  => $user->username,
                 'link'      => $link,
             ];
@@ -401,7 +401,7 @@ class Register extends Page
                     ->setFolder($this->c->DIR_LANG)
                     ->setLanguage($this->user->language)
                     ->setTo($email)
-                    ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
+                    ->setFrom($this->config->o_webmaster_email, $tplData['fMailer'])
                     ->setTpl('welcome.tpl', $tplData)
                     ->send(9);
             } catch (MailException $e) {
@@ -416,12 +416,12 @@ class Register extends Page
 
             // письмо активации аккаунта отправлено
             if ($isSent) {
-                return $this->c->Message->message(['Reg email', $this->c->config->o_admin_email], false, 200);
+                return $this->c->Message->message(['Reg email', $this->config->o_admin_email], false, 200);
 
             // форма сброса пароля
             } else {
                 $auth         = $this->c->Auth;
-                $auth->fIswev = [FORK_MESS_WARN, ['Error welcom mail', $this->c->config->o_admin_email]];
+                $auth->fIswev = [FORK_MESS_WARN, ['Error welcom mail', $this->config->o_admin_email]];
 
                 return $auth->forget([], 'GET', $email);
             }
@@ -451,14 +451,14 @@ class Register extends Page
 
         // уведомление о дубликате email
         if (
-            1 === $this->c->config->b_regs_report
-            && '' != $this->c->config->o_mailing_list
+            1 === $this->config->b_regs_report
+            && '' != $this->config->o_mailing_list
         ) {
-            $this->c->Lang->load('common', $this->c->config->o_default_lang);
+            $this->c->Lang->load('common', $this->config->o_default_lang);
 
             $tplData = [
                 'fRootLink' => $this->c->Router->link('Index'),
-                'fMailer'   => __(['Mailer', $this->c->config->o_board_title]),
+                'fMailer'   => __(['Mailer', $this->config->o_board_title]),
                 'username'  => $v->username,
                 'email'     => $v->email,
                 'ip'        => $this->user->ip,
@@ -468,11 +468,11 @@ class Register extends Page
             try {
                 $this->c->Mail
                     ->reset()
-                    ->setMaxRecipients((int) $this->c->config->i_email_max_recipients)
+                    ->setMaxRecipients((int) $this->config->i_email_max_recipients)
                     ->setFolder($this->c->DIR_LANG)
-                    ->setLanguage($this->c->config->o_default_lang)
-                    ->setTo($this->c->config->o_mailing_list)
-                    ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
+                    ->setLanguage($this->config->o_default_lang)
+                    ->setTo($this->config->o_mailing_list)
+                    ->setFrom($this->config->o_webmaster_email, $tplData['fMailer'])
                     ->setTpl('dupe_email_register.tpl', $tplData)
                     ->send(8);
             } catch (MailException $e) {
@@ -489,7 +489,7 @@ class Register extends Page
         // фейк отправки письма активации аккаунта
         if (
             ! $this->useOAuth
-            && 1 === $this->c->config->b_regs_verify
+            && 1 === $this->config->b_regs_verify
         ) {
             $isSent = true;
 
@@ -500,12 +500,12 @@ class Register extends Page
 
             // письмо активации аккаунта отправлено
             if ($isSent) {
-                return $this->c->Message->message(['Reg email', $this->c->config->o_admin_email], false, 200);
+                return $this->c->Message->message(['Reg email', $this->config->o_admin_email], false, 200);
 
             // форма сброса пароля
             } else {
                 $auth         = $this->c->Auth;
-                $auth->fIswev = [FORK_MESS_WARN, ['Error welcom mail', $this->c->config->o_admin_email]];
+                $auth->fIswev = [FORK_MESS_WARN, ['Error welcom mail', $this->config->o_admin_email]];
 
                 return $auth->forget([], 'GET', $email);
             }
@@ -539,7 +539,7 @@ class Register extends Page
             return $this->c->Message->message('Bad request', false);
         }
 
-        $user->group_id        = $this->c->config->i_default_user_group;
+        $user->group_id        = $this->config->i_default_user_group;
         $user->email_confirmed = 1;
         $user->activate_string = '';
 

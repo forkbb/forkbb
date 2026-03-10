@@ -84,7 +84,7 @@ class Post extends Page
 
         $this->c->Lang->load('post');
 
-        if (1 === $this->c->config->b_poll_enabled) {
+        if (1 === $this->config->b_poll_enabled) {
             $this->c->Lang->load('poll');
         }
 
@@ -303,7 +303,7 @@ class Post extends Page
             $timeout = 0;
 
         } else {
-            $timeout = $this->c->config->i_redirect_delay;
+            $timeout = $this->config->i_redirect_delay;
 
             if ($timeout < 5) {
                 $timeout = 5;
@@ -430,7 +430,7 @@ class Post extends Page
             ) {
                 $topic->poll_type  = $v->poll['duration'] > 0 ? 1000 + $v->poll['duration'] : 1; // ???? перенести в модель poll?
                 $topic->poll_time  = $now;
-                $topic->poll_term  = $v->poll['hide_result'] ? $this->c->config->i_poll_term : 0;
+                $topic->poll_term  = $v->poll['hide_result'] ? $this->config->i_poll_term : 0;
 
                 $poll = $this->c->polls->create([
                     'tid'      => $topic->id,
@@ -485,7 +485,7 @@ class Post extends Page
 
         $this->c->users->update($this->user);
 
-        if (1 === $this->c->config->b_topic_subscriptions) { // ????
+        if (1 === $this->config->b_topic_subscriptions) { // ????
             if (
                 $v->subscribe
                 && ! $topic->is_subscribed
@@ -507,12 +507,12 @@ class Post extends Page
             $this->c->search->index($post);
 
             if ($createTopic) {
-                if (1 === $this->c->config->b_forum_subscriptions) { // ????
+                if (1 === $this->config->b_forum_subscriptions) { // ????
                     $this->c->subscriptions->send($post, $topic);
                 }
 
             } else {
-                if (1 === $this->c->config->b_topic_subscriptions) { // ????
+                if (1 === $this->config->b_topic_subscriptions) { // ????
                     $this->c->subscriptions->send($post);
                 }
             }

@@ -68,7 +68,7 @@ class Report extends Page
 
                 $result = true;
 
-                switch ($this->c->config->i_report_method) {
+                switch ($this->config->i_report_method) {
                     case 2:
                         $this->c->reports->insert($report);
                     case 1:
@@ -96,8 +96,11 @@ class Report extends Page
                     $this->c->users->update($this->user);
                 }
 
-                if (false === $result && 1 === $this->c->config->i_report_method) {
-                    $this->fIswev = [FORK_MESS_ERR, ['Error mail', $this->c->config->o_admin_email]];
+                if (
+                    false === $result
+                    && 1 === $this->config->i_report_method
+                ) {
+                    $this->fIswev = [FORK_MESS_ERR, ['Error mail', $this->config->o_admin_email]];
 
                 } else {
                     return $this->c->Redirect->page('ViewPost', ['id' => $post->id])->message('Report redirect', FORK_MESS_SUCC);
@@ -164,7 +167,7 @@ class Report extends Page
     protected function sendReport(ReportModel $report): bool
     {
         $tplData = [
-            'fMailer'      => __(['Mailer', $this->c->config->o_board_title]),
+            'fMailer'      => __(['Mailer', $this->config->o_board_title]),
             'username'     => $report->author->username,
             'postLink'     => $this->c->Router->link(
                 'ViewPost',
@@ -179,11 +182,11 @@ class Report extends Page
 
         return $this->c->Mail
             ->reset()
-            ->setMaxRecipients((int) $this->c->config->i_email_max_recipients)
+            ->setMaxRecipients((int) $this->config->i_email_max_recipients)
             ->setFolder($this->c->DIR_LANG)
-            ->setLanguage($this->c->config->o_default_lang) // ????
-            ->setTo($this->c->config->o_mailing_list)
-            ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
+            ->setLanguage($this->config->o_default_lang) // ????
+            ->setTo($this->config->o_mailing_list)
+            ->setFrom($this->config->o_webmaster_email, $tplData['fMailer'])
             ->setTpl('new_report.tpl', $tplData)
             ->send(7);
     }

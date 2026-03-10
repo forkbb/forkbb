@@ -29,7 +29,7 @@ class Providers extends Admin
         ) {
             $this->fIswev = [FORK_MESS_ERR, 'cURL disabled'];
 
-        } elseif (1 !== $this->c->config->b_oauth_allow) {
+        } elseif (1 !== $this->config->b_oauth_allow) {
             $this->fIswev = [FORK_MESS_WARN, ['OAuth authorization disabled', $this->c->Router->link('AdminOptions', ['#' => 'id-fs-registration'])]];
         }
     }

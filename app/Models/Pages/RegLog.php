@@ -29,7 +29,7 @@ class RegLog extends Page
     public function redirect(array $args): Page
     {
         if (
-            1 !== $this->c->config->b_oauth_allow
+            1 !== $this->config->b_oauth_allow
             || empty($list = $this->c->providers->active())
         ) {
             return $this->c->Message->message('Bad request');
@@ -67,7 +67,7 @@ class RegLog extends Page
     public function callback(array $args): Page
     {
         if (
-            1 !== $this->c->config->b_oauth_allow
+            1 !== $this->config->b_oauth_allow
             || empty($list = $this->c->providers->active())
             || empty($list[$args['name']])
         ) {
@@ -202,7 +202,7 @@ class RegLog extends Page
         }
 
         // регистрация закрыта
-        if (1 !== $this->c->config->b_regs_allow) {
+        if (1 !== $this->config->b_regs_allow) {
             return $this->c->Message->message('No new regs');
         }
 

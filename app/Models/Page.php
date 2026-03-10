@@ -89,10 +89,10 @@ abstract class Page extends Model
             $this->c->users->update($this->user);
         }
 
-        if (! empty($this->c->config->a_og_image['file'])) {
-            $this->mOgImage  = $this->c->PUBLIC_URL . '/img/og/' . $this->c->config->a_og_image['file'];
-            $this->mOgImageX = $this->c->config->a_og_image['width'] ?? null;
-            $this->mOgImageY = $this->c->config->a_og_image['height'] ?? null;
+        if (! empty($this->config->a_og_image['file'])) {
+            $this->mOgImage  = $this->c->PUBLIC_URL . '/img/og/' . $this->config->a_og_image['file'];
+            $this->mOgImageX = $this->config->a_og_image['width'] ?? null;
+            $this->mOgImageY = $this->config->a_og_image['height'] ?? null;
         }
 
         $this->boardNavigation();
@@ -130,10 +130,10 @@ abstract class Page extends Model
             }
 
             if (
-                1 === $this->c->config->b_rules
+                1 === $this->config->b_rules
                 && (
                     ! $this->user->isGuest
-                    || 1 === $this->c->config->b_regs_allow
+                    || 1 === $this->config->b_regs_allow
                 )
             ) {
                 $navGen[self::FI_RULES] = [
@@ -190,7 +190,7 @@ abstract class Page extends Model
         }
 
         if ($this->user->isGuest) {
-            if (1 === $this->c->config->b_regs_allow) {
+            if (1 === $this->config->b_regs_allow) {
                 $navUser[self::FI_REG] = [
                     $r->link('Register'),
                     'Register',
@@ -247,7 +247,7 @@ abstract class Page extends Model
 
             if ($this->user->isAdmMod) {
                 if (
-                    1 === $this->c->config->b_premoderation
+                    1 === $this->config->b_premoderation
                     && $this->c->premod->queueSize > 0
                 ) {
                     $navUser[self::FI_PREMOD] = [
@@ -275,10 +275,10 @@ abstract class Page extends Model
 
         if (
             1 === $this->user->g_read_board
-            && '' != $this->c->config->o_additional_navlinks
+            && '' != $this->config->o_additional_navlinks
         ) {
             // position|name|link[|id]\n
-            if (\preg_match_all('%^(\d+)\|([^\|\n\r]+)\|([^\|\n\r]+)(?:\|([^\|\n\r]+))?%m', $this->c->config->o_additional_navlinks . "\n", $matches)) {
+            if (\preg_match_all('%^(\d+)\|([^\|\n\r]+)\|([^\|\n\r]+)(?:\|([^\|\n\r]+))?%m', $this->config->o_additional_navlinks . "\n", $matches)) {
                $k = \count($matches[0]);
 
                for ($i = 0; $i < $k; ++$i) {
@@ -316,7 +316,7 @@ abstract class Page extends Model
     protected function iswevMessages(): void
     {
         if (
-            1 === $this->c->config->b_maintenance
+            1 === $this->config->b_maintenance
             && $this->user->isAdmin
         ) {
             if ($this->c->MAINTENANCE_OFF) {
@@ -345,7 +345,7 @@ abstract class Page extends Model
             $titles = $this->titles;
         }
 
-        $titles[] = ['%s', $this->c->config->o_board_title];
+        $titles[] = ['%s', $this->config->o_board_title];
 
         return \implode(__('Title separator'), \array_map('\\ForkBB\\__', $titles));
     }
@@ -381,7 +381,7 @@ abstract class Page extends Model
             'href' => $this->publicLink("/style/{$this->user->style}/style.css"),
         ]);
 
-        if (1 === $this->c->config->b_colored_subjects) {
+        if (1 === $this->config->b_colored_subjects) {
             $this->pageHeader('topicTitlesColors', 'link', 1000, [
                 'rel'  => 'stylesheet',
                 'type' => 'text/css',

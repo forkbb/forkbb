@@ -185,8 +185,8 @@ class Email extends Page
     protected function sendEmail(array $data): bool
     {
         $tplData = [
-            'fTitle'      => $this->c->config->o_board_title,
-            'fMailer'     => __(['Mailer', $this->c->config->o_board_title]),
+            'fTitle'      => $this->config->o_board_title,
+            'fMailer'     => __(['Mailer', $this->config->o_board_title]),
             'username'    => $this->curUser->username,
             'sender'      => $this->user->username,
             'mailSubject' => $data['subject'],
@@ -199,7 +199,7 @@ class Email extends Page
             ->setFolder($this->c->DIR_LANG)
             ->setLanguage($this->curUser->language)
             ->setTo($this->curUser->email)
-            ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
+            ->setFrom($this->config->o_webmaster_email, $tplData['fMailer'])
             ->setReplyTo($this->user->email, $this->user->username)
             ->setTpl('form_email.tpl', $tplData)
             ->send();

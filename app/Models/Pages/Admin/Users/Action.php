@@ -349,7 +349,7 @@ class Action extends Users
                         'new_group' => [
                             'type'      => 'select',
                             'options'   => $this->groupListForChange($profile),
-                            'value'     => $this->c->config->i_default_user_group,
+                            'value'     => $this->config->i_default_user_group,
                             'caption'   => 'New group label',
                             'help'      => ['New group help', $names],
                         ],

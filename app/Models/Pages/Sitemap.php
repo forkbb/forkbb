@@ -85,15 +85,15 @@ class Sitemap extends Page
         --$max;
 
         if (
-            1 === $this->c->config->b_rules
-            && 1 === $this->c->config->b_regs_allow
+            1 === $this->config->b_rules
+            && 1 === $this->config->b_regs_allow
         ) {
             $this->sitemap[$this->c->Router->link('Rules')] = null;
 
             --$max;
         }
 
-        $dtd = $this->c->config->i_disp_topics_default;
+        $dtd = $this->config->i_disp_topics_default;
 
         foreach ($forums->loadTree(0)->descendants as $forum) {
             if ($forum->last_post > 0) {
@@ -161,7 +161,7 @@ class Sitemap extends Page
             return false;
         }
 
-        $dpd = $this->c->config->i_disp_posts_default;
+        $dpd = $this->config->i_disp_posts_default;
 
         $vars = [
             ':fid' => $forum->id,

@@ -28,14 +28,14 @@ class Stat extends Users
         $number = \count($stat);
 
         $page  = $args['page'] ?? 1;
-        $pages = (int) \ceil(($number ?: 1) / $this->c->config->i_disp_users);
+        $pages = (int) \ceil(($number ?: 1) / $this->config->i_disp_users);
 
         if ($page > $pages) {
             return $this->c->Message->message('Not Found', true, 404);
         }
 
-        $startNum = ($page - 1) * $this->c->config->i_disp_users;
-        $stat     = \array_slice($stat, $startNum, $this->c->config->i_disp_users);
+        $startNum = ($page - 1) * $this->config->i_disp_users;
+        $stat     = \array_slice($stat, $startNum, $this->config->i_disp_users);
 
         $user = $this->c->users->load($args['id']);
 

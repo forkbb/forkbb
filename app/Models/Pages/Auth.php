@@ -124,7 +124,7 @@ class Auth extends Page
         $this->canonical    = $this->c->Router->link('Login');
         $this->robots       = 'noindex';
         $this->titles       = 'Login';
-        $this->regLink      = 1 === $this->c->config->b_regs_allow ? $this->c->Router->link('Register') : null;
+        $this->regLink      = 1 === $this->config->b_regs_allow ? $this->c->Router->link('Register') : null;
 
         $username           = $v->username ?? $username;
         $save               = $v->save ?? true;
@@ -315,7 +315,7 @@ class Auth extends Page
                     );
                     $tplData = [
                         'fRootLink' => $this->c->Router->link('Index'),
-                        'fMailer'   => __(['Mailer', $this->c->config->o_board_title]),
+                        'fMailer'   => __(['Mailer', $this->config->o_board_title]),
                         'username'  => $tmpUser->username,
                         'link'      => $link,
                     ];
@@ -327,7 +327,7 @@ class Auth extends Page
                             ->setFolder($this->c->DIR_LANG)
                             ->setLanguage($tmpUser->language)
                             ->setTo($tmpUser->email, $tmpUser->username)
-                            ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
+                            ->setFrom($this->config->o_webmaster_email, $tplData['fMailer'])
                             ->setTpl('passphrase_reset.tpl', $tplData)
                             ->send(9);
                     } catch (MailException $e) {
@@ -353,7 +353,7 @@ class Auth extends Page
                     $this->c->Log->warning('Passphrase reset: email form, fail', $context);
                 }
 
-                return $this->c->Message->message(['Forget mail', $this->c->config->o_admin_email], false, 0);
+                return $this->c->Message->message(['Forget mail', $this->config->o_admin_email], false, 0);
             }
 
             $this->fIswev = $v->getErrors();
@@ -482,7 +482,7 @@ class Auth extends Page
         }
         // активация аккаунта (письмо активации не дошло, заказали восстановление)
         if ($user->isUnverified) {
-            $user->group_id        = $this->c->config->i_default_user_group;
+            $user->group_id        = $this->config->i_default_user_group;
             $user->email_confirmed = 1;
 
             $this->c->users->update($user);

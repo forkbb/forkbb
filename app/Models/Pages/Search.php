@@ -139,7 +139,7 @@ class Search extends Page
             $this->fIswev = $v->getErrors();
         }
 
-        if (! $this->c->config->insensitive()) {
+        if (! $this->config->insensitive()) {
             $this->fIswev = [FORK_MESS_INFO, 'The search may be case sensitive'];
         }
 

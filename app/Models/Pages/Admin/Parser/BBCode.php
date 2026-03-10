@@ -95,12 +95,12 @@ class BBCode extends Parser
                     }
                 }
 
-                $this->c->config->a_bb_white_mes = $mesClear ? [] : $white_mes;
-                $this->c->config->a_bb_black_mes = $mesClear ? [] : $black_mes;
-                $this->c->config->a_bb_white_sig = $sigClear ? [] : $white_sig;
-                $this->c->config->a_bb_black_sig = $sigClear ? [] : $black_sig;
+                $this->config->a_bb_white_mes = $mesClear ? [] : $white_mes;
+                $this->config->a_bb_black_mes = $mesClear ? [] : $black_mes;
+                $this->config->a_bb_white_sig = $sigClear ? [] : $white_sig;
+                $this->config->a_bb_black_sig = $sigClear ? [] : $black_sig;
 
-                $this->c->config->save();
+                $this->config->save();
 
                 return $this->c->Redirect->url($this->AdminBBCodeUrl)->message('Parser settings updated redirect', FORK_MESS_SUCC);
             }
@@ -171,7 +171,7 @@ class BBCode extends Parser
                 'class'     => ['bbcode', 'in_mes'],
                 'type'      => 'select',
                 'options'   => $selectList,
-                'value'     => $this->getValue($tag, $this->c->config->a_bb_white_mes, $this->c->config->a_bb_black_mes),
+                'value'     => $this->getValue($tag, $this->config->a_bb_white_mes, $this->config->a_bb_black_mes),
                 'caption'   => 'BBCode mes label',
                 'disabled'  => 'ROOT' === $tag,
             ];
@@ -179,7 +179,7 @@ class BBCode extends Parser
                 'class'     => ['bbcode', 'in_sig'],
                 'type'      => 'select',
                 'options'   => $selectList,
-                'value'     => $this->getValue($tag, $this->c->config->a_bb_white_sig, $this->c->config->a_bb_black_sig),
+                'value'     => $this->getValue($tag, $this->config->a_bb_white_sig, $this->config->a_bb_black_sig),
                 'caption'   => 'BBCode sig label',
                 'disabled'  => 'ROOT' === $tag,
             ];

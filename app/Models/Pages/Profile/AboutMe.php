@@ -56,7 +56,7 @@ class AboutMe extends Profile
                 'poster_id'    => $this->curUser->id,
                 'poster'       => $this->curUser->username,
                 'poster_email' => $this->curUser->email,
-                'topic_id'     => $this->c->config->i_about_me_topic_id,
+                'topic_id'     => $this->config->i_about_me_topic_id,
             ]);
         }
 
@@ -174,7 +174,7 @@ class AboutMe extends Profile
             }
 
             if (
-                1 === $this->c->config->b_smilies
+                1 === $this->config->b_smilies
                 && (bool) $post->hide_smilies !== (bool) $v->hide_smilies
             ) {
                 $post->hide_smilies = $v->hide_smilies ? 1 : 0;
