@@ -80,7 +80,7 @@ class Sitemap extends Page
 
     protected function sitemap00(Forums $forums, Group $gGroup, int $max): bool
     {
-        $this->sitemap[$this->c->Router->link('Index')] = null;
+        $this->sitemap[$this->fRootLink] = null;
 
         --$max;
 

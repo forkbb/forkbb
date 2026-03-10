@@ -48,7 +48,7 @@ abstract class Page extends Model
         $this->config       = $container->config;
         $this->user         = $container->user;
         $this->userRules    = $container->userRules;
-        $this->fRootLink    = $container->Router->link('Index'); // ????
+        $this->fRootLink    = $container->Router->link('Index');
         $this->mDescription = $this->config->s_meta_desc;
 
         $this->identifier   = 'unknown';      # string|array Идентификатор(ы) для установки классов элемента #fork
@@ -114,7 +114,7 @@ abstract class Page extends Model
         $navUser = [];
         $navGen  = [
             self::FI_INDEX => [
-                $r->link('Index'),
+                $this->fRootLink,
                 'Index',
                 'Home page',
             ],
@@ -738,7 +738,7 @@ abstract class Page extends Model
         }
 
         // главная страница
-        $result[] = [$this->c->Router->link('Index'), 'Index', null, 'index', $active, $ext];
+        $result[] = [$this->fRootLink, 'Index', null, 'index', $active, $ext];
 
         $event         = new Event('Models\Page:crumbs:after');
         $event->list   = $result;

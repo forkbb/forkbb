@@ -56,7 +56,7 @@ class Index extends Page
         $this->onlinePos    = 'index';
         $this->onlineDetail = true;
         $this->onlineFilter = false;
-        $this->canonical    = $this->c->Router->link('Index');
+        $this->canonical    = $this->fRootLink;
         $this->stats        = $this->c->stats;
         $this->online       = $this->c->Online->calc($this)->info();
         $this->categoryes   = $ctgs;

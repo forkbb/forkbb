@@ -140,7 +140,7 @@ class Email extends Profile
                             ]
                         );
                         $tplData = [
-                            'fRootLink' => $this->c->Router->link('Index'),
+                            'fRootLink' => $this->fRootLink,
                             'fMailer'   => __(['Mailer', $this->config->o_board_title]),
                             'username'  => $this->curUser->username,
                             'link'      => $link,

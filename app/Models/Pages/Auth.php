@@ -314,7 +314,7 @@ class Auth extends Page
                         ]
                     );
                     $tplData = [
-                        'fRootLink' => $this->c->Router->link('Index'),
+                        'fRootLink' => $this->fRootLink,
                         'fMailer'   => __(['Mailer', $this->config->o_board_title]),
                         'username'  => $tmpUser->username,
                         'link'      => $link,

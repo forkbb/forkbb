@@ -345,7 +345,7 @@ class Register extends Page
             $this->c->Lang->load('common', $this->config->o_default_lang);
 
             $tplData = [
-                'fRootLink' => $this->c->Router->link('Index'),
+                'fRootLink' => $this->fRootLink,
                 'fMailer'   => __(['Mailer', $this->config->o_board_title]),
                 'username'  => $user->username,
                 'userLink'  => $user->link,
@@ -388,7 +388,7 @@ class Register extends Page
             );
             $tplData = [
                 'fTitle'    => $this->config->o_board_title,
-                'fRootLink' => $this->c->Router->link('Index'),
+                'fRootLink' => $this->fRootLink,
                 'fMailer'   => __(['Mailer', $this->config->o_board_title]),
                 'username'  => $user->username,
                 'link'      => $link,
@@ -457,7 +457,7 @@ class Register extends Page
             $this->c->Lang->load('common', $this->config->o_default_lang);
 
             $tplData = [
-                'fRootLink' => $this->c->Router->link('Index'),
+                'fRootLink' => $this->fRootLink,
                 'fMailer'   => __(['Mailer', $this->config->o_board_title]),
                 'username'  => $v->username,
                 'email'     => $v->email,
