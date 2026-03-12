@@ -23,7 +23,6 @@ class Index extends Admin
         $this->c->Lang->load('admin_index');
 
         $this->nameTpl  = 'admin/index';
-        $this->revision = $this->config->i_fork_revision;
         $this->linkStat = $this->c->Router->link('AdminStatistics');
 
         return $this;
