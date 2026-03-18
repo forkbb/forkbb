@@ -42,7 +42,7 @@
         @endif
         @if ($p->model->canReply)
           <small>|</small>
-          <span class="f-act-span"><a class="f-btn f-btn-post-reply" title="{{ __('Post reply') }}" href="{{ $p->model->linkReply }}" rel="nofollow"><span>{!! __('Post reply') !!}</span></a></span>
+          <span class="f-act-span"><a class="f-btn f-btn-post-reply" title="{{ __('Post reply') }}" href="{{ $p->model->linkReply }}"><span>{!! __('Post reply') !!}</span></a></span>
         @endif
         </div>
     @endif
@@ -220,27 +220,27 @@
               <small>{!! __('ACTIONS') !!}</small>
                 @if (1 === $post->postNumber && $p->model->solution > 0)
               <small>-</small>
-              <a class="f-btn f-gotosolution" title="{{ __('Go to solution') }}" href="{{ $p->model->linkGoToSolution }}" rel="nofollow"><span>{!! __('Go to solution') !!}</span></a>
+              <a class="f-btn f-gotosolution" title="{{ __('Go to solution') }}" href="{{ $p->model->linkGoToSolution }}"><span>{!! __('Go to solution') !!}</span></a>
                 @endif
                 @if ($p->model->canChSolution)
               <small>-</small>
-              <a class="f-btn f-postsolution" title="{{ __('Solution') }}" href="{{ $post->linkSolution }}" rel="nofollow"><span>{!! __('Solution') !!}</span></a>
+              <a class="f-btn f-postsolution" title="{{ __('Solution') }}" href="{{ $post->linkSolution }}"><span>{!! __('Solution') !!}</span></a>
                 @endif
                 @if ($post->canReport)
               <small>-</small>
-              <a class="f-btn f-minor f-postreport" title="{{ __('Report') }}" href="{{ $post->linkReport }}" rel="nofollow"><span>{!! __('Report') !!}</span></a>
+              <a class="f-btn f-minor f-postreport" title="{{ __('Report') }}" href="{{ $post->linkReport }}"><span>{!! __('Report') !!}</span></a>
                 @endif
                 @if ($post->canDelete)
               <small>-</small>
-              <a class="f-btn f-postdelete" title="{{ __('Delete') }}" href="{{ $post->linkDelete }}" rel="nofollow"><span>{!! __('Delete') !!}</span></a>
+              <a class="f-btn f-postdelete" title="{{ __('Delete') }}" href="{{ $post->linkDelete }}"><span>{!! __('Delete') !!}</span></a>
                 @endif
                 @if ($post->canEdit)
               <small>-</small>
-              <a class="f-btn f-postedit" title="{{ __('Edit') }}" href="{{ $post->linkEdit }}" rel="nofollow"><span>{!! __('Edit') !!}</span></a>
+              <a class="f-btn f-postedit" title="{{ __('Edit') }}" href="{{ $post->linkEdit }}"><span>{!! __('Edit') !!}</span></a>
                 @endif
                 @if ($post->canQuote)
               <small>-</small>
-              <a class="f-btn f-postquote" title="{{ __('Quote') }}" href="{{ $post->linkQuote }}" rel="nofollow"><span>{!! __('Quote') !!}</span></a>
+              <a class="f-btn f-postquote" title="{{ __('Quote') }}" href="{{ $post->linkQuote }}"><span>{!! __('Quote') !!}</span></a>
                 @endif
             </div>
             @endif
@@ -269,7 +269,7 @@
         @endif
         @if ($p->model->canReply)
           <small>|</small>
-          <span class="f-act-span"><a class="f-btn f-btn-post-reply" title="{{ __('Post reply') }}" href="{{ $p->model->linkReply }}" rel="nofollow"><span>{!! __('Post reply') !!}</span></a></span>
+          <span class="f-act-span"><a class="f-btn f-btn-post-reply" title="{{ __('Post reply') }}" href="{{ $p->model->linkReply }}"><span>{!! __('Post reply') !!}</span></a></span>
         @endif
         </div>
     @endif

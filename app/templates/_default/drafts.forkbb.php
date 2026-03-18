@@ -89,9 +89,9 @@
             <div class="f-post-btns">
               <small>{!! __('ACTIONS') !!}</small>
               <small>-</small>
-              <a class="f-btn f-postedit" title="{{ __('Edit') }}" href="{{ $post->link }}" rel="nofollow"><span>{!! __('Edit') !!}</span></a>
+              <a class="f-btn f-postedit" title="{{ __('Edit') }}" href="{{ $post->link }}"><span>{!! __('Edit') !!}</span></a>
               <small>-</small>
-              <a class="f-btn f-postdelete" title="{{ __('Delete') }}" href="{{ $post->linkDelete }}" rel="nofollow"><span>{!! __('Delete') !!}</span></a>
+              <a class="f-btn f-postdelete" title="{{ __('Delete') }}" href="{{ $post->linkDelete }}"><span>{!! __('Delete') !!}</span></a>
             </div>
           </aside>
         </div>
