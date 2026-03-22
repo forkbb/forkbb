@@ -35,6 +35,10 @@ return [
         'algo' => 'sha1',
         'salt' => '_SALT_FOR_HMAC_',
     ],
+    'PASSHASH' => [
+        'algo'    => \PASSWORD_DEFAULT,
+        'options' => [],
+    ],
     'DEBUG'            => 0, // 0&1st: time/memory, 1st: queries, 2nd: message 400+ to log
     'MAINTENANCE_OFF'  => false,
     'BBCODE_INFO'      => [

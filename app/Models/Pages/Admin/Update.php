@@ -1667,4 +1667,25 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.94 to rev.95
+     */
+    protected function stageNumber94(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'PASSHASH',
+            [
+                'algo'    => '\\PASSWORD_DEFAULT',
+                'options' => '[]',
+            ],
+            'HMAC'
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }

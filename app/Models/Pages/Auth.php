@@ -455,7 +455,7 @@ class Auth extends Page
             $v = $this->c->Test->beforeValidation($v);
 
             if ($v->validation($_POST, true)) {
-                $user->password        = \password_hash($v->password, \PASSWORD_DEFAULT);
+                $user->password        = \password_hash($v->password, $this->c->PASSHASH['algo'], $this->c->PASSHASH['options']);
                 $user->email_confirmed = 1;
                 $user->activate_string = '';
 

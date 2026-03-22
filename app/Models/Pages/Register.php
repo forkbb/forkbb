@@ -270,7 +270,7 @@ class Register extends Page
         $user = $this->c->users->create();
 
         $user->username        = $v->username;
-        $user->password        = $this->useOAuth ? 'oauth_' . $this->c->Secury->randomPass(7) : \password_hash($v->password, \PASSWORD_DEFAULT);
+        $user->password        = $this->useOAuth ? 'oauth_' . $this->c->Secury->randomPass(7) : \password_hash($v->password, $this->c->PASSHASH['algo'], $this->c->PASSHASH['options']);
         $user->group_id        = $groupId;
         $user->email           = $email;
         $user->email_confirmed = $this->useOAuth && $this->provider->userEmailVerifed ? 1 : 0;
