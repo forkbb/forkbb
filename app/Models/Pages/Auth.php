@@ -211,19 +211,18 @@ class Auth extends Page
     {
         if (empty($v->getErrors())) {
             if (true === $this->loginWithForm) {
-                if (false !== \strpos($v->username, '@')) {
-                    $this->userAfterLogin = $this->c->users->loadByEmail($v->username);
-                }
+                $userByEmail = $this->c->users->loadByEmail($v->username);
+                $userByName  = $this->c->users->loadByName($v->username);
 
-                if (! $this->userAfterLogin instanceof User) {
-                    $this->userAfterLogin = $this->c->users->loadByName($v->username);
-                }
+                $this->userAfterLogin = $userByEmail ?? $userByName ?? null;
             }
 
             if (
                 ! $this->userAfterLogin instanceof User
                 || $this->userAfterLogin->isGuest
             ) {
+                $zero = \password_hash($password, $this->c->PASSHASH['algo'], $this->c->PASSHASH['options']);
+
                 $v->addError('Wrong user/pass');
 
             } elseif ($this->userAfterLogin->isUnverified) {
