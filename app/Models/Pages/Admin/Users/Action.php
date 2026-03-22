@@ -324,7 +324,7 @@ class Action extends Users
      */
     public function vCheckPassword(Validator $v, #[SensitiveParameter] string $password): string
     {
-        if (! \password_verify($password, $this->user->password)) {
+        if (true !== \password_verify($password, $this->user->password)) {
             $v->addError('Invalid passphrase');
         }
 

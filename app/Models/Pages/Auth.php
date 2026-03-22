@@ -210,8 +210,8 @@ class Auth extends Page
     public function vLoginCheck(Validator $v, #[SensitiveParameter] string $password): string
     {
         if (empty($v->getErrors())) {
-            if ($this->loginWithForm) {
-                if (\strpos($v->username, '@')) {
+            if (true === $this->loginWithForm) {
+                if (false !== \strpos($v->username, '@')) {
                     $this->userAfterLogin = $this->c->users->loadByEmail($v->username);
                 }
 
@@ -230,8 +230,8 @@ class Auth extends Page
                 $v->addError('Account is not activated', FORK_MESS_WARN);
 
             } elseif (
-                $this->loginWithForm
-                && ! \password_verify($password, $this->userAfterLogin->password)
+                true === $this->loginWithForm
+                && true !== \password_verify($password, $this->userAfterLogin->password)
             ) {
                 $v->addError('Wrong user/pass');
             }
@@ -240,10 +240,11 @@ class Auth extends Page
         if (! empty($v->getErrors())) {
             $this->userAfterLogin = null;
 
-        } elseif ($this->loginWithForm) {
-            if (true === \password_needs_rehash($this->userAfterLogin->password, $this->c->PASSHASH['algo'], $this->c->PASSHASH['options'])) {
-                $this->userAfterLogin->password = \password_hash($password, $this->c->PASSHASH['algo'], $this->c->PASSHASH['options']);
-            }
+        } elseif (
+            true === $this->loginWithForm
+            && true === \password_needs_rehash($this->userAfterLogin->password, $this->c->PASSHASH['algo'], $this->c->PASSHASH['options'])
+        ) {
+            $this->userAfterLogin->password = \password_hash($password, $this->c->PASSHASH['algo'], $this->c->PASSHASH['options']);
         }
 
         return $password;

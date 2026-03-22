@@ -49,6 +49,7 @@ class Pass extends Profile
 
             if ($v->validation($_POST)) {
                 $this->curUser->password = \password_hash($v->new_pass, $this->c->PASSHASH['algo'], $this->c->PASSHASH['options']);
+
                 $this->c->users->update($this->curUser);
 
                 if ($this->rules->my) {
