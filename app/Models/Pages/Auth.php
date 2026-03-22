@@ -239,6 +239,11 @@ class Auth extends Page
 
         if (! empty($v->getErrors())) {
             $this->userAfterLogin = null;
+
+        } elseif ($this->loginWithForm) {
+            if (true === \password_needs_rehash($this->userAfterLogin->password, $this->c->PASSHASH['algo'], $this->c->PASSHASH['options'])) {
+                $this->userAfterLogin->password = \password_hash($password, $this->c->PASSHASH['algo'], $this->c->PASSHASH['options']);
+            }
         }
 
         return $password;
