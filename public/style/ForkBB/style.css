@@ -3541,11 +3541,11 @@ body,
   }
 
   #fork .f-btn-subscribe::before {
-    content: "\f00e";
+    content: "\f0f3";
   }
 
   #fork .f-btn-unsubscribe::before {
-    content: "\f010";
+    content: "\f1f6";
   }
 }
 
