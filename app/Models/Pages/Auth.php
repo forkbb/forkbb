@@ -215,35 +215,39 @@ class Auth extends Page
                 $userByName  = $this->c->users->loadByName($v->username);
 
                 $this->userAfterLogin = $userByEmail ?? $userByName ?? null;
-            }
 
-            if (
-                ! $this->userAfterLogin instanceof User
-                || $this->userAfterLogin->isGuest
-            ) {
-                $zero = \password_hash($password, $this->c->PASSHASH['algo'], $this->c->PASSHASH['options']);
+                if (
+                    ! $this->userAfterLogin instanceof User
+                    || $this->userAfterLogin->isGuest
+                ) {
+                    $zero = \password_hash($password, $this->c->PASSHASH['algo'], $this->c->PASSHASH['options']);
 
-                $v->addError('Wrong user/pass');
+                    $v->addError('Wrong user/pass');
 
-            } elseif ($this->userAfterLogin->isUnverified) {
-                $v->addError('Account is not activated', FORK_MESS_WARN);
+                } elseif (true !== \password_verify($password, $this->userAfterLogin->password)) {
+                    $v->addError('Wrong user/pass');
 
-            } elseif (
-                true === $this->loginWithForm
-                && true !== \password_verify($password, $this->userAfterLogin->password)
-            ) {
-                $v->addError('Wrong user/pass');
+                } elseif ($this->userAfterLogin->isUnverified) {
+                    $v->addError('Account is not activated', FORK_MESS_WARN);
+
+                } elseif (true === \password_needs_rehash($this->userAfterLogin->password, $this->c->PASSHASH['algo'], $this->c->PASSHASH['options'])) {
+                    $this->userAfterLogin->password = \password_hash($password, $this->c->PASSHASH['algo'], $this->c->PASSHASH['options']);
+                }
+            } else {
+                if (
+                    ! $this->userAfterLogin instanceof User
+                    || $this->userAfterLogin->isGuest
+                ) {
+                    $v->addError('Wrong user/pass');
+
+                } elseif ($this->userAfterLogin->isUnverified) {
+                    $v->addError('Account is not activated', FORK_MESS_WARN);
+                }
             }
         }
 
         if (! empty($v->getErrors())) {
             $this->userAfterLogin = null;
-
-        } elseif (
-            true === $this->loginWithForm
-            && true === \password_needs_rehash($this->userAfterLogin->password, $this->c->PASSHASH['algo'], $this->c->PASSHASH['options'])
-        ) {
-            $this->userAfterLogin->password = \password_hash($password, $this->c->PASSHASH['algo'], $this->c->PASSHASH['options']);
         }
 
         return $password;
