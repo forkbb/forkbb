@@ -91,6 +91,7 @@ class View extends Users
                         'order_by'        => 'required|string|in:username,email,num_posts,last_post,last_visit,registered',
                         'direction'       => 'required|string|in:ASC,DESC',
                         'user_group'      => 'required|integer|in:' . \implode(',', $this->groups(true)),
+                        'users_per_page'  => 'required|integer|in:50,100,250,500,1000',
                     ])->addAliases([
                         'username'        => 'Username label',
                         'email'           => 'E-mail address label',
@@ -113,6 +114,7 @@ class View extends Users
                         'num_drafts_2'    => 'Drafts label',
                         'order_by'        => 'Order by label',
                         'user_group'      => 'User group label',
+                        'users_per_page'  => 'Users per page label',
                     ])->addArguments([
                     ])->addMessages([
                     ]);
@@ -410,6 +412,18 @@ class View extends Users
             'options' => $this->groups(),
             'value'   => $data['user_group'] ?? -1,
             'caption' => 'User group label',
+        ];
+        $fields['users_per_page'] = [
+            'type'    => 'radio',
+            'value'   => $data['users_per_page'] ?? 50,
+            'values'  => [
+                '50'   => '50',
+                '100'  => '100',
+                '250'  => '250',
+                '500'  => '500',
+                '1000' => '1000',
+            ],
+            'caption' => 'Users per page label',
         ];
 
         $form['sets']['sorting'] = [

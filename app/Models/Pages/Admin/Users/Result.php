@@ -40,6 +40,8 @@ class Result extends Users
         } else {
             $idsN   = $this->forFilter($data);
             $crName = 'Results head';
+
+            $this->config->__i_disp_users = $data['users_per_page']; // ????
         }
 
         $number = \count($idsN);
@@ -189,6 +191,13 @@ class Result extends Users
         return \array_merge($fromPosts, $ids);
     }
 
+    protected array $serviceFields = [
+        'order_by'       => true,
+        'direction'      => true,
+        'user_group'     => true,
+        'users_per_page' => true,
+    ];
+
     /**
      * Возвращает список id пользователей по фильтру
      */
@@ -205,11 +214,7 @@ class Result extends Users
         }
 
         foreach ($data as $field => $value) {
-            if (
-                'order_by' === $field
-                || 'direction' === $field
-                || 'user_group' === $field
-            ) {
+            if (isset($this->serviceFields[$field])) {
                 continue;
             }
 

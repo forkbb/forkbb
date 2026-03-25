@@ -281,3 +281,6 @@ msgstr "Drafts"
 
 msgid "SN profile %s"
 msgstr "Social network profile %s"
+
+msgid "Users per page label"
+msgstr "Users per page"

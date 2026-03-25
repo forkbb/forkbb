@@ -281,3 +281,6 @@ msgstr "草稿"
 
 msgid "SN profile %s"
 msgstr "其他社交平台 %s"
+
+msgid "Users per page label"
+msgstr "Users per page"

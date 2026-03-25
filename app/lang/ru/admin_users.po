@@ -281,3 +281,6 @@ msgstr "Черновиков"
 
 msgid "SN profile %s"
 msgstr "Профиль в соц.сети %s"
+
+msgid "Users per page label"
+msgstr "Пользователей на странице"
