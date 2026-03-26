@@ -286,7 +286,7 @@ class Result extends Users
 
         foreach ($users as $user) {
             if (\is_string($user)) {
-                $user = $this->c->users->create(['id' => 1, 'username' => $user]);
+                $user = $this->c->users->create(['id' => 0, 'username' => $user]);
             }
 
             $fields = [];
