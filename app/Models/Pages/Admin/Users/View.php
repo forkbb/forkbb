@@ -36,6 +36,25 @@ class View extends Users
         return $onlyKeys ? \array_keys($groups) : $groups;
     }
 
+    protected function numberList(): array
+    {
+        $max  = ((int) \ini_get('max_input_vars') ?: 1000) - 10;
+        $list = [];
+
+        foreach ([50, 100, 250, 500, 1000] as $i) {
+            if ($i < $max) {
+                $list[$i] = $i;
+
+            } else {
+                $list[$max] = $max;
+
+                break;
+            }
+        }
+
+        return $list;
+    }
+
     /**
      * Подготавливает данные для шаблона поиска пользователей
      */
@@ -91,7 +110,7 @@ class View extends Users
                         'order_by'        => 'required|string|in:username,email,num_posts,last_post,last_visit,registered',
                         'direction'       => 'required|string|in:ASC,DESC',
                         'user_group'      => 'required|integer|in:' . \implode(',', $this->groups(true)),
-                        'users_per_page'  => 'required|integer|in:50,100,250,500,1000',
+                        'users_per_page'  => 'required|integer|in:'. \implode(',', $this->numberList()),
                     ])->addAliases([
                         'username'        => 'Username label',
                         'email'           => 'E-mail address label',
@@ -416,13 +435,7 @@ class View extends Users
         $fields['users_per_page'] = [
             'type'    => 'radio',
             'value'   => $data['users_per_page'] ?? 50,
-            'values'  => [
-                '50'   => '50',
-                '100'  => '100',
-                '250'  => '250',
-                '500'  => '500',
-                '1000' => '1000',
-            ],
+            'values'  => $this->numberList(),
             'caption' => 'Users per page label',
         ];
 
