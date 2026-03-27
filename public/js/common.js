@@ -118,7 +118,8 @@ ForkBB.common = (function (doc, win) {
     {
         var inps = doc.querySelectorAll("input[type=\"hidden\"][name=\"nekot\"]"),
             regx = new RegExp("(" + ".".repeat([1]+[2]-[3]-[2]-[1]) + ").*"),
-            sel = doc.getElementById("id-subject_color");
+            sel = doc.getElementById("id-subject_color"),
+            swAlls = doc.querySelectorAll(".switch_all_checkboxes");
 
         for (var i = 0; i < inps.length; i++) {
             inps[i].value = (inps[i].parentNode.querySelector("input[type=\"hidden\"][name=\"token\"]").value.replace(/\D/g, "").replace(regx, "$1"));
@@ -130,6 +131,19 @@ ForkBB.common = (function (doc, win) {
                 this.style.color = win.getComputedStyle(option).color;
             });
             sel.dispatchEvent(new Event("change"));
+        }
+
+        for (var i = 0; i < swAlls.length; i++) {
+            if (swAlls[i].form) {
+                swAlls[i].addEventListener("click", function(e) {
+                    e.preventDefault();
+                    Array.from(this.form.elements).forEach(function (element) {
+                        if (element.getAttribute("type") == "checkbox") {
+                            element.checked = !element.checked;
+                        }
+                    });
+                });
+            }
         }
     }
 

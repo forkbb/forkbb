@@ -282,6 +282,12 @@ class Result extends Users
             ];
         }
 
+        $form['btns']['all'] = [
+            'class' => ['origin', 'switch_all_checkboxes'],
+            'type'  => 'button',
+            'value' => '✓',
+        ];
+
         \array_unshift($users, $this->c->users->create(['id' => -1]));
 
         foreach ($users as $user) {
