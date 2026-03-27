@@ -415,6 +415,11 @@
   justify-content: flex-end;
 }
 
+#fork-ausersrch-rs .f-flblch {
+  display: flex;
+  height: 100%;
+}
+
 #fork-ausersrch-rs .f-btns .f-fbtn,
 #fork .f-delete-users-form .f-fbtn,
 #fork .f-change-group-form .f-fbtn {
@@ -444,7 +449,7 @@
 }
 
 #forka .f-fs-result .f-ychk {
-  margin: 0;
+  margin: auto;
 }
 
 #forka .f-fs-result .f-field-result {
