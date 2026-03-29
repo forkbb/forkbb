@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ __('lang_identifier') }}" dir="{{ __('lang_direction') }}">
+<html lang="{{ __('lang_identifier') }}" dir="{{ __('lang_direction') }}" @if ($p->baseFontSize) class="ffs-{!! (int) $p->baseFontSize !!}" @endif>
 <head>
   <!-- PRE headStart -->
   <meta charset="utf-8">
@@ -136,11 +136,12 @@
     <footer id="fork-footer">
       <p class="f-sim-header">{!! __('Board footer') !!}</p>
       <div id="fork-footer-in">
-        <div>
+        <div id="fork-footer-in-s">
           <!-- PRE footerFirstStart -->
+          <p id="id-cvjs-button"></p>
           <!-- PRE footerFirstEnd -->
         </div>
-        <div>
+        <div id="fork-footer-in-e">
           <!-- PRE footerSecondStart -->
           <p id="id-fpoweredby">{!! __('Powered by') !!}</p>
           <!-- PRE footerSecondEnd -->
@@ -150,6 +151,11 @@
     </footer>
     <!-- PRE footerAfter -->
   </div>
+  <aside id="fork-cvjs-panel">
+    <span id="id-cvjs-close">Close</span>
+    <input id="id-cvjs-fss" type="range" min="8" max="32">
+    <span id="id-cvjs-reset">Reset</span>
+  </aside>
   <!-- PRE scriptsBefore -->
 @foreach ($p->pageHeaders as $pageHeader)
     @if ('script' === $pageHeader['type'])

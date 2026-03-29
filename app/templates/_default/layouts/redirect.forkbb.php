@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ __('lang_identifier') }}" dir="{{ __('lang_direction') }}">
+<html lang="{{ __('lang_identifier') }}" dir="{{ __('lang_direction') }}" @if ($p->baseFontSize) class="ffs-{!! (int) $p->baseFontSize !!}" @endif>
 <head>
   <!-- PRE headStart -->
   <meta charset="utf-8">

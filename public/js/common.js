@@ -16,7 +16,13 @@ ForkBB.common = (function (doc, win) {
         selectorBack = ".f-go-back",
         selectorZoomImg = ".f-bb-img-chk",
         hlClass = "f-highlighted",
-        shlClass = "f-search-highlight";
+        shlClass = "f-search-highlight",
+        cvjsPanel = byId("fork-cvjs-panel");
+
+    function byId(e)
+    {
+        return doc.getElementById(e);
+    }
 
     function initGoBack()
     {
@@ -53,7 +59,7 @@ ForkBB.common = (function (doc, win) {
             hash = (win.location.hash || "").replace(/^#/, "");
 
         if (hash) {
-            target = doc.getElementById(hash);
+            target = byId(hash);
 
             if (target) {
                 target.classList.add(hlClass);
@@ -63,21 +69,21 @@ ForkBB.common = (function (doc, win) {
                 }, 1500);
             }
         } else if (
-            (target = doc.getElementById("fork"))
+            (target = byId("fork"))
             && (scroll = target.dataset.pageScroll)
             && (scroll = scroll.match(/^(-)?(\d+)$/))
             && "0" !== scroll[2]
         ) {
             target = null;
 
-            if ("2" === scroll[2] && (target = doc.getElementById("fork-announce"))) {
+            if ("2" === scroll[2] && (target = byId("fork-announce"))) {
                 do {
                     target = target.nextElementSibling;
                 } while (target && "none" === win.getComputedStyle(target).display)
             }
 
             if (!target) {
-                target = doc.getElementById("fork-main");
+                target = byId("fork-main");
             }
 
             if (target) {
@@ -118,7 +124,7 @@ ForkBB.common = (function (doc, win) {
     {
         var inps = doc.querySelectorAll("input[type=\"hidden\"][name=\"nekot\"]"),
             regx = new RegExp("(" + ".".repeat([1]+[2]-[3]-[2]-[1]) + ").*"),
-            sel = doc.getElementById("id-subject_color"),
+            sel = byId("id-subject_color"),
             swAlls = doc.querySelectorAll(".switch_all_checkboxes");
 
         for (var i = 0; i < inps.length; i++) {
@@ -135,8 +141,8 @@ ForkBB.common = (function (doc, win) {
 
         for (var i = 0; i < swAlls.length; i++) {
             if (swAlls[i].form) {
-                swAlls[i].addEventListener("click", function(e) {
-                    e.preventDefault();
+                swAlls[i].addEventListener("click", function(event) {
+                    event.preventDefault();
                     Array.from(this.form.elements).forEach(function (element) {
                         if (element.getAttribute("type") == "checkbox") {
                             element.checked = !element.checked;
@@ -239,21 +245,66 @@ ForkBB.common = (function (doc, win) {
         }
     }
 
+    function initCvJS()
+    {
+        if (!cvjsPanel) {
+            return;
+        }
+
+        var b = byId("id-cvjs-button"),
+            c = byId("id-cvjs-close"),
+            r = byId("id-cvjs-reset"),
+            s = byId("id-cvjs-fss"),
+            h = doc.documentElement,
+            f = function () {cvjsPanel.classList.toggle("enabled")};
+
+        if (b) {
+            b.addEventListener("click", f);
+            c.addEventListener("click", f);
+            s.addEventListener("input", function () {
+                h.className = (h.className.replace(/ffs\-\d+/g, "") + " ffs-" + this.value).replace(/  /g, " ").trim();
+            })
+            s.addEventListener("change", function () {
+                ForkBB.common.setBFSCookie(this.value);
+            });
+            r.addEventListener("click", function () {
+                h.className = (h.className.replace(/ffs\-\d+/g, "")).replace(/  /g, " ").trim();
+                s.value = Math.max(8, Math.min(32, parseInt(getComputedStyle(h).fontSize)));
+
+                ForkBB.common.setBFSCookie(0);
+            });
+
+            b.className = "enabled";
+            s.value = Math.max(8, Math.min(32, parseInt(getComputedStyle(h).fontSize)));
+        }
+    }
+
     return {
         init : function () {
             initGoBack();
-            initZoomImg();
             initForm();
 
             if (typeof DOMTokenList !== "undefined") {
+                initZoomImg();
                 initAnchorHL();
                 initShowPass();
                 initHighlight();
+                initCvJS();
             }
 
             if (typeof fetch !== "undefined") {
                 initSubmitReactions();
             }
+        },
+        setBFSCookie : function (value) {
+            var age = "31536000";
+
+            if (!value) {
+                value = "";
+                age = "-1";
+            }
+
+            doc.cookie = "fork_base_font_size=" + encodeURIComponent("" + value) + "; path=/; samesite=Lax; max-age=" + age;
         },
     };
 }(document, window));

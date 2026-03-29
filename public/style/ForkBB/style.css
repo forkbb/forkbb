@@ -3775,3 +3775,66 @@ body,
 #fork .f-retype-shock::before {
   background-image: url("reactions/shock.svg");
 }
+
+/*****************/
+/* Config via js */
+/*****************/
+#id-cvjs-button,
+#fork-cvjs-panel {
+  display: none;
+}
+
+#id-cvjs-button.enabled {
+  display: inline-block;
+}
+
+#id-cvjs-button.enabled::before {
+  display: inline-block;
+  font-family: "fa";
+  font-weight: 900;
+  content: "\f013";
+  cursor: pointer;
+}
+
+#fork-cvjs-panel.enabled {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  gap: 1vw;
+  z-index: 1000;
+  background-color: var(--bg-fprimary);
+  border: 2px solid var(--br-fprimary);
+  padding: 10px;
+  font-size: 20px;
+}
+
+#id-cvjs-close,
+#id-cvjs-reset {
+  cursor: pointer;
+}
+
+html.ffs-8 {font-size: 8px;}
+html.ffs-9 {font-size: 9px;}
+html.ffs-10 {font-size: 10px;}
+html.ffs-11 {font-size: 11px;}
+html.ffs-12 {font-size: 12px;}
+html.ffs-13 {font-size: 13px;}
+html.ffs-14 {font-size: 14px;}
+html.ffs-15 {font-size: 15px;}
+html.ffs-16 {font-size: 16px;}
+html.ffs-17 {font-size: 17px;}
+html.ffs-18 {font-size: 18px;}
+html.ffs-19 {font-size: 19px;}
+html.ffs-20 {font-size: 20px;}
+html.ffs-21 {font-size: 21px;}
+html.ffs-22 {font-size: 22px;}
+html.ffs-23 {font-size: 23px;}
+html.ffs-24 {font-size: 24px;}
+html.ffs-25 {font-size: 25px;}
+html.ffs-26 {font-size: 26px;}
+html.ffs-27 {font-size: 27px;}
+html.ffs-28 {font-size: 28px;}
+html.ffs-29 {font-size: 29px;}
+html.ffs-30 {font-size: 30px;}
+html.ffs-31 {font-size: 31px;}
+html.ffs-32 {font-size: 32px;}

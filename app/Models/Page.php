@@ -64,6 +64,13 @@ abstract class Page extends Model
 //      $this->canonical    = '';             # string       Переменная для link rel="canonical"
         $this->hhsLevel     = 'common';       # string       Ключ для $c->HTTP_HEADERS (для вывода заголовков HTTP из конфига)
 
+        if (
+            ($bfs = (int) $this->c->Cookie->get('fork_base_font_size', 0, false)) > 7
+            && $bfs < 33
+        ) {
+            $this->baseFontSize = $bfs;
+        }
+
         $now = \gmdate('D, d M Y H:i:s') . ' GMT';
 
         $this->header('Cache-Control', 'private, no-cache')
