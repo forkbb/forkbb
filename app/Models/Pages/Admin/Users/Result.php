@@ -282,7 +282,7 @@ class Result extends Users
             ];
         }
 
-        $form['btns']['all'] = [
+        $form['btns']['switch_all'] = [
             'class' => ['origin', 'switch_all_checkboxes'],
             'type'  => 'button',
             'value' => '✓',
