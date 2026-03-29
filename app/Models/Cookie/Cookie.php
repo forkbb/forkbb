@@ -85,9 +85,11 @@ class Cookie extends Model
     /**
      * Получает значение куки
      */
-    public function get(string $name, mixed $default = null): mixed
+    public function get(string $name, mixed $default = null, bool $usePrefix = true): mixed
     {
-        $name = $this->prefix . $name;
+        if (true === $usePrefix) {
+            $name = $this->prefix . $name;
+        }
 
         return isset($_COOKIE[$name])
             ? $this->c->Secury->replInvalidChars($_COOKIE[$name])
