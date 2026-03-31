@@ -22,15 +22,15 @@ trait PostFormTrait
     /**
      * Возвращает данные для построения формы создания темы/сообщения
      */
-    protected function messageForm(Model $model, string $marker, array $args, bool $edit, bool $first, bool $quick, bool $about = false): array
+    protected function messageForm(?Model $model, string $marker, array $args, bool $edit, bool $first, bool $quick, bool $about = false): array
     {
         $vars = $args['_vars'] ?? null;
 
         unset($args['_vars']);
 
-        $power     = $this->user->isAdmin || $this->user->isModerator($model);
+        $power     = $this->user->isAdmin || (null !== $model && $this->user->isModerator($model));
         $preMod    = $this->userRules->forPreModeration($model);
-        $notPM     = $this->fIndex !== self::FI_PM;
+        $notPM     = null !== $model && $this->fIndex !== self::FI_PM;
         $autofocus = $quick ? null : true;
         $form      = [
             'action'  => $this->c->Router->link($marker, $args),
@@ -71,7 +71,7 @@ trait PostFormTrait
                 'type'  => 'btn',
                 'value' => __('Go back'), // 'Cancel'
                 'class' => ['f-opacity', 'f-go-back'],
-                'href'  => $model->link,
+                'href'  => null === $model ? '' : $model->link,
             ];
         }
 

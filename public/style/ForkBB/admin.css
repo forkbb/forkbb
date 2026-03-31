@@ -520,6 +520,17 @@
   #forka .f-fs-result .f-field-result .f-ycaption::after {
     content: none;
   }
+
+  #forka .f-post-form dl,
+  #forka .f-post-form dt,
+  #forka .f-post-form dd {
+    display: block;
+    width: 100%;
+  }
+
+  #fork .f-post-form .f-ycaption {
+    font-weight: bold;
+  }
 }
 
 @media screen and (min-width: 50rem) {
@@ -620,6 +631,10 @@
   #forka .f-fs-result .f-field-action {
     width: 30%;
     border-inline-start: 0.0625rem dotted var(--br-fprimary);
+  }
+
+  #forka > .f-preview, #forka > .f-post-form:first-child {
+    border-top-style: dotted;
   }
 }
 
@@ -1372,4 +1387,5 @@
   bottom: 0;
   background-color: var(--bg-like-nav);
   border-top: 0.0625rem dotted var(--br-fprimary);
+  z-index: 10;
 }

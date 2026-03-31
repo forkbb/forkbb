@@ -284,3 +284,9 @@ msgstr "其他社交平台 %s"
 
 msgid "Users per page label"
 msgstr "Users per page"
+
+msgid "Create private dialogues"
+msgstr "Create private dialogues"
+
+msgid "Private dialogues created redirect"
+msgstr "Private dialogues created."

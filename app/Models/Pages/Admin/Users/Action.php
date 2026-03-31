@@ -13,12 +13,18 @@ namespace ForkBB\Models\Pages\Admin\Users;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin\Users;
+use ForkBB\Models\Pages\PostFormTrait;
+use ForkBB\Models\Pages\PostValidatorTrait;
+use ForkBB\Models\PM\Cnst;
 use SensitiveParameter;
 use RuntimeException;
 use function \ForkBB\__;
 
 class Action extends Users
 {
+    use PostFormTrait;
+    use PostValidatorTrait;
+
     /**
      * Возвращает список имен пользователей
      */
@@ -51,39 +57,39 @@ class Action extends Users
             $profile = false;
         }
 
-        $error = false;
+        $error = true;
 
         switch ($args['action']) {
-/*
-            case self::ACTION_BAN:
-                if (! $this->userRules->banUsers) {
-                    $error = true;
+            case self::ACTION_PM:
+                if (
+                    $this->user->isAdmin
+                    && $this->user->usePM
+                ) {
+                    $error = false;
                 }
+
                 break;
-*/
             case self::ACTION_DEL:
-                if (! $this->userRules->deleteUsers) {
-                    $error = true;
+                if ($this->userRules->deleteUsers) {
+                    $error = false;
                 }
 
                 break;
             case self::ACTION_CHG:
                 if (
                     $profile
-                    && ! $this->userRules->canChangeGroup($this->c->users->load((int) $args['ids']), true)
+                    && $this->userRules->canChangeGroup($this->c->users->load((int) $args['ids']), true)
                 ) {
-                    $error = true;
+                    $error = false;
 
                 } elseif (
                     ! $profile
-                    && ! $this->userRules->changeGroup
+                    && $this->userRules->changeGroup
                 ) {
-                    $error = true;
+                    $error = false;
                 }
 
                 break;
-            default:
-                $error = true;
         }
 
         if ($error) {
@@ -102,10 +108,8 @@ class Action extends Users
         $this->userList = $this->c->users->loadByIds($ids);
 
         switch ($args['action']) {
-/*
-            case self::ACTION_BAN:
-                return $this->ban($args, $method);
-*/
+            case self::ACTION_PM:
+                return $this->pm($args, $method);
             case self::ACTION_DEL:
                 return $this->delete($args, $method);
             case self::ACTION_CHG:
@@ -384,5 +388,91 @@ class Action extends Users
         }
 
         return $form;
+    }
+
+    /**
+     * Рассылает приватные диалоги
+     */
+    protected function pm(array $args, string $method): Page
+    {
+        $this->c->Lang->load('post');
+
+        $this->config->__b_upload = 0;
+
+        if ('POST' === $method) {
+            $v       = $this->messageValidator(null, 'AdminUsersAction', $args, false, true);
+            $isValid = $v->validation($_POST);
+
+            if (
+                $isValid
+                && null === $v->preview
+                && null !== $v->submit
+            ) {
+                $now      = \time();
+                $userList = $this->userList;
+
+                \usort($userList, function ($a, $b) {
+                    return $a->id <=> $b->id;
+                });
+
+                foreach ($userList as $targetUser) {
+                    if ($this->user->id === $targetUser->id) {
+                        continue;
+                    }
+
+                    $topic            = $this->c->pms->create(Cnst::PTOPIC);
+                    $topic->sender    = $this->user;
+                    $topic->recipient = $targetUser;
+                    $topic->subject   = $v->subject;
+                    $topic->status    = Cnst::PT_NORMAL;
+
+                    $this->c->pms->insert(Cnst::PTOPIC, $topic);
+
+                    $post               = $this->c->pms->create(Cnst::PPOST);
+                    $post->user         = $this->user;
+                    $post->poster_ip    = $this->user->ip;
+                    $post->message      = $v->message;
+                    $post->hide_smilies = $v->hide_smilies ? 1 : 0;
+                    $post->posted       = $now;
+                    $post->topic_id     = $topic->id;
+
+                    $this->c->pms->insert(Cnst::PPOST, $post);
+
+                    $topic->first_post_id = $post->id;
+
+                    $this->c->pms->update(Cnst::PTOPIC, $topic->calcStat());
+
+                    $this->user->u_pm_num_all += 1;
+
+                    $targetUser->u_pm_flash = 1;
+
+                    $this->c->pms->recalculate($targetUser);
+                }
+
+                $this->user->u_pm_last_post = $now;
+
+                $this->c->users->update($this->user);
+
+                return $this->c->Redirect->page('AdminUsers')->message('Private dialogues created redirect', FORK_MESS_SUCC);
+
+            } elseif (
+                null !== $v->preview
+                && $isValid
+            ) {
+                $this->previewHtml = $this->c->censorship->censor(
+                    $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies)
+                );
+            }
+
+            $this->fIswev  = $v->getErrors();
+            $args['_vars'] = $v->getData();
+        }
+
+        $this->nameTpl   = 'admin/form_pm';
+        $this->titleForm = 'Create private dialogues';
+        $this->aCrumbs[] = [$this->c->Router->link('AdminUsersAction', $args), 'PM'];
+        $this->form      = $this->messageForm(null, 'AdminUsersAction', $args, false, true, false);
+
+        return $this;
     }
 }

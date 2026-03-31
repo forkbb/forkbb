@@ -162,7 +162,7 @@ trait PostValidatorTrait
 
         $this->attachmentsProc($marker, $args);
 
-        $notPM  = $this->fIndex !== self::FI_PM;
+        $notPM  = null !== $model && $this->fIndex !== self::FI_PM;
         $preMod = $this->userRules->forPreModeration($model);
 
         if ($this->user->isGuest) {

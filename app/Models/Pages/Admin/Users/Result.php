@@ -67,6 +67,7 @@ class Result extends Users
                 'token'          => 'token:AdminUsersResult',
                 'users'          => 'required|array',
                 'users.*'        => 'required|integer|min:1|max:9999999999',
+                'pm'             => $this->user->isAdmin && $this->user->usePM ? 'checkbox' : 'absent',
                 'ban'            => $this->userRules->banUsers ? 'checkbox' : 'absent',
                 'delete'         => $this->userRules->deleteUsers ? 'checkbox' : 'absent',
                 'change_group'   => $this->userRules->changeGroup ? 'checkbox' : 'absent',
@@ -83,22 +84,16 @@ class Result extends Users
             ]);
 
             if ($v->validation($_POST)) {
-                if (
-                    ! empty($v->ban)
-                    && $this->userRules->banUsers
-                ) {
+                if (! empty($v->pm)) {
+                    $action = self::ACTION_PM;
+
+                } elseif (! empty($v->ban)) {
                     $action = self::ACTION_BAN;
 
-                } elseif (
-                    ! empty($v->delete)
-                    && $this->userRules->deleteUsers
-                ) {
+                } elseif (! empty($v->delete)) {
                     $action = self::ACTION_DEL;
 
-                } elseif (
-                    ! empty($v->change_group)
-                    && $this->userRules->changeGroup
-                ) {
+                } elseif (! empty($v->change_group)) {
                     $action = self::ACTION_CHG;
 
                 } else {
@@ -263,6 +258,15 @@ class Result extends Users
             'btns'   => [],
         ];
 
+        if (
+            $this->user->isAdmin
+            && $this->user->usePM
+        ) {
+            $form['btns']['pm'] = [
+                'type'  => 'submit',
+                'value' => __('PM'),
+            ];
+        }
         if ($this->userRules->banUsers) {
             $form['btns']['ban'] = [
                 'type'  => 'submit',

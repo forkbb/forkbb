@@ -17,6 +17,7 @@ use function \ForkBB\__;
 
 abstract class Users extends Admin
 {
+    const ACTION_PM  = 'pm';
     const ACTION_BAN = 'ban';
     const ACTION_DEL = 'delete';
     const ACTION_CHG = 'change_group';
@@ -101,6 +102,8 @@ abstract class Users extends Admin
             }
 
             switch ($action) {
+                case self::ACTION_PM:
+                    break;
                 case self::ACTION_BAN:
                     if ($this->c->bans->banFromName($user->username) > 0) {
                         $this->fIswev = [FORK_MESS_INFO, ['User is ban', $user->username]];
@@ -140,6 +143,9 @@ abstract class Users extends Admin
                         }
 
                         return false;
+
+                    } elseif ($user->id === $this->user->id) {
+                        $this->fIswev = [FORK_MESS_INFO, 'You are trying to change your own group'];
                     }
 
                     break;
@@ -150,10 +156,6 @@ abstract class Users extends Admin
             }
 
             $result[] = $user->id;
-
-            if ($user->id === $this->user->id) {
-                $this->fIswev = [FORK_MESS_INFO, 'You are trying to change your own group'];
-            }
         }
 
         if (empty($result)) {

@@ -284,3 +284,9 @@ msgstr "Профиль в соц.сети %s"
 
 msgid "Users per page label"
 msgstr "Пользователей на странице"
+
+msgid "Create private dialogues"
+msgstr "Рассылка личных диалогов"
+
+msgid "Private dialogues created redirect"
+msgstr "Личные диалоги созданы."
