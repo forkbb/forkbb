@@ -317,3 +317,6 @@ msgstr "User is unblocked."
 
 msgid "PM menu"
 msgstr "Private messages menu"
+
+msgid "You cant start dialogue"
+msgstr "You can't start a dialogue."

@@ -317,3 +317,6 @@ msgstr "El usuario ha sido desbloqueado."
 
 msgid "PM menu"
 msgstr "Menú mensajes privados"
+
+msgid "You cant start dialogue"
+msgstr "You can't start a dialogue."

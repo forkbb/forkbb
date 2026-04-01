@@ -317,3 +317,6 @@ msgstr "用户已被取消屏蔽。"
 
 msgid "PM menu"
 msgstr "私信菜单"
+
+msgid "You cant start dialogue"
+msgstr "You can't start a dialogue."

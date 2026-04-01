@@ -19,6 +19,7 @@ use ForkBB\Models\Pages\PostValidatorTrait;
 use ForkBB\Models\PM\Cnst;
 use ForkBB\Models\PM\PPost;
 use ForkBB\Models\PM\PTopic;
+use ForkBB\Models\User\User;
 use ForkBB\Core\Exceptions\MailException;
 use InvalidArgumentException;
 use function \ForkBB\__;
@@ -53,6 +54,14 @@ class PMPost extends AbstractPM
             }
 
             $this->targetUser = $this->c->users->load($args['more1']);
+
+            if (
+                ! $this->targetUser instanceof User
+                || ! $this->c->ProfileRules->setUser($this->targetUser)->sendPM
+            ) {
+                return $this->c->Message->message('You cant start dialogue', true, 403);
+            }
+
             $this->newTopic   = true;
             $this->formTitle  = 'New PT title';
             $this->pmCrumbs[] = [$this->c->Router->link('PMAction', $args), 'New dialogue'];

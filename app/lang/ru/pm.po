@@ -317,3 +317,6 @@ msgstr "Пользователь разблокирован."
 
 msgid "PM menu"
 msgstr "Меню личных сообщений"
+
+msgid "You cant start dialogue"
+msgstr "Вы не можете начать диалог."
