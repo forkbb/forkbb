@@ -289,7 +289,7 @@ msgid "PM subhead"
 msgstr "Mensajes privados"
 
 msgid "Allow PM label"
-msgstr "Permitir mensajes privados"
+msgstr "Permitir iniciar diálogos"
 
 msgid "PM limit label"
 msgstr "Límite"

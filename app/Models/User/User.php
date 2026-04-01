@@ -30,13 +30,12 @@ class User extends DataModel
         parent::__construct($container);
 
         $this->zDepend = [
-            'group_id'      => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'isBanByName', 'link', 'usePM', 'linkEmail'],
+            'group_id'      => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'isBanByName', 'link', 'linkEmail'],
             'id'            => ['isGuest', 'link', 'online', 'linkEmail'],
             'last_visit'    => ['currentVisit'],
             'signature'     => ['isSignature'],
             'email'         => ['email_normal', 'linkEmail'],
             'username'      => ['username_normal'],
-            'g_pm'          => ['usePM'],
             'email_setting' => ['linkEmail'],
         ];
     }
@@ -365,18 +364,6 @@ class User extends DataModel
         $name = $this->isGuest ? ($this->isBot ? 'bot' : 'guest') : "name:{$this->username}";
 
         return "id:{$this->id} gid:{$this->group_id} {$name}";
-    }
-
-    /**
-     * Статус возможности использования приватных сообщений
-     */
-    protected function getusePM(): bool
-    {
-        return 1 === $this->c->config->b_pm
-            && (
-                1 === $this->g_pm
-                || $this->isAdmin
-            );
     }
 
     /**

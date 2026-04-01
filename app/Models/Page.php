@@ -218,7 +218,7 @@ abstract class Page extends Model
                 'Your profile',
             ];
 
-            if ($this->user->usePM) {
+            if (1 === $this->config->b_pm) {
                 $tmpPM = [];
 
                 if (1 !== $this->user->u_pm) {

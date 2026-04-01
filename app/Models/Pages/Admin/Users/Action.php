@@ -63,7 +63,7 @@ class Action extends Users
             case self::ACTION_PM:
                 if (
                     $this->user->isAdmin
-                    && $this->user->usePM
+                    && 1 === $this->config->b_pm
                 ) {
                     $error = false;
                 }

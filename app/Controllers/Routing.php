@@ -558,7 +558,7 @@ class Routing
         // личные сообщения
         if (
             ! $user->isGuest
-            && $user->usePM
+            && 1 === $config->b_pm
         ) {
             $r->add(
                 $r::GET,

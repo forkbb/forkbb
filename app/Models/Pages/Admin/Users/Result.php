@@ -67,7 +67,7 @@ class Result extends Users
                 'token'          => 'token:AdminUsersResult',
                 'users'          => 'required|array',
                 'users.*'        => 'required|integer|min:1|max:9999999999',
-                'pm'             => $this->user->isAdmin && $this->user->usePM ? 'checkbox' : 'absent',
+                'pm'             => $this->user->isAdmin && 1 === $this->config->b_pm ? 'checkbox' : 'absent',
                 'ban'            => $this->userRules->banUsers ? 'checkbox' : 'absent',
                 'delete'         => $this->userRules->deleteUsers ? 'checkbox' : 'absent',
                 'change_group'   => $this->userRules->changeGroup ? 'checkbox' : 'absent',
@@ -260,7 +260,7 @@ class Result extends Users
 
         if (
             $this->user->isAdmin
-            && $this->user->usePM
+            && 1 === $this->config->b_pm
         ) {
             $form['btns']['pm'] = [
                 'type'  => 'submit',
