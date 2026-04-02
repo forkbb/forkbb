@@ -1,9 +1,13 @@
 @section ('pagination')
     @if ($p->model->pagination)
+        @if (\max(\array_map(function ($cur) {return \is_int($cur[1]) ? $cur[1] : 0;}, $p->model->pagination)) > 6)
+        <nav class="f-pages f-pages-disc">
+        @else
         <nav class="f-pages">
+        @endif
         @foreach ($p->model->pagination as $cur)
-            @if ($cur[2])
-          <a class="f-page active" href="{{ $cur[0] }}">{{ $cur[1] }}</a>
+            @if (true === $cur[2])
+          <a class="f-page active" href="{{ $cur[0] }}">{!! (int) $cur[1] !!}</a>
             @elseif ('info' === $cur[1])
           <span class="f-pinfo">{!! __($cur[0]) !!}</span>
             @elseif ('space' === $cur[1])
@@ -13,7 +17,7 @@
             @elseif ('next' === $cur[1])
           <a rel="next" class="f-page f-pnext" href="{{ $cur[0] }}" title="{{ __('Next') }}"><span>{!! __('Next') !!}</span></a>
             @else
-          <a class="f-page" href="{{ $cur[0] }}">{{ $cur[1] }}</a>
+          <a class="f-page @if (null === $cur[2]) @if (1 === $cur[1]) f-pfirst @else f-plast @endif @endif" href="{{ $cur[0] }}">{!! (int) $cur[1] !!}</a>
             @endif
         @endforeach
         </nav>

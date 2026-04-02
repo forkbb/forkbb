@@ -221,8 +221,9 @@ class Func
                     + $args
                 ),
                 $i,
-                $i === $cur ? true : null,
+                $i === $cur ? true : (1 === $i || $all === $i ? null : false),
             ];
+
             $k = $i;
         }
 

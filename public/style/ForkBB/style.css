@@ -1201,6 +1201,7 @@ body,
 }
 
 #fork .f-nav-links .f-page {
+  display: flex;
   border: 0.0625rem solid var(--br-fprimary);
   padding: 0.125rem 0.375rem;
   font-size: 0.875rem;
@@ -1218,14 +1219,54 @@ body,
   color: var(--c-active);
 }
 
-#fork .f-pinfo {
-  display: none;
-}
-
 @media screen and (max-width: 49.9999rem) {
   #fork .f-crumbs {
     white-space: nowrap;
     overflow-x: auto;
+  }
+
+  #fork .f-pages-disc .f-page,
+  #fork .f-pinfo {
+    display: none;
+  }
+
+  #fork .f-pages-disc .active,
+  #fork .f-pages-disc .f-pprev,
+  #fork .f-pages-disc .f-pnext,
+  #fork .f-pages-disc .f-pfirst,
+  #fork .f-pages-disc .f-plast {
+    display: flex;
+  }
+
+  #fork .f-pages-disc .f-pfirst,
+  #fork .f-pages-disc .f-plast {
+    font-size: 0;
+    line-height: 0;
+  }
+
+  #fork .f-pages-disc .f-pfirst::before,
+  #fork .f-pages-disc .f-plast::before {
+    display: flex;
+    font-family: "fa";
+    font-weight: 900;
+    font-size: 0.875rem;
+    line-height: 1.125rem;
+  }
+
+  #fork .f-pages-disc .f-pfirst {
+    order: -1;
+  }
+
+  #fork .f-pages-disc .f-plast {
+    order: 1;
+  }
+
+  #fork .f-pages-disc .f-pfirst::before {
+    content: "\f100";
+  }
+
+  #fork .f-pages-disc .f-plast::before {
+    content: "\f101";
   }
 }
 
@@ -1233,7 +1274,6 @@ body,
   #fork .f-pinfo {
     font-size: 0.875rem;
     line-height: 1.125rem;
-    display: inline;
   }
 }
 
