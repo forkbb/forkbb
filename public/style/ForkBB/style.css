@@ -3573,7 +3573,9 @@ body,
 @media screen and (max-width: 49.9999rem) {
   #fork .f-btn-markread > span,
   #fork .f-btn-subscribe > span,
-  #fork .f-btn-unsubscribe > span {
+  #fork .f-btn-unsubscribe > span,
+  #fork .f-btn[name="preview"] > span,
+  #fork .f-btn[data-name="cancel"] > span {
     display: none;
   }
 
@@ -3587,6 +3589,19 @@ body,
 
   #fork .f-btn-unsubscribe::before {
     content: "\f1f6";
+  }
+
+  #fork .f-btn[name="preview"],
+  #fork .f-btn[data-name="cancel"] {
+    min-width: 2.5rem;
+  }
+
+  #fork .f-btn[name="preview"]::before {
+    content: "\f06e";
+  }
+
+  #fork .f-btn[data-name="cancel"]::before {
+    content: "\f060";
   }
 }
 
