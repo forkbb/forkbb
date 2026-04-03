@@ -3838,14 +3838,16 @@ body,
 
 #fork-cvjs-panel.enabled {
   display: flex;
+  align-items: center;
+  gap: 10px;
   position: fixed;
   bottom: 0;
-  gap: 1vw;
   z-index: 1000;
   background-color: var(--bg-fprimary);
   border: 2px solid var(--br-fprimary);
   padding: 10px;
   font-size: 20px;
+  line-height: 20px;
 }
 
 #id-cvjs-close,

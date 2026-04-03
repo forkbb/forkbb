@@ -152,9 +152,9 @@
     <!-- PRE footerAfter -->
   </div>
   <aside id="fork-cvjs-panel">
-    <span id="id-cvjs-close">Close</span>
+    <span id="id-cvjs-close">✕</span>
     <input id="id-cvjs-fss" type="range" min="8" max="32">
-    <span id="id-cvjs-reset">Reset</span>
+    <span id="id-cvjs-reset">⟲</span>
   </aside>
   <!-- PRE scriptsBefore -->
 @foreach ($p->pageHeaders as $pageHeader)
