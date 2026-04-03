@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
+use ForkBB\Models\Post\Post;
 use function \ForkBB\__;
 
 class Reaction extends Page
@@ -62,6 +63,7 @@ class Reaction extends Page
         if (
             ! $v->validation($_POST)
             || 1 !== \count($result = $v->getData())
+            || ! ($post = $this->c->posts->load($args['id'])) instanceof Post
         ) {
             if (true === $responseAsJSON) {
                 return $this->responseAsJSON(['error' => __('Bad request')]);
@@ -71,9 +73,7 @@ class Reaction extends Page
             }
         }
 
-        $post = $this->c->posts->load($args['id']);
-        $name = \array_key_first($result);
-
+        $name   = \array_key_first($result);
         $result = $this->c->reactions->reaction($post, $nameKey[$name]);
         $status = match ($result) {
             true    => FORK_MESS_SUCC,
