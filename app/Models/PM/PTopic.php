@@ -491,7 +491,8 @@ class PTopic extends DataModel
      */
     protected function getactionsAllowed(): bool
     {
-        return ! $this->closed;
+        return ! $this->closed
+            && 1 === $this->c->user->u_pm;
     }
 
     /**
