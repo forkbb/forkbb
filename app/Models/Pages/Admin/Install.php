@@ -712,7 +712,7 @@ class Install extends Admin
         //attachments_pos
         $schema = [
             'FIELDS' => [
-                'id'          => ['SERIAL', false],
+                'id'          => ['INT(10) UNSIGNED', false, 0],
                 'pid'         => ['INT(10) UNSIGNED', false, 0],
             ],
             'UNIQUE KEYS' => [
@@ -728,7 +728,7 @@ class Install extends Admin
         //attachments_pos_pm
         $schema = [
             'FIELDS' => [
-                'id'          => ['SERIAL', false],
+                'id'          => ['INT(10) UNSIGNED', false, 0],
                 'pid'         => ['INT(10) UNSIGNED', false, 0],
             ],
             'UNIQUE KEYS' => [

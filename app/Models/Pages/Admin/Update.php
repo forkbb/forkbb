@@ -1686,6 +1686,9 @@ class Update extends Admin
 
         $coreConfig->save();
 
+        $this->c->DB->alterField('::attachments_pos', 'id', 'INT(10) UNSIGNED', false, 0);
+        $this->c->DB->alterField('::attachments_pos_pm', 'id', 'INT(10) UNSIGNED', false, 0);
+
         return null;
     }
 }
