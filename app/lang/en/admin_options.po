@@ -525,8 +525,8 @@ msgstr "Topic hashtags"
 msgid "Topic hashtags help"
 msgstr "Allow adding hashtags to topics when creating/editing them. These hashtags will appear in topic lists."
 
-msgid "Favorites label"
-msgstr "Favorites"
+msgid "Topic bookmarks label"
+msgstr "Topic bookmarks"
 
-msgid "Favorites help"
-msgstr "Allow users to mark topics as favorites so they can quickly find them in search."
+msgid "Topic bookmarks help"
+msgstr "Allow users to bookmark topics so they can quickly find them in searches."

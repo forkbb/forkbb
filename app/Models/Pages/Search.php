@@ -443,7 +443,7 @@ class Search extends Page
             'latest_active_topics'   => 'latest',
             'unanswered_topics'      => 'unanswered',
             'new'                    => 'new',
-            'favorites'              => 'favorites',
+            'topic_bookmarks'        => 't-bookmarks',
         ];
         $extLink      = true;
 
@@ -470,7 +470,7 @@ class Search extends Page
                 break;
             case 'new':
             case 'topics_with_your_posts':
-            case 'favorites':
+            case 'topic_bookmarks':
                 if ($this->user->isGuest) {
                     break;
                 }

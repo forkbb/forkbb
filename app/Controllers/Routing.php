@@ -514,12 +514,12 @@ class Routing
                 }
 
                 // избранное
-                if (1 === $config->b_favorites) {
+                if (1 === $config->b_topic_bookmarks) {
                     $r->add(
                         $r::GET,
-                        '/topic/{tid|i:[1-9]\d*}/{type:(?:add|remove)_favorite}/{token}',
-                        'Misc:favorites',
-                        'TopicFavorites'
+                        '/topic/{tid|i:[1-9]\d*}/{type:(?:un)?bookmark}/{token}',
+                        'Misc:bookmark',
+                        'TopicBookmark'
                     );
                 }
             }

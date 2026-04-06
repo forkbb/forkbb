@@ -123,9 +123,9 @@ class ActionT extends Method
                 \arsort($list, \SORT_NUMERIC); // ???? или по последнему сообщению делать?
 
                 break;
-            case 'favorites':
+            case 'topic_bookmarks':
                 if (
-                    1 !== $this->c->config->b_favorites
+                    1 !== $this->c->config->b_topic_bookmarks
                     || 0 !== $root->id
                 ) {
                     return false;

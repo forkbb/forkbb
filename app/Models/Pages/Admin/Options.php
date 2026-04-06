@@ -127,7 +127,7 @@ class Options extends Admin
                     'b_show_user_reaction'    => 'required|integer|in:0,1',
                     'b_colored_subjects'      => 'required|integer|in:0,1',
                     'b_topic_hashtags'        => 'required|integer|in:0,1',
-                    'b_favorites'             => 'required|integer|in:0,1',
+                    'b_topic_bookmarks'       => 'required|integer|in:0,1',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
@@ -563,12 +563,12 @@ class Options extends Admin
                     'caption' => 'Menu items label',
                     'help'    => 'Menu items help',
                 ],
-                'b_favorites' => [
+                'b_topic_bookmarks' => [
                     'type'    => 'radio',
-                    'value'   => $config->b_favorites,
+                    'value'   => $config->b_topic_bookmarks,
                     'values'  => $yn,
-                    'caption' => 'Favorites label',
-                    'help'    => 'Favorites help',
+                    'caption' => 'Topic bookmarks label',
+                    'help'    => 'Topic bookmarks help',
                 ],
             ],
         ];

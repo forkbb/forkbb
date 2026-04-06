@@ -43,9 +43,9 @@ class Load extends Action
                 $leftRepl[]   = 'LEFT JOIN ::topic_subscriptions AS s ON (t.id=s.topic_id AND s.user_id=?i:uid)';
             }
 
-            if (1 === $this->c->config->b_favorites) {
-                $selectRepl[] = 'fv.uid AS is_favorited,';
-                $leftRepl[]   = 'LEFT JOIN ::favorites AS fv ON (fv.uid=?i:uid AND t.id=fv.tid)';
+            if (1 === $this->c->config->b_topic_bookmarks) {
+                $selectRepl[] = 'tbm.uid AS is_bookmarked,';
+                $leftRepl[]   = 'LEFT JOIN ::topic_bookmarks AS tbm ON (tbm.uid=?i:uid AND t.id=tbm.tid)';
             }
 
             $query = \str_replace(['SELECT_REPL', 'LEFT_REPL'], [\implode(' ', $selectRepl), \implode(' ', $leftRepl)], $query);

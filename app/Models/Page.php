@@ -189,17 +189,17 @@ abstract class Page extends Model
 
                 if (
                     ! $this->user->isGuest
-                    && 1 === $this->config->b_favorites
+                    && 1 === $this->config->b_topic_bookmarks
                 ) {
-                    $sub['favorites'] = [
+                    $sub['t-bookmarks'] = [
                         $r->link(
                             'SearchAction',
                             [
-                                'action' => 'favorites',
+                                'action' => 'topic_bookmarks',
                             ]
                         ),
-                        'Favorite topics',
-                        'Find favorite topics',
+                        'Topic bookmarks',
+                        'Find topic bookmarks',
                     ];
                 }
 

@@ -120,8 +120,8 @@ msgstr "Предупреждения для %s"
 msgid "Quick search show_last"
 msgstr "Последние сообщения"
 
-msgid "Quick search favorites"
-msgstr "Ваши избранные темы"
+msgid "Quick search topic_bookmarks"
+msgstr "Темы из ваших закладок"
 
 msgid "Search query: %s"
 msgstr "Запрос: «%s»"

@@ -109,9 +109,9 @@ class Topic extends DataModel
     /**
      * Статус возможности использования избраных тем
      */
-    protected function getcanFavorite(): bool
+    protected function getcanBookmark(): bool
     {
-        return 1 === $this->c->config->b_favorites
+        return 1 === $this->c->config->b_topic_bookmarks
             && $this->id > 0
             && ! $this->c->user->isGuest
             && ! $this->c->user->isUnverified;
@@ -231,29 +231,29 @@ class Topic extends DataModel
     }
 
     /**
-     * Ссылка на добавление в избранное
+     * Ссылка на добавление в закладки
      */
-    protected function getlinkAddFavorite(): string
+    protected function getlinkBookmark(): string
     {
         return $this->c->Router->link(
-            'TopicFavorites',
+            'TopicBookmark',
             [
                 'tid'  => $this->id,
-                'type' => 'add_favorite',
+                'type' => 'bookmark',
             ]
         );
     }
 
     /**
-     * Ссылка на удаление из избранного
+     * Ссылка на удаление из закладок
      */
-    protected function getlinkRemoveFavorite(): string
+    protected function getlinkUnbookmark(): string
     {
         return $this->c->Router->link(
-            'TopicFavorites',
+            'TopicBookmark',
             [
                 'tid'  => $this->id,
-                'type' => 'remove_favorite',
+                'type' => 'unbookmark',
             ]
         );
     }

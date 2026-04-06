@@ -149,14 +149,14 @@ msgstr "To draft"
 msgid "To pre-moderation"
 msgstr "To pre-moderation"
 
-msgid "Favorites+"
-msgstr "To Favorites"
+msgid "Bookmark"
+msgstr "Bookmark"
 
-msgid "Favorites-"
-msgstr "From Favorites"
+msgid "Unbookmark"
+msgstr "Unbookmark"
 
-msgid "Add favorite topic"
-msgstr "Add topic to favorites"
+msgid "Save to bookmarks"
+msgstr "Save this topic to your bookmarks"
 
-msgid "Remove favorite topic"
-msgstr "Remove topic from favorites"
+msgid "Remove from bookmarks"
+msgstr "Remove this topic from your bookmarks"

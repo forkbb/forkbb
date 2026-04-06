@@ -520,8 +520,8 @@ msgstr "<span class="f-spantxtpm">审核 </span><b>(%s)</b>"
 msgid "Temporary IP blocking"
 msgstr "您的 IP 地址已被临时封锁。"
 
-msgid "Favorite topics"
-msgstr "Favorite topics"
+msgid "Topic bookmarks"
+msgstr "Bookmarks"
 
-msgid "Find favorite topics"
-msgstr "Find your favorite topics"
+msgid "Find topic bookmarks"
+msgstr "Find topics saved in your bookmarks"

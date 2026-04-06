@@ -258,17 +258,17 @@
     <!-- PRE mainAfter -->
     <!-- PRE linksABefore -->
     <div class="f-nav-links">
-@if ($p->model->canReply || $p->model->pagination || $p->model->canSubscription || $p->model->canFavorite)
+@if ($p->model->canReply || $p->model->pagination || $p->model->canSubscription || $p->model->canBookmark)
       <div class="f-nlinks-a">
-    @if ($p->model->canReply || $p->model->canSubscription || $p->model->canFavorite)
+    @if ($p->model->canReply || $p->model->canSubscription || $p->model->canBookmark)
         <div class="f-actions-links">
           <small>{!! __('ACTIONS') !!}</small>
-        @if ($p->model->canFavorite)
+        @if ($p->model->canBookmark)
           <small>|</small>
-            @if ($p->model->is_favorited)
-          <span class="f-act-span"><a class="f-btn f-btn-remove-favor f-opacity" title="{{ __('Remove favorite topic') }}" href="{{ $p->model->linkRemoveFavorite }}"><span>{!! __('Favorites-') !!}</span></a></span>
+            @if ($p->model->is_bookmarked)
+          <span class="f-act-span"><a class="f-btn f-btn-unbookmark f-opacity" title="{{ __('Remove from bookmarks') }}" href="{{ $p->model->linkUnbookmark }}"><span>{!! __('Unbookmark') !!}</span></a></span>
             @else
-          <span class="f-act-span"><a class="f-btn f-btn-add-favor f-opacity" title="{{ __('Add favorite topic') }}" href="{{ $p->model->linkAddFavorite }}"><span>{!! __('Favorites+') !!}</span></a></span>
+          <span class="f-act-span"><a class="f-btn f-btn-bookmark f-opacity" title="{{ __('Save to bookmarks') }}" href="{{ $p->model->linkBookmark }}"><span>{!! __('Bookmark') !!}</span></a></span>
             @endif
         @endif
         @if ($p->model->canSubscription)

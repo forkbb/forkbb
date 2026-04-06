@@ -522,8 +522,8 @@ msgstr "<span class="f-spantxtpm">Премод. </span><b>(%s)</b>"
 msgid "Temporary IP blocking"
 msgstr "Ваш IP временно заблокирован."
 
-msgid "Favorite topics"
-msgstr "Избранное"
+msgid "Topic bookmarks"
+msgstr "Закладки"
 
-msgid "Find favorite topics"
-msgstr "Найти ваши избранные темы"
+msgid "Find topic bookmarks"
+msgstr "Найти темы сохраненные в ваших закладках"

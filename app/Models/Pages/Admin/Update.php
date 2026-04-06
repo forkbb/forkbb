@@ -1691,11 +1691,11 @@ class Update extends Admin
 
         $config = $this->c->config;
 
-        $config->b_favorites ??= 0;
+        $config->b_topic_bookmarks ??= 0;
 
         $config->save();
 
-        // favorites
+        // topic_bookmarks
         $schema = [
             'FIELDS' => [
                 'uid' => ['INT(10) UNSIGNED', false, 0],
@@ -1708,7 +1708,7 @@ class Update extends Admin
                 'tid_idx' => ['tid'],
             ],
         ];
-        $this->c->DB->createTable('::favorites', $schema);
+        $this->c->DB->createTable('::topic_bookmarks', $schema);
 
         return null;
     }

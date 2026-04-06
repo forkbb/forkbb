@@ -120,8 +120,8 @@ msgstr "Warnings for %s"
 msgid "Quick search show_last"
 msgstr "Last posts"
 
-msgid "Quick search favorites"
-msgstr "Your favorite topics"
+msgid "Quick search topic_bookmarks"
+msgstr "Topics from your bookmarks"
 
 msgid "Search query: %s"
 msgstr "Search query: «%s»"
