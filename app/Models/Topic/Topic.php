@@ -107,6 +107,17 @@ class Topic extends DataModel
     }
 
     /**
+     * Статус возможности использования избраных тем
+     */
+    protected function getcanFavorite(): bool
+    {
+        return 1 === $this->c->config->b_favorites
+            && $this->id > 0
+            && ! $this->c->user->isGuest
+            && ! $this->c->user->isUnverified;
+    }
+
+    /**
      * Ссылка на тему
      */
     protected function getlink(): string
@@ -215,6 +226,34 @@ class Topic extends DataModel
             [
                 'tid'  => $this->id,
                 'type' => 'unsubscribe',
+            ]
+        );
+    }
+
+    /**
+     * Ссылка на добавление в избранное
+     */
+    protected function getlinkAddFavorite(): string
+    {
+        return $this->c->Router->link(
+            'TopicFavorites',
+            [
+                'tid'  => $this->id,
+                'type' => 'add_favorite',
+            ]
+        );
+    }
+
+    /**
+     * Ссылка на удаление из избранного
+     */
+    protected function getlinkRemoveFavorite(): string
+    {
+        return $this->c->Router->link(
+            'TopicFavorites',
+            [
+                'tid'  => $this->id,
+                'type' => 'remove_favorite',
             ]
         );
     }
