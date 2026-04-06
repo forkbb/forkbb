@@ -1689,6 +1689,27 @@ class Update extends Admin
         $this->c->DB->alterField('::attachments_pos', 'id', 'INT(10) UNSIGNED', false, 0);
         $this->c->DB->alterField('::attachments_pos_pm', 'id', 'INT(10) UNSIGNED', false, 0);
 
+        $config = $this->c->config;
+
+        $config->b_favorites ??= 0;
+
+        $config->save();
+
+        // favorites
+        $schema = [
+            'FIELDS' => [
+                'uid' => ['INT(10) UNSIGNED', false, 0],
+                'tid' => ['INT(10) UNSIGNED', false, 0],
+            ],
+            'UNIQUE KEYS' => [
+                'uid_tid_idx' => ['uid', 'tid'],
+            ],
+            'INDEXES' => [
+                'tid_idx' => ['tid'],
+            ],
+        ];
+        $this->c->DB->createTable('::favorites', $schema);
+
         return null;
     }
 }

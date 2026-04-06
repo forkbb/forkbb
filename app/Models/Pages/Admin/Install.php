@@ -824,6 +824,22 @@ class Install extends Admin
         ];
         $this->c->DB->createTable('::extensions', $schema);
 
+        // favorites
+        $schema = [
+            'FIELDS' => [
+                'uid' => ['INT(10) UNSIGNED', false, 0],
+                'tid' => ['INT(10) UNSIGNED', false, 0],
+            ],
+            'UNIQUE KEYS' => [
+                'uid_tid_idx' => ['uid', 'tid'],
+            ],
+            'INDEXES' => [
+                'tid_idx' => ['tid'],
+            ],
+            'ENGINE' => $this->DBEngine,
+        ];
+        $this->c->DB->createTable('::favorites', $schema);
+
         // forum_perms
         $schema = [
             'FIELDS' => [
@@ -1700,6 +1716,7 @@ class Install extends Admin
             'b_premoderation'         => 0,
             'b_colored_subjects'      => 0,
             'b_topic_hashtags'        => 0,
+            'b_favorites'             => 0,
         ];
 
         foreach ($forkConfig as $name => $value) {
