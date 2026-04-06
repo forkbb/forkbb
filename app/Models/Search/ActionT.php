@@ -123,6 +123,17 @@ class ActionT extends Method
                 \arsort($list, \SORT_NUMERIC); // ???? или по последнему сообщению делать?
 
                 break;
+            case 'favorites':
+                if (
+                    1 !== $this->c->config->b_favorites
+                    || 0 !== $root->id
+                ) {
+                    return false;
+                }
+
+                $list = [];
+
+                break;
             default:
                 throw new InvalidArgumentException('Unknown action: ' . $action);
         }

@@ -120,6 +120,9 @@ msgstr "%s的警告"
 msgid "Quick search show_last"
 msgstr "最新帖子"
 
+msgid "Quick search favorites"
+msgstr "Your favorite topics"
+
 msgid "Search query: %s"
 msgstr "搜索查询：「%s」"
 
