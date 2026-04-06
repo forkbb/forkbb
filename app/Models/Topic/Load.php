@@ -28,12 +28,27 @@ class Load extends Action
                 WHERE ' . $where;
 
         } elseif ($full) {
-            $query = 'SELECT t.*, s.user_id AS is_subscribed, mof.mf_mark_all_read, mot.mt_last_visit, mot.mt_last_read
+            $query = 'SELECT t.*, SELECT_REPL mof.mf_mark_all_read, mot.mt_last_visit, mot.mt_last_read
                 FROM ::topics AS t
-                LEFT JOIN ::topic_subscriptions AS s ON (t.id=s.topic_id AND s.user_id=?i:uid)
+                LEFT_REPL
                 LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND t.forum_id=mof.fid)
                 LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND t.id=mot.tid)
                 WHERE ' . $where;
+
+            $selectRepl = [];
+            $leftRepl   = [];
+
+            if (1 === $this->c->config->b_topic_subscriptions) {
+                $selectRepl[] = 's.user_id AS is_subscribed,';
+                $leftRepl[]   = 'LEFT JOIN ::topic_subscriptions AS s ON (t.id=s.topic_id AND s.user_id=?i:uid)';
+            }
+
+            if (1 === $this->c->config->b_favorites) {
+                $selectRepl[] = 'fv.uid AS is_favorited,';
+                $leftRepl[]   = 'LEFT JOIN ::favorites AS fv ON (fv.uid=?i:uid AND t.id=fv.tid)';
+            }
+
+            $query = \str_replace(['SELECT_REPL', 'LEFT_REPL'], [\implode(' ', $selectRepl), \implode(' ', $leftRepl)], $query);
 
         } else {
             $query = 'SELECT t.*, mot.mt_last_visit, mot.mt_last_read
