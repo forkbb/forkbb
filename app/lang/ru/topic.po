@@ -149,3 +149,15 @@ msgstr "В черновики"
 
 msgid "To pre-moderation"
 msgstr "На премодерацию"
+
+msgid "Favorites+"
+msgstr "В избранное"
+
+msgid "Favorites-"
+msgstr "Из избранного"
+
+msgid "Add favorite topic"
+msgstr "Добавить тему в избранное"
+
+msgid "Remove favorite topic"
+msgstr "Удалить тему из избранного"

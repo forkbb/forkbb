@@ -148,3 +148,15 @@ msgstr "Vers brouillons"
 
 msgid "To pre-moderation"
 msgstr "Vers pré-moderation"
+
+msgid "Favorites+"
+msgstr "To Favorites"
+
+msgid "Favorites-"
+msgstr "From Favorites"
+
+msgid "Add favorite topic"
+msgstr "Add topic to favorites"
+
+msgid "Remove favorite topic"
+msgstr "Remove topic from favorites"

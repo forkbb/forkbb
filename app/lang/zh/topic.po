@@ -148,3 +148,15 @@ msgstr "保存为草稿"
 
 msgid "To pre-moderation"
 msgstr "提交审核"
+
+msgid "Favorites+"
+msgstr "To Favorites"
+
+msgid "Favorites-"
+msgstr "From Favorites"
+
+msgid "Add favorite topic"
+msgstr "Add topic to favorites"
+
+msgid "Remove favorite topic"
+msgstr "Remove topic from favorites"
