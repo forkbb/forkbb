@@ -187,6 +187,22 @@ abstract class Page extends Model
                     'Find unanswered topics',
                 ];
 
+                if (
+                    ! $this->user->isGuest
+                    && 1 === $this->config->b_favorites
+                ) {
+                    $sub['favorites'] = [
+                        $r->link(
+                            'SearchAction',
+                            [
+                                'action' => 'favorites',
+                            ]
+                        ),
+                        'Favorite topics',
+                        'Find favorite topics',
+                    ];
+                }
+
                 $navGen[self::FI_SRCH] = [
                     $r->link('Search'),
                     'Search',

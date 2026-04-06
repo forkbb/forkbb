@@ -519,3 +519,9 @@ msgstr "<span class="f-spantxtpm">Pre-moderation </span><b>(%s)</b>"
 
 msgid "Temporary IP blocking"
 msgstr "Your IP has been temporarily blocked."
+
+msgid "Favorite topics"
+msgstr "Favorite topics"
+
+msgid "Find favorite topics"
+msgstr "Find your favorite topics"
