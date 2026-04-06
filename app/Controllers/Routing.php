@@ -490,23 +490,38 @@ class Routing
                 'Feed'
             );
 
-            // подписки
             if (
                 ! $user->isGuest
                 && ! $user->isUnverified
             ) {
-                $r->add(
-                    $r::GET,
-                    '/forum/{fid|i:[1-9]\d*}/{type:subscribe|unsubscribe}/{token}',
-                    'Misc:forumSubscription',
-                    'ForumSubscription'
-                );
-                $r->add(
-                    $r::GET,
-                    '/topic/{tid|i:[1-9]\d*}/{type:subscribe|unsubscribe}/{token}',
-                    'Misc:topicSubscription',
-                    'TopicSubscription'
-                );
+                // подписки
+                if (1 === $config->b_forum_subscriptions) {
+                    $r->add(
+                        $r::GET,
+                        '/forum/{fid|i:[1-9]\d*}/{type:subscribe|unsubscribe}/{token}',
+                        'Misc:forumSubscription',
+                        'ForumSubscription'
+                    );
+                }
+
+                if (1 === $config->b_topic_subscriptions) {
+                    $r->add(
+                        $r::GET,
+                        '/topic/{tid|i:[1-9]\d*}/{type:subscribe|unsubscribe}/{token}',
+                        'Misc:topicSubscription',
+                        'TopicSubscription'
+                    );
+                }
+
+                // избранное
+                if (1 === $config->b_favorites) {
+                    $r->add(
+                        $r::GET,
+                        '/topic/{tid|i:[1-9]\d*}/{type:(?:add|remove)_favorite}/{token}',
+                        'Misc:favorites',
+                        'TopicFavorites'
+                    );
+                }
             }
 
             // реакции
