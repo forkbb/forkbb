@@ -5,7 +5,7 @@
     @foreach ($p->crumbs as $cur)
           <!-- PRE foreachStart -->
         @if (\is_object($cur[0]))
-          <li @class(['f-crumb', 'f-subscribed' => $cur[0]->is_subscribed, [$cur[3], 'f-cr-']]) itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><!-- inline -->
+          <li @class(['f-crumb', 'f-subscribed' => $cur[0]->is_subscribed, 'f-bookmarked' => $cur[0]->is_bookmarked, [$cur[3], 'f-cr-']]) itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><!-- inline -->
             <a @class(['f-crumb-a', 'active' => $cur[4], [$cur[3], 'f-cr-', '-a'], 'f-color' . $cur[0]->colorNum => $cur[0]->colorNum]) @if ($cur[4]) aria-current="page" @endif href="{{ $cur[0]->link }}" title="{!! __($cur[2] ?? $cur[1]) !!}" itemprop="item">
               <span itemprop="name">{!! __($cur[1]) !!}</span>
             </a>

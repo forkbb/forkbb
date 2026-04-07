@@ -1133,6 +1133,16 @@ body,
   content: "\a0\f0f3";
 }
 
+#fork .f-bookmarked > .f-crumb-a::after {
+  display: inline;
+  font: 400 0.875rem "fa";
+  content: "\a0\f02e";
+}
+
+#fork .f-subscribed.f-bookmarked > .f-crumb-a::after {
+  content: "\a0\f0f3\a0\f02e";
+}
+
 #fork .f-cr-index-a::before {
   display: inline-block;
   font: 900 0.875rem "fa";
@@ -3574,6 +3584,8 @@ body,
   #fork .f-btn-markread > span,
   #fork .f-btn-subscribe > span,
   #fork .f-btn-unsubscribe > span,
+  #fork .f-btn-bookmark > span,
+  #fork .f-btn-unbookmark > span,
   #fork .f-btn[name="preview"] > span,
   #fork .f-btn[data-name="cancel"] > span {
     display: none;
@@ -3602,6 +3614,14 @@ body,
 
   #fork .f-btn[data-name="cancel"]::before {
     content: "\f060";
+  }
+
+  #fork .f-btn-bookmark::before {
+    content: "\f02e";
+  }
+
+  #fork .f-btn-unbookmark::before {
+    content: "\f02e\f175";
   }
 }
 
