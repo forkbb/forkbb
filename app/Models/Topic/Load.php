@@ -28,7 +28,7 @@ class Load extends Action
                 WHERE ' . $where;
 
         } elseif ($full) {
-            $query = 'SELECT t.*, SELECT_REPL mof.mf_mark_all_read, mot.mt_last_visit, mot.mt_last_read
+            $query = 'SELECT t.*, SELECT_REPL, mof.mf_mark_all_read, mot.mt_last_visit, mot.mt_last_read
                 FROM ::topics AS t
                 LEFT_REPL
                 LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND t.forum_id=mof.fid)
@@ -39,16 +39,16 @@ class Load extends Action
             $leftRepl   = [];
 
             if (1 === $this->c->config->b_topic_subscriptions) {
-                $selectRepl[] = 's.user_id AS is_subscribed,';
+                $selectRepl[] = 's.user_id AS is_subscribed';
                 $leftRepl[]   = 'LEFT JOIN ::topic_subscriptions AS s ON (t.id=s.topic_id AND s.user_id=?i:uid)';
             }
 
             if (1 === $this->c->config->b_topic_bookmarks) {
-                $selectRepl[] = 'tbm.uid AS is_bookmarked,';
+                $selectRepl[] = 'tbm.uid AS is_bookmarked';
                 $leftRepl[]   = 'LEFT JOIN ::topic_bookmarks AS tbm ON (tbm.uid=?i:uid AND t.id=tbm.tid)';
             }
 
-            $query = \str_replace(['SELECT_REPL', 'LEFT_REPL'], [\implode(' ', $selectRepl), \implode(' ', $leftRepl)], $query);
+            $query = \str_replace(['SELECT_REPL', 'LEFT_REPL'], [\implode(', ', $selectRepl), \implode(' ', $leftRepl)], $query);
 
         } else {
             $query = 'SELECT t.*, mot.mt_last_visit, mot.mt_last_read

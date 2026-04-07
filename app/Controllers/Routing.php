@@ -315,38 +315,13 @@ class Routing
                     'ProfileDelete:delete',
                     'DeleteUserProfile'
                 );
-            }
-
-            // управление аккаунтами OAuth
-            if (
-                ! $user->isGuest
-                && 1 === $config->b_oauth_allow
-            ) {
-                $r->add(
-                    $r::GET,
-                    '/user/{id|i:' . $user->id . '}/edit/profile/oauth',
-                    'ProfileOAuth:list',
-                    'EditUserOAuth'
-                );
-                $r->add(
-                    $r::DUO,
-                    '/user/{id|i:' . $user->id . '}/edit/profile/oauth/{key}',
-                    'ProfileOAuth:action',
-                    'EditUserOAuthAction'
-                );
-            }
-
-            // смена своего email
-            if (! $user->isGuest) {
+                // смена своего email
                 $r->add(
                     $r::GET,
                     '/user/{id|i:' . $user->id . '}/{email}/{key}/{hash}',
                     'ProfileEmail:setEmail',
                     'SetNewEmail'
                 );
-            }
-
-            if (! $user->isGuest) {
                 // пометка разделов прочитанными
                 $r->add(
                     $r::GET,
@@ -361,6 +336,22 @@ class Routing
                     'Forum:scrollToTopic',
                     'ForumScrollToTopic'
                 );
+
+                // управление аккаунтами OAuth
+                if (1 === $config->b_oauth_allow) {
+                    $r->add(
+                        $r::GET,
+                        '/user/{id|i:' . $user->id . '}/edit/profile/oauth',
+                        'ProfileOAuth:list',
+                        'EditUserOAuth'
+                    );
+                    $r->add(
+                        $r::DUO,
+                        '/user/{id|i:' . $user->id . '}/edit/profile/oauth/{key}',
+                        'ProfileOAuth:action',
+                        'EditUserOAuthAction'
+                    );
+                }
             }
 
             // разделы
@@ -498,7 +489,7 @@ class Routing
                 if (1 === $config->b_forum_subscriptions) {
                     $r->add(
                         $r::GET,
-                        '/forum/{fid|i:[1-9]\d*}/{type:subscribe|unsubscribe}/{token}',
+                        '/forum/{fid|i:[1-9]\d*}/{type:(?:un)?subscribe}/{token}',
                         'Misc:forumSubscription',
                         'ForumSubscription'
                     );
@@ -507,13 +498,13 @@ class Routing
                 if (1 === $config->b_topic_subscriptions) {
                     $r->add(
                         $r::GET,
-                        '/topic/{tid|i:[1-9]\d*}/{type:subscribe|unsubscribe}/{token}',
+                        '/topic/{tid|i:[1-9]\d*}/{type:(?:un)?subscribe}/{token}',
                         'Misc:topicSubscription',
                         'TopicSubscription'
                     );
                 }
 
-                // избранное
+                // закладки для тем
                 if (1 === $config->b_topic_bookmarks) {
                     $r->add(
                         $r::GET,
