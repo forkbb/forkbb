@@ -309,3 +309,9 @@ msgstr "La solución ha sido cambiada."
 
 msgid "Solution removed"
 msgstr "La solución ha sido eliminada."
+
+msgid "Bookmark redirect"
+msgstr "The topic has been added to your bookmarks."
+
+msgid "Unbookmark redirect"
+msgstr "The topic has been removed from your bookmarks."

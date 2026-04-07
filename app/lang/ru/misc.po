@@ -329,3 +329,9 @@ msgstr "Решение изменено."
 
 msgid "Solution removed"
 msgstr "Решение удалено."
+
+msgid "Bookmark redirect"
+msgstr "Тема добавлена в ваши закладки."
+
+msgid "Unbookmark redirect"
+msgstr "Тема убрана из ваших закладок."

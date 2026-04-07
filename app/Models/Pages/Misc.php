@@ -37,7 +37,7 @@ class Misc extends Page
     }
 
     /**
-     * Пометка раздела прочитанным
+     * Обрабатывает пометку разделов прочитанными
      */
     public function markread(array $args): Page
     {
@@ -60,7 +60,7 @@ class Misc extends Page
     }
 
     /**
-     * Подписка на форум и отписка от него
+     * Обрабатывает подписку/отписку для разделов
      */
     public function forumSubscription(array $args): Page
     {
@@ -95,7 +95,7 @@ class Misc extends Page
     }
 
     /**
-     * Подписка на топик и отписка от него
+     * Обрабатывает подписку/отписку для тем
      */
     public function topicSubscription(array $args): Page
     {
@@ -189,5 +189,36 @@ class Misc extends Page
         $this->c->Lang->load('misc');
 
         return $this->c->Redirect->url($post->link)->message($message, $status);
+    }
+
+    /**
+     * Обрабатывает сохранение/удаление закладок
+     */
+    public function bookmark(array $args): Page
+    {
+        if (! $this->c->Csrf->verify($args['token'], 'TopicBookmark', $args)) {
+            return $this->c->Message->message($this->c->Csrf->getError());
+        }
+
+        $topic = $this->c->topics->load($args['tid']);
+
+        if (! $topic instanceof Topic) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $this->c->Lang->load('misc');
+
+        if ('bookmark' === $args['type']) {
+            $this->c->bookmarks->bookmark($this->user, $topic);
+
+            $message = 'Bookmark redirect';
+
+        } else {
+            $this->c->bookmarks->unbookmark($this->user, $topic);
+
+            $message = 'Unbookmark redirect';
+        }
+
+        return $this->c->Redirect->url($topic->link)->message($message, FORK_MESS_SUCC);
     }
 }
