@@ -131,7 +131,8 @@ class ActionT extends Method
                     return false;
                 }
 
-                $list = [];
+                $user = $this->c->users->load($uid);
+                $list = $this->c->bookmarks->info($user);
 
                 break;
             default:

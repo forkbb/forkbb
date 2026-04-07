@@ -167,6 +167,7 @@ class Delete extends Action
             }
 
             $this->c->subscriptions->unsubscribe(...$topics);
+            $this->c->bookmarks->unbookmark(...$topics);
             $this->c->polls->delete(...$topics);
 
             $vars = [
