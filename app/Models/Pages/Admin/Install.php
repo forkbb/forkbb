@@ -1147,14 +1147,14 @@ class Install extends Admin
         // topic_bookmarks
         $schema = [
             'FIELDS' => [
-                'uid' => ['INT(10) UNSIGNED', false, 0],
-                'tid' => ['INT(10) UNSIGNED', false, 0],
+                'user_id'  => ['INT(10) UNSIGNED', false, 0],
+                'topic_id' => ['INT(10) UNSIGNED', false, 0],
             ],
             'UNIQUE KEYS' => [
-                'uid_tid_idx' => ['uid', 'tid'],
+                'user_id_topic_id_idx' => ['user_id', 'topic_id'],
             ],
             'INDEXES' => [
-                'tid_idx' => ['tid'],
+                'topic_id_idx' => ['topic_id'],
             ],
             'ENGINE' => $this->DBEngine,
         ];

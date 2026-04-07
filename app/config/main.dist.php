@@ -189,6 +189,7 @@ return [
         'categories'    => '@CategoriesManager:init',
         'search'        => \ForkBB\Models\Search\Search::class,
         'subscriptions' => \ForkBB\Models\Subscription\Subscription::class,
+        'bookmarks'     => \ForkBB\Models\Bookmark\Bookmark::class,
         'bbcode'        => '@BBCodeListModel:init',
         'pms'           => \ForkBB\Models\PM\PM::class,
         'providers'     => [

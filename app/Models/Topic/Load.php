@@ -40,12 +40,12 @@ class Load extends Action
 
             if (1 === $this->c->config->b_topic_subscriptions) {
                 $selectRepl[] = 's.user_id AS is_subscribed';
-                $leftRepl[]   = 'LEFT JOIN ::topic_subscriptions AS s ON (t.id=s.topic_id AND s.user_id=?i:uid)';
+                $leftRepl[]   = 'LEFT JOIN ::topic_subscriptions AS s ON (s.user_id=?i:uid AND s.topic_id=t.id)';
             }
 
             if (1 === $this->c->config->b_topic_bookmarks) {
-                $selectRepl[] = 'tbm.uid AS is_bookmarked';
-                $leftRepl[]   = 'LEFT JOIN ::topic_bookmarks AS tbm ON (tbm.uid=?i:uid AND t.id=tbm.tid)';
+                $selectRepl[] = 'tbm.user_id AS is_bookmarked';
+                $leftRepl[]   = 'LEFT JOIN ::topic_bookmarks AS tbm ON (tbm.user_id=?i:uid AND tbm.topic_id=t.id)';
             }
 
             $query = \str_replace(['SELECT_REPL', 'LEFT_REPL'], [\implode(', ', $selectRepl), \implode(' ', $leftRepl)], $query);
