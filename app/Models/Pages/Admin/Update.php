@@ -1706,9 +1706,7 @@ class Update extends Admin
                 'user_id'  => ['INT(10) UNSIGNED', false, 0],
                 'topic_id' => ['INT(10) UNSIGNED', false, 0],
             ],
-            'UNIQUE KEYS' => [
-                'user_id_topic_id_idx' => ['user_id', 'topic_id'],
-            ],
+            'PRIMARY KEY' => ['user_id', 'topic_id'],
             'INDEXES' => [
                 'topic_id_idx' => ['topic_id'],
             ],
