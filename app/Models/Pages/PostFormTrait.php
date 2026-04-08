@@ -22,15 +22,21 @@ trait PostFormTrait
     /**
      * Возвращает данные для построения формы создания темы/сообщения
      */
-    protected function messageForm(?Model $model, string $marker, array $args, bool $edit, bool $first, bool $quick, bool $about = false): array
+    protected function messageForm(?Model $model, string $marker, array $args, string $config): array
     {
         $vars = $args['_vars'] ?? null;
 
         unset($args['_vars']);
 
-        $power     = $this->user->isAdmin || (null !== $model && $this->user->isModerator($model));
+        $config    = \array_flip(\explode('.', $config));
+        $about     = isset($config['about']);
+        $quick     = isset($config['quick']);
+        $first     = isset($config['first']);
+        $last      = isset($config['last']);
+        $edit      = isset($config['edit']);
+        $pm        = isset($config['pm']);
+        $isAdmMod  = $this->user->isAdmin || (null !== $model && $this->user->isModerator($model));
         $preMod    = $this->userRules->forPreModeration($model);
-        $notPM     = null !== $model && $this->fIndex !== self::FI_PM;
         $autofocus = $quick ? null : true;
         $form      = [
             'action'  => $this->c->Router->link($marker, $args),
@@ -53,7 +59,7 @@ trait PostFormTrait
             $form['btns']['submit'] = [
                 'type'  => 'submit',
                 'class' => $this->draft instanceof Draft ? ['f-opacity'] : null,
-                'value' => __($model instanceof Forum ? 'Create topic' : 'Submit'),
+                'value' => __($first && ! $pm && ! $edit ? 'Create topic' : 'Submit'),
             ];
         }
 
@@ -76,7 +82,7 @@ trait PostFormTrait
         }
 
         if (
-            $notPM
+            ! $pm
             && ! $edit
             && ! $about
             && $this->userRules->useDraft
@@ -132,7 +138,7 @@ trait PostFormTrait
 
             if (
                 1 === $this->config->b_topic_hashtags
-                && $notPM
+                && ! $pm
             ) {
                 $fieldset['hashtags'] = [
                     'class'     => ['w0'],
@@ -145,8 +151,8 @@ trait PostFormTrait
 
             if (
                 1 === $this->config->b_colored_subjects
-                && $power
-                && $notPM
+                && $isAdmMod
+                && ! $pm
             ) {
                 $colors = [0 => __('No')];
 
@@ -219,8 +225,8 @@ trait PostFormTrait
         $autofocus = null;
         $fieldset  = [];
 
-        if ($notPM) {
-            if ($power) {
+        if (! $pm) {
+            if ($isAdmMod) {
                 if ($first) {
                     $fieldset['stick_topic'] = [
                         'type'    => 'checkbox',
@@ -248,12 +254,15 @@ trait PostFormTrait
                 }
             }
 
-            if (! $edit) {
+            if (
+                ! $edit
+                && ! $about
+            ) {
                 if (
                     ! $first
                     && ! $this->user->isGuest
                     && (
-                        $power
+                        $isAdmMod
                         || $model->last_post + $this->user->g_force_merge_interval < \time()
                     )
                 ) {
@@ -302,10 +311,24 @@ trait PostFormTrait
         }
 
         if (
-            $power
+            $isAdmMod
+            && $last
+            && $edit
+            && ! $pm
+            && ! $about
+        ) {
+            $fieldset['not_calc'] = [
+                'type'    => 'checkbox',
+                'label'   => 'Not calc topic',
+                'checked' => (bool) ($vars['not_calc'] ?? false),
+            ];
+        }
+
+        if (
+            $isAdmMod
             && 1 === $this->config->b_premoderation
             && ! $preMod
-            && $notPM
+            && ! $pm
             && $first
         ) {
             $fieldset['premoderation'] = [
@@ -329,7 +352,7 @@ trait PostFormTrait
 
         if (
             $first
-            && $notPM
+            && ! $pm
             && $this->userRules->usePoll
         ) {
             $term = $edit && $model->parent->poll_term

@@ -51,7 +51,7 @@ class PMEdit extends AbstractPM
         $this->c->Lang->load('post');
 
         if ('POST' === $method) {
-            $v = $this->messageValidatorPM(null, 'PMAction', $args, true, $firstPost);
+            $v = $this->messageValidatorPM(null, 'PMAction', $args, $firstPost ? 'pm.first.edit' : 'pm.edit');
 
             if (
                 $v->validation($_POST)
@@ -87,7 +87,7 @@ class PMEdit extends AbstractPM
         $this->pmIndex    = $this->pms->area;
         $this->nameTpl    = 'pm/post';
         $this->formTitle  = $firstPost ? 'Edit PT title' : 'Edit PM title';
-        $this->form       = $this->messageFormPM($post, 'PMAction', $args, true, $firstPost, false);
+        $this->form       = $this->messageFormPM($post, 'PMAction', $args, $firstPost ? 'pm.first.edit' : 'pm.edit');
         $this->pmCrumbs[] = [
             $this->c->Router->link('PMAction', $args),
             $firstPost ? 'Edit dialogue' : 'Edit message',
@@ -97,9 +97,9 @@ class PMEdit extends AbstractPM
         return $this;
     }
 
-    protected function messageFormPM(Model $model, string $marker, array $args, bool $edit, bool $first, bool $quick): array
+    protected function messageFormPM(Model $model, string $marker, array $args, string $config): array
     {
-        $form = $this->messageForm($model, $marker, $args, $edit, $first, $quick);
+        $form = $this->messageForm($model, $marker, $args, $config);
 
         if (Cnst::ACTION_ARCHIVE === $this->pms->area) {
             $form['btns']['submit']['value'] = __('Save');
@@ -108,9 +108,9 @@ class PMEdit extends AbstractPM
         return $form;
     }
 
-    protected function messageValidatorPM(?Model $model, string $marker, array $args, bool $edit, bool $first): Validator
+    protected function messageValidatorPM(?Model $model, string $marker, array $args, string $config): Validator
     {
-        $v = $this->messageValidator($model, $marker, $args, $edit, $first)
+        $v = $this->messageValidator($model, $marker, $args, $config)
             ->addRules([
                 'message' => 'required|string:trim|max:65535 bytes|check_message',
             ])->addArguments([

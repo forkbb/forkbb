@@ -400,7 +400,7 @@ class Action extends Users
         $this->config->__b_upload = 0;
 
         if ('POST' === $method) {
-            $v       = $this->messageValidator(null, 'AdminUsersAction', $args, false, true);
+            $v       = $this->messageValidator(null, 'AdminUsersAction', $args, 'pm.first');
             $isValid = $v->validation($_POST);
 
             if (
@@ -471,7 +471,7 @@ class Action extends Users
         $this->nameTpl   = 'admin/form_pm';
         $this->titleForm = 'Create private dialogues';
         $this->aCrumbs[] = [$this->c->Router->link('AdminUsersAction', $args), 'PM'];
-        $this->form      = $this->messageForm(null, 'AdminUsersAction', $args, false, true, false);
+        $this->form      = $this->messageForm(null, 'AdminUsersAction', $args, 'pm.first');
 
         return $this;
     }

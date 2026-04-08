@@ -106,7 +106,7 @@ class PMPost extends AbstractPM
         $this->c->Lang->load('post');
 
         if ('POST' === $method) {
-            $v       = $this->messageValidatorPM(null, 'PMAction', $args, false, $this->newTopic);
+            $v       = $this->messageValidatorPM(null, 'PMAction', $args, $this->newTopic ? 'pm.first' : 'pm');
             $isValid = $v->validation($_POST);
 
             if (
@@ -181,7 +181,7 @@ class PMPost extends AbstractPM
         $this->identifier = ['pm', 'pm-post'];
         $this->pmIndex    = $this->pms->area;
         $this->nameTpl    = 'pm/post';
-        $this->form       = $this->messageFormPM($this->newTopic ? $this->targetUser : $topic, 'PMAction', $args, false, $this->newTopic, false);
+        $this->form       = $this->messageFormPM($this->newTopic ? $this->targetUser : $topic, 'PMAction', $args, $this->newTopic ? 'pm.first' : 'pm');
         $this->posts      = $this->newTopic ? null : $topic->review();
         $this->postsTitle = 'Topic review';
 
@@ -192,9 +192,9 @@ class PMPost extends AbstractPM
         return $this;
     }
 
-    protected function messageFormPM(Model $model, string $marker, array $args, bool $edit, bool $first, bool $quick): array
+    protected function messageFormPM(Model $model, string $marker, array $args, string $config): array
     {
-        $form = $this->messageForm($model, $marker, $args, $edit, $first, $quick);
+        $form = $this->messageForm($model, $marker, $args, $config);
 
         if ($this->newTopic) {
             $form['btns']['archive'] = [
@@ -209,9 +209,9 @@ class PMPost extends AbstractPM
         return $form;
     }
 
-    protected function messageValidatorPM(?Model $model, string $marker, array $args, bool $edit, bool $first): Validator
+    protected function messageValidatorPM(?Model $model, string $marker, array $args, string $config): Validator
     {
-        $v = $this->messageValidator($model, $marker, $args, $edit, $first)
+        $v = $this->messageValidator($model, $marker, $args, $config)
             ->addRules([
                 'archive' => $this->newTopic ? 'string' : 'absent',
                 'message' => 'required|string:trim|max:65535 bytes|check_message',

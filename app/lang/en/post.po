@@ -146,3 +146,6 @@ msgstr "Color N %s"
 
 msgid "Hashtags format"
 msgstr "Hashtags can consist of letters and numbers. Underscores may appear within a hashtag. Each hashtag must be at least three characters long."
+
+msgid "Not calc topic"
+msgstr "Do not recalculate this topic"

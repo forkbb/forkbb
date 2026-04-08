@@ -100,7 +100,7 @@ class Post extends Page
         }
 
         if ('POST' === $method) {
-            $v = $this->messageValidator($forum, $this->marker ?: 'NewTopic', $args, false, true);
+            $v = $this->messageValidator($forum, $this->marker ?: 'NewTopic', $args, 'first');
 
             if ($this->customFieldsLevel > 0) {
                 $this->addCFtoMessageValidator($forum->custom_fields, $this->customFieldsLevel, $v);
@@ -156,7 +156,7 @@ class Post extends Page
         $this->robots     = 'noindex';
         $this->formTitle  = $this->draft instanceof Draft ? '[Draft] Post new topic' : 'Post new topic';
         $this->crumbs     = $this->crumbs($this->formTitle, $forum);
-        $this->form       = $this->messageForm($forum, $this->marker ?: 'NewTopic', $args, false, true, false);
+        $this->form       = $this->messageForm($forum, $this->marker ?: 'NewTopic', $args, 'first');
 
         if ($this->customFieldsLevel > 0) {
             $this->form = $this->addCFtoMessageForm($forum->custom_fields, $this->customFieldsLevel, $this->form, $args);
@@ -184,7 +184,7 @@ class Post extends Page
         $this->onlinePos = 'topic-' . $topic->id;
 
         if ('POST' === $method) {
-            $v = $this->messageValidator($topic, $this->marker ?: 'NewReply', $args, false, false);
+            $v = $this->messageValidator($topic, $this->marker ?: 'NewReply', $args, '');
 
             if (
                 $this->user->isGuest
@@ -243,7 +243,7 @@ class Post extends Page
         $this->robots     = 'noindex';
         $this->formTitle  = $this->draft instanceof Draft ? '[Draft] Post a reply' : 'Post a reply';
         $this->crumbs     = $this->crumbs($this->formTitle, $topic);
-        $this->form       = $this->messageForm($topic, $this->marker ?: 'NewReply', $args, false, false, false);
+        $this->form       = $this->messageForm($topic, $this->marker ?: 'NewReply', $args, '');
         $this->postsTitle = 'Topic review';
         $this->posts      = $topic->review();
 

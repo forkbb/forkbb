@@ -174,7 +174,7 @@ class Topic extends Page
             $topic->canReply
             && 1 === $this->config->b_quickpost
         ) {
-            $this->form     = $this->messageForm($topic, 'NewReply', ['id' => $topic->id], false, false, true);
+            $this->form     = $this->messageForm($topic, 'NewReply', ['id' => $topic->id], 'quick');
         }
 
         if (

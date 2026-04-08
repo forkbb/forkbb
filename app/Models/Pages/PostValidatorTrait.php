@@ -24,7 +24,7 @@ trait PostValidatorTrait
     /**
      * Дополнительная проверка subject
      */
-    public function vCheckSubject(Validator $v, string $subject, $attr, bool $power): string
+    public function vCheckSubject(Validator $v, string $subject, $attr, bool $isAdmMod): string
     {
         // после цензуры заголовок темы путой
         if ('' == $this->c->censorship->censor($subject, $this->censorCount)) {
@@ -39,7 +39,7 @@ trait PostValidatorTrait
 
         // заголовок темы только заглавными буквами
         } elseif (
-            ! $power
+            ! $isAdmMod
             && 1 !== $this->config->b_subject_all_caps
             && \preg_match('%\p{Lu}%u', $subject)
             && ! \preg_match('%\p{Ll}%u', $subject)
@@ -85,7 +85,7 @@ trait PostValidatorTrait
     /**
      * Дополнительная проверка message
      */
-    public function vCheckMessage(Validator $v, string $message, $attr, bool $power): string
+    public function vCheckMessage(Validator $v, string $message, $attr, bool $isAdmMod): string
     {
         if ('' === $message) {
             return '';
@@ -118,7 +118,7 @@ trait PostValidatorTrait
         // текст сообщения только заглавными буквами
         if (
             true === $prepare
-            && ! $power
+            && ! $isAdmMod
             && 1 !== $this->config->b_message_all_caps
         ) {
             $text = $this->c->Parser->getText();
@@ -156,14 +156,19 @@ trait PostValidatorTrait
     /**
      * Подготовка валидатора к проверке данных из формы создания темы/сообщения
      */
-    protected function messageValidator(?Model $model, string $marker, array $args, bool $edit, bool $first, bool $about = false): Validator
+    protected function messageValidator(?Model $model, string $marker, array $args, string $config): Validator
     {
         $this->c->Lang->load('validator');
 
         $this->attachmentsProc($marker, $args);
 
-        $notPM  = null !== $model && $this->fIndex !== self::FI_PM;
-        $preMod = $this->userRules->forPreModeration($model);
+        $config    = \array_flip(\explode('.', $config));
+        $about     = isset($config['about']);
+        $first     = isset($config['first']);
+        $last      = isset($config['last']);
+        $edit      = isset($config['edit']);
+        $pm        = isset($config['pm']);
+        $preMod    = $this->userRules->forPreModeration($model);
 
         if ($this->user->isGuest) {
             if (1 === $this->config->b_hide_guest_email_fld) {
@@ -182,7 +187,7 @@ trait PostValidatorTrait
         }
 
         if (
-            $notPM
+            ! $pm
             && (
                 $this->user->isAdmin
                 || $this->user->isModerator($model)
@@ -200,6 +205,7 @@ trait PostValidatorTrait
             if (
                 ! $first
                 && ! $edit
+                && ! $about
             ) {
                 $ruleMergePost  = 'checkbox';
 
@@ -219,17 +225,18 @@ trait PostValidatorTrait
                 $ruleEditPost   = 'absent';
             }
 
-            $power              = true;
+            $isAdmMod           = true;
 
         } else {
             $ruleStickTopic     = 'absent';
             $ruleStickFP        = 'absent';
 
             if (
-                $notPM
+                ! $pm
                 && ! $this->user->isGuest
                 && ! $first
                 && ! $edit
+                && ! $about
                 && $model->last_post + $this->user->g_force_merge_interval < \time()
             ) {
                 $ruleMergePost  = 'checkbox';
@@ -239,11 +246,11 @@ trait PostValidatorTrait
             }
 
             $ruleEditPost       = 'absent';
-            $power              = false;
+            $isAdmMod           = false;
         }
 
         if ($first) {
-            $ruleSubject = 'required|string:trim,spaces|min:1|max:' . $this->c->MAX_SUBJ_LENGTH . '|' . ($power ? '' : 'noURL|') . 'check_subject';
+            $ruleSubject = 'required|string:trim,spaces|min:1|max:' . $this->c->MAX_SUBJ_LENGTH . '|' . ($isAdmMod ? '' : 'noURL|') . 'check_subject';
 
         } else {
             $ruleSubject = 'absent';
@@ -252,7 +259,7 @@ trait PostValidatorTrait
         if (
             1 === $this->config->b_topic_hashtags
             && $first
-            && $notPM
+            && ! $pm
         ) {
             $ruleHashtags = 'string:trim,spaces|check_hashtags|max:255';
 
@@ -262,8 +269,8 @@ trait PostValidatorTrait
 
         if (
             1 === $this->config->b_colored_subjects
-            && $power
-            && $notPM
+            && $isAdmMod
+            && ! $pm
             && $first
         ) {
             $ruleSubjectColor = 'required|integer|min:0|max:' . self::NUM_COLORS;
@@ -274,7 +281,8 @@ trait PostValidatorTrait
 
         if (
             ! $edit
-            && $notPM
+            && ! $about
+            && ! $pm
             && 1 === $this->config->b_topic_subscriptions
             && $this->user->email_confirmed
         ) {
@@ -292,7 +300,7 @@ trait PostValidatorTrait
         }
 
         if (
-            $notPM
+            ! $pm
             && ! $edit
             && ! $about
             && $this->userRules->useDraft
@@ -317,10 +325,10 @@ trait PostValidatorTrait
         }
 
         if (
-            $power
+            $isAdmMod
             && 1 === $this->config->b_premoderation
             && ! $preMod
-            && $notPM
+            && ! $pm
             && $first
         ) {
             $rulePremoderation = 'required|integer|in:-1,0,1';
@@ -329,8 +337,21 @@ trait PostValidatorTrait
             $rulePremoderation = 'absent';
         }
 
+        if (
+            $isAdmMod
+//            && $last
+            && $edit
+            && ! $pm
+            && ! $about
+        ) {
+            $ruleNotCalc = 'integer';
 
-        $ruleMessage = ($about ? '' : 'required|') . 'string:trim|max:' . $this->c->MAX_POST_SIZE . ($power ? '' : '|noURL') . '|check_message';
+        } else {
+            $ruleNotCalc = 'absent';
+
+        }
+
+        $ruleMessage = ($about ? '' : 'required|') . 'string:trim|max:' . $this->c->MAX_POST_SIZE . ($isAdmMod ? '' : '|noURL') . '|check_message';
 
         $v = $this->c->Validator->reset()
             ->addValidators([
@@ -353,6 +374,7 @@ trait PostValidatorTrait
                 'subscribe'     => $ruleSubscribe,
                 'terms'         => 'absent',
                 'premoderation' => $rulePremoderation,
+                'not_calc'      => $ruleNotCalc,
                 'preview'       => 'string',
                 'submit'        => $ruleSubmit,
                 'draft'         => $ruleDraft,
@@ -365,15 +387,15 @@ trait PostValidatorTrait
                 'message'       => 'Message',
             ])->addArguments([
                 'token'                 => $args,
-                'subject.check_subject' => $power,
-                'message.check_message' => $power,
+                'subject.check_subject' => $isAdmMod,
+                'message.check_message' => $isAdmMod,
                 'email.email'           => $this->user,
             ])->addMessages([
             ]);
 
         if (
             $first
-            && $notPM
+            && ! $pm
             && $this->userRules->usePoll
         ) {
             $v->addValidators([

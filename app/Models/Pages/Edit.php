@@ -44,6 +44,7 @@ class Edit extends Page
 
         $topic                   = $post->parent;
         $firstPost               = $post->id === $topic->first_post_id;
+        $lastPost                = $post->id === $topic->last_post_id;
         $this->customFieldsLevel = $firstPost ? $topic->customFieldsCurLevel : 0;
 
         $this->c->Lang->load('post');
@@ -53,7 +54,7 @@ class Edit extends Page
         }
 
         if ('POST' === $method) {
-            $v = $this->messageValidator($post, 'EditPost', $args, true, $firstPost);
+            $v = $this->messageValidator($post, 'EditPost', $args, ($firstPost ? 'first.' : '') . ($lastPost ? 'last.' : '') . 'edit');
 
             if ($this->customFieldsLevel > 0) {
                 $this->addCFtoMessageValidator($topic->cf_data, $this->customFieldsLevel, $v);
@@ -146,7 +147,7 @@ class Edit extends Page
         $this->robots     = 'noindex';
         $this->formTitle  = $firstPost ? 'Edit topic' : 'Edit post';
         $this->crumbs     = $this->crumbs($this->formTitle, $topic);
-        $this->form       = $this->messageForm($post, 'EditPost', $args, true, $firstPost, false);
+        $this->form       = $this->messageForm($post, 'EditPost', $args, ($firstPost ? 'first.' : '') . ($lastPost ? 'last.' : '') . 'edit');
 
         if ($this->customFieldsLevel > 0) {
             $this->form = $this->addCFtoMessageForm($topic->cf_data, $this->customFieldsLevel, $this->form, $args);
@@ -187,7 +188,10 @@ class Edit extends Page
                 $post->editor_id = $this->user->id;
                 $calcPost        = true;
 
-                if ($post->id === $topic->last_post_id) {
+                if (
+                    $post->id === $topic->last_post_id
+                    && 1 !== $v->not_calc
+                ) {
                     $calcTopic   = true;
                     $calcForum   = true;
                 }

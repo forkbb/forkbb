@@ -225,7 +225,7 @@ class PMTopic extends AbstractPM
             $this->model->canReply
             && 1 === $this->config->b_quickpost
         ) {
-            $form = $this->messageForm($this->model, 'PMAction', $this->model->dataReply, false, false, true);
+            $form = $this->messageForm($this->model, 'PMAction', $this->model->dataReply, 'pm.quick');
 
             if (Cnst::ACTION_ARCHIVE === $this->pmIndex) {
                 $form['btns']['submit']['value'] = __('Save');

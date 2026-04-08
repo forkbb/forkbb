@@ -61,7 +61,7 @@ class AboutMe extends Profile
         }
 
         if ('POST' === $method) {
-            $v = $this->messageValidator($post, 'EditUserAboutMe', $args, true, false, true);
+            $v = $this->messageValidator($post, 'EditUserAboutMe', $args, 'about');
 
             if (
                 $v->validation($_POST)
@@ -95,7 +95,7 @@ class AboutMe extends Profile
         $this->hhsLevel    = 'common'; // для остальных страниц профиля уровень задан в initProfile()
         $this->nameTpl     = 'post';
         $this->formTitle   = 'About me';
-        $this->form        = $this->messageForm($post, 'EditUserAboutMe', $args, true, false, false, true);
+        $this->form        = $this->messageForm($post, 'EditUserAboutMe', $args, 'about');
         $this->identifier  = ['profile', 'profile-search'];
         $this->crumbs      = $this->crumbs(
             [
