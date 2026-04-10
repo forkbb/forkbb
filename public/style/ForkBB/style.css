@@ -4,6 +4,8 @@
   --br-fprimary: hsl(0, 0%, 34%);
   --bg-like-br1: hsl(0, 18%, 30%);
   --c-a-and-btn: hsl(50, 100%, 50%);
+  --c-btn-lo: hsl(0, 0%, 50%);
+  --bg-btn-lo: hsl(0, 0%, 16%);
   --c-fh1: hsl(0, 0%, 80%);
   --bg-fh1: hsl(220, 5%, 12%);
   --br-fh1: hsl(0, 0%, 80%);
@@ -58,6 +60,8 @@
     --br-fprimary: hsl(0, 0%, 66%);
     --bg-like-br1: hsl(0, 40%, 92%);
     --c-a-and-btn: hsl(210, 100%, 40%);
+    --c-btn-lo: hsl(0, 0%, 50%);
+    --bg-btn-lo: hsl(0, 0%, 93%);
     --c-fh1: hsl(0, 0%, 10%);
     --bg-fh1: hsl(0, 0%, 94%);
     --br-fh1: hsl(0, 0%, 20%);
@@ -433,7 +437,9 @@ body,
 }
 
 #fork .f-btn.f-opacity:not(:hover):not(:focus) {
-  opacity: 0.5;
+  /*opacity: 0.5;*/
+  color: var(--c-btn-lo);
+  background-color: var(--bg-btn-lo);
 }
 
 #fork a:hover,
@@ -1978,7 +1984,9 @@ body,
 }
 
 #fork .f-post-btns:not(:hover) .f-btn:not(:focus) {
-  opacity: 0.6;
+  /*opacity: 0.6;*/
+  color: var(--c-btn-lo);
+  background-color: var(--bg-btn-lo);
 }
 
 #fork .f-post-sign {
@@ -2758,7 +2766,9 @@ body,
 }
 
 #fork-mod .f-btns:not(:hover) .f-fbtn:not(:focus) {
-  opacity: 0.6;
+  /*opacity: 0.6;*/
+  color: var(--c-btn-lo);
+  background-color: var(--bg-btn-lo);
 }
 
 #fork-modform .f-btns .f-fbtn {
