@@ -57,7 +57,7 @@ class Bookmark extends Model
                 $mayBeUsers               = false;
 
             } else {
-                throw new InvalidArgumentException('Expected only Forum or Topic');
+                throw new InvalidArgumentException('Expected only Topic');
             }
         }
     }
