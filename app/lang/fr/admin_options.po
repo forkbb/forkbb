@@ -514,19 +514,19 @@ msgid "Disable email help"
 msgstr "Ne pas demander d'email à l'enregistrement si la vérification par mail est désactivée."
 
 msgid "Colored topic titles label"
-msgstr "Colored topic titles"
+msgstr "Titres de sujets colorés"
 
 msgid "Colored topic titles help"
-msgstr "Allow administrators and moderators to set a color from the list for each topic title."
+msgstr "Autoriser administarteurs et modérateurs à assigner une couleur de la liste pour chaque titre de conversation."
 
 msgid "Topic hashtags label"
-msgstr "Topic hashtags"
+msgstr "hashtags de conversations"
 
 msgid "Topic hashtags help"
-msgstr "Allow adding hashtags to topics when creating/editing them. These hashtags will appear in topic lists."
+msgstr "Autoriser l'ajout de hashtags aux conversations à la création ou l'édition. Ces hashtags apparaitront dans la liste des sujets."
 
 msgid "Topic bookmarks label"
-msgstr "Topic bookmarks"
+msgstr "Marque pages de sujets"
 
 msgid "Topic bookmarks help"
-msgstr "Allow users to bookmark topics so they can quickly find them in searches."
+msgstr "Autoriser les utilisateurs à marquer les sujets de façon à ce qu'ils les retrouvent facilement."

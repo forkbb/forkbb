@@ -150,13 +150,13 @@ msgid "To pre-moderation"
 msgstr "Vers pré-moderation"
 
 msgid "Bookmark"
-msgstr "Bookmark"
+msgstr "Marque page"
 
 msgid "Unbookmark"
-msgstr "Unbookmark"
+msgstr "Enlever marque page"
 
 msgid "Save to bookmarks"
-msgstr "Save this topic to your bookmarks"
+msgstr "Sauver cette discussion dans vos favoris"
 
 msgid "Remove from bookmarks"
-msgstr "Remove this topic from your bookmarks"
+msgstr "Retirer cette discussion de vos favoris"

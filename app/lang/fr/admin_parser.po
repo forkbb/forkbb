@@ -85,7 +85,7 @@ msgid "Name label"
 msgstr "Nom du fichier"
 
 msgid "File %s deleted redirect"
-msgstr "File '%s' deleted."
+msgstr "Fichier '%s' effacé."
 
 msgid "File %s not deleted redirect"
 msgstr "Fichier '%s' non effacé."
