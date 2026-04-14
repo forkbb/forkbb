@@ -280,13 +280,13 @@ msgid "Drafts label"
 msgstr "Brouillons"
 
 msgid "SN profile %s"
-msgstr "Social network profile %s"
+msgstr "Profil de résau social %s"
 
 msgid "Users per page label"
-msgstr "Users per page"
+msgstr "Utilisateurs par page"
 
 msgid "Create private dialogues"
-msgstr "Create private dialogues"
+msgstr "Créer dialogues privés"
 
 msgid "Private dialogues created redirect"
-msgstr "Private dialogues created."
+msgstr "Dialogues privés crées."

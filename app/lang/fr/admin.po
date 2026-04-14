@@ -46,7 +46,7 @@ msgid "Reports"
 msgstr "Rapports"
 
 msgid "Server statistics"
-msgstr "Statistique serveur"
+msgstr "Statistiques serveur"
 
 msgid "Admin title"
 msgstr "Administration"

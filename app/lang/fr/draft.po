@@ -79,4 +79,4 @@ msgid "Publish"
 msgstr "Publier"
 
 msgid "Selected posts processed redirect"
-msgstr "Les messages séléctionnés ont été traités."
+msgstr "Les messages sélectionnés ont été traités."

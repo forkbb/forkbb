@@ -58,10 +58,10 @@ msgid "Info 4"
 msgstr "Le nom de la base sur laquelle vous voulez installer ForkBB."
 
 msgid "Database username"
-msgstr "Database username"
+msgstr "nom d'utilisateur de la base de données"
 
 msgid "Database password"
-msgstr "Database password"
+msgstr "Mot de passe de la base de données"
 
 msgid "Info 5"
 msgstr "Vos login et mot de passe pour se conecter à la base (ignorer dans le cas de SQLite)."
@@ -70,7 +70,7 @@ msgid "Table prefix"
 msgstr "Préfixe de la table"
 
 msgid "Info 6"
-msgstr "Le préfix peut contenir les lettres a à z, nombre et tiret_souligné. Il doit toutefois commencer par une lettre. La taille maximum est de 40 caractères."
+msgstr "Le préfixe peut contenir les lettres a à z, nombre et tiret_souligné. Il doit toutefois commencer par une lettre. La taille maximum est de 40 caractères."
 
 msgid "Administration setup"
 msgstr "<b>Installation de l’admministration</b>"
@@ -115,7 +115,7 @@ msgid "Default language"
 msgstr "Language par défaut"
 
 msgid "Default style"
-msgstr "style par défaute"
+msgstr "style par défaut"
 
 msgid "Start install"
 msgstr "Commencer l’installation"
