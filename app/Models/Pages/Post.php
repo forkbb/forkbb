@@ -15,6 +15,7 @@ use ForkBB\Models\Model;
 use ForkBB\Models\Page;
 use ForkBB\Models\Draft\Draft;
 use ForkBB\Models\Forum\Forum;
+use ForkBB\Models\Post\Post;
 use ForkBB\Models\Topic\Topic;
 use function \ForkBB\__;
 
@@ -518,6 +519,30 @@ class Post extends Page
             }
         }
 
+        if (1 === $this->config->b_notifications) {
+            $this->addNotifications($v->message, $merge ? $lastPost : $post);
+        }
+
         return $this->c->Redirect->url(/*$merge ? $lastPost->link : $post->link*/ $topic->linkLast)->message('Post redirect', FORK_MESS_SUCC);
+    }
+
+    protected function addNotifications(string $text, Post $post): void
+    {
+        list($nQuoted, $nContact) = $this->c->Parser->findNicknames($text);
+        $nicks                    = \array_merge($nQuoted, $nContact);
+
+        if (empty($nicks)) {
+            return;
+        }
+
+        foreach ($nicks as $nick => $z) {
+            $user = $this->c->users->loadByName($nick, true);
+
+            if (null === $user) {
+                continue;
+            }
+
+            $this->c->notifications->addNicknameMention($user, $post, ['quoted' => isset($nQuoted[$nick]), 'contact' => isset($nContact[$nick])]);
+        }
     }
 }
