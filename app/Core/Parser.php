@@ -159,6 +159,72 @@ class Parser extends Parserus
         return \preg_replace('%^(\x20*\n)+|(\n\x20*)+$%D', '', $this->getCode());
     }
 
+    protected array $nicksQuoted  = []; // ~ ники в цитатах
+    protected array $nicksContact = []; // ~ обращение по нику
+
+    /**
+     * Возвращает ники (не точно!) из текста
+     * Результат: 0-ой элемент - ники цитируемых, 1-ый элемент - ники в обращениях к ним
+     * Ники в ключах!
+     */
+    public function findNicknames(string $text): array
+    {
+        $whiteList = 1 === $this->c->config->b_message_bbcode ? null : [];
+        $blackList = $this->c->config->a_bb_black_mes;
+
+        $this->setAttr('isSign', false)
+            ->setWhiteList($whiteList)
+            ->setBlackList($blackList)
+            ->parse($text);
+
+        $this->nicksQuoted  = [];
+        $this->nicksContact = [];
+
+        $this->findNicksRecursion([0]);
+
+        return [$this->nicksQuoted, $this->nicksContact];
+    }
+
+    /**
+     * Рекурсивно обходит массив тегов для поиска ников
+     */
+    protected function findNicksRecursion(array $ids, bool $maybeNickname = false)
+    {
+        foreach ($ids as $id) {
+            if (empty($this->data[$id])) {
+                continue;
+            }
+
+            $tag = $this->data[$id];
+
+            if (isset($tag['text'])) {
+                if (
+                    true === $maybeNickname
+                    && isset($tag['text'][$this->c->USERNAME['min']])
+                    && '@' === $tag['text'][0]
+                    && \preg_match($this->c->USERNAME['phpPattern'], \substr($tag['text'], 1))
+                ) {
+                    $this->nicksContact[\substr($tag['text'], 1)] = true;
+
+                } elseif (\preg_match_all('%(?<=^|\s)@(\p{L}[\p{L}\p{N}\._-]+)%u', $tag['text'], $matches, \PREG_PATTERN_ORDER)) {
+                    foreach ($matches[1] as $nick) {
+                        $this->nicksContact[$nick] = true;
+
+                        if ('.' === $nick[-1]) {
+                            $this->nicksContact[\substr($nick, 0, -1)] = true;
+                        }
+                    }
+                }
+
+            } elseif ('quote' !== $tag['tag']) {
+                $this->findNicksRecursion($tag['children'], 'b' === $tag['tag']);
+
+            } elseif (! empty($tag['attrs']['Def'])) {
+                $this->nicksQuoted[$tag['attrs']['Def']] = true;
+            }
+        }
+    }
+
     /**
      * Преобразует бб-коды в html в подписях пользователей
      */
