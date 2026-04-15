@@ -187,7 +187,7 @@ msgid "Post links help"
 msgstr "Autoriser les utilisateurs de ce groupe à inclure des liens dans leurs messages. Ce paramètre s’applique également aux signatures et au champ site Web du profil utilisateurs."
 
 msgid "Set own title label"
-msgstr "L'utilisteur peut choisir son propre titre"
+msgstr "L'utilisateur peut choisir son propre titre"
 
 msgid "Set own title help"
 msgstr "Autoriser les utilisateurs de ce groupe à choir leurs propres titres."
@@ -244,7 +244,7 @@ msgid "Delete-edit interval help"
 msgstr "Nombre de secondes pour modifier (ou effacer) vos messages ou discussions. Définir à 0 pour désactiver.<br>Les modérateurs n’ont pas de restrictions dans leur zone d'activité."
 
 msgid "Create new group"
-msgstr "Creer un nouveau groupe"
+msgstr "Créer un nouveau groupe"
 
 msgid "Edit group"
 msgstr "Modifier groupe"
@@ -262,7 +262,7 @@ msgid "Max sig length label"
 msgstr "Longueur maximum de la signature"
 
 msgid "Max sig length help"
-msgstr "LE maximum de caractères que peut contenir une signature utilisateur. 0 - désactive les signatures."
+msgstr "Le maximum de caractères que peut contenir une signature utilisateur. 0 - désactive les signatures."
 
 msgid "Max sig lines label"
 msgstr "Maximum de lignes par signature"
@@ -343,7 +343,7 @@ msgid "Use pre-moderation help"
 msgstr "Soumettre les nouveaux sujets et messages des utilisateurs de ce groupe pour modération préalable."
 
 msgid "Merge interval label"
-msgstr "Merge interval"
+msgstr "Intervalle de fusion"
 
 msgid "Merge interval help"
-msgstr "The number of seconds during which a user's new message is forcibly merged with their previous message (assuming their previous message is the last one in the topic).<br>Les modérateurs n’ont pas de restrictions dans leur zone d'activité."
+msgstr "Nombre de secondes durant lesquelles le nouveau message de l'utilisateur est fusionné avec son message précédent (en assumant que le message de l'utilisateur est le dernier de la section).<br>Les modérateurs n’ont pas de restrictions dans leur zone d'activité."

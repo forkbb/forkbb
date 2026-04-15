@@ -518,10 +518,10 @@ msgid "Pre-moderation (%s)"
 msgstr "<span class="f-spantxtpm">Pre-moderation </span><b>(%s)</b>"
 
 msgid "Temporary IP blocking"
-msgstr "Your IP has been temporarily blocked."
+msgstr "Votre IP a été bloquée temporairement."
 
 msgid "Topic bookmarks"
-msgstr "Bookmarks"
+msgstr "Sujets favoris"
 
 msgid "Find topic bookmarks"
-msgstr "Find topics saved in your bookmarks"
+msgstr "Trouvers les sujets dans vos favoris"

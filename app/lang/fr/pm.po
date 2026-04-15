@@ -319,4 +319,4 @@ msgid "PM menu"
 msgstr "Menu messages privés"
 
 msgid "You cant start dialogue"
-msgstr "You can't start a dialogue."
+msgstr "Vous ne pouvez pas commencer de dialogue."

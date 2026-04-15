@@ -139,13 +139,13 @@ msgid "Yes "
 msgstr "Oui"
 
 msgid "Topic title color label"
-msgstr "Subject color"
+msgstr "Couleur du sujet"
 
 msgid "Color number %s"
 msgstr "Color N %s"
 
 msgid "Hashtags format"
-msgstr "Hashtags can consist of letters and numbers. Underscores may appear within a hashtag. Each hashtag must be at least three characters long."
+msgstr "Les Hashtags peuvent être constitués de lettres et nombres. Le caractère souligné peut appraitre dans un hashtag. Chaque hashtag doit contenir au moins 3 caractères."
 
 msgid "Not calc topic"
-msgstr "Do not recalculate this topic"
+msgstr "Ne pas recalculer ce sujet"
