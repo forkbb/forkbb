@@ -59,8 +59,7 @@ class Delete extends Action
         }
 
         if ($moderators) {
-            $forums = $this->c->ForumManager->init(FORK_GROUP_ADMIN);
-            $root   = $forums->get(0);
+            $root = $this->c->ForumManager->init(FORK_GROUP_ADMIN)->get(0);
 
             if ($root instanceof Forum) {
                 foreach ($root->descendants as $forum) {
