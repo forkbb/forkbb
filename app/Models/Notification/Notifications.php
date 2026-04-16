@@ -13,13 +13,13 @@ namespace ForkBB\Models\Notification;
 use ForkBB\Models\Model;
 use ForkBB\Models\Notification\NotificationAboutNicknameMentions;
 use ForkBB\Models\Post\Post;
+use ForkBB\Models\User\User;
 
 
 
 use ForkBB\Models\DataModel;
 use ForkBB\Models\Forum\Forum;
 use ForkBB\Models\Topic\Topic;
-use ForkBB\Models\User\User;
 use PDO;
 use InvalidArgumentException;
 
@@ -29,6 +29,19 @@ class Notifications extends Model
      * Ключ модели для контейнера
      */
     protected string $cKey = 'Notifications';
+
+    protected array $permRF = [];
+
+    public function permReadForum(User $user, int $fid): bool
+    {
+        $key = $fid . '_' . $user->group_id;
+
+        if (! isset($this->permRF[$key])) {
+            $this->permRF[$key] = $this->c->ForumManager->init($user->group_id)->get($fid) instanceof Forum;
+        }
+
+        return $this->permRF[$key];
+    }
 
     public function notifyAboutNicknameMentions(string $text, Post $post): void
     {

@@ -11,7 +11,9 @@ declare(strict_types=1);
 namespace ForkBB\Models\Notification;
 
 use ForkBB\Models\Notification\Notification;
+use ForkBB\Models\Forum\Forum;
 use ForkBB\Models\Post\Post;
+use ForkBB\Models\Topic\Topic;
 use ForkBB\Models\User\User;
 
 class NotificationAboutNicknameMentions extends Notification
@@ -27,11 +29,13 @@ class NotificationAboutNicknameMentions extends Notification
             || $data['user']->isGuest
             || $data['user']->isUnverified
 //          || $data['user']->isBanByName
-            || ! $data['post'] instanceof Post
             || (
                 true !== $data['quoted']
                 && true !== $data['mentioned']
             )
+            || ! $data['post'] instanceof Post
+            || ! ($topic = $post->parent) instanceof Topic
+            || true !== $this->c->notifications->permReadForum($user, $topic->forum_id)
         ) {
             return false;
         }
