@@ -1,0 +1,46 @@
+<?php
+/**
+ * This file is part of the ForkBB <https://forkbb.ru, https://github.com/forkbb>.
+ *
+ * @copyright (c) Visman <mio.visman@yandex.ru, https://github.com/MioVisman>
+ * @license   The MIT License (MIT)
+ */
+
+declare(strict_types=1);
+
+namespace ForkBB\Models\Notification;
+
+use ForkBB\Core\Container;
+use ForkBB\Models\User\User;
+
+
+
+
+use ForkBB\Models\Post\Post;
+use ForkBB\Models\Model;
+
+
+
+use ForkBB\Models\DataModel;
+use ForkBB\Models\Forum\Forum;
+use ForkBB\Models\Topic\Topic;
+use PDO;
+use InvalidArgumentException;
+
+abstract class Notification
+{
+    protected User $user;
+
+    abstract public function init(array $data): bool;
+    abstract public function title(): string;
+    abstract public function text(): string;
+
+    public function __construct(protected Container $c)
+    {
+    }
+
+    public function user(): User
+    {
+        return $this->user;
+    }
+}

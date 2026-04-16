@@ -204,6 +204,7 @@ return [
         'attachments'   => \ForkBB\Models\Attachment\Attachments::class,
         'extensions'    => '@ExtensionManager:init',
         'reactions'     => \ForkBB\Models\Reaction\Reactions::class,
+        'notifications' => \ForkBB\Models\Notification\Notifications::class,
 
         'Csrf' => [
             'class'   => \ForkBB\Core\Csrf::class,

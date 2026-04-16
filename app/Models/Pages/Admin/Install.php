@@ -1715,6 +1715,7 @@ class Install extends Admin
             'b_colored_subjects'      => 0,
             'b_topic_hashtags'        => 0,
             'b_topic_bookmarks'       => 0,
+            'b_notifications'         => 0,
         ];
 
         foreach ($forkConfig as $name => $value) {

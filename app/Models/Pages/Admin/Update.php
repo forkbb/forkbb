@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '8.0.0';
     const REV_MIN_FOR_UPDATE         = 87;
-    const LATEST_REV_WITH_DB_CHANGES = 90;
+    const LATEST_REV_WITH_DB_CHANGES = 95;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
     const CONFIG_FILE                = 'main.php';
@@ -1712,6 +1712,30 @@ class Update extends Admin
             ],
         ];
         $this->c->DB->createTable('::topic_bookmarks', $schema);
+
+        return null;
+    }
+
+    /**
+     * rev.95 to rev.96
+     */
+    protected function stageNumber95(array $args): ?int
+    {
+        $config = $this->c->config;
+
+        $config->b_notifications ??= 0;
+
+        $config->save();
+
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'shared=>notifications',
+            '\\ForkBB\\Models\\Notification\\Notifications::class',
+            'reactions'
+        );
+
+        $coreConfig->save();
 
         return null;
     }
