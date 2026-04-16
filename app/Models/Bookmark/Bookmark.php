@@ -151,7 +151,7 @@ class Bookmark extends Model
             $root = $this->c->forums->get(0);
 
         } else {
-            $root = $this->c->ForumManager->init($this->c->groups->get($user->group_id))->get(0);
+            $root = $this->c->ForumManager->init($user->group_id)->get(0);
         }
 
         $vars = [

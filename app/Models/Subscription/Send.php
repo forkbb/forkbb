@@ -78,8 +78,7 @@ class Send extends Method
                 }
 
                 if (! isset($grPerm[$user->group_id])) {
-                    $group                   = $this->c->groups->get($user->group_id);
-                    $grPerm[$user->group_id] = $this->c->ForumManager->init($group)->get($forum->id) instanceof Forum;
+                    $grPerm[$user->group_id] = $this->c->ForumManager->init($user->group_id)->get($forum->id) instanceof Forum;
                 }
 
                 if (! $grPerm[$user->group_id]) {

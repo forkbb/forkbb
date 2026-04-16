@@ -64,7 +64,7 @@ class UpdateCountPosts extends Action
                 $manager = $this->c->forums;
 
             } else {
-                $manager = $this->c->ForumManager->init($this->c->groups->get(FORK_GROUP_ADMIN)); //???? закэшировать?
+                $manager = $this->c->ForumManager->init(FORK_GROUP_ADMIN);
             }
 
             $forums = $manager->get(0)->descendants;

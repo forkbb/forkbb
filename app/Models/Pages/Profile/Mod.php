@@ -93,7 +93,7 @@ class Mod extends Profile
      */
     protected function getcurForums(): array
     {
-        $root = $this->c->ForumManager->init($this->c->groups->get($this->curUser->group_id))->get(0);
+        $root = $this->c->ForumManager->init($this->curUser->group_id)->get(0);
 
         return $root instanceof Forum ? $root->descendants : [];
     }

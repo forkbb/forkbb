@@ -35,7 +35,7 @@ class Search extends Profile
             $this->forumManager = $this->c->forums;
 
         } else {
-            $this->forumManager = $this->c->ForumManager->init($this->c->groups->get($this->curUser->group_id));
+            $this->forumManager = $this->c->ForumManager->init($this->curUser->group_id);
         }
 
         if ('POST' === $method) {
