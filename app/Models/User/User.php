@@ -97,7 +97,7 @@ class User extends DataModel
             $model = $model->parent;
 
             if (! $model instanceof Model) {
-                throw new RuntimeException('Moderator\'s rights can not be found');
+                return false; //throw new RuntimeException('Moderator\'s rights can not be found');
             }
         }
 
