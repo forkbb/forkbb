@@ -574,10 +574,12 @@ class PTopic extends DataModel
         return (
                 Cnst::PT_DELETED === $this->poster_status
                 || Cnst::PT_NOTSENT === $this->poster_status
+                || 0 === $this->poster_id
             )
             && (
                 Cnst::PT_DELETED === $this->target_status
                 || Cnst::PT_NOTSENT === $this->target_status
+                || 0 === $this->target_id
             );
     }
 }
