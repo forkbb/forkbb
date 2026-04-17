@@ -190,9 +190,7 @@ class Validator
                     }
 
                     if (--$n) {
-                        if (! isset($r[$field]['array'])) {
-                            $r[$field]['array'] = [];
-                        }
+                        $r[$field]['array'] ??= [];
 
                         $r = &$r[$field]['array'];
 
