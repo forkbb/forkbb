@@ -13,27 +13,13 @@ namespace ForkBB\Models\Notification;
 use ForkBB\Core\Container;
 use ForkBB\Models\User\User;
 
-
-
-
-use ForkBB\Models\Post\Post;
-use ForkBB\Models\Model;
-
-
-
-use ForkBB\Models\DataModel;
-use ForkBB\Models\Forum\Forum;
-use ForkBB\Models\Topic\Topic;
-use PDO;
-use InvalidArgumentException;
-
 abstract class Notification
 {
     protected User $user;
 
     abstract public function init(array $data): bool;
-    abstract public function title(): string;
-    abstract public function text(): string;
+    abstract public function title(): array|string;
+    abstract public function text(): array|string;
 
     public function __construct(protected Container $c)
     {

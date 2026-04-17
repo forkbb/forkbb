@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace ForkBB\Models\Notification;
 
 use ForkBB\Models\Notification\Notification;
-use ForkBB\Models\Forum\Forum;
 use ForkBB\Models\Post\Post;
 use ForkBB\Models\Topic\Topic;
 use ForkBB\Models\User\User;
@@ -34,8 +33,8 @@ class NotificationAboutNicknameMentions extends Notification
                 && true !== $data['mentioned']
             )
             || ! $data['post'] instanceof Post
-            || ! ($topic = $post->parent) instanceof Topic
-            || true !== $this->c->notifications->permReadForum($user, $topic->forum_id)
+            || ! ($topic = $data['post']->parent) instanceof Topic
+            || true !== $this->c->notifications->permReadForum($topic->forum_id, $data['user'])
         ) {
             return false;
         }
@@ -46,5 +45,19 @@ class NotificationAboutNicknameMentions extends Notification
         $this->mentioned = $data['mentioned'];
 
         return true;
+    }
+
+    public function title(): array|string
+    {
+        return match (true) {
+            true === $this->quoted && true === $this->mentioned => 'You been quoted and mentioned',
+            true === $this->quoted                              => 'You been quoted',
+            default                                             => 'You been mentioned',
+        };
+    }
+
+    public function text(): array|string
+    {
+        return ['Topic %1$s Post %2$s', $this->post->parent->name, $this->post->link];
     }
 }
