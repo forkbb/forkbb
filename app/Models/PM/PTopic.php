@@ -530,8 +530,14 @@ class PTopic extends DataModel
                     Cnst::PT_ARCHIVE === $this->{"{$this->zp}_status"}
                     && Cnst::PT_NOTSENT === $this->{"{$this->zt}_status"}
                 )
-                || $this->zpUser->isAdmin
-                || $this->ztUser->isAdmin
+                || (
+                    $this->zpUser->isAdmin
+                    && ! $this->ztUser->isGuest
+                )
+                || (
+                    $this->ztUser->isAdmin
+                    && ! $this->zpUser->isGuest
+                )
             );
     }
 
