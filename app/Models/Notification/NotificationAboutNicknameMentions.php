@@ -27,7 +27,7 @@ class NotificationAboutNicknameMentions extends Notification
             ! $data['user'] instanceof User
             || $data['user']->isGuest
             || $data['user']->isUnverified
-//          || $data['user']->isBanByName
+            || $data['user']->isBanByName
             || (
                 true !== $data['quoted']
                 && true !== $data['mentioned']
@@ -58,6 +58,6 @@ class NotificationAboutNicknameMentions extends Notification
 
     public function text(): array|string
     {
-        return ['Topic %1$s Post %2$s', $this->post->parent->name, $this->post->link];
+        return ['Topic %1$s Post %2$s User %3$s', $this->post->parent->name, $this->post->link, $this->post->user->username];
     }
 }

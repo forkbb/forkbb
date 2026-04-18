@@ -121,9 +121,7 @@ class Notifications extends Model
             return false;
         }
 
-        $this->addPM($notification);
-
-        return true;
+        return $this->addPM($notification);
     }
 
     protected function addPM(Notification $notification): bool

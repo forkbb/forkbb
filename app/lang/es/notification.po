@@ -21,8 +21,8 @@ msgstr "You may have been quoted in post."
 msgid "You been quoted and mentioned"
 msgstr "You may have been quoted and mentioned in post."
 
-msgid "Topic %1$s Post %2$s"
-msgstr "[url=%2$s]Post[/url] in the topic \"[b]%1$s[/b]\"."
+msgid "Topic %1$s Post %2$s User %3$s"
+msgstr "[url=%2$s]Post[/url] by [b]%3$s[/b] in the topic \"[i]%1$s[/i]\"."
 
 msgid "Notification subject title"
-msgstr "Notifications"
+msgstr "🔔 Notifications"
