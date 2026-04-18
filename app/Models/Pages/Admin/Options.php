@@ -529,6 +529,20 @@ class Options extends Admin
         $form['sets']['features'] = [
             'legend' => 'Features subhead',
             'fields' => [
+                'b_pm' => [
+                    'type'    => 'radio',
+                    'value'   => $config->b_pm,
+                    'values'  => $yn,
+                    'caption' => 'Allow PM label',
+                    'help'    => ['Allow PM help', __('User groups'), $this->c->Router->link('AdminGroups')],
+                ],
+                'b_topic_bookmarks' => [
+                    'type'    => 'radio',
+                    'value'   => $config->b_topic_bookmarks,
+                    'values'  => $yn,
+                    'caption' => 'Topic bookmarks label',
+                    'help'    => 'Topic bookmarks help',
+                ],
                 'b_quickpost' => [
                     'type'    => 'radio',
                     'value'   => $config->b_quickpost,
@@ -562,13 +576,6 @@ class Options extends Admin
                     'value'   => $config->o_additional_navlinks,
                     'caption' => 'Menu items label',
                     'help'    => 'Menu items help',
-                ],
-                'b_topic_bookmarks' => [
-                    'type'    => 'radio',
-                    'value'   => $config->b_topic_bookmarks,
-                    'values'  => $yn,
-                    'caption' => 'Topic bookmarks label',
-                    'help'    => 'Topic bookmarks help',
                 ],
             ],
         ];
@@ -906,19 +913,6 @@ class Options extends Admin
                     'values'  => $yn,
                     'caption' => 'Result for guest label',
                     'help'    => 'Result for guest help',
-                ],
-            ],
-        ];
-
-        $form['sets']['pm'] = [
-            'legend' => 'PM subhead',
-            'fields' => [
-                'b_pm' => [
-                    'type'    => 'radio',
-                    'value'   => $config->b_pm,
-                    'values'  => $yn,
-                    'caption' => 'Allow PM label',
-                    'help'    => ['Allow PM help', __('User groups'), $this->c->Router->link('AdminGroups')],
                 ],
             ],
         ];

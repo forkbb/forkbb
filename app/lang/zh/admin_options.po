@@ -423,14 +423,11 @@ msgstr "头像上传文件夹设置不正确。"
 msgid "For PHP, it is forbidden to write in the folder for uploading avatars"
 msgstr "PHP无法写入头像上传文件夹。"
 
-msgid "PM subhead"
+msgid "Allow PM label"
 msgstr "私信设置"
 
-msgid "Allow PM label"
-msgstr "允许私信"
-
 msgid "Allow PM help"
-msgstr "各个用户组的设置可在<a href="%2$s">%1$s</a>中找到。"
+msgstr "允许私信。各个用户组的设置可在<a href="%2$s">%1$s</a>中找到。"
 
 msgid "Allow oauth label"
 msgstr "OAuth授权"

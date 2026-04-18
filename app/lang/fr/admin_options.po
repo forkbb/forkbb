@@ -423,14 +423,11 @@ msgstr "Le dossier de stockage des avatars est incorrect."
 msgid "For PHP, it is forbidden to write in the folder for uploading avatars"
 msgstr "Pour PHP, l’écriture est interdite dans le répertoire de stockage des avatars."
 
-msgid "PM subhead"
+msgid "Allow PM label"
 msgstr "Messages privés"
 
-msgid "Allow PM label"
-msgstr "Autoriser les messages privés"
-
 msgid "Allow PM help"
-msgstr "Les réglages pour les groupes individuels sont ici <a href="%2$s">%1$s</a>."
+msgstr "Autoriser les messages privés. Les réglages pour les groupes individuels sont ici <a href="%2$s">%1$s</a>."
 
 msgid "Allow oauth label"
 msgstr "Authentification OAuth"

@@ -423,14 +423,11 @@ msgstr "La carpeta para subir avatares es incorrecta."
 msgid "For PHP, it is forbidden to write in the folder for uploading avatars"
 msgstr "Para PHP, está prohibido escribir en la carpeta para subir avatares."
 
-msgid "PM subhead"
+msgid "Allow PM label"
 msgstr "Mensajes privados"
 
-msgid "Allow PM label"
-msgstr "Permitir mensajes privados"
-
 msgid "Allow PM help"
-msgstr "Las configuraciones para grupos individuales están disponibles en <a href="%2$s">%1$s</a>."
+msgstr "Permitir mensajes privados. Las configuraciones para grupos individuales están disponibles en <a href="%2$s">%1$s</a>."
 
 msgid "Allow oauth label"
 msgstr "Autorización OAuth"
