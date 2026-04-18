@@ -527,3 +527,24 @@ msgstr "Закладки для тем"
 
 msgid "Topic bookmarks help"
 msgstr "Разершить пользователям добавлять темы в закладки, чтобы они могли быстро находить их в результатах поиска."
+
+msgid "Notifications subhead"
+msgstr "Уведомления"
+
+msgid "Notifications label"
+msgstr "Использовать уведомления"
+
+msgid "Notifications help"
+msgstr "Дает пользователям возможность получать уведомления. Каждый пользователь должен сделать настройку в своём профиле."
+
+msgid "Notifications pm label"
+msgstr "Разрешить через ЛС"
+
+msgid "Notifications pm help"
+msgstr "Пользователи могут выбрать вариант получения уведомлений через ЛС."
+
+msgid "Notifications email label"
+msgstr "Разрешить через электронную почту"
+
+msgid "Notifications email help"
+msgstr "Пользователи могут выбрать вариант получения уведомлений через электронную почту."

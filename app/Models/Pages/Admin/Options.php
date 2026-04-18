@@ -128,6 +128,9 @@ class Options extends Admin
                     'b_colored_subjects'      => 'required|integer|in:0,1',
                     'b_topic_hashtags'        => 'required|integer|in:0,1',
                     'b_topic_bookmarks'       => 'required|integer|in:0,1',
+                    'b_notifications'         => 'required|integer|in:0,1',
+                    'b_notifications_pm'      => 'required|integer|in:0,1',
+                    'b_notifications_email'   => 'required|integer|in:0,1',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
@@ -193,6 +196,21 @@ class Options extends Admin
 
                 if (1 === $config->b_regs_verify) {
                     $config->b_regs_disable_email = 0;
+                }
+
+                if (1 !== $config->b_pm) {
+                    $config->b_notifications_pm = 0;
+                }
+
+                if (1 !== $config->b_notifications) {
+                    $config->b_notifications_pm    = 0;
+                    $config->b_notifications_email = 0;
+
+                } elseif (
+                    1 !== $config->b_notifications_pm
+                    && 1 !== $config->b_notifications_email
+                ) {
+                    $config->b_notifications = 0;
                 }
 
                 $config->save();
@@ -580,6 +598,33 @@ class Options extends Admin
             ],
         ];
 
+        $form['sets']['тotifications'] = [
+            'legend' => 'Notifications subhead',
+            'fields' => [
+                'b_notifications' => [
+                    'type'    => 'radio',
+                    'value'   => $config->b_notifications,
+                    'values'  => $yn,
+                    'caption' => 'Notifications label',
+                    'help'    => 'Notifications help',
+                ],
+                'b_notifications_pm' => [
+                    'type'     => 'radio',
+                    'value'    => $config->b_notifications_pm,
+                    'values'   => $yn,
+                    'caption'  => 'Notifications pm label',
+                    'help'     => 'Notifications pm help',
+                ],
+                'b_notifications_email' => [
+                    'type'    => 'radio',
+                    'value'   => $config->b_notifications_email,
+                    'values'  => $yn,
+                    'caption' => 'Notifications email label',
+                    'help'    => 'Notifications email help',
+                ],
+            ],
+        ];
+
         $form['sets']['feed'] = [
             'legend' => 'Feed subhead',
             'fields' => [
@@ -607,7 +652,6 @@ class Options extends Admin
                     'caption' => 'Feed TTL label',
                     'help'    => 'Feed TTL help',
                 ],
-
             ],
         ];
 
@@ -862,7 +906,6 @@ class Options extends Admin
                     'caption' => 'Announcement message label',
                     'help'    => 'Announcement message help',
                 ],
-
             ],
         ];
 

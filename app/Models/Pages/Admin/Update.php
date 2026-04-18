@@ -1724,6 +1724,8 @@ class Update extends Admin
         $config = $this->c->config;
 
         $config->b_notifications ??= 0;
+        $config->b_notifications_pm ??= 0;
+        $config->b_notifications_email ??= 0;
 
         $config->save();
 

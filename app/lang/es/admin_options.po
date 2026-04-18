@@ -527,3 +527,24 @@ msgstr "Topic bookmarks"
 
 msgid "Topic bookmarks help"
 msgstr "Allow users to bookmark topics so they can quickly find them in searches."
+
+msgid "Notifications subhead"
+msgstr "Notification"
+
+msgid "Notifications label"
+msgstr "Use notifications"
+
+msgid "Notifications help"
+msgstr "Allows users to receive notifications. Each user must configure this setting in their profile."
+
+msgid "Notifications pm label"
+msgstr "Allow via PM"
+
+msgid "Notifications pm help"
+msgstr "Users can choose to receive notifications via private messages."
+
+msgid "Notifications email label"
+msgstr "Allow via email"
+
+msgid "Notifications email help"
+msgstr "Users can choose to receive notifications via email."
