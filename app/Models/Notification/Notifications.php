@@ -71,6 +71,8 @@ class Notifications extends Model
             return;
         }
 
+        $unique = [];
+
         foreach ($nicks as $nick => $z) {
             $user = $this->c->users->loadByName($nick, true);
 
@@ -78,13 +80,32 @@ class Notifications extends Model
                 continue;
             }
 
+            if (isset($unique[$user->id])) {
+                if (isset($nQuoted[$nick])) {
+                    $unique[$user->id]['quoted'] = true;
+                }
+
+                if (isset($nMentioned[$nick])) {
+                    $unique[$user->id]['mentioned'] = true;
+                }
+
+            } else {
+                $unique[$user->id] = [
+                    'user'      => $user,
+                    'quoted'    => isset($nQuoted[$nick]),
+                    'mentioned' => isset($nMentioned[$nick]),
+                ];
+            }
+        }
+
+        foreach ($unique as $cur) {
             $notification = new NotificationAboutNicknameMentions($this->c);
 
             if (true === $notification->init([
-                'user'      => $user,
+                'user'      => $cur['user'],
                 'post'      => $post,
-                'quoted'    => isset($nQuoted[$nick]),
-                'mentioned' => isset($nMentioned[$nick]),
+                'quoted'    => $cur['quoted'],
+                'mentioned' => $cur['mentioned'],
             ])) {
                 $this->add($notification);
             }
