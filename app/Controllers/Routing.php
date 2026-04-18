@@ -318,7 +318,7 @@ class Routing
                 // смена своего email
                 $r->add(
                     $r::GET,
-                    '/user/{id|i:' . $user->id . '}/{email}/{key}/{hash}',
+                    '/user/{id|i:' . $user->id . '}/set/{email}/{key}/{hash}',
                     'ProfileEmail:setEmail',
                     'SetNewEmail'
                 );
