@@ -13,13 +13,13 @@ msgstr ""
 "Language: ru\n"
 
 msgid "You been mentioned"
-msgstr "Возможно, вас упомянули в сообщении."
+msgstr "Возможно, вас упомянули в сообщении"
 
 msgid "You been quoted"
-msgstr "Возможно, вас процитировали в сообщении."
+msgstr "Возможно, вас процитировали в сообщении"
 
 msgid "You been quoted and mentioned"
-msgstr "Возможно, вас процитировали и упомянули в сообщении."
+msgstr "Возможно, вас процитировали и упомянули в сообщении"
 
 msgid "Topic %1$s Post %2$s User %3$s"
 msgstr "[url=%2$s]Сообщение[/url] от [b]%3$s[/b] в теме \"[i]%1$s[/i]\"."

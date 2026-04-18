@@ -121,10 +121,24 @@ class Notifications extends Model
             return false;
         }
 
-        return $this->addPM($notification);
+        if (
+            1 === $this->c->config->b_notifications_pm
+            && true
+        ) {
+            $this->addPM($notification);
+        }
+
+        if (
+            1 === $this->c->config->b_notifications_email
+            && true
+        ) {
+            $this->addEmail($notification);
+        }
+
+        return true;
     }
 
-    protected function addPM(Notification $notification): bool
+    protected function addPM(Notification $notification): void
     {
         $rName = '[Notification bot]';
         $robot = $this->c->users->guest(['username' => $rName]);
@@ -157,7 +171,7 @@ class Notifications extends Model
         $post->poster       = $robot->username;
         $post->poster_id    = $robot->id;
         $post->poster_ip    = '0.0.0.0';
-        $post->message      = __($notification->title()) . "\n" . __($notification->text());
+        $post->message      = __($notification->title()) . "\n---\n" . __($notification->text());
         $post->hide_smilies = 0;
         $post->posted       = \time();
         $post->topic_id     = $topic->id;
@@ -172,10 +186,16 @@ class Notifications extends Model
 
         $this->c->pms->update(Cnst::PTOPIC, $topic->calcStat());
         $this->c->pms->recalculate($user);
+    }
 
-        if ( // ???? рассылка почты
-            1 === $user->u_pm_notify
-            && 1 === $user->email_confirmed
+    protected function addEmail(Notification $notification): void
+    {
+        $user  = $notification->user();
+
+        $this->c->Lang->load('notification', $user->language);
+
+        if (
+            1 === $user->email_confirmed
             && true !== $user->isBanByName
             && ! $this->c->Online->isOnline($user)
         ) {
@@ -183,12 +203,11 @@ class Notifications extends Model
                 $this->c->Lang->load('common', $user->language);
 
                 $tplData = [
-                    'fTitle'     => $this->c->config->o_board_title,
-                    'fMailer'    => __(['Mailer', $this->c->config->o_board_title]),
-                    'pmSubject'  => $topic->subject,
-                    'username'   => $user->username,
-                    'sender'     => $robot->username,
-                    'messageUrl' => $new ? $topic->link : $post->link,
+                    'fMailer'  => __(['Mailer', $this->c->config->o_board_title]),
+                    'title'    => __($notification->title()),
+                    'text'     => $this->c->Parser->parseMessage(__($notification->text()), true),
+                    'userLink' => $user->link,
+
                 ];
 
                 $this->c->Mail
@@ -198,11 +217,11 @@ class Notifications extends Model
                     ->setLanguage($user->language)
                     ->setTo($user->email, $user->username)
                     ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
-                    ->setTpl('new_pm.tpl', $tplData)
+                    ->setTpl('notification.tpl', $tplData)
                     ->send();
 
             } catch (MailException $e) {
-                $this->c->Log->error('Notification (PM): MailException', [
+                $this->c->Log->error('Notification: MailException', [
                     'exception' => $e,
                     'headers'   => false,
                 ]);
@@ -210,7 +229,5 @@ class Notifications extends Model
 
             $this->c->Lang->load('common', $this->c->user->language);
         }
-
-        return true;
     }
 }

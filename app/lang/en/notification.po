@@ -13,13 +13,13 @@ msgstr ""
 "Language: en\n"
 
 msgid "You been mentioned"
-msgstr "You may have been mentioned in post."
+msgstr "You may have been mentioned in post"
 
 msgid "You been quoted"
-msgstr "You may have been quoted in post."
+msgstr "You may have been quoted in post"
 
 msgid "You been quoted and mentioned"
-msgstr "You may have been quoted and mentioned in post."
+msgstr "You may have been quoted and mentioned in post"
 
 msgid "Topic %1$s Post %2$s User %3$s"
 msgstr "[url=%2$s]Post[/url] by [b]%3$s[/b] in the topic \"[i]%1$s[/i]\"."
