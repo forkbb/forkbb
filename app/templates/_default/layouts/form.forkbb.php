@@ -48,13 +48,13 @@
                         @case ('password')
                         @case ('file')
                         @case ('datetime-local')
-                <input id="id-{{ $key }}" name="{{ $key }}" class="f-ctrl" type="{{ $cur['type'] }}" @foreach ($cur as $k => $v) @if (\in_array($k, ['autofocus', 'disabled', 'multiple', 'readonly', 'required'], true) && ! empty($v)) {!! $k !!} @elseif (\in_array($k, ['accept', 'autocapitalize', 'autocomplete', 'max', 'maxlength', 'min', 'minlength', 'pattern', 'placeholder', 'step', 'title', 'value'], true)) {!! $k !!}="{{ $v }}" @elseif ('data' === $k) @foreach ($v as $kd => $vd) data-{{ $kd }}="{{ $vd }}" @endforeach  @endif @endforeach>
+                <input id="id-{{ $key }}" name="{{ $key }}" class="f-ctrl" type="{{ $cur['type'] }}" @foreach ($cur as $k => $v) @if (\in_array($k, ['autofocus', 'disabled', 'multiple', 'readonly', 'required'], true) && ! empty($v)) {!! $k !!} @elseif (\in_array($k, ['accept', 'autocapitalize', 'autocomplete', 'max', 'maxlength', 'min', 'minlength', 'pattern', 'placeholder', 'step', 'title', 'value'], true)) {!! $k !!}="{{ $v }}" @elseif ('data' === $k) @foreach ($v as $kd => $vd) data-{{ $kd }}="{{ $vd }}" @endforeach @endif @endforeach>
                             @break
                         @case ('textarea')
                 <textarea id="id-{{ $key }}" name="{{ $key }}" class="f-ctrl f-ytxtarea" @foreach ($cur as $k => $v) @if (\in_array($k, ['autofocus', 'disabled', 'readonly', 'required'], true) && ! empty($v)) {!! $k !!} @elseif (\in_array($k, ['maxlength', 'placeholder', 'rows', 'title'], true)) {!! $k !!}="{{ $v }}" @elseif ('data' === $k) @foreach ($v as $kd => $vd) data-{{ $kd }}="{{ $vd }}" @endforeach @endif @endforeach>{{ $cur['value'] or '' }}</textarea>
                             @break
                         @case ('select')
-                <select id="id-{{ $key }}" @if ($cur['multiple']) name="{{ $key }}[]" @else name="{{ $key }}" @endif class="f-ctrl" @foreach ($cur as $k => $v) @if (\in_array($k, ['autofocus', 'disabled', 'multiple', 'required'], true) && ! empty($v)) {!! $k !!} @elseif (\in_array($k, ['size'], true)) {!! $k !!}="{{ $v }}" @endif @endforeach>
+                <select id="id-{{ $key }}" @if ($cur['multiple']) name="{{ $key }}[]" @else name="{{ $key }}" @endif class="f-ctrl" @foreach (['autofocus', 'disabled', 'multiple', 'required'] as $k) @if ($cur[$k]) {!! $k !!} @endif @endforeach @if ($cur['size']) size="{{ $cur['size'] }}" @endif>
                             @if (!($count = null) && \is_array(\reset($cur['options'])) && 1 === \count(\reset($cur['options'])) && ($count = 0)) @endif
                             @foreach ($cur['options'] as $v => $option)
                                 @if (\is_array($option))
@@ -64,10 +64,10 @@
                                         @endif
                 <optgroup label="{{ $option[0] }}">
                                     @else
-                  <option value="{{ $option[0] }}" @if ($cur['cprefix']) class="{{ $cur['cprefix'] . $option[0] }}" @endif @if ((\is_array($cur['value']) && \in_array($option[0], $cur['value'])) || $option[0] == $cur['value']) selected @endif @if ($option[2]) disabled @endif>{{ $option[1] }}</option>
+                  <option value="{{ $option[0] }}" @if ($cur['cprefix']) class="{{ $cur['cprefix'].$option[0] }}" @endif @if ((\is_array($cur['value']) && \in_array($option[0], $cur['value'])) || $option[0] == $cur['value']) selected @endif @if ($option[2]) disabled @endif>{{ $option[1] }}</option>
                                     @endif
                                 @else
-                  <option value="{{ $v }}" @if ($cur['cprefix']) class="{{ $cur['cprefix'] . $v }}" @endif @if ((\is_array($cur['value']) && \in_array($v, $cur['value'])) || $v == $cur['value']) selected @endif>{{ $option }}</option>
+                  <option value="{{ $v }}" @if ($cur['cprefix']) class="{{ $cur['cprefix'].$v }}" @endif @if ((\is_array($cur['value']) && \in_array($v, $cur['value'])) || $v == $cur['value']) selected @endif>{{ $option }}</option>
                                 @endif
                             @endforeach
                             @if (null !== $count)
@@ -76,11 +76,17 @@
                 </select>
                             @break
                         @case ('checkbox')
-                <label class="f-flblch"><input id="id-{{ $key }}" name="{{ $key }}" class="f-ychk" type="checkbox" @foreach ($cur as $k => $v) @if (\in_array($k, ['autofocus', 'disabled', 'checked'], true) && ! empty($v)) {!! $k !!} @endif @endforeach value="{{ $cur['value'] or '1' }}"> @isset ($cur['label']){!! __($cur['label']) !!} @endisset</label>
+                            @if ($cur['multiple'])
+                                @foreach ($cur['multiple'] as $vm => $curm)
+                <label class="f-flblch"><input id="id-{{ $key.'-'.$vm }}" name="{{ $key }}[]" class="f-ychk" type="checkbox" @foreach (['autofocus', 'disabled', 'checked'] as $k) @if ($curm[$k]) {!! $k !!} @endif @endforeach value="{{ $vm }}"> @isset ($curm['label']){!! __($curm['label']) !!} @endisset</label>
+                                @endforeach
+                            @else
+                <label class="f-flblch"><input id="id-{{ $key }}" name="{{ $key }}" class="f-ychk" type="checkbox" @foreach (['autofocus', 'disabled', 'checked'] as $k) @if ($cur[$k]) {!! $k !!} @endif @endforeach value="{{ $cur['value'] or '1' }}"> @isset ($cur['label']){!! __($cur['label']) !!} @endisset</label>
+                            @endif
                             @break
                         @case ('radio')
                             @foreach ($cur['values'] as $v => $n)
-                <label class="f-flblr"><input id="id-{{ $key }}-{{ $v }}" name="{{ $key }}" class="f-yradio" type="radio" @if ($cur['autofocus']) autofocus @endif @if ($cur['disabled']) disabled @endif value="{{ $v }}" @if ($v == $cur['value']) checked @endif>{{ $n }}</label>
+                <label class="f-flblr"><input id="id-{{ $key.'-'.$v }}" name="{{ $key }}" class="f-yradio" type="radio" @if ($cur['autofocus']) autofocus @endif @if ($cur['disabled']) disabled @endif value="{{ $v }}" @if ($v == $cur['value']) checked @endif>{{ $n }}</label>
                             @endforeach
                             @break
                         @case ('btn')
