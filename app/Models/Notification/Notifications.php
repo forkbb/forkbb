@@ -121,16 +121,18 @@ class Notifications extends Model
             return false;
         }
 
+        $localRule = $notification->rule();
+
         if (
             1 === $this->c->config->b_notifications_pm
-            && true
+            && 1 & $localRule
         ) {
             $this->addPM($notification);
         }
 
         if (
             1 === $this->c->config->b_notifications_email
-            && true
+            && 2 & $localRule
         ) {
             $this->addEmail($notification);
         }

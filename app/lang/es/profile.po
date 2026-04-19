@@ -431,3 +431,9 @@ msgstr "Afecta los formatos de fecha y hora. Dependiente del lenguaje."
 
 msgid "SN profile %s"
 msgstr "Link to social network profile %s"
+
+msgid "Notification options"
+msgstr "Notification options"
+
+msgid "Notify if I in post"
+msgstr "Notify when quoted/mentioned"

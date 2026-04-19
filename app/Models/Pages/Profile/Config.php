@@ -114,6 +114,26 @@ class Config extends Profile
                     ]);
             }
 
+            if (1 === $this->config->b_notifications) {
+                $tmp = [];
+
+                if (1 === $this->config->b_notifications_pm) {
+                    $tmp[] = 1;
+                }
+
+                if (1 === $this->config->b_notifications_email) {
+                    $tmp[] = 2;
+                }
+
+                $v = $this->c->Validator
+                    ->addRules([
+                        'notify_if_i_in_post'   => 'array',
+                        'notify_if_i_in_post.*' => 'integer|in:' . \implode(',', $tmp),
+                    ])->addAliases([
+                        'notify_if_i_in_post'   => 'Notify if I in post',
+                    ]);
+            }
+
             if ($v->validation($_POST)) {
                 $data = $v->getData(false, ['token']);
 
@@ -393,6 +413,41 @@ class Config extends Profile
             ];
         }
 
+        if (1 === $this->config->b_notifications) {
+            $form['sets']['notifications'] = [
+                'legend' => 'Notification options',
+                'class'  => ['data-edit'],
+                'fields' => [
+                    'notify_if_i_in_post' => [
+                        'type'     => 'checkbox',
+                        'multiple' => $this->getNotificationCheckbox($this->curUser->notify_if_i_in_post ?? 0),
+                        'caption'  => 'Notify if I in post',
+                    ],
+                ],
+            ];
+        }
+
         return $form;
+    }
+
+    protected function getNotificationCheckbox(int $value): array
+    {
+        $checkboxes = [];
+
+        if (1 === $this->config->b_notifications_pm) {
+            $checkboxes[1] = [
+                'checked' => 1 & $value,
+                'label'   => 'PM',
+            ];
+        }
+
+        if (1 === $this->config->b_notifications_email) {
+            $checkboxes[2] = [
+                'checked' => 2 & $value,
+                'label'   => 'Email',
+            ];
+        }
+
+        return $checkboxes;
     }
 }

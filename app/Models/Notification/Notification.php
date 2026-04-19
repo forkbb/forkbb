@@ -16,6 +16,7 @@ use ForkBB\Models\User\User;
 abstract class Notification
 {
     protected User $user;
+    protected int $localRule;
 
     abstract public function init(array $data): bool;
     abstract public function title(): array|string;
@@ -28,5 +29,10 @@ abstract class Notification
     public function user(): User
     {
         return $this->user;
+    }
+
+    public function rule(): int
+    {
+        return $this->localRule;
     }
 }
