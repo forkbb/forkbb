@@ -101,10 +101,6 @@
   margin-bottom: 0.3125rem;
 }
 
-#forka .f-flblch {
-  font-size: 1rem;
-}
-
 #fork-grlist li {
   padding: 0.625rem 0;
   border-bottom: 0.0625rem dotted var(--br-fprimary);
@@ -296,6 +292,10 @@
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
+}
+
+#forka .f-fs-permission .f-flblch {
+  display: block;
 }
 
 #forka .f-fs-permission .f-fleg {
