@@ -910,8 +910,8 @@ body,
   }
 }
 
+#fork .f-flblch,
 #fork .f-flblr {
-  font-size: 1rem;
   display: inline-block;
   cursor: pointer;
 }
@@ -924,6 +924,7 @@ body,
   margin-inline-end: 0.3125rem;
 }
 
+#fork .f-flblch + .f-flblch,
 #fork .f-flblr + .f-flblr {
   margin-inline-start: 0.625rem;
 }
@@ -932,14 +933,12 @@ body,
   margin: 0.3125rem 0 0;
 }
 
-#fork .f-flblch,
 #fork .f-label,
 #fork .f-ychk {
   cursor: pointer;
 }
 
 #fork .f-ycaption,
-#fork .f-flblch,
 #fork .f-yhint,
 #fork .f-fbbul,
 #fork .f-yinfo {
@@ -951,7 +950,6 @@ body,
   font-weight: bold;
 }
 
-#fork .f-flblch,
 #fork .f-fbbul {
   font-size: 0.875rem;
 }
