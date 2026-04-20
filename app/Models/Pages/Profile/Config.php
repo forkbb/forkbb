@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Pages\Profile;
 
 use ForkBB\Core\Validator;
+use ForkBB\Models\Notification\Notifications;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
 use ForkBB\Models\Pages\TimeZoneTrait;
@@ -118,24 +119,28 @@ class Config extends Profile
                 $tmp = [];
 
                 if (1 === $this->config->b_notifications_pm) {
-                    $tmp[] = 1;
+                    $tmp[] = Notifications::PM;
                 }
 
                 if (1 === $this->config->b_notifications_email) {
-                    $tmp[] = 2;
+                    $tmp[] = Notifications::EMAIL;
                 }
 
                 $v = $this->c->Validator
                     ->addRules([
-                        'notify_if_i_in_post'   => 'array',
-                        'notify_if_i_in_post.*' => 'integer|in:' . \implode(',', $tmp),
+                        'ntfy_name_post'   => 'array',
+                        'ntfy_name_post.*' => 'integer|in:' . \implode(',', $tmp),
                     ])->addAliases([
-                        'notify_if_i_in_post'   => 'Notify if I in post',
+                        'ntfy_name_post'   => 'Notify if I in post',
                     ]);
             }
 
             if ($v->validation($_POST)) {
                 $data = $v->getData(false, ['token']);
+
+                if (1 === $this->config->b_notifications) {
+                    $data['ntfy_name_post'] = \array_sum($data['ntfy_name_post'] ?? []);
+                }
 
                 $this->curUser->replAttrs($data, true);
 
@@ -418,10 +423,10 @@ class Config extends Profile
                 'legend' => 'Notification options',
                 'class'  => ['data-edit'],
                 'fields' => [
-                    'notify_if_i_in_post' => [
-                        'type'     => 'checkbox',
-                        'multiple' => $this->getNotificationCheckbox($this->curUser->notify_if_i_in_post ?? 0),
-                        'caption'  => 'Notify if I in post',
+                    'ntfy_name_post' => [
+                        'type'    => 'multi-checkbox',
+                        'list'    => $this->getNotificationCheckbox($this->curUser->ntfy_name_post ?? 0),
+                        'caption' => 'Notify if I in post',
                     ],
                 ],
             ];
@@ -435,15 +440,15 @@ class Config extends Profile
         $checkboxes = [];
 
         if (1 === $this->config->b_notifications_pm) {
-            $checkboxes[1] = [
-                'checked' => 1 & $value,
+            $checkboxes[Notifications::PM] = [
+                'checked' => $value & Notifications::PM,
                 'label'   => 'PM',
             ];
         }
 
         if (1 === $this->config->b_notifications_email) {
-            $checkboxes[2] = [
-                'checked' => 2 & $value,
+            $checkboxes[Notifications::EMAIL] = [
+                'checked' => $value & Notifications::EMAIL,
                 'label'   => 'Email',
             ];
         }

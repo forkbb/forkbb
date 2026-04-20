@@ -27,6 +27,9 @@ use InvalidArgumentException;
 
 class Notifications extends Model
 {
+    const PM    = 1;
+    const EMAIL = 2;
+
     /**
      * Ключ модели для контейнера
      */
@@ -125,14 +128,14 @@ class Notifications extends Model
 
         if (
             1 === $this->c->config->b_notifications_pm
-            && 1 & $localRule
+            && $localRule & self::PM
         ) {
             $this->addPM($notification);
         }
 
         if (
             1 === $this->c->config->b_notifications_email
-            && 2 & $localRule
+            && $localRule & self::EMAIL
         ) {
             $this->addEmail($notification);
         }

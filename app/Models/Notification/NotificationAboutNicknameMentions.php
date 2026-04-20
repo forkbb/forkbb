@@ -43,7 +43,7 @@ class NotificationAboutNicknameMentions extends Notification
         $this->post      = $data['post'];
         $this->quoted    = $data['quoted'];
         $this->mentioned = $data['mentioned'];
-        $this->localRule = $this->user->notify_if_i_in_post ?? 0;
+        $this->localRule = $this->user->ntfy_name_post ?? 0;
 
         return true;
     }

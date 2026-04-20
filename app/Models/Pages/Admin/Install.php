@@ -1290,6 +1290,7 @@ class Install extends Admin
                 'show_reaction'    => ['TINYINT(1)', false, 1],
                 'page_scroll'      => ['TINYINT', false, 0],
                 'about_me_id'      => ['INT(10) UNSIGNED', false, 0],
+                'ntfy_name_post'   => ['TINYINT UNSIGNED', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
             'UNIQUE KEYS' => [

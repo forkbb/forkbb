@@ -1739,6 +1739,8 @@ class Update extends Admin
 
         $coreConfig->save();
 
+        $this->c->DB->addField('::users', 'ntfy_name_post', 'TINYINT UNSIGNED', false, 0);
+
         return null;
     }
 }
