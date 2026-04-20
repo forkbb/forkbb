@@ -36,7 +36,7 @@
             <dl id="id-dl-{{ $cur['id'] or $key }}" @class([[$cur['type'], 'f-ft-'], [$cur['class'] ?? null, 'f-field-']])>
               <dt>
                     @if ($cur['caption'])
-                <label class="f-ycaption f-yc-{{ $cur['type'] }} @if ($cur['required']) f-req @endif" @if (false === \strpos('.radio.yield.str.btn.link.label.include.', ".{$cur['type']}.")) for="id-{{ $key }}" @endif>{!! __($cur['caption']) !!}</label>
+                <label class="f-ycaption f-yc-{{ $cur['type'] }} @if ($cur['required']) f-req @endif" @if (false === \strpos('.radio.yield.str.btn.link.label.include.multi-checkbox.', ".{$cur['type']}.")) for="id-{{ $key }}" @endif>{!! __($cur['caption']) !!}</label>
                     @endif
               </dt>
               <dd>
@@ -75,14 +75,13 @@
                             @endif
                 </select>
                             @break
-                        @case ('checkbox')
-                            @if ($cur['multiple'])
-                                @foreach ($cur['multiple'] as $vm => $curm)
+                        @case ('multi-checkbox')
+                            @foreach ($cur['list'] as $vm => $curm)
                 <label class="f-flblch"><input id="id-{{ $key.'-'.$vm }}" name="{{ $key }}[]" class="f-ychk" type="checkbox" @foreach (['autofocus', 'disabled', 'checked'] as $k) @if ($curm[$k]) {!! $k !!} @endif @endforeach value="{{ $vm }}"> @isset ($curm['label']){!! __($curm['label']) !!} @endisset</label>
-                                @endforeach
-                            @else
+                            @endforeach
+                            @break
+                        @case ('checkbox')
                 <label class="f-flblch"><input id="id-{{ $key }}" name="{{ $key }}" class="f-ychk" type="checkbox" @foreach (['autofocus', 'disabled', 'checked'] as $k) @if ($cur[$k]) {!! $k !!} @endif @endforeach value="{{ $cur['value'] or '1' }}"> @isset ($cur['label']){!! __($cur['label']) !!} @endisset</label>
-                            @endif
                             @break
                         @case ('radio')
                             @foreach ($cur['values'] as $v => $n)
