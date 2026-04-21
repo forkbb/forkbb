@@ -1,4 +1,4 @@
-# ForkBB rev.95 Beta Readme
+# ForkBB rev.96 Beta Readme
 
 ## About
 
