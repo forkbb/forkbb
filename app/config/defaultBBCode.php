@@ -372,7 +372,7 @@ HANDLER,
         'self_nesting' => 5,
         'attrs' => [
             'Def' => [
-                'format' => '%^[a-z\d, -]+$%i',
+                'format' => '%^(?:[\w -]+|\'[\w -]+\'|"[\w -]+")(?:, *(?:[\w -]+|\'[\w -]+\'|"[\w -]+"))*$%',
             ],
         ],
         'handler' => <<<'HANDLER'
