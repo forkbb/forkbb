@@ -658,6 +658,7 @@
 					return content;
 				}
 
+/* Visman - в парсере движка размер не устанавливается
 				width = attr(element, 'width') || style('width');
 				height = attr(element, 'height') || style('height');
 
@@ -668,7 +669,7 @@
 					attribs = '=' + dom.width(element) + 'x' +
 						dom.height(element);
 				}
-
+*/
 				return '[img' + attribs + ']' + attr(element, 'src') + '[/img]';
 			},
 			html: function (token, attrs, content) {
