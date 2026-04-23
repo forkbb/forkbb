@@ -7275,10 +7275,14 @@
 
 				// Visman - удаление color и background-color при copy-paste
 				data.html = data.html.replace(/(<\w+\s+[^<>]*?style=")([^"<>]+)/gi, function (match, p1, p2) {
-					return p1 + p2.replace(/(?:background-)?color:\s*[^\s;];?/gi, "")
+					return p1 + p2.replace(/(?:background-)?color:\s*[^\s;]+;?/gi, "")
 						.replace(/(font-family:)([^;]+)/gi, function (match2, p3, p4) {
 							return p3 + p4.replace(/'/g, "");
 						});
+				});
+				// Visman - удаление font-size внутри h1-h6 при copy-paste
+				data.html = data.html.replace(/(<h[1-6]\s+[^<>]*?style=")([^"<>]+)/gi, function (match, p1, p2) {
+					return p1 + p2.replace(/font-size:\s*[^\s;]+;?/gi, "");
 				});
 
 				handlePasteData(data);
