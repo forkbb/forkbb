@@ -247,7 +247,7 @@ msgid "Pass updated redirect"
 msgstr "Phrase de passe mise à jour."
 
 msgid "Language"
-msgstr "Language"
+msgstr "Langage"
 
 msgid "Essentials"
 msgstr "Essentiels"
@@ -256,7 +256,7 @@ msgid "Time zone"
 msgstr "Fuseau horaire"
 
 msgid "Default for language"
-msgstr "Language par défaut"
+msgstr "Langage par défaut"
 
 msgid "For default"
 msgstr "Mettez ce champ à 0 pour les réglages par défaut."
@@ -388,7 +388,7 @@ msgid "Page scroll label"
 msgstr "Défilements de page"
 
 msgid "Page scroll info"
-msgstr "Si activé, le script javascript défilera la page ouverte dans la fenêtre active jusqu’au bloc spécifié. L’operation dépend de votre navigateur et de ses réglages."
+msgstr "Si activé, le script javascript défilera la page ouverte dans la fenêtre active jusqu’au bloc spécifié. L’opération dépend de votre navigateur et de ses réglages."
 
 msgid "Not active"
 msgstr "Non actif"
@@ -430,10 +430,10 @@ msgid "Locale info"
 msgstr "Affecte les formats heure et date, dépendant de la langue."
 
 msgid "SN profile %s"
-msgstr "Link to social network profile %s"
+msgstr "Lien vers profil de réseau social %s"
 
 msgid "Notification options"
-msgstr "Notification options"
+msgstr "Options de notification"
 
 msgid "Notify if I in post"
-msgstr "Notify when quoted/mentioned"
+msgstr "Notifier quand cité/mentionné"

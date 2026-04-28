@@ -118,7 +118,7 @@ msgid "IP label"
 msgstr "Ip ou plage ip"
 
 msgid "IP help"
-msgstr "L’addresse IP ou plage IP que vous souhaitez bannir(e.g. 150.11.110.1 or 150.11.110). Séparer les adresse par des espaces. Si une IP est déjà entrée il s’agit de la dernière adresse connue de l’utilisateur."
+msgstr "L’addresse IP ou plage IP que vous souhaitez bannir(e.g. 150.11.110.1 or 150.11.110). Séparer les adresses par des espaces. Si une IP est déjà entrée il s’agit de la dernière adresse connue de l’utilisateur."
 
 msgid "Ban message label"
 msgstr "Message de bannissement"

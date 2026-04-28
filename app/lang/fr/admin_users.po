@@ -121,7 +121,7 @@ msgid "Registered label"
 msgstr "Enregistré"
 
 msgid "Order by label"
-msgstr "classer par"
+msgstr "Classer par"
 
 msgid "Order by username"
 msgstr "Nom d’utlisateur"
@@ -148,7 +148,7 @@ msgid "Descending"
 msgstr "Descendant"
 
 msgid "User group label"
-msgstr "groupe utilisateur"
+msgstr "Groupe utilisateur"
 
 msgid "All groups"
 msgstr "Tous les groupes"
@@ -166,7 +166,7 @@ msgid "IP search subhead"
 msgstr "IP à rechercher"
 
 msgid "IP address label"
-msgstr "adresse IP"
+msgstr "Adresse IP"
 
 msgid "Find IP address"
 msgstr "Trouver l’adresse IP"
