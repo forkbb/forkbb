@@ -331,7 +331,7 @@ msgid "Rules help"
 msgstr "Ici vous pouvez indiquer toute règle ou autre information que l’utilisateur doit considérer et accepter avant de s’inscrire. Si vous avez activé les règles ci-dessus vous devez saisir quelque chose ici, sinon, elles seront désactivées. Ce texte ne sera pas traité comme les messages ordinaires et peut contenir du code HTML."
 
 msgid "E-mail default label"
-msgstr "Règlages email par défaut"
+msgstr "Réglages email par défaut"
 
 msgid "E-mail default help"
 msgstr "Choisissez le paramètre de vie privée pour les nouvelles inscriptions d’utilisateurs."
@@ -400,10 +400,10 @@ msgid "Max options help"
 msgstr "Le nombre maximum de réponses possibles à une question. <b>Il est recommandé de le régler une fois et de ne plus le changer!</b>"
 
 msgid "Poll edit time label"
-msgstr "temps d’edition"
+msgstr "temps d’édition"
 
 msgid "Poll edit time help"
-msgstr "Temps d’edition du sondage(en minutes). Mettre à 0 pour désactiver."
+msgstr "Temps d’édition du sondage(en minutes). Mettre à 0 pour désactiver."
 
 msgid "Hidden voices label"
 msgstr "Nombre de voix"
@@ -412,7 +412,7 @@ msgid "Hidden voices help"
 msgstr "Le nombre de votes avant que les résultats du sondage soient affichés. A régler dans le sondage."
 
 msgid "Result for guest label"
-msgstr "Resultat pour les invités"
+msgstr "Résultat pour les invités"
 
 msgid "Result for guest help"
 msgstr "Les invités voient le résultat du vote."
@@ -532,19 +532,19 @@ msgid "Notifications subhead"
 msgstr "Notification"
 
 msgid "Notifications label"
-msgstr "Use notifications"
+msgstr "Utilisation des notifications"
 
 msgid "Notifications help"
-msgstr "Allows users to receive notifications. Each user must configure this setting in their profile."
+msgstr "Autoriser les utilisateurs à recevoir des notifications. Chaque utilisateur doit configurer ce paramètre dans son profil."
 
 msgid "Notifications pm label"
-msgstr "Allow via PM"
+msgstr "Autoriser par MP"
 
 msgid "Notifications pm help"
-msgstr "Users can choose to receive notifications via private messages."
+msgstr "Les utilisateurs peuvent choisir de recevoir les notifications par message privé."
 
 msgid "Notifications email label"
-msgstr "Allow via email"
+msgstr "Autoriser par email"
 
 msgid "Notifications email help"
-msgstr "Users can choose to receive notifications via email."
+msgstr "Les utilisateurs peuvent choisir de recevoir les notifications via email."

@@ -18,7 +18,7 @@ Content-Type: text/html; charset=UTF-8
   <p></p>
   <p>-----------------------------------------------------------------------</p>
   <p></p>
-  <p>You can customize your notifications by logging into your <a href="{{userLink}}">profile</a>.</p>
+  <p>Vous pouvez régler les paramètres de notifications en vous connectant à votre <a href="{{userLink}}">profil</a>.</p>
   <p></p>
   <p>--</p>
   <p>{{fMailer}} Mailer</p>

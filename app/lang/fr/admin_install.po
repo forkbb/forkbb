@@ -22,13 +22,13 @@ msgid "Choose install language"
 msgstr "Choisissez le langage d’installation"
 
 msgid "Install language"
-msgstr "language d’installation"
+msgstr "langage d’installation"
 
 msgid "Choose install language info"
 msgstr "Le langage utilisé pour ce script d’installation. Le choix du langage par défaut pour le forum se fera ensuite."
 
 msgid "Change language"
-msgstr "Changer le language"
+msgstr "Changer le langage"
 
 msgid "Install"
 msgstr "Installer ForkBB rev.%s"
@@ -112,7 +112,7 @@ msgid "Base URL"
 msgstr "Adresse web de votre forum"
 
 msgid "Default language"
-msgstr "Language par défaut"
+msgstr "Langage par défaut"
 
 msgid "Default style"
 msgstr "style par défaut"
