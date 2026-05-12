@@ -13,10 +13,10 @@
       <dl id="fork-stusers">
         <dt class="f-stats-dt">{!! __('User info') !!}</dt>
 @if ($p->stats)
-    @if ($p->stats->userLast['link'])
-        <dd class="f-stats-dd">{!! __(['Newest user: <a href="%2$s">%1$s</a>', $p->stats->userLast['name'], $p->stats->userLast['link']]) !!}</dd>
+    @if ($p->stats->userLastLink)
+        <dd class="f-stats-dd">{!! __(['Newest user: <a href="%2$s">%1$s</a>', $p->stats->userLastName, $p->stats->userLastLink]) !!}</dd>
     @else
-        <dd class="f-stats-dd">{!! __(['Newest user: %s', $p->stats->userLast['name']]) !!}</dd>
+        <dd class="f-stats-dd">{!! __(['Newest user: %s', $p->stats->userLastName]) !!}</dd>
     @endif
 @endif
 @if ($p->online)

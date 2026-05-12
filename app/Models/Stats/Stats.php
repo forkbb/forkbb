@@ -38,11 +38,20 @@ class Stats extends Model
             }
         }
 
-        $this->userTotal = $list['total'];
-        $this->userLast  = $list['last'];
+        $this->userTotal    = $list['total'];
+        $this->userLast     = $list['last'];
+        $this->userLastName = $list['last']['username'];
+        $this->userLastLink = $this->c->userRules->viewUsers
+            ? $this->c->Router->link(
+                'User',
+                [
+                    'id'   => $list['last']['id'],
+                    'name' => $this->c->Func->friendly($list['last']['username']),
+                ]
+            )
+            : null;
 
-        $query = 'SELECT SUM(f.num_topics), SUM(f.num_posts)
-            FROM ::forums AS f';
+        $query = 'SELECT SUM(num_topics), SUM(num_posts) FROM ::forums';
 
         list($this->topicTotal, $this->postTotal) = $this->c->DB->query($query)->fetch(PDO::FETCH_NUM);
 

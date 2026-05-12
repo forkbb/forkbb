@@ -23,20 +23,6 @@ class Index extends Page
         $this->c->Lang->load('index');
         $this->c->Lang->load('subforums');
 
-        // крайний пользователь // ???? может в stats переместить?
-        $this->c->stats->userLast = [
-            'name' => $this->c->stats->userLast['username'],
-            'link' => $this->userRules->viewUsers
-                ? $this->c->Router->link(
-                    'User',
-                    [
-                        'id'   => $this->c->stats->userLast['id'],
-                        'name' => $this->c->Func->friendly($this->c->stats->userLast['username']),
-                    ]
-                )
-                : null,
-        ];
-
         // для таблицы разделов
         $root   = $this->c->forums->loadTree(0);
         $forums = empty($root) ? [] : $root->subforums;
