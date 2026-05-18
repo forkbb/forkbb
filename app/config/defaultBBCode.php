@@ -556,10 +556,14 @@ if (isset($attrs['Def'])) {
     // возможно внутри была картинка, которая отображается как ссылка
     if (\preg_match('%^<a href=".++(?<=</a>)$%D', $url)) {
         return $url;
-    }
+
     // возможно внутри картинка
-    if (\preg_match('%<img src="([^"]+)"%', $url, $match)) {
+    } elseif (\preg_match('%<img src="([^"]+)"%', $url, $match)) {
         $url = $match[1];
+
+    // кодированные символы %xx перевести в читаемые для отображения в тексте
+    } elseif (false !== \strpos($body, '%')) {
+        $body = $parser->e(\rawurldecode($parser->de($body)));
     }
 }
 
