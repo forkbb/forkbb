@@ -1312,6 +1312,7 @@ class Files
         \curl_setopt($ch, \CURLOPT_HEADER, false);
         \curl_setopt($ch, \CURLOPT_HTTPHEADER, $this->actHeader);
         \curl_setopt($ch, \CURLOPT_USERAGENT, \sprintf($this->actUAgent, $this->c->BASE_URL));
+        \curl_setopt($ch, \CURLOPT_FOLLOWLOCATION, true);
         \curl_setopt($ch, \CURLOPT_MAXREDIRS, $this->actMaxRedir);
         \curl_setopt($ch, \CURLOPT_TIMEOUT, $this->actTimeout);
         \curl_setopt($ch, \CURLOPT_FILE, $tmpFile);
