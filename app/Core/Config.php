@@ -53,13 +53,11 @@ class Config
     {
         if (! \is_file($path)) {
             throw new ForkException('Config not found');
-        }
 
-        if (! \is_readable($path)) {
+        } elseif (! \is_readable($path)) {
             throw new ForkException('Config can not be read');
-        }
 
-        if (! \is_writable($path)) {
+        } elseif (! \is_writable($path)) {
             throw new ForkException('Config can not be write');
         }
 
