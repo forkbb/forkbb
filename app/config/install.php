@@ -146,6 +146,10 @@ return [
                 'timeFormat' => 'Y-m-d H:i:s',
             ],
         ],
+        'Cookie' => [
+            'class'   => \ForkBB\Models\Cookie\Cookie::class,
+            'options' => [],
+        ],
 
         'config'     => '@ConfigModel:install',
         'users'      => \ForkBB\Models\User\Users::class,
