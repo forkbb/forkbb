@@ -111,6 +111,13 @@ class Lang
      */
     public function load(string $name, string $lang = '', string $path = ''): void
     {
+        if (
+            '' !== $lang
+            && \preg_match('%[^\w-]%', $lang)
+        ) {
+            $lang = '';
+        }
+
         if ('' !== $lang) {
             // смена порядка перебора языка
             $this->langOrder = [$lang => $lang] + $this->langOrder;
