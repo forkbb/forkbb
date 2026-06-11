@@ -301,7 +301,7 @@ msgid "Board footer"
 msgstr "Подвал форума:"
 
 msgid "Powered by"
-msgstr "Под управлением <a href=\"https://forkbb.ru\">ForkBB</a>"
+msgstr "Под управлением <a href=\"https://forkbb.org\">ForkBB</a>"
 
 msgid "Debug table"
 msgstr "Отладочная информация:"

@@ -299,7 +299,7 @@ msgid "Board footer"
 msgstr "论坛页脚："
 
 msgid "Powered by"
-msgstr "由 <a href=\"https://forkbb.ru\">ForkBB</a> 驱动"
+msgstr "由 <a href=\"https://forkbb.org\">ForkBB</a> 驱动"
 
 msgid "Debug table"
 msgstr "调试信息："

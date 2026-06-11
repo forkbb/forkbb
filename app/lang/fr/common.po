@@ -299,7 +299,7 @@ msgid "Board footer"
 msgstr "Pied de page forum:"
 
 msgid "Powered by"
-msgstr "Propulsé par <a href=\"https://forkbb.ru\">ForkBB</a>"
+msgstr "Propulsé par <a href=\"https://forkbb.org\">ForkBB</a>"
 
 msgid "Debug table"
 msgstr "Informations de débugging:"
