@@ -432,6 +432,37 @@ class Config extends Profile
             ];
         }
 
+        if ($this->userRules->canUseTelegramBot) {
+            $this->c->Lang->load('telebot');
+
+            $form['sets']['telegram_bot'] = [
+                'legend' => 'Telegram bot options',
+                'class'  => ['data-edit'],
+                'fields' => [
+                    'telegram_bot_status' => [
+                        'type'    => 'str',
+                        'value'   => __(empty($this->curUser->telegram_chat_id) ? 'Bot is not connected' : 'Bot is connected'),
+                        'caption' => 'Status',
+                    ],
+                ],
+            ];
+
+            if ($this->rules->my) {
+                if (empty($this->curUser->telegram_chat_id)) {
+                    $form['sets']['telegram_bot-info'] = [
+                        'inform' => [
+                            [
+                                'message' => ['Telegram bot info for add', $this->config->s_tele_username, $this->c->telebot->initText($this->user)],
+                            ],
+                        ],
+                    ];
+
+                } else {
+
+                }
+            }
+        }
+
         return $form;
     }
 

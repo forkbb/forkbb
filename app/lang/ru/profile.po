@@ -437,15 +437,3 @@ msgstr "Опции уведомлений"
 
 msgid "Notify if I in post"
 msgstr "Уведомить при цитате/упоминании"
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""

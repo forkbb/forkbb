@@ -171,4 +171,85 @@ class Admix extends Page
             'uploads' => $uploads,
         ]);
     }
+
+    /**
+     * Принимает post запросы от telegram
+     */
+    public function telegramHook(array $args, string $method): Page
+    {
+        $response = null;
+        $error    = null;
+        $data     = null;
+        $secret   = $_SERVER['HTTP_X_TELEGRAM_BOT_API_SECRET_TOKEN'] ?? null;
+
+        if (null !== $secret) {
+            $_SERVER['HTTP_X_TELEGRAM_BOT_API_SECRET_TOKEN'] = 'hidden';
+        }
+
+        if (empty($secret)) {
+            $error = 'Empty secret in request';
+
+        } elseif (! \is_string($secret)) {
+            $error = 'Secret is not string in request';
+
+        } elseif (empty($this->c->config->s_tele_secret)) {
+            $error = 'Empty secret in config';
+
+        } elseif (true !== \hash_equals($this->c->config->s_tele_secret, $secret)) {
+            $error = 'Secret is not true';
+
+        } elseif (false === ($data = \file_get_contents('php://input'))) {
+            $error = 'Error reading php://input';
+
+        } elseif (! \is_array($data = \json_decode($data, true))) {
+            $error = \json_last_error_msg();
+
+        } elseif (
+            empty($chatId = $data['message']['chat']['id'] ?? null)
+            || empty($chatId = (int) $chatId)
+        ) {
+            $error = 'Chat ID is missing';
+
+        } elseif ($chatId < 0) {
+            $error = 'Chat ID is negative';
+
+        } elseif (! \is_string($text = $data['message']['text'] ?? null)) {
+            $error = 'Text is missing';
+
+        } else {
+            if (empty($data['message']['from']['language_code'])) {
+                $lang = $this->user->language;
+
+            } else {
+                $lang = $this->c->Secury->replInvalidChars($data['message']['from']['language_code']);
+            }
+
+            $this->c->Lang->load('telebot', $lang);
+
+            $text     = $this->c->Secury->replInvalidChars($text);
+            $response = $this->c->telebot->hookHandler($chatId, $text);
+        }
+
+        $this->c->Log->debug('Telegram' . (null === $error ? '' : " [{$error}]"), [
+            'data'     => $data,
+            'headers'  => true,
+            'response' => $response ?? null,
+        ]);
+
+        if (
+            null === $error
+            && ! emtpy($response)
+        ) {
+            return $this->returnJson([
+                'method'  => 'sendMessage',
+                'chat_id' => $chatId,
+                'text'    => __($response),
+            ]);
+
+        } else {
+            $this->plainRaw = '';
+
+            return $this->exitPoint('text/html');
+        }
+    }
 }

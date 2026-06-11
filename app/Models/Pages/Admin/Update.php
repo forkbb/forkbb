@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '8.0.0';
     const REV_MIN_FOR_UPDATE         = 87;
-    const LATEST_REV_WITH_DB_CHANGES = 96;
+    const LATEST_REV_WITH_DB_CHANGES = 97;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
     const CONFIG_FILE                = 'main.php';
@@ -1740,6 +1740,36 @@ class Update extends Admin
         $coreConfig->save();
 
         $this->c->DB->addField('::users', 'ntfy_name_post', 'TINYINT UNSIGNED', false, 0);
+
+        return null;
+    }
+
+    /**
+     * rev.96 to rev.97
+     */
+    protected function stageNumber96(array $args): ?int
+    {
+        $config = $this->c->config;
+
+        $config->b_notifications_tele ??= 0;
+        $config->s_tele_username      ??= '';
+        $config->s_tele_token         ??= '';
+        $config->s_tele_secret        ??= '';
+
+        $config->save();
+
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'shared=>telebot',
+            '\\ForkBB\\Models\\Telebot\\Telebot::class',
+            'notifications'
+        );
+
+        $coreConfig->save();
+
+        $this->c->DB->addField('::users', 'telegram_chat_id', 'BIGINT', false, 0);
+        $this->c->DB->addIndex('::users', 'telegram_chat_id_idx', ['telegram_chat_id']);
 
         return null;
     }

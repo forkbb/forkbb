@@ -548,3 +548,27 @@ msgstr "Autoriser par email"
 
 msgid "Notifications email help"
 msgstr "Les utilisateurs peuvent choisir de recevoir les notifications via email."
+
+msgid "Notifications telebot label"
+msgstr "via telegram bot"
+
+msgid "Notifications telebot help"
+msgstr "Users can choose to receive notifications via telegram bot."
+
+msgid "Telebot subhead"
+msgstr "Telegram bot"
+
+msgid "Telegram bot username label"
+msgstr "Username"
+
+msgid "Telegram bot username help"
+msgstr "Ends with <b>bot</b> or <b>_bot</b>. <b>Do not</b> need to enter the character <b>@</b> at the beginning."
+
+msgid "Telegram bot token label"
+msgstr "Token"
+
+msgid "Telegram bot token help"
+msgstr "It was given to you by <b>@BotFather</b> when you registered the bot."
+
+msgid "Telegram bot token change help"
+msgstr "Check this if you want to change or delete the currently stored token."

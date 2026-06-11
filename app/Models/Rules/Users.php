@@ -266,4 +266,15 @@ class Users extends Rules
             return false;
         }
     }
+
+    /**
+     * Статус возможности использования telegram бота
+     */
+    protected function getcanUseTelegramBot(): bool
+    {
+        return ! $this->user->isGuest
+            && ! empty($this->c->config->s_tele_username)
+            && ! empty($this->c->config->s_tele_token)
+            && ! empty($this->c->config->s_tele_secret);
+    }
 }

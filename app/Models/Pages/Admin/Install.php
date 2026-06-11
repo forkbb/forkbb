@@ -1291,6 +1291,7 @@ class Install extends Admin
                 'page_scroll'      => ['TINYINT', false, 0],
                 'about_me_id'      => ['INT(10) UNSIGNED', false, 0],
                 'ntfy_name_post'   => ['TINYINT UNSIGNED', false, 0],
+                'telegram_chat_id' => ['BIGINT', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
             'UNIQUE KEYS' => [
@@ -1298,7 +1299,8 @@ class Install extends Admin
                 'email_normal_idx' => ['email_normal'],
             ],
             'INDEXES' => [
-                'registered_idx' => ['registered'],
+                'registered_idx'       => ['registered'],
+                'telegram_chat_id_idx' => ['telegram_chat_id'],
             ],
             'ENGINE' => $this->DBEngine,
         ];
@@ -1719,6 +1721,10 @@ class Install extends Admin
             'b_notifications'         => 0,
             'b_notifications_pm'      => 0,
             'b_notifications_email'   => 0,
+            'b_notifications_tele'    => 0,
+            's_tele_username'         => '',
+            's_tele_token'            => '',
+            's_tele_secret'           => '',
         ];
 
         foreach ($forkConfig as $name => $value) {

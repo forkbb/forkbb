@@ -30,13 +30,6 @@ class Routing
         $config    = $this->c->config;
         $r         = $this->c->Router;
 
-        $r->add(
-            $r::GET,
-            '/sitemap{id:\d*}.xml',
-            'Sitemap:view',
-            'Sitemap'
-        );
-
         // регистрация/вход/выход
         if ($user->isGuest) {
             // вход
@@ -948,6 +941,25 @@ class Routing
                 '/admin/extensions/action',
                 'AdminExtensions:action',
                 'AdminExtensionsAction'
+            );
+        }
+
+        $r->add(
+            $r::GET,
+            '/sitemap{id:\d*}.xml',
+            'Sitemap:view',
+            'Sitemap'
+        );
+
+        if (
+            $user->isAdmin
+            || ! empty($config->s_tele_token)
+        ) {
+            $r->add(
+                $r::PST,
+                '/admix/telebot',
+                'Admix:telegramHook',
+                'Telebot'
             );
         }
 

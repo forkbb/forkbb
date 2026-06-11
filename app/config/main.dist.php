@@ -205,6 +205,7 @@ return [
         'extensions'    => '@ExtensionManager:init',
         'reactions'     => \ForkBB\Models\Reaction\Reactions::class,
         'notifications' => \ForkBB\Models\Notification\Notifications::class,
+        'telebot'       => \ForkBB\Models\Telebot\Telebot::class,
 
         'Csrf' => [
             'class'   => \ForkBB\Core\Csrf::class,

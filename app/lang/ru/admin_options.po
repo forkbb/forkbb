@@ -532,19 +532,43 @@ msgid "Notifications subhead"
 msgstr "Уведомления"
 
 msgid "Notifications label"
-msgstr "Использовать уведомления"
+msgstr "Использовать"
 
 msgid "Notifications help"
 msgstr "Дает пользователям возможность получать уведомления. Каждый пользователь должен сделать настройку в своём профиле."
 
 msgid "Notifications pm label"
-msgstr "Разрешить через ЛС"
+msgstr "через ЛС"
 
 msgid "Notifications pm help"
 msgstr "Пользователи могут выбрать вариант получения уведомлений через ЛС."
 
 msgid "Notifications email label"
-msgstr "Разрешить через электронную почту"
+msgstr "через электронную почту"
 
 msgid "Notifications email help"
 msgstr "Пользователи могут выбрать вариант получения уведомлений через электронную почту."
+
+msgid "Notifications telebot label"
+msgstr "через telegram-бота"
+
+msgid "Notifications telebot help"
+msgstr "Пользователи могут выбрать вариант получения уведомлений через telegram-бота."
+
+msgid "Telebot subhead"
+msgstr "Telegram-бот"
+
+msgid "Telegram bot username label"
+msgstr "Юзернейм"
+
+msgid "Telegram bot username help"
+msgstr "Заканчивается на <b>bot</b> или <b>_bot</b>. Символ <b>@</b> в начале вводить <b>не надо</b>."
+
+msgid "Telegram bot token label"
+msgstr "Токен"
+
+msgid "Telegram bot token help"
+msgstr "Его вам выдал <b>@BotFather</b> при регистрации бота."
+
+msgid "Telegram bot token change help"
+msgstr "Установите флажок, если хотите поменять или удалить токен"

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\Pages\Admin;
 
+use ForkBB\Core\HTTPClient;
 use ForkBB\Core\Image;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
@@ -41,6 +42,7 @@ class Options extends Admin
                     'check_dir'     => [$this, 'vCheckDir'],
                     'check_empty'   => [$this, 'vCheckEmpty'],
                     'check_type'    => [$this, 'vCheckType'],
+                    'check_tele'    => [$this, 'vCheckTele'],
                 ])->addRules([
                     'token'                   => 'token:AdminOptions',
                     'o_board_title'           => 'required|string:trim|max:255',
@@ -131,6 +133,10 @@ class Options extends Admin
                     'b_notifications'         => 'required|integer|in:0,1',
                     'b_notifications_pm'      => 'required|integer|in:0,1',
                     'b_notifications_email'   => 'required|integer|in:0,1',
+                    'b_notifications_tele'    => 'required|integer|in:0,1',
+                    's_tele_username'         => 'exist|string:trim,empty|min:5|max:32|regex:%^\w+bot$%',
+                    's_tele_token'            => 'exist|string:trim,empty|max:255|regex:%^[\w:-]+$%|check_tele',
+                    'changeTeleToken'         => 'checkbox',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
@@ -146,7 +152,14 @@ class Options extends Admin
                 unset($data['o_smtp_pass']);
             }
 
-            unset($data['changeSmtpPassword'], $data['token'], $data['upload_og_image'], $data['delete_og_image']);
+            if (empty($data['changeTeleToken'])) {
+                unset($data['s_tele_token']);
+
+            } else {
+                $data['s_tele_secret'] = $this->telegramSecretToken ?? '';
+            }
+
+            unset($data['changeSmtpPassword'], $data['token'], $data['upload_og_image'], $data['delete_og_image'], $data['changeTeleToken']);
 
             foreach ($data as $attr => $value) {
                 $config->$attr = $value;
@@ -205,10 +218,12 @@ class Options extends Admin
                 if (1 !== $config->b_notifications) {
                     $config->b_notifications_pm    = 0;
                     $config->b_notifications_email = 0;
+                    $config->b_notifications_tele  = 0;
 
                 } elseif (
                     1 !== $config->b_notifications_pm
                     && 1 !== $config->b_notifications_email
+                    && 1 !== $config->b_notifications_tele
                 ) {
                     $config->b_notifications = 0;
                 }
@@ -242,6 +257,43 @@ class Options extends Admin
                 \unlink($path);
             }
         }
+    }
+
+    /**
+     * Дополнительная проверка токена telegram
+     */
+    public function vCheckTele(Validator $v, string $token): string
+    {
+        if (
+            '' !== $token
+            && $v->changeTeleToken
+        ) {
+            $secret = $this->c->Secury->randomPass(32);
+            $resp   = (new HTTPClient())->get(
+                "https://api.telegram.org/bot{$token}/setWebhook",
+                [
+                    'query' => [
+                        'url'          => $this->c->Router->link('Telebot'),
+                        'secret_token' => $secret,
+                    ],
+                ]
+            );
+
+            if (isset($resp['error'])) {
+                $v->addError($resp['error'] . ' <- [Telegram]');
+
+            } elseif (empty($resp['json'])) {
+                $v->addError('No json <- [Telegram]');
+
+            } elseif (empty($resp['json']['ok'])) {
+                $v->addError($resp['response'] . ' <- [Telegram]');
+
+            } else {
+                $this->telegramSecretToken = $secret;
+            }
+        }
+
+        return $token;
     }
 
     /**
@@ -621,6 +673,39 @@ class Options extends Admin
                     'values'  => $yn,
                     'caption' => 'Notifications email label',
                     'help'    => 'Notifications email help',
+                ],
+                'b_notifications_tele' => [
+                    'type'    => 'radio',
+                    'value'   => $config->b_notifications_tele,
+                    'values'  => $yn,
+                    'caption' => 'Notifications telebot label',
+                    'help'    => 'Notifications telebot help',
+                ],
+            ],
+        ];
+
+        $form['sets']['telebot'] = [
+            'legend' => 'Telebot subhead',
+            'fields' => [
+                's_tele_username' => [
+                    'type'      => 'text',
+                    'minlength' => '5',
+                    'maxlength' => '32',
+                    'value'     => $config->s_tele_username,
+                    'caption'   => 'Telegram bot username label',
+                    'help'      => 'Telegram bot username help',
+                ],
+                's_tele_token' => [
+                    'type'      => 'password',
+                    'maxlength' => '255',
+                    'value'     => $config->s_tele_token ? '          ' : null,
+                    'caption'   => 'Telegram bot token label',
+                    'help'      => 'Telegram bot token help',
+                ],
+                'changeTeleToken' => [
+                    'type'    => 'checkbox',
+                    'caption' => '',
+                    'label'   => 'Telegram bot token change help',
                 ],
             ],
         ];
