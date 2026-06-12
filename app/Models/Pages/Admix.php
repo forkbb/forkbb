@@ -238,7 +238,7 @@ class Admix extends Page
 
         if (
             null === $error
-            && ! emtpy($response)
+            && ! empty($response)
         ) {
             return $this->returnJson([
                 'method'  => 'sendMessage',
