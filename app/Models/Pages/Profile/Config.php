@@ -135,11 +135,26 @@ class Config extends Profile
                     ]);
             }
 
+            if (
+                $this->rules->my
+                && $this->userRules->canUseTelegramBot
+            ) {
+                $v = $this->c->Validator
+                    ->addRules([
+                        'delete_telebot' => 'checkbox',
+                    ])->addAliases([
+                    ]);
+            }
+
             if ($v->validation($_POST)) {
                 $data = $v->getData(false, ['token']);
 
                 if (1 === $this->config->b_notifications) {
                     $data['ntfy_name_post'] = \array_sum($data['ntfy_name_post'] ?? []);
+                }
+
+                if (! empty($data['delete_telebot'])) {
+                    $data['telegram_chat_id'] = 0;
                 }
 
                 $this->curUser->replAttrs($data, true);
@@ -435,16 +450,18 @@ class Config extends Profile
         if ($this->userRules->canUseTelegramBot) {
             $this->c->Lang->load('telebot');
 
+            $fields = [];
+
             $form['sets']['telegram_bot'] = [
                 'legend' => 'Telegram bot options',
                 'class'  => ['data-edit'],
-                'fields' => [
-                    'telegram_bot_status' => [
-                        'type'    => 'str',
-                        'value'   => __(empty($this->curUser->telegram_chat_id) ? 'Bot is not connected' : 'Bot is connected'),
-                        'caption' => 'Status',
-                    ],
-                ],
+                'fields' => [],
+            ];
+
+            $fields['telegram_bot_status'] = [
+                'type'    => 'str',
+                'value'   => __(empty($this->curUser->telegram_chat_id) ? 'Bot is not connected' : 'Bot is connected'),
+                'caption' => 'Status',
             ];
 
             if ($this->rules->my) {
@@ -458,9 +475,16 @@ class Config extends Profile
                     ];
 
                 } else {
-
+                    $fields['delete_telebot'] = [
+                        'type'    => 'checkbox',
+                        'checked' => false,
+                        'label'   => 'Delete telebot',
+                        'help'    => 'Delete telebot info'
+                    ];
                 }
             }
+
+            $form['sets']['telegram_bot']['fields'] = $fields;
         }
 
         return $form;

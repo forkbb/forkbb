@@ -35,3 +35,9 @@ msgstr "You can configure this bot in your board profile."
 
 msgid "Bot is connected, set it up"
 msgstr "Bot is connected, configure it in your profile on the board."
+
+msgid "Delete telebot"
+msgstr "Disable this bot"
+
+msgid "Delete telebot info"
+msgstr "Once you've disabled this bot, you can delete the chat with it (but don't block it) in the Telegram app."

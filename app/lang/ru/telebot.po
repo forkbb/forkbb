@@ -35,3 +35,9 @@ msgstr "Вы можете настроить бота в своем профил
 
 msgid "Bot is connected, set it up"
 msgstr "Бот подключен, настройте его в своем профиле на форуме."
+
+msgid "Delete telebot"
+msgstr "Отключить бота"
+
+msgid "Delete telebot info"
+msgstr "После отключения бота вы можете удалить чат с ним (только не блокируйте его) в приложении Telegram."
