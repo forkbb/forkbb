@@ -29,6 +29,7 @@ class Notifications extends Model
 {
     const PM    = 1;
     const EMAIL = 2;
+    const TELE  = 4;
 
     /**
      * Ключ модели для контейнера
@@ -140,6 +141,13 @@ class Notifications extends Model
             $this->addEmail($notification);
         }
 
+        if (
+            1 === $this->c->config->b_notifications_tele
+            && $localRule & self::TELE
+        ) {
+            $this->addTeleMess($notification);
+        }
+
         return true;
     }
 
@@ -195,15 +203,15 @@ class Notifications extends Model
 
     protected function addEmail(Notification $notification): void
     {
-        $user  = $notification->user();
-
-        $this->c->Lang->load('notification', $user->language);
+        $user = $notification->user();
 
         if (
             1 === $user->email_confirmed
             && true !== $user->isBanByName
             && ! $this->c->Online->isOnline($user)
         ) {
+            $this->c->Lang->load('notification', $user->language);
+
             try {
                 $this->c->Lang->load('common', $user->language);
 
@@ -233,6 +241,20 @@ class Notifications extends Model
             }
 
             $this->c->Lang->load('common', $this->c->user->language);
+        }
+    }
+
+    protected function addTeleMess(Notification $notification): void
+    {
+        $user = $notification->user();
+
+        if (! empty($user->telegram_chat_id)) {
+            $this->c->Lang->load('notification', $user->language);
+
+            $title = __($notification->title());
+            $text  = $this->c->Parser->parseMessage(__($notification->text()), true);
+
+            $this->c->telebot->sendMessage($user->telegram_chat_id, "{$title}\n{$text}");
         }
     }
 }

@@ -126,6 +126,10 @@ class Config extends Profile
                     $tmp[] = Notifications::EMAIL;
                 }
 
+                if (1 === $this->config->b_notifications_tele) {
+                    $tmp[] = Notifications::TELE;
+                }
+
                 $v = $this->c->Validator
                     ->addRules([
                         'ntfy_name_post'   => 'array',
@@ -505,6 +509,13 @@ class Config extends Profile
             $checkboxes[Notifications::EMAIL] = [
                 'checked' => $value & Notifications::EMAIL,
                 'label'   => 'Email',
+            ];
+        }
+
+        if (1 === $this->config->b_notifications_tele) {
+            $checkboxes[Notifications::TELE] = [
+                'checked' => $value & Notifications::TELE,
+                'label'   => 'Telegram',
             ];
         }
 

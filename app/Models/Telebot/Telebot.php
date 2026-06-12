@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Telebot;
 
 use ForkBB\Core\Container;
+use ForkBB\Core\HTTPClient;
 use ForkBB\Models\Model;
 use ForkBB\Models\User\User;
 use PDO;
@@ -80,6 +81,9 @@ class Telebot extends Model
         return $user;
     }
 
+    /**
+     * Получает id пользователя по номеру чата $chatId
+     */
     protected function uid(int $chatId): int
     {
         $vars = [
@@ -124,5 +128,29 @@ class Telebot extends Model
                 return $status;
             }
         }
+    }
+
+    /**
+     * Отправляет(?) текст $text в чат $chatId
+     */
+    public function sendMessage(int $chatId, string $text): bool
+    {
+        $token = $this->c->config->s_tele_token;
+        $resp  = (new HTTPClient())->post(
+            "https://api.telegram.org/bot{$token}/sendMessage",
+            [
+                'form_params' => [
+                    'chat_id' => $chatId,
+                    'text'    => $text,
+                ],
+            ]
+        );
+
+        $this->c->Log->debug('Telegram ->', [
+            'response' => $resp,
+            'headers'  => false,
+        ]);
+
+        return true;
     }
 }
