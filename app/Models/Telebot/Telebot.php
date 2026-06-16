@@ -135,10 +135,9 @@ class Telebot extends Model
      */
     public function sendMessage(int $chatId, string $text): bool
     {
-        $token = $this->c->config->s_tele_token;
         $text  = \strip_tags($text, ['b', 'i', 'u', 's', 'code', 'pre', 'a']);
-        $resp  = (new HTTPClient())->post(
-            "https://api.telegram.org/bot{$token}/sendMessage",
+        $resp  = $this->httpClient->post(
+            'sendMessage',
             [
                 'form_params' => [
                     'chat_id'    => $chatId,
@@ -154,5 +153,12 @@ class Telebot extends Model
         ]);
 
         return true;
+    }
+
+    protected function gethttpClient(): HTTPClient
+    {
+        $token = $this->c->config->s_tele_token;
+
+        return new HTTPClient(['base_uri' => "https://api.telegram.org/bot{$token}/"]);
     }
 }

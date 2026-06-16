@@ -254,7 +254,7 @@ class Notifications extends Model
             $title = __($notification->title());
             $text  = $this->c->Parser->parseMessage(__($notification->text()), true);
 
-            $this->c->telebot->sendMessage($user->telegram_chat_id, "{$title}\n{$text}");
+            $this->c->telebot->sendMessage($user->telegram_chat_id, "{$title}:\n\n{$text}");
         }
     }
 }
