@@ -200,7 +200,7 @@ abstract class Driver extends Model
      */
     protected function request(string $method, string $url, array $options): array|false
     {
-        $options['user_agent'] = "ForkBB (Client ID: {$this->client_id})",
+        $options['user_agent'] = "ForkBB (Client ID: {$this->client_id})";
 
         $result = $this->httpClient->request($method, $url, $options);
 
