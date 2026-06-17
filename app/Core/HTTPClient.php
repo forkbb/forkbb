@@ -132,16 +132,16 @@ class HTTPClient
         }
 
         if (isset($options['form_params'])) {
-            $options['content'] = \http_build_query($options['form_params'], '', '&', \PHP_QUERY_RFC1738);
-            // ????
+            $options['content']  = \http_build_query($options['form_params'], '', '&', \PHP_QUERY_RFC1738);
+            $options['header']   = $this->clearHeader('Content-Type', $options['header'] ?? []);
             $options['header'][] = 'Content-Type: application/x-www-form-urlencoded';
 
             unset($options['form_params']);
         }
 
         if (isset($options['json'])) {
-            $options['content'] = \json_encode($options['json']);
-            // ????
+            $options['content']  = \json_encode($options['json']);
+            $options['header']   = $this->clearHeader('Content-Type', $options['header'] ?? []);
             $options['header'][] = 'Content-Type: application/json';
 
             unset($options['json']);
@@ -295,6 +295,23 @@ class HTTPClient
 
         if (true === $fill) {
             $this->streamHeaders = \array_reverse($this->streamHeaders);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Очищает список заголовков $headers от заголовка с именем $name
+     */
+    protected function clearHeader(string $name, array $headers): array
+    {
+        $result  = [];
+        $pattern = '%^' . \preg_quote($name, '%') . ':%i';
+
+        foreach ($headers as $header) {
+            if (! \preg_match($pattern, $header)) {
+                $result[] = $header;
+            }
         }
 
         return $result;
