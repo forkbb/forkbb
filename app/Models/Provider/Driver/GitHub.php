@@ -33,8 +33,8 @@ class GitHub extends Driver
 
         $options = [
             'header' => [
-                'Accept'        => 'application/json',
-                'Authorization' => "Bearer {$this->access_token}",
+                'Accept: application/json',
+                "Authorization: Bearer {$this->access_token}",
             ],
         ];
 

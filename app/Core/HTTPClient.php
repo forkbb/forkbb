@@ -132,15 +132,17 @@ class HTTPClient
         }
 
         if (isset($options['form_params'])) {
-            $options['content']                = \http_build_query($options['form_params'], '', '&', \PHP_QUERY_RFC1738);
-            $options['header']['Content-Type'] = 'application/x-www-form-urlencoded';
+            $options['content'] = \http_build_query($options['form_params'], '', '&', \PHP_QUERY_RFC1738);
+            // ????
+            $options['header'][] = 'Content-Type: application/x-www-form-urlencoded';
 
             unset($options['form_params']);
         }
 
         if (isset($options['json'])) {
-            $options['content']                = \json_encode($options['json']);
-            $options['header']['Content-Type'] = 'application/json';
+            $options['content'] = \json_encode($options['json']);
+            // ????
+            $options['header'][] = 'Content-Type: application/json';
 
             unset($options['json']);
         }

@@ -1263,7 +1263,7 @@ class Files
 
             $result = $this->httpClient->get($url, [
                 'user_agent' => \sprintf('ForkBB downloader (%s)', $this->c->BASE_URL),
-                'header'     => ['Accept' => '*/*'],
+                'header'     => ['Accept: */*'],
                 'sink'       => $tmpFile,
             ]);
 

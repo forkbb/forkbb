@@ -33,8 +33,8 @@ class Yandex extends Driver
 
         $options = [
             'header' => [
-                'Accept'        => 'application/json',
-                'Authorization' => "OAuth {$this->access_token}",
+                'Accept: application/json',
+                "Authorization: OAuth {$this->access_token}",
             ],
         ];
 

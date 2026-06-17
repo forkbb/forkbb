@@ -163,7 +163,7 @@ abstract class Driver extends Model
 
         $options = [
             'header' => [
-                'Accept' => 'application/json',
+                'Accept: application/json',
             ],
             'form_params' => [
                 'grant_type'    => 'authorization_code',
