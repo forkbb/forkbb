@@ -32,9 +32,9 @@ class GitHub extends Driver
         $this->userInfo = [];
 
         $options = [
-            'headers' => [
-                'Accept: application/json',
-                "Authorization: Bearer {$this->access_token}",
+            'header' => [
+                'Accept'        => 'application/json',
+                'Authorization' => "Bearer {$this->access_token}",
             ],
         ];
 

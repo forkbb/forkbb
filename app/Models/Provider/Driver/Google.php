@@ -32,9 +32,9 @@ class Google extends Driver    // Not tested. Google banned the registration of 
         $this->userInfo = [];
 
         $options = [
-            'headers' => [
-                'Accept: application/json',
-                "Authorization: Bearer {$this->access_token}",
+            'header' => [
+                'Accept'        => 'application/json',
+                'Authorization' => "Bearer {$this->access_token}",
             ],
         ];
 

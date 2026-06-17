@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Provider;
 
 use ForkBB\Core\Container;
+use ForkBB\Core\HTTPClient;
 use ForkBB\Models\Manager;
 use ForkBB\Models\Provider\Driver;
 use RuntimeException;
@@ -88,10 +89,7 @@ class Providers extends Manager
      */
     public function active(): array
     {
-        if (
-            ! \extension_loaded('curl')
-            && ! \filter_var(\ini_get('allow_url_fopen'), \FILTER_VALIDATE_BOOL)
-        ) {
+        if (HTTPClient::status() === HTTPClient::OFF) {
             return [];
         }
 

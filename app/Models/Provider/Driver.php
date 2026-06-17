@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Provider;
 
 use ForkBB\Core\Container;
+use ForkBB\Core\HTTPClient;
 use ForkBB\Models\Model;
 use InvalidArgumentException;
 use RuntimeException;
@@ -161,9 +162,8 @@ abstract class Driver extends Model
         $this->access_token = '';
 
         $options = [
-            'headers' => [
-                'Accept: application/json',
-                'Content-type: application/x-www-form-urlencoded',
+            'header' => [
+                'Accept' => 'application/json',
             ],
             'form_params' => [
                 'grant_type'    => 'authorization_code',
@@ -200,164 +200,27 @@ abstract class Driver extends Model
      */
     protected function request(string $method, string $url, array $options): array|false
     {
-        $result = null;
+        $options['user_agent'] = "ForkBB (Client ID: {$this->client_id})",
 
-        //преобразовать массив переменных запроса в строку запроса
-        if (\is_array($options['query'] ?? null)) {
-            $options['query'] = \http_build_query($options['query']);
-        }
-        // дополнить url строкой запроса
-        if (\is_string($options['query'] ?? null)) {
-            $url .= (false === \strpos($url, '?') ? '?' : '&') . $options['query'];
-
-            unset($options['query']);
-        }
-
-        if (\extension_loaded('curl')) {
-            $result = $this->curlRequest($method, $url, $options);
-
-        } elseif (\filter_var(\ini_get('allow_url_fopen'), \FILTER_VALIDATE_BOOL)) {
-            $result = $this->streamRequest($method, $url, $options);
-        }
+        $result = $this->httpClient->request($method, $url, $options);
 
         if (null === $result) {
             $this->error = 'No cURL and allow_url_fopen OFF';
 
-            return false;
+        } elseif (! empty($result['error'])) {
+            $this->error = $result['error'];
 
-        } elseif (\is_string($result)) {
-            if (\str_starts_with($this->respContentType, 'application/json')) {
-                $data = \json_decode($result, true, 20);
+        } elseif (! isset($result['json'])) {
+            $this->error = 'Bad Content-type: ' . $result['contentType'];
 
-                if (\is_array($data)) {
-                    return $this->c->Secury->replInvalidChars($data);
-                }
+        } elseif (! \is_array($result['json'])) {
+            $this->error = 'Bad json';
 
-                $this->error ??= 'Bad json';
-            }
-
-            $this->error ??= "Bad Content-type: {$this->respContentType}";
+        } else {
+            return $this->c->Secury->replInvalidChars($result['json']);
         }
 
         return false;
-    }
-
-    /**
-     * Отправляет/получает данные через cURL
-     */
-    protected function curlRequest(string $method, string $url, array $options): string|false
-    {
-        $ch = \curl_init($url);
-
-        if (! $ch) {
-            $this->error = "Failed cURL init for {$url}";
-
-            return false;
-        }
-
-        switch ($method) {
-            case 'POST':
-                \curl_setopt($ch, \CURLOPT_POST, true);
-
-                if (\is_array($options['form_params'] ?? null)) {
-                    \curl_setopt($ch, \CURLOPT_POSTFIELDS, \http_build_query($options['form_params']));
-                }
-
-                break;
-            default:
-                \curl_setopt($ch, \CURLOPT_HTTPGET, true);
-
-                break;
-        }
-
-        \curl_setopt($ch, \CURLOPT_PROTOCOLS, \CURLPROTO_HTTPS | \CURLPROTO_HTTP);
-        \curl_setopt($ch, \CURLOPT_REDIR_PROTOCOLS, \CURLPROTO_HTTPS);
-        \curl_setopt($ch, \CURLOPT_FOLLOWLOCATION, true);
-        \curl_setopt($ch, \CURLOPT_MAXREDIRS, 5);
-        \curl_setopt($ch, \CURLOPT_TIMEOUT, 10.0);
-        \curl_setopt($ch, \CURLOPT_RETURNTRANSFER, true);
-        \curl_setopt($ch, \CURLOPT_HEADER, false);
-        \curl_setopt($ch, \CURLOPT_USERAGENT, "ForkBB (Client ID: {$this->client_id})");
-
-        if (\is_array($options['headers'] ?? null)) {
-            \curl_setopt($ch, \CURLOPT_HTTPHEADER, $options['headers']);
-        }
-
-        $result = \curl_exec($ch);
-
-        if (false === $result) {
-            $this->error = 'cURL error: ' . \curl_error($ch);
-
-        } else {
-            $this->respContentType = \curl_getinfo($ch, \CURLINFO_CONTENT_TYPE);
-            $this->respHttpCode    = \curl_getinfo($ch, \CURLINFO_RESPONSE_CODE);
-        }
-
-//        \curl_close($ch);
-
-        return $result;
-    }
-
-    /**
-     * Отправляет/получает данные через file_get_contents()
-     */
-    protected function streamRequest(string $method, string $url, array $options): string|false
-    {
-        $http = [
-            'max_redirects' => 10,
-            'timeout'       => 10,
-            'user_agent'    => "ForkBB (Client ID: {$this->client_id})",
-        ];
-
-        switch ($method) {
-            case 'POST':
-                $http['method'] = 'POST';
-
-                if (\is_array($options['form_params'] ?? null)) {
-                    $http['content'] = \http_build_query($options['form_params']);
-                }
-
-                break;
-            default:
-                $http['method'] = 'GET';
-
-                break;
-        }
-
-        if (\is_array($options['headers'] ?? null)) {
-            $http['header'] = $options['headers'];
-        }
-
-        $context = \stream_context_create(['http' => $http]);
-        $result  = @\file_get_contents($url, false, $context);
-
-        if (false === $result) {
-            $this->error = "Failed file_get_contents for {$url}";
-
-        } else {
-            if (\function_exists('\\http_get_last_response_headers')) {
-                $http_response_header = \http_get_last_response_headers();
-            }
-
-            $this->respContentType = $this->parseHeader($http_response_header, 'Content-Type:\s*(.+)');
-            $this->respHttpCode    = (int) $this->parseHeader($http_response_header, 'HTTP/[0-9.]+\s+([0-9]+)');
-        }
-
-        return $result;
-    }
-
-    /**
-     * Достает по шаблону значение нужного заголовка из списка
-     */
-    protected function parseHeader(array $headers, string $pattern): string
-    {
-        while ($header = \array_pop($headers)) {
-            if (\preg_match('%^' . $pattern . '%i', $header, $matches)) {
-                return \trim($matches[1]);
-            }
-        }
-
-        return '';
     }
 
     /**
@@ -366,6 +229,11 @@ abstract class Driver extends Model
     protected function getformAction(): string
     {
         return $this->formAction;
+    }
+
+    protected function gethttpClient(): HTTPClient
+    {
+        return new HTTPClient();
     }
 
     /**

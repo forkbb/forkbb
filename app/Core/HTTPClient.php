@@ -81,7 +81,7 @@ class HTTPClient
     /**
      * Делает запрос
      */
-    protected function request(string $method, string $uri, array $options = []): ?array
+    public function request(string $method, string $uri, array $options = []): ?array
     {
         $status = self::status();
 

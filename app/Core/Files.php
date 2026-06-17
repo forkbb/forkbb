@@ -12,6 +12,7 @@ namespace ForkBB\Core;
 
 use ForkBB\Core\Container;
 use ForkBB\Core\File;
+use ForkBB\Core\HTTPClient;
 use ForkBB\Core\Image;
 use ForkBB\Core\Image\DefaultDriver;
 use ForkBB\Core\Exceptions\FileException;
@@ -21,6 +22,8 @@ use RuntimeException;
 
 class Files
 {
+    protected HTTPClient|null $httpClient = null;
+
     /**
      * Максимальный размер для картинок
      */
@@ -1255,11 +1258,21 @@ class Files
                 $this->error = "Failed fwrite() to temp file";
             }
 
-        } elseif (\extension_loaded('curl')) {
-            $result = $this->curlAction($url, $tmpFile);
+        } else {
+            $this->httpClient ??= new HTTPClient();
 
-        } elseif (\filter_var(\ini_get('allow_url_fopen'), \FILTER_VALIDATE_BOOL)) {
-            $result = $this->streamAction($url, $tmpFile);
+            $result = $this->httpClient->get($url, [
+                'user_agent' => \sprintf('ForkBB downloader (%s)', $this->c->BASE_URL),
+                'header'     => ['Accept' => '*/*'],
+                'sink'       => $tmpFile,
+            ]);
+
+            if (! empty($result['error'])) {
+                $this->error = $result['error'];
+
+            } elseif (null !== $result) {
+                $result = true;
+            }
         }
 
         \fclose($tmpFile);
@@ -1281,96 +1294,6 @@ class Files
         }
 
         return null;
-    }
-
-    /**
-     * Переменные конфига подключения
-     */
-    protected int    $actMaxRedir = 5;
-    protected float  $actTimeout  = 15.0;
-    protected string $actUAgent   = 'ForkBB downloader (%s)';
-    protected array  $actHeader   = [
-        'Accept: */*',
-    ];
-
-    /**
-     * Загружает файл с помощью cURL
-     */
-    protected function curlAction(string $url, $tmpFile): bool
-    {
-        $ch = \curl_init($url);
-
-        if (! $ch) {
-            $this->error = "Failed cURL init for {$url}";
-
-            return false;
-        }
-
-        \curl_setopt($ch, \CURLOPT_PROTOCOLS, \CURLPROTO_HTTPS | \CURLPROTO_HTTP);
-        \curl_setopt($ch, \CURLOPT_REDIR_PROTOCOLS, \CURLPROTO_HTTPS);
-        \curl_setopt($ch, \CURLOPT_HTTPGET, true);
-        \curl_setopt($ch, \CURLOPT_HEADER, false);
-        \curl_setopt($ch, \CURLOPT_HTTPHEADER, $this->actHeader);
-        \curl_setopt($ch, \CURLOPT_USERAGENT, \sprintf($this->actUAgent, $this->c->BASE_URL));
-        \curl_setopt($ch, \CURLOPT_FOLLOWLOCATION, true);
-        \curl_setopt($ch, \CURLOPT_MAXREDIRS, $this->actMaxRedir);
-        \curl_setopt($ch, \CURLOPT_TIMEOUT, $this->actTimeout);
-        \curl_setopt($ch, \CURLOPT_FILE, $tmpFile);
-//        \curl_setopt($ch, \CURLOPT_SSL_VERIFYPEER, false);
-
-        $result = \curl_exec($ch);
-
-        if (false === $result) {
-            $this->error = 'cURL error: ' . \curl_error($ch);
-        }
-
-//        \curl_close($ch);
-
-        return false !== $result;
-    }
-
-    /**
-     * Загружает файл с помощью fread/fwrite
-     */
-    protected function streamAction(string $url, $tmpFile): bool
-    {
-        $context = \stream_context_create(
-            [
-                'http' => [
-                    'method'        => 'GET',
-                    'header'        => $this->actHeader,
-                    'user_agent'    => \sprintf($this->actUAgent, $this->c->BASE_URL),
-                    'max_redirects' => $this->actMaxRedir,
-                    'timeout'       => $this->actTimeout,
-                ],
-            ]
-        );
-
-        $fh = @\fopen($url, 'rb' , false, $context);
-
-        if (! $fh) {
-            $this->error = "Failed fopen() for {$url}";
-
-            return false;
-        }
-
-        while (! \feof($fh)) {
-            if (false === ($buffer = \fread($fh, 4096))) {
-                $this->error = "Failed fread() from {$url}";
-
-                return false;
-            }
-
-            if (false === @\fwrite($tmpFile, $buffer)) {
-                $this->error = "Failed fwrite() to temp file";
-
-                return false;
-            }
-        }
-
-        \fclose($fh);
-
-        return true;
     }
 
     /**
