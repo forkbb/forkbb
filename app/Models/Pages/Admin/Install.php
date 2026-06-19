@@ -117,7 +117,10 @@ class Install extends Admin
             $this->c->DIR_CONFIG . '/ext',
             $this->c->DIR_CACHE,
             $this->c->DIR_CACHE . '/polls',
+            $this->c->DIR_CACHE . '/mail',
             $this->c->DIR_PUBLIC . '/img/avatars',
+            $this->c->DIR_PUBLIC . '/img/og',
+            $this->c->DIR_PUBLIC . '/img/sm',
             $this->c->DIR_PUBLIC . '/upload',
             $this->c->DIR_LOG,
         ];
