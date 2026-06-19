@@ -1770,6 +1770,10 @@ class Update extends Admin
             '\'%DIR_CONFIG%/ext\'',
             '%DIR_EXT%'
         );
+        $coreConfig->add(
+            'shared=>View=>config=>preFile',
+            '\'%DIR_EXT_WORK%/pre.php\''
+        );
 
         $coreConfig->save();
 

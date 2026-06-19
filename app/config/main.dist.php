@@ -118,7 +118,7 @@ return [
                 'cache'      => '%DIR_CACHE%',
                 'defaultDir' => '%DIR_VIEWS%/_default',
                 'userDir'    => '%DIR_VIEWS%/_user',
-                'preFile'    => '%DIR_CONFIG%/ext/pre.php',
+                'preFile'    => '%DIR_EXT_WORK%/pre.php',
             ],
         ],
         'Router' => [
