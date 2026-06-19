@@ -1765,6 +1765,11 @@ class Update extends Admin
             '\\ForkBB\\Models\\Telebot\\Telebot::class',
             'notifications'
         );
+        $coreConfig->add(
+            'shared=>%DIR_EXT_WORK%',
+            '\'%DIR_CONFIG%/ext\'',
+            '%DIR_EXT%'
+        );
 
         $coreConfig->save();
 

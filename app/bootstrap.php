@@ -26,8 +26,14 @@ $errorHandler = new ErrorHandler();
 
 if (\is_file(__DIR__ . '/config/main.php')) {
     $c = new Container(include __DIR__ . '/config/main.php');
+
+    if (isset($individualSiteConfig)) {
+        $c->config($individualSiteConfig);
+    }
+
 } elseif (\is_file(__DIR__ . '/config/install.php')) {
     $c = new Container(include __DIR__ . '/config/install.php');
+
 } else {
     throw new RuntimeException('Application is not configured');
 }

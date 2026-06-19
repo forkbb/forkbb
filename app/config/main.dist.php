@@ -83,15 +83,16 @@ return [
     'SN_PROFILE' => 'sn_profile.default.php',
 
     'shared' => [
-        '%DIR_ROOT%'   => \realpath(__DIR__ . '/../..'),
-        '%DIR_PUBLIC%' => '%DIR_ROOT%/public',
-        '%DIR_APP%'    => '%DIR_ROOT%/app',
-        '%DIR_CACHE%'  => '%DIR_APP%/cache',
-        '%DIR_CONFIG%' => '%DIR_APP%/config',
-        '%DIR_LANG%'   => '%DIR_APP%/lang',
-        '%DIR_LOG%'    => '%DIR_APP%/log',
-        '%DIR_VIEWS%'  => '%DIR_APP%/templates',
-        '%DIR_EXT%'    => '%DIR_ROOT%/ext',
+        '%DIR_ROOT%'     => \realpath(__DIR__ . '/../..'),
+        '%DIR_PUBLIC%'   => '%DIR_ROOT%/public',
+        '%DIR_APP%'      => '%DIR_ROOT%/app',
+        '%DIR_CACHE%'    => '%DIR_APP%/cache',
+        '%DIR_CONFIG%'   => '%DIR_APP%/config',
+        '%DIR_LANG%'     => '%DIR_APP%/lang',
+        '%DIR_LOG%'      => '%DIR_APP%/log',
+        '%DIR_VIEWS%'    => '%DIR_APP%/templates',
+        '%DIR_EXT%'      => '%DIR_ROOT%/ext',
+        '%DIR_EXT_WORK%' => '%DIR_CONFIG%/ext',
 
         'DB' => [
             'class' => \ForkBB\Core\DB::class,
