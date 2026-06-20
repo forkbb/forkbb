@@ -99,6 +99,10 @@ class DB
         'sqliteCreateAggregate' => true,
         'sqliteCreateCollation' => true,
         'sqliteCreateFunction'  => true,
+
+        'createAggregate'       => true,
+        'createCollation'       => true,
+        'createFunction'        => true,
     ];
 
     public function __construct(
@@ -119,10 +123,29 @@ class DB
         list($initSQLCommands, $initFunction) = $this->prepareOptions($options);
 
         $this->pdoStart = $start = \microtime(true);
-        $this->pdo               = new PDO($dsn, $username, $password, $options);
+
+        if (\PHP_VERSION_ID >= 80400) {
+            switch ($this->dbType) {
+                case 'mysql':
+                    $this->pdo = new \Pdo\Mysql($dsn, $username, $password, $options);
+
+                    break;
+                case 'sqlite':
+                    $this->pdo = new \Pdo\Sqlite($dsn, $username, $password, $options);
+
+                    break;
+                case 'pgsql':
+                    $this->pdo = new \Pdo\Pgsql($dsn, $username, $password, $options);
+
+                    break;
+            }
+        }
+
+        if (empty($this->pdo)) {
+            $this->pdo = new PDO($dsn, $username, $password, $options);
+        }
 
         $this->saveQuery('PDO::__construct()', \microtime(true) - $start, false);
-
 
         if (\is_string($initSQLCommands)) {
             $this->exec($initSQLCommands);
