@@ -114,7 +114,7 @@ class Install extends Admin
         $folders = [
             $this->c->DIR_CONFIG,
             $this->c->DIR_CONFIG . '/db',
-            $this->c->DIR_CONFIG . '/ext',
+            $this->c->DIR_EXT_WORK,
             $this->c->DIR_CACHE,
             $this->c->DIR_CACHE . '/polls',
             $this->c->DIR_CACHE . '/mail',
