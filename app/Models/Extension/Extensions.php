@@ -56,11 +56,11 @@ class Extensions extends Manager
      */
     public function init(): Extensions
     {
-        $this->commonFile = $this->c->DIR_CONFIG . '/ext/common.php';
-        $this->preFile    = $this->c->DIR_CONFIG . '/ext/pre.php';
-        $this->autoFile   = $this->c->DIR_CONFIG . '/ext/auto.php';
-        $this->configFile = $this->c->DIR_CONFIG . '/ext/config.php';
-        $this->eventsFile = $this->c->DIR_CONFIG . '/ext/events.php';
+        $this->commonFile = $this->c->DIR_EXT_WORK . '/common.php';
+        $this->preFile    = $this->c->DIR_EXT_WORK . '/pre.php';
+        $this->autoFile   = $this->c->DIR_EXT_WORK . '/auto.php';
+        $this->configFile = $this->c->DIR_EXT_WORK . '/config.php';
+        $this->eventsFile = $this->c->DIR_EXT_WORK . '/events.php';
 
         $this->fromDB();
 

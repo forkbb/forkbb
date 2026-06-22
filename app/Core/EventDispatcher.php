@@ -23,9 +23,9 @@ class EventDispatcher
 
     public function __construct(protected Container $c)
     {
-        $this->autoFile   = $this->c->DIR_CONFIG . '/ext/auto.php';
-        $this->configFile = $this->c->DIR_CONFIG . '/ext/config.php';
-        $this->eventsFile = $this->c->DIR_CONFIG . '/ext/events.php';
+        $this->autoFile   = $this->c->DIR_EXT_WORK . '/auto.php';
+        $this->configFile = $this->c->DIR_EXT_WORK . '/config.php';
+        $this->eventsFile = $this->c->DIR_EXT_WORK . '/events.php';
 
         $this->init();
     }
