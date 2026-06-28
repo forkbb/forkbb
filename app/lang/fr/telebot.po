@@ -13,31 +13,31 @@ msgstr ""
 "Language: fr\n"
 
 msgid "Telegram bot options"
-msgstr "Telegram bot options"
+msgstr "Options du bot Telegram"
 
 msgid "Status"
 msgstr "Status"
 
 msgid "Bot is connected"
-msgstr "Bot is connected"
+msgstr "Le bot est connecté"
 
 msgid "Bot is not connected"
-msgstr "Bot is not connected"
+msgstr "Le bot n'est pas connecté"
 
 msgid "Telegram bot info for add"
-msgstr "To set up and connect the bot, follow these steps in the Telegram app:<br>1. <u>Find the bot</u>: Enter <b>@%1$s</b> in the global search bar and select it from the results list.<br>2. <u>Start the dialog</u>: Click the 'Start' button at the bottom of the screen or send the /start command.<br>3. <u>Activate features</u>: send to bot this message <b>%2$s</b><br><br>After this, the bot should respond to you in accordance with its settings."
+msgstr "Pour paramétrer et connecter le bot, suivre ces étapes dans l'application Telegram:<br>1. <u>Trouver le bot</u>: Entrer <b>@%1$s</b> dans la barre de recherche globale et le sélectionner dans la liste de résultats.<br>2. <u>Commencer le dialogue</u>: Cliquer le bouton 'Start' en bas de l'écran ou envoyer la commande /start .<br>3. <u>Activer les options</u>: envoyer ce message au <b>%2$s</b><br><br>Après cela, le bot devrait vous répondre en accord avec ces réglages."
 
 msgid "Bad init"
-msgstr "Incorrect activation string. Open (refresh) the board configuration page in your profile and copy the entire activation string (highlighted in bold) here."
+msgstr "Chaine d'activation incorrecte. Ouvrir (rafraichir) la page de configuration du forum dans votre profil et copier l'intégralité de la chaine d'activation (mise en évidence encaractères gras) ici."
 
 msgid "Setting information"
-msgstr "You can configure this bot in your board profile."
+msgstr "Vous pouvez configurer ce bot dans votre profil de forum."
 
 msgid "Bot is connected, set it up"
-msgstr "Bot is connected, configure it in your profile on the board."
+msgstr "Le bot est connecté, configurer le dans votre profil sur le forum."
 
 msgid "Delete telebot"
-msgstr "Disable this bot"
+msgstr "Désactiver ce bot"
 
 msgid "Delete telebot info"
-msgstr "Once you've disabled this bot, you can delete the chat with it (but don't block it) in the Telegram app."
+msgstr "Une fois que vous aurez désactivé ce bot, vous pouvez effacer le chat avec celui ci dans l'application Telegram (mais ne le bloquez pas)."
