@@ -191,6 +191,7 @@ class HTTPClient
         \curl_setopt($ch, \CURLOPT_REDIR_PROTOCOLS, \CURLPROTO_HTTPS);
         \curl_setopt($ch, \CURLOPT_FOLLOWLOCATION, 1 === $options['follow_location']);
         \curl_setopt($ch, \CURLOPT_MAXREDIRS, $options['max_redirects']);
+        \curl_setopt($ch, \CURLOPT_CONNECTTIMEOUT, \ceil($options['timeout'] / 2));
         \curl_setopt($ch, \CURLOPT_TIMEOUT, $options['timeout']);
         \curl_setopt($ch, \CURLOPT_RETURNTRANSFER, true);
         \curl_setopt($ch, \CURLOPT_HEADER, false);
