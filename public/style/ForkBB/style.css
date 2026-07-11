@@ -51,6 +51,7 @@
   --br-reaction: hsl(0, 0%, 34%);
   --c-post-cf-n: hsl(42, 100%, 50%);
   --c-hashtag: hsl(0, 0%, 50%);
+  --bg-legend: hsl(50, 9%, 25%);
 }
 
 @media (prefers-color-scheme: light) {
@@ -107,6 +108,7 @@
     --br-reaction: hsl(0, 0%, 66%);
     --c-post-cf-n: hsl(42, 100%, 35%);
     --c-hashtag: hsl(0, 0%, 50%);
+    --bg-legend: hsl(210, 52%, 89%);
   }
 }
 
@@ -877,7 +879,7 @@ body,
 }
 
 #fork .f-fleg {
-  background: linear-gradient(var(--bg-like-nav), var(--bg-fprimary), var(--bg-like-nav));
+  background: linear-gradient(var(--bg-like-nav), var(--bg-legend), var(--bg-like-nav));
   border-bottom: 0.0625rem dotted var(--br-fprimary);
   width: 100%;
   padding: 0.3125rem;
