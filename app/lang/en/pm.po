@@ -240,12 +240,6 @@ msgstr "Use PM"
 msgid "Use PM help"
 msgstr "Use private messages."
 
-msgid "Email notification label"
-msgstr "Email notifications"
-
-msgid "Email notification help"
-msgstr "Receive email notifications about new private messages."
-
 msgid "PM Config redirect"
 msgstr "Private messaging configuration changed."
 

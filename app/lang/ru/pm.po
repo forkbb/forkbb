@@ -240,12 +240,6 @@ msgstr "Использовать ЛС"
 msgid "Use PM help"
 msgstr "Использовать личные сообщения."
 
-msgid "Email notification label"
-msgstr "Уведомления на почту"
-
-msgid "Email notification help"
-msgstr "Получать электронные письма-уведомления о новых личных сообщениях."
-
 msgid "PM Config redirect"
 msgstr "Конфигурация личных сообщений изменена."
 

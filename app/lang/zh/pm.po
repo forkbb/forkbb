@@ -240,12 +240,6 @@ msgstr "使用私信"
 msgid "Use PM help"
 msgstr "启用私信功能。"
 
-msgid "Email notification label"
-msgstr "邮件通知"
-
-msgid "Email notification help"
-msgstr "接收新私信的邮件通知。"
-
 msgid "PM Config redirect"
 msgstr "私信设置已更改。"
 

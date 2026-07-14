@@ -37,18 +37,16 @@ class PMConfig extends AbstractPM
         if ('POST' === $method) {
             $v = $this->c->Validator->reset()
                 ->addRules([
-                    'token'       => 'token:PMAction',
-                    'u_pm'        => 'required|integer|in:0,1',
-                    'u_pm_notify' => 'required|integer|in:0,1',
-                    'save'        => 'required|string',
+                    'token' => 'token:PMAction',
+                    'u_pm'  => 'required|integer|in:0,1',
+                    'save'  => 'required|string',
                 ])->addAliases([
                 ])->addArguments([
                     'token' => $args,
                 ]);
 
             if ($v->validation($_POST)) {
-                $this->user->u_pm        = $v->u_pm;
-                $this->user->u_pm_notify = $v->u_pm_notify;
+                $this->user->u_pm = $v->u_pm;
 
                 $this->c->users->update($this->user);
 
@@ -92,13 +90,6 @@ class PMConfig extends AbstractPM
                             'values'  => $yn,
                             'caption' => 'Use PM label',
                             'help'    => 'Use PM help',
-                        ],
-                        'u_pm_notify' => [
-                            'type'    => 'radio',
-                            'value'   => $this->user->u_pm_notify,
-                            'values'  => $yn,
-                            'caption' => 'Email notification label',
-                            'help'    => 'Email notification help',
                         ],
                     ],
                 ],

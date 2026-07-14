@@ -1790,6 +1790,12 @@ class Update extends Admin
     {
         $this->c->DB->addField('::users', 'ntfy_pm', 'TINYINT UNSIGNED', false, 0, null, 'ntfy_name_post');
 
+        if (true === $this->c->DB->fieldExists('::users', 'u_pm_notify')) {
+            $this->c->DB->exec('UPDATE ::users SET ntfy_pm=2 WHERE u_pm_notify=1');
+        }
+
+        $this->c->DB->dropField('::users', 'u_pm_notify');
+
         return null;
     }
 }

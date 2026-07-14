@@ -1293,7 +1293,6 @@ class Install extends Admin
                 'admin_note'       => ['VARCHAR(30)', false, ''],
                 'activate_string'  => ['VARCHAR(80)', false, ''],
                 'u_pm'             => ['TINYINT(1)', false, 1],
-                'u_pm_notify'      => ['TINYINT(1)', false, 0],
                 'u_pm_flash'       => ['TINYINT(1)', false, 0],
                 'u_pm_num_new'     => ['INT(10) UNSIGNED', false, 0],
                 'u_pm_num_all'     => ['INT(10) UNSIGNED', false, 0],
