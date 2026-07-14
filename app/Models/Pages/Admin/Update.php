@@ -1782,4 +1782,14 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.97 to rev.98
+     */
+    protected function stageNumber97(array $args): ?int
+    {
+        $this->c->DB->addField('::users', 'ntfy_pm', 'TINYINT UNSIGNED', false, 0, null, 'ntfy_name_post');
+
+        return null;
+    }
 }

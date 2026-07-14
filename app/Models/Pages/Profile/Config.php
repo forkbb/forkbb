@@ -116,26 +116,34 @@ class Config extends Profile
             }
 
             if (1 === $this->config->b_notifications) {
-                $tmp = [];
+                $tmp1 = [];
+                $tmp2 = [];
 
                 if (1 === $this->config->b_notifications_pm) {
-                    $tmp[] = Notifications::PM;
+                    $tmp1[] = Notifications::PM;
                 }
 
                 if (1 === $this->config->b_notifications_email) {
-                    $tmp[] = Notifications::EMAIL;
+                    $tmp1[] = Notifications::EMAIL;
+                    $tmp2[] = Notifications::EMAIL;
                 }
 
                 if (1 === $this->config->b_notifications_tele) {
-                    $tmp[] = Notifications::TELE;
+                    $tmp1[] = Notifications::TELE;
+                    $tmp2[] = Notifications::TELE;
                 }
 
                 $v = $this->c->Validator
                     ->addRules([
                         'ntfy_name_post'   => 'array',
-                        'ntfy_name_post.*' => 'integer|in:' . \implode(',', $tmp),
+                        'ntfy_name_post.*' => 'integer|in:' . \implode(',', $tmp1),
+                        'ntfy_pm'          => 'array',
+                        'ntfy_pm.*'        => 'integer|in:' . \implode(',', $tmp2),
                     ])->addAliases([
                         'ntfy_name_post'   => 'Notify if I in post',
+                        'ntfy_name_post.*' => 'Notify if I in post',
+                        'ntfy_pm'          => 'Notify about new PM',
+                        'ntfy_pm.*'        => 'Notify about new PM',
                     ]);
             }
 
@@ -155,6 +163,7 @@ class Config extends Profile
 
                 if (1 === $this->config->b_notifications) {
                     $data['ntfy_name_post'] = \array_sum($data['ntfy_name_post'] ?? []);
+                    $data['ntfy_pm']        = \array_sum($data['ntfy_pm'] ?? []);
                 }
 
                 if (! empty($data['delete_telebot'])) {
@@ -447,6 +456,11 @@ class Config extends Profile
                         'list'    => $this->getNotificationCheckbox($this->curUser->ntfy_name_post ?? 0),
                         'caption' => 'Notify if I in post',
                     ],
+                    'ntfy_pm' => [
+                        'type'    => 'multi-checkbox',
+                        'list'    => $this->getNotificationCheckbox($this->curUser->ntfy_pm ?? 0, Notifications::ALL ^ Notifications::PM),
+                        'caption' => 'Notify about new PM',
+                    ],
                 ],
             ];
         }
@@ -494,28 +508,31 @@ class Config extends Profile
         return $form;
     }
 
-    protected function getNotificationCheckbox(int $value): array
+    protected function getNotificationCheckbox(int $value, int $bits = Notifications::ALL): array
     {
         $checkboxes = [];
 
         if (1 === $this->config->b_notifications_pm) {
             $checkboxes[Notifications::PM] = [
-                'checked' => $value & Notifications::PM,
-                'label'   => 'PM',
+                'disabled' => ~ $bits & Notifications::PM,
+                'checked'  => $value & Notifications::PM & $bits,
+                'label'    => 'PM',
             ];
         }
 
         if (1 === $this->config->b_notifications_email) {
             $checkboxes[Notifications::EMAIL] = [
-                'checked' => $value & Notifications::EMAIL,
-                'label'   => 'Email',
+                'disabled' => ~ $bits & Notifications::EMAIL,
+                'checked'  => $value & Notifications::EMAIL & $bits,
+                'label'    => 'Email',
             ];
         }
 
         if (1 === $this->config->b_notifications_tele) {
             $checkboxes[Notifications::TELE] = [
-                'checked' => $value & Notifications::TELE,
-                'label'   => 'Telegram',
+                'disabled' => ~ $bits & Notifications::TELE,
+                'checked'  => $value & Notifications::TELE & $bits,
+                'label'    => 'Telegram',
             ];
         }
 

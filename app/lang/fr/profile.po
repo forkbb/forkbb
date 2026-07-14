@@ -437,3 +437,6 @@ msgstr "Options de notification"
 
 msgid "Notify if I in post"
 msgstr "Notifier quand cité/mentionné"
+
+msgid "Notify about new PM"
+msgstr "Notify about new PM"

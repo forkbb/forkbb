@@ -437,3 +437,6 @@ msgstr "Опции уведомлений"
 
 msgid "Notify if I in post"
 msgstr "Уведомить при цитате/упоминании"
+
+msgid "Notify about new PM"
+msgstr "Уведомить о новом ЛС"

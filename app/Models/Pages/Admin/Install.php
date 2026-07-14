@@ -1311,6 +1311,7 @@ class Install extends Admin
                 'page_scroll'      => ['TINYINT', false, 0],
                 'about_me_id'      => ['INT(10) UNSIGNED', false, 0],
                 'ntfy_name_post'   => ['TINYINT UNSIGNED', false, 0],
+                'ntfy_pm'          => ['TINYINT UNSIGNED', false, 0],
                 'telegram_chat_id' => ['BIGINT', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
