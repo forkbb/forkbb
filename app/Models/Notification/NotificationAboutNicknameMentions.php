@@ -23,27 +23,30 @@ class NotificationAboutNicknameMentions extends Notification
 
     public function init(array $data): bool
     {
+        $user = $data['user'] ?? null;
+        $post = $data['post'] ?? null;
+
         if (
-            ! $data['user'] instanceof User
-            || $data['user']->isGuest
-            || $data['user']->isUnverified
-            || $data['user']->isBanByName
+            ! $user instanceof User
+            || $user->isGuest
+            || $user->isUnverified
+            || $user->isBanByName
             || (
                 true !== $data['quoted']
                 && true !== $data['mentioned']
             )
-            || ! $data['post'] instanceof Post
-            || ! ($topic = $data['post']->parent) instanceof Topic
-            || true !== $this->c->notifications->permReadForum($topic->forum_id, $data['user'])
+            || ! $post instanceof Post
+            || ! ($topic = $post->parent) instanceof Topic
+            || true !== $this->c->notifications->permReadForum($topic->forum_id, $user)
         ) {
             return false;
         }
 
-        $this->user      = $data['user'];
-        $this->post      = $data['post'];
+        $this->user      = $user;
+        $this->post      = $post;
         $this->quoted    = $data['quoted'];
         $this->mentioned = $data['mentioned'];
-        $this->localRule = $this->user->ntfy_name_post ?? 0;
+        $this->localRule = $user->ntfy_name_post ?? 0;
 
         return true;
     }
