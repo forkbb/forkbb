@@ -26,3 +26,9 @@ msgstr "[url=%2$s]message [/url] par [b]%3$s[/b] dans le sujet \"[i]%1$s[/i]\"."
 
 msgid "Notification subject title"
 msgstr "🔔 Notifications"
+
+msgid "New PM: %s"
+msgstr "Nouveau message personnel: %s"
+
+msgid "User %1$s sent PM. Located %2$s"
+msgstr "[b]%1$s[/b] vous a envoyé un message personnel.\nCe message se situe [url]%2$s[/url]."

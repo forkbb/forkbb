@@ -11,22 +11,19 @@ declare(strict_types=1);
 namespace ForkBB\Models\Notification;
 
 use ForkBB\Models\Model;
+use ForkBB\Models\Forum\Forum;
 use ForkBB\Models\Notification\Notification;
 use ForkBB\Models\Notification\NotificationAboutNicknameMentions;
+use ForkBB\Models\Notification\NotificationAboutNewPM;
 use ForkBB\Models\PM\Cnst;
 use ForkBB\Models\PM\PTopic;
 use ForkBB\Models\Post\Post;
 use ForkBB\Models\User\User;
 use function \ForkBB\__;
 
-use ForkBB\Models\DataModel;
-use ForkBB\Models\Forum\Forum;
-use ForkBB\Models\Topic\Topic;
-use PDO;
-use InvalidArgumentException;
-
 class Notifications extends Model
 {
+    const ALL   = 7;
     const PM    = 1;
     const EMAIL = 2;
     const TELE  = 4;
@@ -51,6 +48,22 @@ class Notifications extends Model
         $this->permRF[$key] ??= $this->listFM[$gid]->get($fid) instanceof Forum;
 
         return $this->permRF[$key];
+    }
+
+    /**
+     * Создает уведоления о новом личном сообщении
+     */
+    public function notifyAboutNewPM(User $target, User $sender, PTopic $topic): void
+    {
+        $notification = new NotificationAboutNewPM($this->c);
+
+        if (true === $notification->init([
+            'target' => $target,
+            'sender' => $sender,
+            'topic'  => $topic,
+        ])) {
+            $this->add($notification);
+        }
     }
 
     /**

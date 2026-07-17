@@ -26,3 +26,9 @@ msgstr "[url=%2$s]Post[/url] by [b]%3$s[/b] in the topic \"[i]%1$s[/i]\"."
 
 msgid "Notification subject title"
 msgstr "🔔 Notifications"
+
+msgid "New PM: %s"
+msgstr "Nuevo mensaje privado: %s"
+
+msgid "User %1$s sent PM. Located %2$s"
+msgstr "[b]%1$s[/b] te ha enviado un mensaje privado.\nEl mensaje se encuentra en [url]%2$s[/url]."

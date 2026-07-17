@@ -294,14 +294,14 @@ class PMPost extends AbstractPM
         // отправка уведомления
         $this->c->Online->calc($this);
 
-/*
+
         if (
             Cnst::PT_NORMAL === $topic->poster_status
             && 1 === $this->config->b_notifications
         ) {
             $this->c->notifications->notifyAboutNewPM($this->targetUser, $this->user, $topic);
         }
-*/
+
 /*
         if ( // ????
             Cnst::PT_NORMAL === $topic->poster_status
