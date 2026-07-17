@@ -294,53 +294,12 @@ class PMPost extends AbstractPM
         // отправка уведомления
         $this->c->Online->calc($this);
 
-
         if (
             Cnst::PT_NORMAL === $topic->poster_status
             && 1 === $this->config->b_notifications
         ) {
             $this->c->notifications->notifyAboutNewPM($this->targetUser, $this->user, $topic);
         }
-
-/*
-        if ( // ????
-            Cnst::PT_NORMAL === $topic->poster_status
-            && 1 === $this->targetUser->u_pm_notify
-            && 1 === $this->targetUser->email_confirmed
-            && 0 === $this->c->bans->banFromName($this->targetUser->username)
-            && ! $this->c->Online->isOnline($this->targetUser)
-        ) {
-            try {
-                $this->c->Lang->load('common', $this->targetUser->language);
-
-                $tplData = [
-                    'fTitle'     => $this->config->o_board_title,
-                    'fMailer'    => __(['Mailer', $this->config->o_board_title]),
-                    'pmSubject'  => $topic->subject,
-                    'username'   => $this->targetUser->username,
-                    'sender'     => $this->user->username,
-                    'messageUrl' => $this->newTopic ? $topic->link : $post->link,
-                ];
-
-                $this->c->Mail
-                    ->reset()
-                    ->setMaxRecipients(1)
-                    ->setFolder($this->c->DIR_LANG)
-                    ->setLanguage($this->targetUser->language)
-                    ->setTo($this->targetUser->email, $this->targetUser->username)
-                    ->setFrom($this->config->o_webmaster_email, $tplData['fMailer'])
-                    ->setTpl('new_pm.tpl', $tplData)
-                    ->send();
-
-                $this->c->Lang->load('common', $this->user->language); // ???? вынести?
-            } catch (MailException $e) {
-                $this->c->Log->error('PM: MailException', [
-                    'exception' => $e,
-                    'headers'   => false,
-                ]);
-            }
-        }
-*/
         // отправка уведомления
 
         return $this->c->Redirect->url($post->link)->message($message, FORK_MESS_SUCC);
