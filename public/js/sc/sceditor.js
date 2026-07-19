@@ -4049,9 +4049,9 @@
 						emoticonsCompat = opts.emoticonsCompat,
 						rangeHelper     = editor.getRangeHelper(),
 						startSpace      = emoticonsCompat &&
-							rangeHelper.getOuterText(true, 1) !== ' ' ? ' ' : '',
+							! /( |\xA0)/.test(rangeHelper.getOuterText(true, 1)) ? ' ' : '',
 						endSpace        = emoticonsCompat &&
-							rangeHelper.getOuterText(false, 1) !== ' ' ? ' ' : '',
+							! /( |\xA0)/.test(rangeHelper.getOuterText(false, 1)) ? "\xA0" : '',
 						content         = createElement('div'),
 						line            = createElement('div'),
 						perLine         = 0,
