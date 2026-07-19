@@ -1407,45 +1407,9 @@
 		 */
 		emoticonsRoot: '',
 		emoticons: {
-			dropdown: {
-				':)': 'emoticons/smile.png',
-				':angel:': 'emoticons/angel.png',
-				':angry:': 'emoticons/angry.png',
-				'8-)': 'emoticons/cool.png',
-				':\'(': 'emoticons/cwy.png',
-				':ermm:': 'emoticons/ermm.png',
-				':D': 'emoticons/grin.png',
-				'<3': 'emoticons/heart.png',
-				':(': 'emoticons/sad.png',
-				':O': 'emoticons/shocked.png',
-				':P': 'emoticons/tongue.png',
-				';)': 'emoticons/wink.png'
-			},
-			more: {
-				':alien:': 'emoticons/alien.png',
-				':blink:': 'emoticons/blink.png',
-				':blush:': 'emoticons/blush.png',
-				':cheerful:': 'emoticons/cheerful.png',
-				':devil:': 'emoticons/devil.png',
-				':dizzy:': 'emoticons/dizzy.png',
-				':getlost:': 'emoticons/getlost.png',
-				':happy:': 'emoticons/happy.png',
-				':kissing:': 'emoticons/kissing.png',
-				':ninja:': 'emoticons/ninja.png',
-				':pinch:': 'emoticons/pinch.png',
-				':pouty:': 'emoticons/pouty.png',
-				':sick:': 'emoticons/sick.png',
-				':sideways:': 'emoticons/sideways.png',
-				':silly:': 'emoticons/silly.png',
-				':sleeping:': 'emoticons/sleeping.png',
-				':unsure:': 'emoticons/unsure.png',
-				':woot:': 'emoticons/w00t.png',
-				':wassat:': 'emoticons/wassat.png'
-			},
-			hidden: {
-				':whistling:': 'emoticons/whistling.png',
-				':love:': 'emoticons/wub.png'
-			}
+			dropdown: {},
+			more: {},
+			hidden: {}
 		},
 
 		/**
