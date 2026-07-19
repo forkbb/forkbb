@@ -201,7 +201,7 @@ ForkBB.editor = (function (doc, win) {
             var a = doc.createElement("a");
             a.textContent = "@";
             a.addEventListener("click", function (e) {
-                instance.insert("[b]" + e.target.parentNode.textContent + "[/b],");
+                instance.insert("[b]" + e.target.parentNode.textContent + "[/b],\xA0");
                 elForScroll.scrollIntoView({behavior: "smooth", block: "end"});
                 e.preventDefault();
             });
