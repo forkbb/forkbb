@@ -48,7 +48,7 @@ msgstr "If the email you specified is in the database, then an email will be sen
 msgid "Passphrases not match"
 msgstr "Passphrases do not match."
 
-msgid "Change pass"
+msgid "Change passphrase title"
 msgstr "Change passphrase"
 
 msgid "Change passphrase"

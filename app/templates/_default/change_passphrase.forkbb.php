@@ -5,7 +5,7 @@
     <section id="fork-changepass" class="f-main">
       <!-- PRE mainStart -->
       <div class="f-fdiv f-lrdiv">
-        <h2>{!! __('Change pass') !!}</h2>
+        <h2>{!! __('Change passphrase title') !!}</h2>
     @include ('layouts/form')
       </div>
       <!-- PRE mainEnd -->

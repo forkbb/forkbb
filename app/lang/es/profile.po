@@ -225,7 +225,7 @@ msgstr "Dirección de correo electrónico cambiada."
 msgid "Email confirmed redirect"
 msgstr "Dirección de correo electrónico confirmada."
 
-msgid "Change pass"
+msgid "Change passphrase title"
 msgstr "Cambiar frase de contraseña"
 
 msgid "Change passphrase"

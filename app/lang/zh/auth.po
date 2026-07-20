@@ -48,7 +48,7 @@ msgstr "如果您指定的邮箱地址存在于数据库中，我们将会发送
 msgid "Passphrases not match"
 msgstr "两次输入的密码不匹配。"
 
-msgid "Change pass"
+msgid "Change passphrase title"
 msgstr "修改密码"
 
 msgid "Change passphrase"

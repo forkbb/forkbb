@@ -48,7 +48,7 @@ msgstr "Si el correo electrónico que has introducido está en la base de datos,
 msgid "Passphrases not match"
 msgstr "La frases de contraseña no coinciden"
 
-msgid "Change pass"
+msgid "Change passphrase title"
 msgstr "Cambiar la frase de contraseña"
 
 msgid "Change passphrase"

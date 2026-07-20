@@ -70,7 +70,7 @@ class Pass extends Profile
         $this->crumbs          = $this->crumbs(
             [
                 $this->c->Router->link('EditUserPass', $args),
-                'Change pass',
+                'Change passphrase title',
             ],
             [
                 $this->c->Router->link('EditUserProfile', $args),
