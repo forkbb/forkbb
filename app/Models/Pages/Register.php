@@ -107,11 +107,10 @@ class Register extends Page
         if ($v->validation($_POST, true)) {
             // завершение регистрации
             if (1 === $v->on) {
-//                $email    = $this->useOAuth ? $this->provider->userEmail : $v->email;
                 $email    = match (true) {
-                    $this->useOAuth                              => $this->provider->userEmail,
+                    $this->useOAuth                           => $this->provider->userEmail,
                     1 === $this->config->b_regs_disable_email => 'fake' . \time() . \bin2hex(\random_bytes(3)) . '@localhost',
-                    default                                      => $v->email,
+                    default                                   => $v->email,
                 };
                 $userInDB = $this->c->users->loadByEmail($email);
 
