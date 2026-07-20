@@ -54,12 +54,12 @@ class Pass extends Profile
 
                 if ($this->rules->my) {
 //                    $auth = $this->c->Auth;
-//                    $auth->fIswev = [FORK_MESS_SUCC => [__('Pass updated')]];
+//                    $auth->fIswev = [FORK_MESS_SUCC => [__('Passphrases updated')]];
 //                    return $auth->login([], 'GET', $this->curUser->username);
-                    return $this->c->Redirect->page('Login')->message('Pass updated', FORK_MESS_SUCC); // ???? нужна передача данных между скриптами не привязанная к пользователю
+                    return $this->c->Redirect->page('Login')->message('Passphrases updated', FORK_MESS_SUCC); // ???? нужна передача данных между скриптами не привязанная к пользователю
 
                 } else {
-                    return $this->c->Redirect->page('EditUserProfile', $args)->message('Pass updated redirect', FORK_MESS_SUCC);
+                    return $this->c->Redirect->page('EditUserProfile', $args)->message('Passphrases updated redirect', FORK_MESS_SUCC);
                 }
             }
 

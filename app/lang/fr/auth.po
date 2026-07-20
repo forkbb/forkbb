@@ -60,7 +60,7 @@ msgstr "Nouveau mot de passe"
 msgid "Confirm new passphrase"
 msgstr "Confirmer le nouveau mot de passe"
 
-msgid "Pass updated"
+msgid "Passphrases updated"
 msgstr "Votre mot de passe à été mis à jour. Vous pouvez maintenant vous connecter avec ce nouveau mot de passe."
 
 msgid "Account activated"

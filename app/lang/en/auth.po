@@ -60,7 +60,7 @@ msgstr "New passphrase"
 msgid "Confirm new passphrase"
 msgstr "Confirm new passphrase"
 
-msgid "Pass updated"
+msgid "Passphrases updated"
 msgstr "Your passphrase has been updated. You can now login with your new passphrase."
 
 msgid "Account activated"

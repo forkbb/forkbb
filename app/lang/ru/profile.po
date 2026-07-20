@@ -237,10 +237,10 @@ msgstr "Новая кодовая фраза"
 msgid "Confirm new passphrase"
 msgstr "Ещё раз"
 
-msgid "Pass updated"
+msgid "Passphrases updated"
 msgstr "Ваша кодовая фраза изменена. Вы можете войти на форум с ее помощью."
 
-msgid "Pass updated redirect"
+msgid "Passphrases updated redirect"
 msgstr "Кодовая фраза изменена."
 
 msgid "Language"

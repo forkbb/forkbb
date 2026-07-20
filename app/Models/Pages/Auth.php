@@ -469,7 +469,7 @@ class Auth extends Page
 
                 $this->c->users->update($user);
 
-                $this->fIswev = [FORK_MESS_SUCC, 'Pass updated'];
+                $this->fIswev = [FORK_MESS_SUCC, 'Passphrases updated'];
 
                 $this->c->Log->info('Passphrase reset: ok', [
                     'user' => $user->fLog(),

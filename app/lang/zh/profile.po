@@ -237,10 +237,10 @@ msgstr "新密码"
 msgid "Confirm new passphrase"
 msgstr "确认新密码"
 
-msgid "Pass updated"
+msgid "Passphrases updated"
 msgstr "您的密码已更新。您现在可以使用新密码登录。"
 
-msgid "Pass updated redirect"
+msgid "Passphrases updated redirect"
 msgstr "密码已更新。"
 
 msgid "Language"

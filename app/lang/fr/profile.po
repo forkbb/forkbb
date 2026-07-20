@@ -237,10 +237,10 @@ msgstr "Nouvelle phrase de passe"
 msgid "Confirm new passphrase"
 msgstr "Confirmer la nouvelle phrase de passe"
 
-msgid "Pass updated"
+msgid "Passphrases updated"
 msgstr "Votre phrase de passe à été mise à jour. Vous pouvez maintenant vous enregistrer avec celle ci."
 
-msgid "Pass updated redirect"
+msgid "Passphrases updated redirect"
 msgstr "Phrase de passe mise à jour."
 
 msgid "Language"
