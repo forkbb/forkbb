@@ -142,7 +142,7 @@ msgid "Username"
 msgstr "Имя"
 
 msgid "Passphrase"
-msgstr "Кодовая фраза"
+msgstr "Парольная фраза"
 
 msgid "Email"
 msgstr "Почта"
@@ -430,7 +430,7 @@ msgid "No"
 msgstr "Нет"
 
 msgid "Your passphrase"
-msgstr "Ваша кодовая фраза"
+msgstr "Ваша парольная фраза"
 
 msgid "User %s"
 msgstr "%s"

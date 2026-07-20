@@ -226,22 +226,22 @@ msgid "Email confirmed redirect"
 msgstr "Адрес электронной почты подтвержден."
 
 msgid "Change passphrase title"
-msgstr "Смена кодовой фразы"
+msgstr "Смена парольной фразы"
 
 msgid "Change passphrase"
-msgstr "Изменить кодовую фразу"
+msgstr "Изменить парольную фразу"
 
 msgid "New passphrase"
-msgstr "Новая кодовая фраза"
+msgstr "Новая парольная фраза"
 
 msgid "Confirm new passphrase"
 msgstr "Ещё раз"
 
 msgid "Passphrases updated"
-msgstr "Ваша кодовая фраза изменена. Вы можете войти на форум с ее помощью."
+msgstr "Ваша парольная фраза изменена. Вы можете войти на форум с ее помощью."
 
 msgid "Passphrases updated redirect"
-msgstr "Кодовая фраза изменена."
+msgstr "Парольная фраза изменена."
 
 msgid "Language"
 msgstr "Язык"
