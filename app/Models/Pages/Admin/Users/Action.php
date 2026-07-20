@@ -262,7 +262,7 @@ class Action extends Users
                 $user->isAdmin
                 || $user->id === $this->user->id
             ) {
-                $rulePass = 'required|string:trim|max:100000|check_password';
+                $rulePass = 'required|string|max:100000|check_password';
             }
 
         } else {
