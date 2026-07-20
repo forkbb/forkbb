@@ -234,10 +234,10 @@ msgstr "Change passphrase"
 msgid "Change passphrase"
 msgstr "Change passphrase"
 
-msgid "New pass"
+msgid "New passphrase"
 msgstr "New passphrase"
 
-msgid "Confirm new pass"
+msgid "Confirm new passphrase"
 msgstr "Confirm new passphrase"
 
 msgid "Pass updated"

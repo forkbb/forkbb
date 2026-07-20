@@ -21,7 +21,7 @@ msgstr "您输入的电子邮件地址太长。"
 msgid "Passphrase help"
 msgstr "密码短语至少应包含16个字符，由多个以空格分隔的单词组成，且区分大小写。"
 
-msgid "Pass format"
+msgid "Passphrase format"
 msgstr "密码短语至少应包含16个字符，由多个以空格分隔的单词组成。"
 
 msgid "Login format"

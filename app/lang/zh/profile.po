@@ -234,10 +234,10 @@ msgstr "更改密码"
 msgid "Change passphrase"
 msgstr "更改密码"
 
-msgid "New pass"
+msgid "New passphrase"
 msgstr "新密码"
 
-msgid "Confirm new pass"
+msgid "Confirm new passphrase"
 msgstr "确认新密码"
 
 msgid "Pass updated"

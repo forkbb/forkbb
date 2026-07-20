@@ -40,7 +40,7 @@ class NewUser extends Users
                     'username' => 'Username',
                     'password' => 'Passphrase',
                 ])->addMessages([
-                    'password.password' => 'Pass format',
+                    'password.password' => 'Passphrase format',
                     'username.login'    => 'Login format',
                 ]);
 

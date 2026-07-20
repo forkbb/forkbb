@@ -40,7 +40,7 @@ class Pass extends Profile
                     'new_pass'  => 'required|string|min:16|max:100000|password',
                     'submit'    => 'required|string',
                 ])->addAliases([
-                    'new_pass'  => 'New pass',
+                    'new_pass'  => 'New passphrase',
                     'password'  => 'Your passphrase',
                 ])->addArguments([
                     'token'     => $args,
@@ -101,7 +101,7 @@ class Pass extends Profile
                         'new_pass' => [
                             'autofocus' => true,
                             'type'      => 'password',
-                            'caption'   => 'New pass',
+                            'caption'   => 'New passphrase',
                             'required'  => true,
                             'minlength' => '16',
                             'pattern'   => '^.*[^ ] [^ ].*$',

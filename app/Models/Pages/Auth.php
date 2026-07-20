@@ -452,12 +452,12 @@ class Auth extends Page
                     'password2' => 'required|same:password',
                     'submit'    => 'required|string',
                 ])->addAliases([
-                    'password'  => 'New pass',
-                    'password2' => 'Confirm new pass',
+                    'password'  => 'New passphrase',
+                    'password2' => 'Confirm new passphrase',
                 ])->addArguments([
                     'token' => $args,
                 ])->addMessages([
-                    'password.password'  => 'Pass format',
+                    'password.password'  => 'Passphrase format',
                     'password2.same'     => 'Pass not match',
                 ]);
 
@@ -532,13 +532,13 @@ class Auth extends Page
                         'password' => [
                             'autofocus' => true,
                             'type'      => 'password',
-                            'caption'   => 'New pass',
+                            'caption'   => 'New passphrase',
                             'required'  => true,
                             'pattern'   => '^.{16,}$',
                         ],
                         'password2' => [
                             'type'      => 'password',
-                            'caption'   => 'Confirm new pass',
+                            'caption'   => 'Confirm new passphrase',
                             'help'      => 'Passphrase help',
                             'required'  => true,
                             'pattern'   => '^.{16,}$',

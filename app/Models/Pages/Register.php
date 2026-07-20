@@ -97,7 +97,7 @@ class Register extends Page
             ])->addMessages([
                 'agree.required'    => ['cancel', 'cancel'],
                 'agree.token'       => [FORK_MESS_WARN, ['Bad agree', $this->c->Router->link('Register')]],
-                'password.password' => 'Pass format',
+                'password.password' => 'Passphrase format',
                 'username.login'    => 'Login format',
                 'nekot'             => [FORK_MESS_ERR, 'Javascript disabled or bot'],
             ]);

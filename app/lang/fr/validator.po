@@ -21,7 +21,7 @@ msgstr "L’adresse email entrée est trop longue."
 msgid "Passphrase help"
 msgstr "La phrase de passe doit contenir au moins 16 caractères, avec de multiples mots séparés par des espaces (sensible à la casse)."
 
-msgid "Pass format"
+msgid "Passphrase format"
 msgstr "La phrase de passe doit contenir au moins 16 caractères, avec de multiples mots séparés par des espaces ."
 
 msgid "Login format"

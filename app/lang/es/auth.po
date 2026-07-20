@@ -54,10 +54,10 @@ msgstr "Cambiar la frase de contraseña"
 msgid "Change passphrase"
 msgstr "Cambiar la frase de contraseña"
 
-msgid "New pass"
+msgid "New passphrase"
 msgstr "Nueva frase de contraseña"
 
-msgid "Confirm new pass"
+msgid "Confirm new passphrase"
 msgstr "Confirmar nueva frase de contraseña"
 
 msgid "Pass updated"

@@ -234,10 +234,10 @@ msgstr "Смена кодовой фразы"
 msgid "Change passphrase"
 msgstr "Изменить кодовую фразу"
 
-msgid "New pass"
+msgid "New passphrase"
 msgstr "Новая кодовая фраза"
 
-msgid "Confirm new pass"
+msgid "Confirm new passphrase"
 msgstr "Ещё раз"
 
 msgid "Pass updated"

@@ -21,7 +21,7 @@ msgstr "La dirección de correo electrónico que has introducido es demasiado la
 msgid "Passphrase help"
 msgstr "La frase de contraseña debe tener al menos 16 caracteres, con varias palabras separadas por espacios y distingue entre mayúsculas y minúsculas."
 
-msgid "Pass format"
+msgid "Passphrase format"
 msgstr "La frase de contraseña debe tener al menos 16 caracteres, con varias palabras separadas por espacios."
 
 msgid "Login format"
