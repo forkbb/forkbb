@@ -45,7 +45,7 @@ msgstr "Recuerdame"
 msgid "Forget mail"
 msgstr "Si el correo electrónico que has introducido está en la base de datos, se te enviará un correo electrónico con instrucciones sobre cómo cambiar la frase de contraseña. Si no llega puedes contactar con el administrador del foro en <a href=\"mailto:%1$s\">%1$s</a>."
 
-msgid "Pass not match"
+msgid "Passphrases not match"
 msgstr "La frases de contraseña no coinciden"
 
 msgid "Change pass"

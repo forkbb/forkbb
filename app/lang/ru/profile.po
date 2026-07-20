@@ -225,9 +225,6 @@ msgstr "Адрес электронной почты изменен."
 msgid "Email confirmed redirect"
 msgstr "Адрес электронной почты подтвержден."
 
-msgid "Pass not match"
-msgstr "Кодовые фразы не совпадают."
-
 msgid "Change pass"
 msgstr "Смена кодовой фразы"
 

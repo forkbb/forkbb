@@ -45,7 +45,7 @@ msgstr "Remember me"
 msgid "Forget mail"
 msgstr "If the email you specified is in the database, then an email will be sent to it with instructions on how to change the passphrase. If it does not arrive you can contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."
 
-msgid "Pass not match"
+msgid "Passphrases not match"
 msgstr "Passphrases do not match."
 
 msgid "Change pass"

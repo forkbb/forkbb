@@ -45,7 +45,7 @@ msgstr "Se rappeler de moi"
 msgid "Forget mail"
 msgstr "Si l’email spécifié dcorrespond à celui enregistré, alors un email vous sera envoyé avec les instructions pour changer de mot de passe. Si celui ci n’arrive pas vous pouvez contacter l’administrateur <a href=\"mailto:%1$s\">%1$s</a>."
 
-msgid "Pass not match"
+msgid "Passphrases not match"
 msgstr "Les mots de passe ne correspondent pas."
 
 msgid "Change pass"

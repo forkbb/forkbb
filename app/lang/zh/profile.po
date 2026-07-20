@@ -225,9 +225,6 @@ msgstr "电子邮件地址已更改。"
 msgid "Email confirmed redirect"
 msgstr "电子邮件地址已确认。"
 
-msgid "Pass not match"
-msgstr "密码不匹配。"
-
 msgid "Change pass"
 msgstr "更改密码"
 

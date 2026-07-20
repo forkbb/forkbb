@@ -457,7 +457,7 @@ class Auth extends Page
                 ])->addArguments([
                     'token' => $args,
                 ])->addMessages([
-                    'password2.same' => 'Pass not match',
+                    'password2.same' => 'Passphrases not match',
                 ]);
 
             $v = $this->c->Test->beforeValidation($v);

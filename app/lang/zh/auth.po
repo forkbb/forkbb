@@ -45,7 +45,7 @@ msgstr "记住我"
 msgid "Forget mail"
 msgstr "如果您指定的邮箱地址存在于数据库中，我们将会发送一封包含如何修改密码说明的邮件。如果您没有收到邮件，可以通过 <a href=\"mailto:%1$s\">%1$s</a> 联系论坛管理员。"
 
-msgid "Pass not match"
+msgid "Passphrases not match"
 msgstr "两次输入的密码不匹配。"
 
 msgid "Change pass"
