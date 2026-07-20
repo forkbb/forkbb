@@ -220,7 +220,10 @@ class User extends DataModel
      */
     public function title(): string
     {
-        if ($this->isGuest) {
+        if (
+            $this->isGuest
+            && '' == $this->g_user_title
+        ) {
             return __('Guest');
 
         } elseif ($this->isBanByName) {
