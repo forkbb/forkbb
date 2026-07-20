@@ -34,14 +34,13 @@ class NewUser extends Users
                     'token'    => 'token:AdminUsersNew',
                     'email'    => 'required|string:trim|email:noban,unique',
                     'username' => 'required|string:trim|username|noURL:1',
-                    'password' => 'required|string|min:16|max:100000|password',
+                    'password' => 'required|string|max:100000|password',
                 ])->addAliases([
                     'email'    => 'Email',
                     'username' => 'Username',
                     'password' => 'Passphrase',
                 ])->addMessages([
-                    'password.password' => 'Passphrase format',
-                    'username.login'    => 'Login format',
+                    'username.login' => 'Login format',
                 ]);
 
                 if ($v->validation($_POST)) {

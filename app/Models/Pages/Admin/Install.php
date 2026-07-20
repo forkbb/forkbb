@@ -174,7 +174,7 @@ class Install extends Admin
                     'dbpass'        => 'exist|string:trim',
                     'dbprefix'      => 'required|string:trim|min:1|max:40|check_prefix',
                     'username'      => 'required|string:trim|min:2|max:25',
-                    'password'      => 'required|string|min:16|max:100000|password',
+                    'password'      => 'required|string|max:100000|password',
                     'email'         => 'required|string:trim|email',
                     'title'         => 'required|string:trim|max:255',
                     'descr'         => 'exist|string:trim,empty|max:65000 bytes|html',

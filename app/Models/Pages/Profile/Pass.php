@@ -37,7 +37,7 @@ class Pass extends Profile
                 ])->addRules([
                     'token'     => 'token:EditUserPass',
                     'password'  => 'required|string|max:100000|check_password',
-                    'new_pass'  => 'required|string|min:16|max:100000|password',
+                    'new_pass'  => 'required|string|max:100000|password',
                     'submit'    => 'required|string',
                 ])->addAliases([
                     'new_pass'  => 'New passphrase',

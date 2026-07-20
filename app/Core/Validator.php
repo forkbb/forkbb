@@ -899,7 +899,14 @@ class Validator
 
     protected function vPassword(Validator $v, string $value): string
     {
-        return $this->vRegex($v, $value, '%[^\x20][\x20][^\x20]%');
+        if (
+            \mb_strlen($value, 'UTF-8') < 16
+            || ! \preg_match('%[^\x20][\x20][^\x20]%', $value)
+        ) {
+            $this->addError('Passphrase format');
+        }
+
+        return $value;
     }
 
     protected function vIn(Validator $v, mixed $value, string|array $attr): mixed

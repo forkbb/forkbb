@@ -448,7 +448,7 @@ class Auth extends Page
             $v = $this->c->Validator->reset()
                 ->addRules([
                     'token'     => 'token:ChangePassword',
-                    'password'  => 'required|string|min:16|max:100000|password',
+                    'password'  => 'required|string|max:100000|password',
                     'password2' => 'required|same:password',
                     'submit'    => 'required|string',
                 ])->addAliases([
@@ -457,8 +457,7 @@ class Auth extends Page
                 ])->addArguments([
                     'token' => $args,
                 ])->addMessages([
-                    'password.password'  => 'Passphrase format',
-                    'password2.same'     => 'Pass not match',
+                    'password2.same' => 'Pass not match',
                 ]);
 
             $v = $this->c->Test->beforeValidation($v);

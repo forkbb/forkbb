@@ -71,7 +71,7 @@ class Register extends Page
             'oauth'    => 'string',
             'email'    => 'required_with:on|string:trim|email:noban',
             'username' => 'required_with:on|string:trim|username|noURL:1',
-            'password' => 'required_with:on|string|min:16|max:100000|password',
+            'password' => 'required_with:on|string|max:100000|password',
             'terms'    => 'absent',
             'register' => 'required|string',
         ];
@@ -95,11 +95,10 @@ class Register extends Page
                 'username' => 'Username',
                 'password' => 'Passphrase',
             ])->addMessages([
-                'agree.required'    => ['cancel', 'cancel'],
-                'agree.token'       => [FORK_MESS_WARN, ['Bad agree', $this->c->Router->link('Register')]],
-                'password.password' => 'Passphrase format',
-                'username.login'    => 'Login format',
-                'nekot'             => [FORK_MESS_ERR, 'Javascript disabled or bot'],
+                'agree.required' => ['cancel', 'cancel'],
+                'agree.token'    => [FORK_MESS_WARN, ['Bad agree', $this->c->Router->link('Register')]],
+                'username.login' => 'Login format',
+                'nekot'          => [FORK_MESS_ERR, 'Javascript disabled or bot'],
             ]);
 
         $v = $this->c->Test->beforeValidation($v, true);
