@@ -66,7 +66,7 @@ class Email extends Profile
                     'check_password' => [$this, 'vCheckPassword'],
                 ])->addRules([
                     'token'     => 'token:EditUserEmail',
-                    'password'  => 'required|string|max:100000|check_password',
+                    'password'  => 'required|string|max:10000|check_password',
                     'new_email' => 'required|string:trim|email',
                     'submit'    => 'required|string',
                 ])->addAliases([

@@ -86,7 +86,7 @@ class Auth extends Page
                     'token'    => 'token:Login',
                     'redirect' => 'required|referer:Index',
                     'username' => 'required|string',
-                    'password' => 'required|string|max:100000|login_check',
+                    'password' => 'required|string|max:10000|login_check',
                     'save'     => 'checkbox',
                     'login'    => 'required|string',
                 ])->addAliases([
@@ -448,7 +448,7 @@ class Auth extends Page
             $v = $this->c->Validator->reset()
                 ->addRules([
                     'token'     => 'token:ChangePassword',
-                    'password'  => 'required|string|max:100000|password',
+                    'password'  => 'required|string|max:10000|password',
                     'password2' => 'required|same:password',
                     'submit'    => 'required|string',
                 ])->addAliases([

@@ -71,7 +71,7 @@ class Register extends Page
             'oauth'    => 'string',
             'email'    => 'required_with:on|string:trim|email:noban',
             'username' => 'required_with:on|string:trim|username|noURL:1',
-            'password' => 'required_with:on|string|max:100000|password',
+            'password' => 'required_with:on|string|max:10000|password',
             'terms'    => 'absent',
             'register' => 'required|string',
         ];

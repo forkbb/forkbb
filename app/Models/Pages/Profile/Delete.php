@@ -36,7 +36,7 @@ class Delete extends Profile
                     'check_password' => [$this, 'vCheckPassword'],
                 ])->addRules([
                     'token'    => 'token:DeleteUserProfile',
-                    'password' => 'required|string|max:100000|check_password',
+                    'password' => 'required|string|max:10000|check_password',
                     'confirm'  => 'required|integer|in:0,1',
                     'delete'   => 'required|string',
                 ])->addAliases([

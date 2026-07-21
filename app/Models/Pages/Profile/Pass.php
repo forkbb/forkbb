@@ -36,8 +36,8 @@ class Pass extends Profile
                     'check_password' => [$this, 'vCheckPassword'],
                 ])->addRules([
                     'token'     => 'token:EditUserPass',
-                    'password'  => 'required|string|max:100000|check_password',
-                    'new_pass'  => 'required|string|max:100000|password',
+                    'password'  => 'required|string|max:10000|check_password',
+                    'new_pass'  => 'required|string|max:10000|password',
                     'submit'    => 'required|string',
                 ])->addAliases([
                     'new_pass'  => 'New passphrase',
