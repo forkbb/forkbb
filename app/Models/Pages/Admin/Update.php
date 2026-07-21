@@ -1796,6 +1796,18 @@ class Update extends Admin
 
         $this->c->DB->dropField('::users', 'u_pm_notify');
 
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'PASSPHRASE',
+            [
+                'min' => '16',
+            ],
+            'USERNAME',
+        );
+
+        $coreConfig->save();
+
         return null;
     }
 }

@@ -54,15 +54,18 @@ return [
         'common' => [],
         'secure' => [],
     ],
-    'HMAC' => [
+    'HMAC'             => [
         'algo' => 'sha1',
         'salt' => '_SALT_FOR_HMAC_',
     ],
-    'FRIENDLY_URL' => [
+    'FRIENDLY_URL'     => [
         'lowercase' => true,
         'translit'  => true, // 'Any-Latin;Latin-ASCII;',
         'WtoHyphen' => true,
         'file'      => 'translit.default.php',
+    ],
+    'PASSPHRASE'       => [
+        'min' => 16,
     ],
 
     'forConfig' => [

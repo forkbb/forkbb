@@ -58,6 +58,9 @@ return [
         'min'        => 2,
         'max'        => 25,
     ],
+    'PASSPHRASE'       => [
+        'min' => 16,
+    ],
     'HTTP_HEADERS'     => [
         'common' => [
             'X-Content-Type-Options'  => 'nosniff',
