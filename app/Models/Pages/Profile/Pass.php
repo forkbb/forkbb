@@ -103,8 +103,7 @@ class Pass extends Profile
                             'type'      => 'password',
                             'caption'   => 'New passphrase',
                             'required'  => true,
-                            'minlength' => '16',
-                            'pattern'   => '^.*[^ ] [^ ].*$',
+                            'minlength' => $this->c->PASSPHRASE['min'],
                             'help'      => 'Passphrase help',
                         ],
                         'password' => [

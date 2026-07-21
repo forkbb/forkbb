@@ -222,8 +222,7 @@ class Register extends Page
                 'caption'   => 'Passphrase',
                 'help'      => 'Passphrase help',
                 'required'  => true,
-                'minlength' => '16',
-                'pattern'   => '^.*[^ ] [^ ].*$',
+                'minlength' => $this->c->PASSPHRASE['min'],
             ];
         }
 
