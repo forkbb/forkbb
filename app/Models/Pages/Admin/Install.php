@@ -324,20 +324,20 @@ class Install extends Admin
                     'fields' => [
                         'username' => [
                             'type'      => 'text',
+                            'minlength' => '2',
                             'maxlength' => '25',
-                            'pattern'   => '^.{2,25}$',
                             'value'     => $v->username ?? '',
                             'caption'   => 'Administrator username',
                             'help'      => 'Info 8',
                             'required'  => true,
                         ],
                         'password' => [
-                            'type'     => 'password',
-                            'pattern'  => '^.{16,}$',
-                            'value'    => '',
-                            'caption'  => 'Administrator passphrase',
-                            'help'     => 'Info 9',
-                            'required' => true,
+                            'type'      => 'password',
+                            'minlength' => '16',
+                            'value'     => '',
+                            'caption'   => 'Administrator passphrase',
+                            'help'      => 'Info 9',
+                            'required'  => true,
                         ],
                         'email' => [
                             'type'           => 'text',
