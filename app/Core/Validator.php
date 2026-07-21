@@ -899,10 +899,7 @@ class Validator
 
     protected function vPassword(Validator $v, string $value): string
     {
-        if (
-            \mb_strlen($value, 'UTF-8') < $this->c->PASSPHRASE['min']
-            || ! \preg_match('%[^\x20][\x20][^\x20]%', $value)
-        ) {
+        if (\mb_strlen($value, 'UTF-8') < $this->c->PASSPHRASE['min']) {
             $this->addError('Passphrase format');
         }
 
