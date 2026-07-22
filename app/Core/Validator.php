@@ -103,7 +103,6 @@ class Validator
             'min'           => [$this, 'vMin'],
             'numeric'       => [$this, 'vNumeric'],
             'not_in'        => [$this, 'vNotIn'],
-            'password'      => [$this, 'vPassword'],
             'referer'       => [$this, 'vReferer'],
             'regex'         => [$this, 'vRegex'],
             'required'      => [$this, 'vRequired'],
@@ -892,15 +891,6 @@ class Validator
     {
         if (! \preg_match($attr, $value)) {
             $this->addError('The :alias is not valid format');
-        }
-
-        return $value;
-    }
-
-    protected function vPassword(Validator $v, string $value): string
-    {
-        if (\mb_strlen($value, 'UTF-8') < $this->c->PASSPHRASE['min']) {
-            $this->addError('Passphrase format');
         }
 
         return $value;

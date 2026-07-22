@@ -21,8 +21,20 @@ msgstr "La dirección de correo electrónico que has introducido es demasiado la
 msgid "Passphrase help"
 msgstr "La frase de contraseña debe tener al menos 16 caracteres, con varias palabras separadas por espacios y distingue entre mayúsculas y minúsculas."
 
-msgid "Passphrase format"
-msgstr "La frase de contraseña debe tener al menos 16 caracteres, con varias palabras separadas por espacios."
+msgid "Short passphrase"
+msgstr "Short passphrase. Add another word to it."
+
+msgid "Many repeated chars passphrase"
+msgstr "There are many identical characters in the passphrase. More diverse words should be used."
+
+msgid "Critically vulnerable passphrase"
+msgstr "Critically weak passphrase. Please create a new one consisting of several words."
+
+msgid "Very vulnerable passphrase"
+msgstr "Very weak passphrase. Add two more words to it."
+
+msgid "Vulnerable passphrase"
+msgstr "Weak passphrase. Add another word to it."
 
 msgid "Login format"
 msgstr "El nombre de usuario debe comenzar con una letra. Puede contener letras, números, espacios, puntos, guiones y guiones bajos."

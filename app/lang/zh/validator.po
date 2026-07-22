@@ -21,8 +21,20 @@ msgstr "您输入的电子邮件地址太长。"
 msgid "Passphrase help"
 msgstr "密码短语至少应包含16个字符，由多个以空格分隔的单词组成，且区分大小写。"
 
-msgid "Passphrase format"
-msgstr "密码短语至少应包含16个字符，由多个以空格分隔的单词组成。"
+msgid "Short passphrase"
+msgstr "Short passphrase. Add another word to it."
+
+msgid "Many repeated chars passphrase"
+msgstr "There are many identical characters in the passphrase. More diverse words should be used."
+
+msgid "Critically vulnerable passphrase"
+msgstr "Critically weak passphrase. Please create a new one consisting of several words."
+
+msgid "Very vulnerable passphrase"
+msgstr "Very weak passphrase. Add two more words to it."
+
+msgid "Vulnerable passphrase"
+msgstr "Weak passphrase. Add another word to it."
 
 msgid "Login format"
 msgstr "用户名必须以字母开头。可以包含字母、数字、空格、点、横线和下划线。"

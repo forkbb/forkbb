@@ -249,6 +249,7 @@ return [
         'VLemail'    => \ForkBB\Models\Validators\Email::class,
         'VLhtml'     => \ForkBB\Models\Validators\Html::class,
         'VLnekot'    => \ForkBB\Models\Validators\Nekot::class,
+        'VLpassword' => \ForkBB\Models\Validators\Password::class,
 
         'ProfileRules' => \ForkBB\Models\Rules\Profile::class,
         'UsersRules'   => \ForkBB\Models\Rules\Users::class,

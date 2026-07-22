@@ -163,6 +163,7 @@ return [
 
         'VLemail'    => \ForkBB\Models\Validators\Email::class,
         'VLhtml'     => \ForkBB\Models\Validators\Html::class,
+        'VLpassword' => \ForkBB\Models\Validators\Password::class,
 
         'Users/normUsername' => \ForkBB\Models\User\NormUsername::class,
     ],

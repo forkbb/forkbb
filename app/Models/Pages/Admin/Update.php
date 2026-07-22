@@ -1805,6 +1805,11 @@ class Update extends Admin
             ],
             'USERNAME',
         );
+        $coreConfig->add(
+            'shared=>VLpassword',
+            '\\ForkBB\\Models\\Validators\\Password::class',
+            'VLnekot'
+        );
 
         $coreConfig->save();
 
