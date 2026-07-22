@@ -330,6 +330,7 @@ class Register extends Page
 
         $this->c->Log->info('Registriaton: ok', [
             'user'    => $user->fLog(),
+            'entropy' => $this->c->isInit('passphraseEntropy') ? $this->c->passphraseEntropy : null,
             'form'    => $v->getData(false, ['token', 'agree', 'password']),
             'headers' => true,
         ]);

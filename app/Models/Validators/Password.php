@@ -81,6 +81,9 @@ class Password extends RulesValidator
 
             } elseif ($level <= 50) {
                 $v->addError('Vulnerable passphrase');
+
+            } else {
+                $this->c->passphraseEntropy = $level;
             }
         }
 
