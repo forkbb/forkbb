@@ -73,7 +73,7 @@ class Password extends RulesValidator
             if ($this->uniqueCount < 4) {
                 $v->addError('Many repeated chars passphrase');
 
-            } elseif ($level < 0.1) {
+            } elseif ($level < 10) {
                 $v->addError('Critically vulnerable passphrase');
 
             } elseif ($level < 40) {
@@ -199,6 +199,8 @@ class Password extends RulesValidator
                 }
             }
         }
+
+        $passLower = \preg_replace('%(.)\1{3,}%u', '$1', $passLower);
 
         return \mb_strlen($passLower, 'UTF-8') * \log($charsetSize, 2);
     }
