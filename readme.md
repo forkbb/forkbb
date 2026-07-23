@@ -6,7 +6,7 @@ ForkBB is a free and open source forum software. The project is based on [FluxBB
 
 ## Requirements
 
-* PHP 8.0+
+* PHP 8.2+
 * PHP extensions: pdo, intl, json, mbstring, fileinfo
 * PHP extensions (suggests): imagick or gd (for upload avatars and other images), openssl (for send email via smtp server using SSL/TLS), curl (for OAuth)
 * A database such as MySQL 5.5.3+ (an extension using the mysqlnd driver must be enabled), SQLite 3.25+, PostgreSQL 10+
