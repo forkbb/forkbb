@@ -102,7 +102,7 @@ class Password extends RulesValidator
         return $pass;
     }
 
-    protected function analysis(string $pass): int|float
+    protected function analysis(string $pass): int
     {
         $this->numbers    = [];
         $this->latinUpper = [];
@@ -194,6 +194,7 @@ class Password extends RulesValidator
         }
 
         $passLower = \mb_strtolower($pass, 'UTF-8');
+        $passLen   = \mb_strlen($passLower, 'UTF-8');
 
         foreach ($this->sequences as $subsequence) {
             $len = \mb_strlen($subsequence, 'UTF-8');
@@ -201,9 +202,14 @@ class Password extends RulesValidator
 
             for ($s = 0; $s < $end; $s++) {
                 for ($l = $len - $s; $l > 2; $l--) {
+                    if ($l > $passLen) {
+                        continue;
+                    }
+
                     $passLower = \str_replace(\mb_substr($subsequence, $s, $l, 'UTF-8'), '', $passLower, $n);
 
                     if ($n > 0) {
+                        $passLen               = \mb_strlen($passLower, 'UTF-8');
                         $this->subsequenceFlag = true;
 
                         break;
@@ -215,6 +221,6 @@ class Password extends RulesValidator
         $passLower = \preg_replace('%(.)\1{3,}%u', '$1', $passLower);
         $passLower = \preg_replace('%(.{2,})\1+%u', '$1', $passLower);
 
-        return \mb_strlen($passLower, 'UTF-8') * \log($charsetSize, 2);
+        return (int) (\mb_strlen($passLower, 'UTF-8') * \log($charsetSize, 2));
     }
 }
