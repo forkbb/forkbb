@@ -37,6 +37,8 @@ class Password extends RulesValidator
     protected array $sequences = [
         '1234567890',
         '0987654321',
+        '147258369',
+        '963852741',
         'qwertyuiop',
         'poiuytrewq',
         'asdfghjkl',
@@ -211,6 +213,7 @@ class Password extends RulesValidator
         }
 
         $passLower = \preg_replace('%(.)\1{3,}%u', '$1', $passLower);
+        $passLower = \preg_replace('%(.{2,})\1+%u', '$1', $passLower);
 
         return \mb_strlen($passLower, 'UTF-8') * \log($charsetSize, 2);
     }
