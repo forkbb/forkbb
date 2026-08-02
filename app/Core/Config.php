@@ -493,9 +493,16 @@ class Config
         foreach ($data as $key => $cur) {
             $tail = '';
 
+            if (
+                \is_string($key)
+                && '\\' !== $key[0]
+            ) {
+                $key = "'{$key}'";
+            }
+
             if ($this->isFormat($cur)) {
                 if (\is_string($key)) {
-                    $result .= "{$cur['key_before']}'{$key}'{$cur['key_after']}=>{$cur['value_before']}";
+                    $result .= "{$cur['key_before']}{$key}{$cur['key_after']}=>{$cur['value_before']}";
 
                 } else {
                     $result .= "{$cur['value_before']}";
@@ -511,7 +518,7 @@ class Config
             } else {
                 if (\is_string($key)) {
                     $result  = \rtrim($result, "\n\t ");
-                    $result .= "\n{$space}'{$key}' => ";
+                    $result .= "\n{$space}{$key} => ";
                     $tail    = "\n" . \str_repeat('    ', $level - 1);
 
                 } else {
