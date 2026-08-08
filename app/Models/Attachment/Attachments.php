@@ -408,4 +408,27 @@ class Attachments extends Model
             return false;
         }
     }
+
+    /**
+     * Удаляет не используемые файлы
+     */
+    public function deleteUnusedFiles(): int
+    {
+        $count = 0;
+        $query = 'SELECT a.id
+                    FROM ::attachments AS a
+                    LEFT JOIN ::attachments_pos AS ap ON (a.id=ap.id)
+                    LEFT JOIN ::attachments_pos_pm AS apm ON (a.id=apm.id)
+                   WHERE ap.id IS NULL AND apm.id IS NULL';
+
+        $ids = $this->c->DB->query($query)->fetchAll(PDO::FETCH_COLUMN);
+
+        foreach ($ids as $id) {
+            if (true === $this->deleteFile($id)) {
+                ++$count;
+            }
+        }
+
+        return $count;
+    }
 }
