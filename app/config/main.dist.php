@@ -39,7 +39,7 @@ return [
         'algo'    => \PASSWORD_DEFAULT,
         'options' => [],
     ],
-    'DEBUG'            => 0, // 0&1st: time/memory, 1st: queries, 2nd: message 400+ to log
+    'DEBUG'            => 0, // 0&1st: time/memory, 1st: queries, 2nd: message 400+ to log, 3rd: deleted file to log
     'MAINTENANCE_OFF'  => false,
     'BBCODE_INFO'      => [
         'smTpl'    => '<img src="{url}" alt="{alt}">',
