@@ -402,27 +402,21 @@ class Attachments extends Model
                 $this->recalculate($user);
             }
 
-            if (8 & $this->c->DEBUG) {
-                $this->c->Log->notice('File deleted: ' . $info['path'], [
-                    'user'    => $this->c->user->fLog(),
-                    'info'    => $info,
-                    'headers' => true,
-                ]);
-            }
-
-            return true;
+            $result = true;
 
         } else {
-            if (8 & $this->c->DEBUG) {
-                $this->c->Log->notice('File not deleted: ' . $info['path'], [
-                    'user'    => $this->c->user->fLog(),
-                    'info'    => $info,
-                    'headers' => true,
-                ]);
-            }
-
-            return false;
+            $result = false;
         }
+
+        if (8 & $this->c->DEBUG) {
+            $this->c->Log->notice((true === $result ? 'File deleted: ' : 'File not deleted: ') . $info['path'], [
+                'user'    => $this->c->user->fLog(),
+                'info'    => $info,
+                'headers' => true,
+            ]);
+        }
+
+        return $result;
     }
 
     /**
