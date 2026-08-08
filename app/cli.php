@@ -177,6 +177,26 @@ switch ($command) {
         }
 
         break;
+
+    /**
+     * Удаление не используемых в сообщениях и ЛС загруженных файлов
+     * php cli.php delete_unused_files [--log=1]
+     *
+     * --log=1 - пишет в лог количество удаленных файлов и время выполнения
+     */
+    case 'delete_unused_files':
+        $c->user = $c->users->create(['id' => 0, 'group_id' => FORK_GROUP_GUEST]);
+
+        $count = $c->attachments->deleteUnusedFiles();
+
+        if (! empty($arguments['log'])) {
+            $c->Log->debug("CLI delete_unused_files. Files deleted: {$count}", [
+                'time'    => \number_format(\microtime(true) - FORK_START, 3, '.', ''),
+                'headers' => false,
+            ]);
+        }
+
+        break;
 }
 
 if ($c->isInit('DB')) {
