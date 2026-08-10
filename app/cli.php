@@ -32,7 +32,7 @@ $errorHandler = new ErrorHandlerCli();
 
 if (\is_file(__DIR__ . '/config/main.php')) {
     $c = new Container(include __DIR__ . '/config/main.php');
-    $a = ['test', 'send_mail'];
+    $a = ['test', 'send_mail', 'delete_unused_files'];
 } elseif (\is_file(__DIR__ . '/config/install.php')) {
     $c = new Container(include __DIR__ . '/config/install.php');
     $a = ['install'];
