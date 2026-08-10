@@ -424,17 +424,21 @@ class Attachments extends Model
      */
     public function deleteUnusedFiles(): int
     {
+        $limit = \time() - 3600;
         $count = 0;
-        $query = 'SELECT a.id
+        $query = 'SELECT a.id, a.created
                     FROM ::attachments AS a
                     LEFT JOIN ::attachments_pos AS ap ON (a.id=ap.id)
                     LEFT JOIN ::attachments_pos_pm AS apm ON (a.id=apm.id)
                    WHERE ap.id IS NULL AND apm.id IS NULL';
 
-        $ids = $this->c->DB->query($query)->fetchAll(PDO::FETCH_COLUMN);
+        $ids = $this->c->DB->query($query)->fetchAll(PDO::FETCH_KEY_PAIR);
 
-        foreach ($ids as $id) {
-            if (true === $this->deleteFile($id)) {
+        foreach ($ids as $id => $time) {
+            if (
+                $time < $limit
+                && true === $this->deleteFile($id)
+            ) {
                 ++$count;
             }
         }
