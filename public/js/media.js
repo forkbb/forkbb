@@ -425,8 +425,11 @@ ForkBB.media = (function (doc, win) {
         } else if (arr = url.match(/^t\.me\/([\w-]+\/\d+)$/)) {
             createMedia(node, {src: "https://telegram.org/js/telegram-widget.js?18", "data-telegram-post": arr[1], "data-width": "100%"}, size || [0, 0], "script");
 
-        } else if (arr = url.match(/^music.yandex.ru\/(?:iframe\/#)?album\/(\d+)/)) {
+        } else if (arr = url.match(/^music\.yandex\.ru\/(?:iframe\/#)?album\/(\d+)/)) {
             createMedia(node, {src: "https://music.yandex.ru/iframe/#album/" + arr[1]}, size || ["100%", 450]);
+
+        } else if (arr = url.match(/^vkvideo\.ru\/video-(\d+)_(\d+)/)) {
+            createMedia(node, {src: "https://vkvideo.ru/video_ext.php?oid=-" + arr[1] + "&id=" + arr[2] + "&hd=1"}, size);
 
         }
     }
