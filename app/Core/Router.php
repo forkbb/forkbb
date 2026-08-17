@@ -157,7 +157,7 @@ class Router
                     'page' !== $name
                     || 1 !== $args[$name]
                 ) {
-                    $data['{' . $name . '}'] = \is_integer($args[$name])
+                    $data['{' . $name . '}'] = \is_int($args[$name])
                         ? (string) $args[$name]
                         : \rawurlencode(\str_replace($this->subSearch, $this->subRepl, (string) $args[$name]));
 
