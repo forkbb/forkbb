@@ -213,7 +213,7 @@ class Current extends Action
             $langs = $this->c->Func->getLangs();
             $main  = [];
 
-            foreach ($this->c->Func->langParse(FORK_LNG) as $entry) {
+            foreach ($this->c->Func->langParse($this->c->Secury->replInvalidChars(FORK_LNG)) as $entry) {
                 $arr = \explode('-', $entry, 2);
 
                 if (isset($arr[1])) {
