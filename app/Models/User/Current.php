@@ -198,6 +198,12 @@ class Current extends Action
         ) {
             return $this->brStatus[$status];
 
+        } elseif (
+            empty($_SERVER['HTTP_FROM'])
+            && \preg_match('%(?:bing|google|yandex)bot%i', $agent)
+        ) {
+            return '⚠' . $agent;
+
         } else {
             return $agent;
         }
