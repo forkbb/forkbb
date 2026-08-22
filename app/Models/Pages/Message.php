@@ -25,6 +25,13 @@ class Message extends Page
      */
     public function message(string|array $message, bool $back = true, int $status = 400, array $headers = [], ?bool $noOnlinePos = false): Page
     {
+        $type = 0;
+
+        while ($status > 999) {
+            $status -= 1000;
+            ++$type;
+        }
+
         $this->identifier   = 'message';
         $this->nameTpl      = 'message';
         $this->noOnlinePos  = $noOnlinePos;
@@ -40,7 +47,14 @@ class Message extends Page
             }
         }
 
-        if ($status < 200) {
+        if ($type > 0) {
+            $type = match ($type) {
+                1       => FORK_MESS_INFO,
+                2       => FORK_MESS_SUCC,
+                3       => FORK_MESS_WARN,
+                default => FORK_MESS_ERR,
+            };
+        } elseif ($status < 200) {
             $type = FORK_MESS_INFO;
 
         } elseif ($status < 300) {
