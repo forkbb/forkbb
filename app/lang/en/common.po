@@ -525,3 +525,6 @@ msgstr "Bookmarks"
 
 msgid "Find topic bookmarks"
 msgstr "Find topics saved in your bookmarks"
+
+msgid "Detecting bots on board"
+msgstr "Hello!<br><br>If you are a human, refresh this page or click this <a href=\"%s\">link</a>."

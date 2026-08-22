@@ -525,3 +525,6 @@ msgstr "Sujets favoris"
 
 msgid "Find topic bookmarks"
 msgstr "Trouvers les sujets dans vos favoris"
+
+msgid "Detecting bots on board"
+msgstr "Hello!<br><br>If you are a human, refresh this page or click this <a href=\"%s\">link</a>."

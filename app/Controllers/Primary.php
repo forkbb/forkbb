@@ -70,7 +70,7 @@ class Primary
             $this->c->user->isHiddenBot
             && 1 === $this->c->config->b_block_hidden_bots
         ) {
-            return $this->c->Message->message('Temporary IP blocking', false, 401, [], null);
+            return $this->c->Message->message('Temporary IP blocking', false, 403, [], null);
 
         } elseif ($this->c->bans->check($this->c->user)) {
             return $this->c->Ban->ban($this->c->user);

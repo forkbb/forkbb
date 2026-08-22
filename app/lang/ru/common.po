@@ -527,3 +527,6 @@ msgstr "Закладки"
 
 msgid "Find topic bookmarks"
 msgstr "Найти темы сохраненные в ваших закладках"
+
+msgid "Detecting bots on board"
+msgstr "Привет!<br><br>Если вы человек, то обновите страницу или кликните по <a href=\"%s\">ссылке</a>."

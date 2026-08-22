@@ -998,7 +998,7 @@ class Routing
                 }
 
                 if (true === $challenge) {
-                    $page = $this->c->Message->message('Abra-Cadabra', false, 401);
+                    $page = $this->c->Message->message(['Detecting bots on board', $this->c->BASE_URL . $event->uri], false, 401);
 
                 } else {
                     $page = $this->c->$page->$action($route[2], $event->method);
