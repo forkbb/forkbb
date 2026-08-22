@@ -41,7 +41,7 @@ class Auth extends Page
         }
 
         $this->c->Cookie->deleteUser();
-        $this->c->Online->delete($this->user);
+        $this->c->Online->delete($this->user, true);
         $this->c->users->updateLastVisit($this->user);
 
         $this->c->Log->info('Logout: ok', [

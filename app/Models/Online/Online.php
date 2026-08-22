@@ -361,7 +361,7 @@ class Online extends Model
     /**
      * Удаление пользователя из таблицы online
      */
-    public function delete(User $user): void
+    public function delete(User $user, bool $soft = false): void
     {
         if ($user->isGuest) {
             $vars = [
@@ -381,6 +381,39 @@ class Online extends Model
         }
 
         $this->c->DB->exec($query, $vars);
+
+        if (
+            true === $soft
+            && ! $user->isGuest
+        ) {
+            $vars  = [
+                ':id'     => 0,
+                ':ident'  => $user->ip,
+                ':logged' => \time(),
+                ':pos'    => 'index',
+                ':name'   => '',
+                ':misc'   => 49,
+            ];
+            $query = match ($this->c->DB->getType()) {
+                'mysql' => 'INSERT IGNORE INTO ::online (user_id, ident, logged, o_position, o_name, o_misc)
+                    VALUES (?i:id, ?s:ident, ?i:logged, ?s:pos, ?s:name, ?i:misc)',
+
+                'sqlite', 'pgsql' => 'INSERT INTO ::online (user_id, ident, logged, o_position, o_name, o_misc)
+                    VALUES (?i:id, ?s:ident, ?i:logged, ?s:pos, ?s:name, ?i:misc)
+                    ON CONFLICT(user_id, ident) DO NOTHING',
+
+                default => 'INSERT INTO ::online (user_id, ident, logged, o_position, o_name, o_misc)
+                    SELECT tmp.*
+                    FROM (SELECT ?i:id AS f1, ?s:ident AS f2, ?i:logged AS f3, ?s:pos AS f4, ?s:name AS f5, ?i:misc AS f6) AS tmp
+                    WHERE NOT EXISTS (
+                        SELECT 1
+                        FROM ::online
+                        WHERE user_id=?i:id AND ident=?s:ident
+                    )',
+            };
+
+            $this->c->DB->exec($query, $vars);
+        }
     }
 
     /**
