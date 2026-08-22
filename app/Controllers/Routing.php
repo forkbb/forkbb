@@ -992,6 +992,7 @@ class Routing
                 } elseif (
                     $user->isGuest
                     && 1 === $config->b_challenge_page
+                    && '' === $user->botName
                     && 48 > (240 & $user->o_misc)
                 ) {
                     $challenge = true;
