@@ -47,3 +47,9 @@ msgstr "Temporarily block"
 
 msgid "Temporarily block help"
 msgstr "Temporarily block IP addresses for detected hidden bots (which impersonate browsers but only load HTML code). Blocking is enabled on the third visit to the forum pages. Blocking is disabled after the visit timeout."
+
+msgid "Challenge page label"
+msgstr "Challenge page"
+
+msgid "Challenge page help"
+msgstr "Show guests (and hidden bots) the challenge page instead of the contents of the requested board page. This works based on the temporary block."

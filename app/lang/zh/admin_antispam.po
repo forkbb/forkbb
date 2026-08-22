@@ -47,3 +47,9 @@ msgstr "临时封锁"
 
 msgid "Temporarily block help"
 msgstr "对检测到的隐藏机器人临时封锁其 IP 地址（这些机器人会伪装成浏览器，但只加载 HTML 代码）。当同一 IP 第三次访问论坛页面时将启用封锁；在访问超时后，封锁将自动解除。"
+
+msgid "Challenge page label"
+msgstr "Challenge page"
+
+msgid "Challenge page help"
+msgstr "Show guests (and hidden bots) the challenge page instead of the contents of the requested board page. This works based on the temporary block."

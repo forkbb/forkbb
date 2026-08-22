@@ -47,3 +47,9 @@ msgstr "Blocage temporaire"
 
 msgid "Temporarily block help"
 msgstr "Bloquer temporairement les adresses IP de robots cachés détéctés (se font passer pour de navigateurs, mais chargent uniquement le code html). Le blocage est actif à la troisième visite du forum. Blocage désactivé après écoulement du compteur depuis la dernière visite."
+
+msgid "Challenge page label"
+msgstr "Challenge page"
+
+msgid "Challenge page help"
+msgstr "Show guests (and hidden bots) the challenge page instead of the contents of the requested board page. This works based on the temporary block."

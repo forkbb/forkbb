@@ -37,6 +37,7 @@ class Antispam extends Admin
                     'b_ant_use_js'        => 'required|integer|in:0,1',
                     'b_premoderation'     => 'required|integer|in:0,1',
                     'b_block_hidden_bots' => 'required|integer|in:0,1',
+                    'b_challenge_page'    => 'required|integer|in:0,1',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
@@ -132,6 +133,13 @@ class Antispam extends Admin
                     'values'  => $yn,
                     'caption' => 'Temporarily block label',
                     'help'    => 'Temporarily block help',
+                ],
+                'b_challenge_page' => [
+                    'type'    => 'radio',
+                    'value'   => $config->b_challenge_page,
+                    'values'  => $yn,
+                    'caption' => 'Challenge page label',
+                    'help'    => 'Challenge page help',
                 ],
             ],
         ];

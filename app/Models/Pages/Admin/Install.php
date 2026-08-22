@@ -1623,8 +1623,8 @@ class Install extends Admin
             'o_board_title'           => $v->title,
             'o_board_desc'            => $v->descr,
             'o_default_timezone'      => \date_default_timezone_get(),
-            'i_timeout_visit'         => 3600,
-            'i_timeout_online'        => 900,
+            'i_timeout_visit'         => 7200,
+            'i_timeout_online'        => 600,
             'i_redirect_delay'        => 1,
             'b_show_user_info'        => 1,
             'b_show_post_count'       => 1,
@@ -1745,6 +1745,7 @@ class Install extends Admin
             's_tele_username'         => '',
             's_tele_token'            => '',
             's_tele_secret'           => '',
+            'b_challenge_page'        => 0,
         ];
 
         foreach ($forkConfig as $name => $value) {

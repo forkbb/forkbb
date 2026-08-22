@@ -1815,4 +1815,16 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.98 to rev.99
+     */
+    protected function stageNumber98(array $args): ?int
+    {
+        $config = $this->c->config;
+
+        $config->b_challenge_page ??= 0;
+
+        $config->save();
+    }
 }
