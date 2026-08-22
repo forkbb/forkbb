@@ -48,6 +48,10 @@ class Antispam extends Admin
 
             unset($data['token']);
 
+            if (0 === $data['b_block_hidden_bots']) {
+                $data['b_challenge_page'] = 0;
+            }
+
             foreach ($data as $attr => $value) {
                 $config->$attr = $value;
             }

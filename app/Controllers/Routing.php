@@ -80,13 +80,13 @@ class Routing
                 $r->add(
                     $r::GET,
                     '/admix/style.css',
-                    'Admix:style',
+                    '~Admix:style',
                     'AdmixStyle'
                 );
                 $r->add(
                     $r::GET,
                     '/admix/img.gif',
-                    'Admix:img'
+                    '~Admix:img'
                 );
             }
 
@@ -203,7 +203,7 @@ class Routing
                 $r->add(
                     $r::GET,
                     '/opensearch.xml',
-                    'Misc:opensearch',
+                    '~Misc:opensearch',
                     'OpenSearch'
                 );
             }
@@ -426,7 +426,7 @@ class Routing
                 $r->add(
                     $r::PST,
                     '/admix/{action:upload}/{token}',
-                    'Admix:admix',
+                    '~Admix:admix',
                     'Admix'
                 );
             }
@@ -470,7 +470,7 @@ class Routing
             $r->add(
                 $r::GET,
                 '/feed/{type:atom|rss}[/forum/{fid|i:[1-9]\d*}][/topic/{tid|i:[1-9]\d*}]',
-                'Feed:view',
+                '~Feed:view',
                 'Feed'
             );
 
@@ -947,7 +947,7 @@ class Routing
         $r->add(
             $r::GET,
             '/sitemap{id:\d*}.xml',
-            'Sitemap:view',
+            '~Sitemap:view',
             'Sitemap'
         );
 
@@ -958,7 +958,7 @@ class Routing
             $r->add(
                 $r::PST,
                 '/admix/telebot',
-                'Admix:telegramHook',
+                '~Admix:telegramHook',
                 'Telebot'
             );
         }
@@ -983,10 +983,29 @@ class Routing
             case $r::OK:
                 // ... 200 OK
                 list($page, $action) = \explode(':', $route[1], 2);
-                $page = $this->c->$page->$action($route[2], $event->method);
+                $challenge           = false;
 
-                if (1 === $this->c->config->b_censoring) {
-                    $this->c->censorship; // предзагрузка цензуры
+                if ('~' === $page[0]) {
+                    $this->c->curReqVisible = 0;
+                    $page                   = \substr($page, 1);
+
+                } elseif (
+                    $user->isGuest
+                    && 1 === $config->b_challenge_page
+                    && 48 > (240 & $user->o_misc)
+                ) {
+                    $challenge = true;
+                }
+
+                if (true === $challenge) {
+                    $page = $this->c->Message->message('Abra-Cadabra', false, 401);
+
+                } else {
+                    $page = $this->c->$page->$action($route[2], $event->method);
+
+                    if (1 === $config->b_censoring) {
+                        $this->c->censorship; // предзагрузка цензуры
+                    }
                 }
 
                 break;
