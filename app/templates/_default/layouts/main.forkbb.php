@@ -80,14 +80,14 @@
         <label id="id-mn-label" class="f-menu-toggle" for="id-mn-checkbox"><span class="f-menu-tsp">{!! __('Main menu') !!}</span></label>
         <ul class="f-menu-items" itemscope itemtype="https://schema.org/SiteNavigationElement" role="menu">
     @foreach ($p->fNavigation as $key => $val)
-          <li id="fork-nav-{{ $key }}" class="f-menu-item" itemprop="about" itemscope itemtype="https://schema.org/ItemList" role="menuitem"><!-- inline -->
+          <li id="fork-nav-{{ $key }}" class="f-menu-item"><!-- inline -->
             <a class="f-menu-a @if ($key == $p->fIndex) active @endif" href="{{ $val[0] }}" @if ($val[2]) title="{{ __($val[2]) }}" @endif itemprop="url">
               <span class="f-menu-span" itemprop="name">{!! __($val[1]) !!}</span>
             </a>
         @if ($val[3])
             <ul class="f-submenu-items" itemscope itemtype="https://schema.org/SiteNavigationElement" role="menu">
             @foreach ($val[3] as $key => $val)
-              <li id="fork-nav-{{ $key }}" class="f-menu-item" itemprop="about" itemscope itemtype="https://schema.org/ItemList" role="menuitem">
+              <li id="fork-nav-{{ $key }}" class="f-menu-item">
                 @if ($val[0])
                 <a class="f-menu-a @if ($key == $p->fSubIndex) active @endif" href="{{ $val[0] }}" @if ($val[2]) title="{{ __($val[2]) }}" @endif itemprop="url">
                   <span class="f-menu-span" itemprop="name">{!! __($val[1]) !!}</span>
@@ -105,14 +105,14 @@
     @if ($p->fNavigationUser)
         <ul class="f-menu-user-items" itemscope itemtype="https://schema.org/SiteNavigationElement" role="menu">
         @foreach ($p->fNavigationUser as $key => $val)
-          <li id="fork-nav-{{ $key }}" @class(['f-menu-item', [$val[4] ?? null, 'f-mi-']]) itemprop="about" itemscope itemtype="https://schema.org/ItemList" role="menuitem"><!-- inline -->
+          <li id="fork-nav-{{ $key }}" @class(['f-menu-item', [$val[4] ?? null, 'f-mi-']])><!-- inline -->
             <a class="f-menu-a @if ($key == $p->fIndex) active @endif" href="{{ $val[0] }}" @if ($val[2]) title="{{ __($val[2]) }}" @endif itemprop="url">
               <span class="f-menu-span" itemprop="name">{!! __($val[1]) !!}</span>
             </a>
             @if ($val[3])
             <ul class="f-submenu-items" itemscope itemtype="https://schema.org/SiteNavigationElement" role="menu">
                 @foreach ($val[3] as $key => $val)
-              <li id="fork-nav-{{ $key }}" class="f-menu-item" itemprop="about" itemscope itemtype="https://schema.org/ItemList" role="menuitem">
+              <li id="fork-nav-{{ $key }}" class="f-menu-item">
                     @if ($val[0])
                 <a class="f-menu-a @if ($key == $p->fSubIndex) active @endif" href="{{ $val[0] }}" @if ($val[2]) title="{{ __($val[2]) }}" @endif itemprop="url">
                   <span class="f-menu-span" itemprop="name">{!! __($val[1]) !!}</span>
