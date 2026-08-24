@@ -10,7 +10,7 @@
             <ol id="fork-pm-bl-ol">
     @foreach ($p->blockList as $user)
               <li class="f-pm-bl-li">
-                <a href="{{ $user->link }}">{{ $user->username }}</a>
+                <a href="{{ $user->link }}" translate="no">{{ $user->username }}</a>
                 <a class="f-btn" href="{{ $user->linkPMUnblock }}" title="{{ __(['Unblock user %s', $user->username]) }}">{!! __('Unblock') !!}</a>
               </li>
     @endforeach

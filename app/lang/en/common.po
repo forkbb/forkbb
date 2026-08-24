@@ -124,7 +124,7 @@ msgid "Last post"
 msgstr "Last post"
 
 msgid "by %s"
-msgstr "by %s"
+msgstr "by <span translate="no">%s</span>"
 
 msgid "New posts"
 msgstr "New posts"
@@ -200,7 +200,7 @@ msgid "Image link"
 msgstr "image"
 
 msgid "%s wrote"
-msgstr "%s wrote:"
+msgstr "<span translate="no">%s</span> wrote:"
 
 msgid "Mailer"
 msgstr "%s"

@@ -16,10 +16,10 @@ msgid "Empty board"
 msgstr "Форум пуст."
 
 msgid "Newest user: %s"
-msgstr "Новичок: %s"
+msgstr "Новичок: <span translate="no">%s</span>"
 
 msgid "Newest user: <a href="%2$s">%1$s</a>"
-msgstr "Новичок: <a href="%2$s">%1$s</a>"
+msgstr "Новичок: <a href="%2$s" translate="no">%1$s</a>"
 
 msgid "No of users: %s"
 msgstr "Пользователей: <b>%s</b>"

@@ -94,9 +94,9 @@
     @foreach ($p->userList as $user)
           <li class="f-row" value="{{ ++$p->startNum }}">
         @if ($p->userRules->viewUsers && $user->link)
-            <span class="f-cell f-cusername"><a href="{{ $user->link }}">{{ $user->username }}</a></span>
+            <span class="f-cell f-cusername"><a href="{{ $user->link }}" translate="no">{{ $user->username }}</a></span>
         @else
-            <span class="f-cell f-cusername">{{ $user->username }}</span>
+            <span class="f-cell f-cusername" translate="no">{{ $user->username }}</span>
         @endif
             <span class="f-cell f-ctitle"><small>(</small><i>{{ $user->title() }}</i><small>),</small></span>
         @if ($p->userRules->showPostCount)

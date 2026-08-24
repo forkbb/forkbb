@@ -31,9 +31,9 @@
         <dt id="id-onlst-dt">{!! __('Online users') !!}</dt>
     @foreach ($p->online->info as $cur)
         @if ($cur['link'])
-        <dd><a href="{{ $cur['link'] }}">{{ $cur['name'] }}</a></dd>
+        <dd><a href="{{ $cur['link'] }}" translate="no">{{ $cur['name'] }}</a></dd>
         @else
-        <dd>{{ $cur['name'] }}</dd>
+        <dd translate="no">{{ $cur['name'] }}</dd>
         @endif
     @endforeach
       </dl><!-- endinline -->

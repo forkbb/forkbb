@@ -16,10 +16,10 @@ msgid "Empty board"
 msgstr "El foro está vacío."
 
 msgid "Newest user: %s"
-msgstr "Último usuario registrado: %s"
+msgstr "Último usuario registrado: <span translate="no">%s</span>"
 
 msgid "Newest user: <a href="%2$s">%1$s</a>"
-msgstr "Último usuario registrado: <a href="%2$s">%1$s</a>"
+msgstr "Último usuario registrado: <a href="%2$s" translate="no">%1$s</a>"
 
 msgid "No of users: %s"
 msgstr "Usuarios: <b>%s</b>"

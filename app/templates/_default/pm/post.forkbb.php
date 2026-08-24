@@ -31,10 +31,10 @@
         <address class="f-post-user">
           <div class="f-post-usticky">
             <ul hidden class="f-user-info-first">
-              <li class="f-username">{{ $post->poster }}</li>
+              <li class="f-username" translate="no">{{ $post->poster }}</li>
             </ul>
             <ul class="f-user-info">
-              <li class="f-username">{{ $post->poster }}</li>
+              <li class="f-username" translate="no">{{ $post->poster }}</li>
               <li class="f-usertitle">{{ $post->user->title() }}</li>
             </ul>
           </div>
