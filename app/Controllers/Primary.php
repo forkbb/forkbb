@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Controllers;
 
 use ForkBB\Core\Container;
+use ForkBB\Core\Event;
 use ForkBB\Models\Page;
 
 class Primary
@@ -76,7 +77,12 @@ class Primary
             return $this->c->Ban->ban($this->c->user);
 
         } else {
-            return null;
+            $event       = new Event('Controllers\Primary:check:after');
+            $event->page = null;
+
+            $this->c->dispatcher->dispatch($event);
+
+            return $event->page;
         }
     }
 }
