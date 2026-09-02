@@ -82,16 +82,16 @@ class Password extends RulesValidator
         } else {
             $level = $this->analysis($pass);
 
-            if ($this->uniqueCount < 4) {
+            if ($this->uniqueCount < ($this->c->PASSPHRASE['minUnique'] ?? 4)) {
                 $v->addError('Many repeated chars passphrase');
 
-            } elseif ($level < 10) {
+            } elseif ($level < ($this->c->PASSPHRASE['critVuln'] ?? 10)) {
                 $v->addError('Critically vulnerable passphrase');
 
-            } elseif ($level < 40) {
+            } elseif ($level < ($this->c->PASSPHRASE['veryVuln'] ?? 40)) {
                 $v->addError('Very vulnerable passphrase');
 
-            } elseif ($level <= 50) {
+            } elseif ($level <= ($this->c->PASSPHRASE['vuln'] ?? 50)) {
                 $v->addError('Vulnerable passphrase');
 
             } else {

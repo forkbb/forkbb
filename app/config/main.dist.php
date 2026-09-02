@@ -59,7 +59,11 @@ return [
         'max'        => 25,
     ],
     'PASSPHRASE'       => [
-        'min' => 16,
+        'min'       => 16,
+        'minUnique' => 4,
+        'critVuln'  => 10,
+        'veryVuln'  => 40,
+        'vuln'      => 50,
     ],
     'HTTP_HEADERS'     => [
         'common' => [
