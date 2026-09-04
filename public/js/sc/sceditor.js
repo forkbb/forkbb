@@ -7238,15 +7238,19 @@
 				data.html = sanitize(data['text/html']);
 
 				// Visman - удаление color и background-color при copy-paste
-				data.html = data.html.replace(/(<\w+\s+[^<>]*?style=")([^"<>]+)/gi, function (match, p1, p2) {
-					return p1 + p2.replace(/(?:background-)?color:\s*[^\s;]+;?/gi, "")
-						.replace(/(font-family:)([^;]+)/gi, function (match2, p3, p4) {
+				data.html = data.html.replace(/(<\w+\s+[^<>]*?style=")([^"<>]+)/gis, function (match, p1, p2) {
+					return p1 + p2.replace(/(?:background-)?color:\s*[^\s;]+;?/gis, "")
+						.replace(/(font-family:)([^;]+)/gis, function (match2, p3, p4) {
 							return p3 + p4.replace(/'/g, "");
 						});
 				});
-				// Visman - удаление font-size внутри h1-h6 при copy-paste
-				data.html = data.html.replace(/(<h[1-6]\s+[^<>]*?style=")([^"<>]+)/gi, function (match, p1, p2) {
-					return p1 + p2.replace(/font-size:\s*[^\s;]+;?/gi, "");
+				// Visman - удаление font-size внутри h1-h6 при copy-paste + удаление тегов a
+				data.html = data.html.replace(/<(h[1-6])([^>]*)>(.+?)<\/\1>/gis, function (match, p1, p2, p3) {
+					return "<" + p1 + p2.replace(/(style=")([^"<>]+)/gis, function (match, p4, p5) {
+						return p4 + p5.replace(/font-size:\s*[^\s;]+;?/gis, "");
+					}) + ">" + p3.replace(/<a(?:\s.*?)>/gis, "").replace(/<\/a>/gi, "").replace(/(<\w+\s+[^<>]*?style=")([^"<>]+)/gis, function (match, p4, p5) {
+						return p4 + p5.replace(/font-size:\s*[^\s;]+;?/gis, "");
+					}) + "</" + p1 + ">";
 				});
 
 				handlePasteData(data);
