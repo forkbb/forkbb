@@ -24,7 +24,7 @@ class Update
      */
     public function routing(): Page
     {
-        $this->c->user = $this->c->users->create(['id' => 1, 'group_id' => FORK_GROUP_ADMIN]); //???? id?
+        $this->c->user = $this->c->users->create(['id' => 1, 'group_id' => FORK_GROUP_ADMIN, 'username' => 'Update']); //???? id?
 
         $this->c->Lang->load('common');
 
