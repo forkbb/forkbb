@@ -1826,5 +1826,7 @@ class Update extends Admin
         $config->b_challenge_page ??= 0;
 
         $config->save();
+
+        return null;
     }
 }
