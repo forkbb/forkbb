@@ -976,32 +976,26 @@ class Routing
 
         $this->c->dispatcher->dispatch($event);
 
-        $route  = $r->route($event->method, $event->uri);
-        $page   = null;
+        $route = $r->route($event->method, $event->uri);
+        $page  = null;
+
+        $challenge = $user->isGuest
+            && 1 === $config->b_challenge_page
+            && '' === $user->botName
+            && 48 > (240 & $user->o_misc);
 
         switch ($route[0]) {
             case $r::OK:
                 // ... 200 OK
                 list($page, $action) = \explode(':', $route[1], 2);
-                $challenge           = false;
 
                 if ('~' === $page[0]) {
                     $this->c->curReqVisible = 0;
                     $page                   = \substr($page, 1);
-
-                } elseif (
-                    $user->isGuest
-                    && 1 === $config->b_challenge_page
-                    && '' === $user->botName
-                    && 48 > (240 & $user->o_misc)
-                ) {
-                    $challenge = true;
+                    $challenge              = false;
                 }
 
-                if (true === $challenge) {
-                    $page = $this->c->Message->message(['Detecting bots on board', $this->c->BASE_URL . $event->uri], false, 1401);
-
-                } else {
+                if (false === $challenge) {
                     $page = $this->c->$page->$action($route[2], $event->method);
 
                     if (1 === $config->b_censoring) {
@@ -1012,34 +1006,44 @@ class Routing
                 break;
             case $r::NOT_FOUND:
                 // ... 404 Not Found
-                if (
-                    1 !== $user->g_read_board
-                    && $user->isGuest
-                ) {
-                    $page = $this->c->Redirect->page('Login');
+                if (false === $challenge) {
+                    if (
+                        1 !== $user->g_read_board
+                        && $user->isGuest
+                    ) {
+                        $page = $this->c->Redirect->page('Login');
 
-                } else {
-                    $page = $this->c->Message->message('Not Found', true, 404);
+                    } else {
+                        $page = $this->c->Message->message('Not Found', true, 404);
+                    }
                 }
 
                 break;
             case $r::METHOD_NOT_ALLOWED:
                 // ... 405 Method Not Allowed
-                $page = $this->c->Message->message(
-                    'Bad request',
-                    true,
-                    405,
-                    [
-                        ['Allow', \implode(',', $route[1])],
-                    ]
-                );
+                if (false === $challenge) {
+                    $page = $this->c->Message->message(
+                        'Bad request',
+                        true,
+                        405,
+                        [
+                            ['Allow', \implode(',', $route[1])],
+                        ]
+                    );
+                }
 
                 break;
             case $r::NOT_IMPLEMENTED:
                 // ... 501 Not implemented
-                $page = $this->c->Message->message('Bad request', true, 501);
+                if (false === $challenge) {
+                    $page = $this->c->Message->message('Bad request', true, 501);
+                }
 
                 break;
+        }
+
+        if (true === $challenge) {
+            $page = $this->c->Message->message(['Detecting bots on board', $this->c->BASE_URL . $event->uri], false, 1401);
         }
 
         return $page;
