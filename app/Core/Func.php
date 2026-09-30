@@ -365,4 +365,39 @@ class Func
 
         return isset($str[0]) ? $str : '-';
     }
+
+    /**
+     * Возвращает имеющийся в наличии язык из HTTP_ACCEPT_LANGUAGE
+     * или язык по умолчанию
+     */
+    public function getLangFromHTTP(): string
+    {
+        if (! empty(FORK_LNG)) {
+            $langs = $this->getLangs();
+            $main  = [];
+
+            foreach ($this->langParse($this->c->Secury->replInvalidChars(FORK_LNG)) as $entry) {
+                $arr = \explode('-', $entry, 2);
+
+                if (isset($arr[1])) {
+                    $entry  = $arr[0] . '_' . \strtoupper($arr[1]);
+                    $main[] = $arr[0];
+                }
+
+                if (isset($langs[$entry])) {
+                    return $langs[$entry];
+                }
+            }
+
+            if (! empty($main)) {
+                foreach ($main as $entry) {
+                    if (isset($langs[$entry])) {
+                        return $langs[$entry];
+                    }
+                }
+            }
+        }
+
+        return $this->c->config->o_default_lang;
+    }
 }

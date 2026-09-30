@@ -50,7 +50,7 @@ class Current extends Action
             $user->__isBot       = '' !== $user->botName || 48 !== (48 & $user->o_misc);
             $user->__isHiddenBot = 128 === (128 & $user->o_misc);
             $user->__timezone    = $this->c->config->o_default_timezone;
-            $user->__language    = 1 === $this->c->config->b_default_lang_auto ? $this->getLangFromHTTP() : $this->c->config->o_default_lang;
+            $user->__language    = 1 === $this->c->config->b_default_lang_auto ? $this->c->Func->getLangFromHTTP() : $this->c->config->o_default_lang;
             $user->__locale      = $user->language;
 
         } else {
@@ -207,40 +207,5 @@ class Current extends Action
         } else {
             return $agent;
         }
-    }
-
-    /**
-     * Возвращает имеющийся в наличии язык из HTTP_ACCEPT_LANGUAGE
-     * или язык по умолчанию
-     */
-    protected function getLangFromHTTP(): string
-    {
-        if (! empty(FORK_LNG)) {
-            $langs = $this->c->Func->getLangs();
-            $main  = [];
-
-            foreach ($this->c->Func->langParse($this->c->Secury->replInvalidChars(FORK_LNG)) as $entry) {
-                $arr = \explode('-', $entry, 2);
-
-                if (isset($arr[1])) {
-                    $entry  = $arr[0] . '_' . \strtoupper($arr[1]);
-                    $main[] = $arr[0];
-                }
-
-                if (isset($langs[$entry])) {
-                    return $langs[$entry];
-                }
-            }
-
-            if (! empty($main)) {
-                foreach ($main as $entry) {
-                    if (isset($langs[$entry])) {
-                        return $langs[$entry];
-                    }
-                }
-            }
-        }
-
-        return $this->c->config->o_default_lang;
     }
 }
