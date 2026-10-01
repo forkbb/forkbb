@@ -36,7 +36,11 @@ class Primary
             && false === \str_ends_with(FORK_URI, '/admix/img.gif')
         ) {
             if (! $this->c->isInit('user')) {
-                $this->c->user = $this->c->users->create(['id' => 0, 'group_id' => FORK_GROUP_GUEST]);
+                $this->c->user = $this->c->users->create([
+                    'id'       => 0,
+                    'group_id' => FORK_GROUP_GUEST,
+                    'language' => $this->c->Func->getLangFromHTTP(),
+                ]);
             }
 
             return $this->c->Message->message('Not Found', false, 404, [], true);
@@ -50,7 +54,11 @@ class Primary
             )
         ) {
             if (! $this->c->isInit('user')) {
-                $this->c->user = $this->c->users->create(['id' => 0, 'group_id' => FORK_GROUP_GUEST]);
+                $this->c->user = $this->c->users->create([
+                    'id'       => 0,
+                    'group_id' => FORK_GROUP_GUEST,
+                    'language' => $this->c->Func->getLangFromHTTP(),
+                ]);
             }
 
             return $this->c->Maintenance;
