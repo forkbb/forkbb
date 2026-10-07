@@ -1043,7 +1043,7 @@ class Routing
         }
 
         if (true === $challenge) {
-            $page = $this->c->Message->message(['Detecting bots on board', $this->c->BASE_URL . $event->uri], false, 1401);
+            $page = $this->c->Message->message(['Detecting bots on board', $this->c->BASE_URL . $event->uri], false, 1418);
         }
 
         return $page;
