@@ -260,7 +260,10 @@ class Online extends Model
                     $count = 15 & $misc;
 
                     if (
-                        $count > 1
+                        (
+                            $count > 1
+                            && (48 !== (48 & $misc))
+                        )
                         || ($bBot xor '' !== $name)
                     ) {
                         $misc = 128;
