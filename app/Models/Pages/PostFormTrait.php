@@ -157,13 +157,13 @@ trait PostFormTrait
                 $colors = [0 => __('No')];
 
                 for ($i = 1; $i <= self::NUM_COLORS; $i++) {
-                    $colors[$i] = __(['Color number %s', $i]);
+                    $colors[$i] = "▣·{$i}·▣"; // __(['Color number %s', $i]);
                 }
 
                 $fieldset['subject_color'] = [
-                    'type'    => 'select',
+                    'type'    => 'radio',
                     'cprefix' => 'f-color',
-                    'options' => $colors,
+                    'values'  => $colors,
                     'value'   => $vars['subject_color'] ?? null,
                     'caption' => 'Topic title color label',
                 ];

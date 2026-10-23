@@ -85,7 +85,7 @@
                             @break
                         @case ('radio')
                             @foreach ($cur['values'] as $v => $n)
-                <label class="f-flblr"><input id="id-{{ $key.'-'.$v }}" name="{{ $key }}" class="f-yradio" type="radio" @if ($cur['autofocus']) autofocus @endif @if ($cur['disabled']) disabled @endif value="{{ $v }}" @if ($v == $cur['value']) checked @endif>{{ $n }}</label>
+                <label class="f-flblr @if($cur['cprefix']) {{ $cur['cprefix'].$v }} @endif"><input id="id-{{ $key.'-'.$v }}" name="{{ $key }}" class="f-yradio" type="radio" @if ($cur['autofocus']) autofocus @endif @if ($cur['disabled']) disabled @endif value="{{ $v }}" @if ($v == $cur['value']) checked @endif>{{ $n }}</label>
                             @endforeach
                             @break
                         @case ('btn')

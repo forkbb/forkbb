@@ -1,3 +1,12 @@
+#id-dl-subject_color {
+  width: 100%;
+}
+
+#id-dl-subject_color > dd {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
 #fork .f-color0 {color: var(--c-fprimary)}
 
 #fork .f-color1 {color: #FF00FF}
