@@ -157,7 +157,7 @@ trait PostFormTrait
                 $colors = [0 => __('No')];
 
                 for ($i = 1; $i <= self::NUM_COLORS; $i++) {
-                    $colors[$i] = "▣·{$i}·▣"; // __(['Color number %s', $i]);
+                    $colors[$i] = "▣·{$i}·▣";
                 }
 
                 $fieldset['subject_color'] = [

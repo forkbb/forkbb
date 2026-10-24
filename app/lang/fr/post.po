@@ -141,9 +141,6 @@ msgstr "Oui"
 msgid "Topic title color label"
 msgstr "Couleur du sujet"
 
-msgid "Color number %s"
-msgstr "Color N %s"
-
 msgid "Hashtags format"
 msgstr "Les Hashtags peuvent être constitués de lettres et nombres. Le caractère souligné peut appraitre dans un hashtag. Chaque hashtag doit contenir au moins 3 caractères."
 
