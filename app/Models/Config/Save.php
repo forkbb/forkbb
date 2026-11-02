@@ -64,11 +64,11 @@ class Save extends Method
                             ON DUPLICATE KEY UPDATE conf_value=?s:value';
 
                         break;
-                    case 'sqlite':
                     case 'pgsql':
+                    case 'sqlite':
                         $query = 'INSERT INTO ::config (conf_name, conf_value)
                             VALUES (?s:name, ?s:value)
-                            ON CONFLICT(conf_name) DO UPDATE SET conf_value=?s:value';
+                            ON CONFLICT (conf_name) DO UPDATE SET conf_value=?s:value';
 
                         break;
                     default:

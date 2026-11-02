@@ -188,9 +188,9 @@ class Attachments extends Model
                 'mysql' => "INSERT IGNORE INTO {$table} (id, pid)
                     VALUES (?i:id, ?i:pid)",
 
-                'sqlite', 'pgsql' => "INSERT INTO {$table} (id, pid)
+                'pgsql', 'sqlite' => "INSERT INTO {$table} (id, pid)
                     VALUES (?i:id, ?i:pid)
-                    ON CONFLICT(id, pid) DO NOTHING",
+                    ON CONFLICT (id, pid) DO NOTHING",
 
                 default => "INSERT INTO {$table} (id, pid)
                     SELECT tmp.*

@@ -343,9 +343,9 @@ class Online extends Model
                 'mysql' => 'INSERT IGNORE INTO ::online (user_id, ident, logged, o_position, o_name, o_misc)
                     VALUES (?i:id, ?s:ident, ?i:logged, ?s:pos, ?s:name, ?i:misc)',
 
-                'sqlite', 'pgsql' => 'INSERT INTO ::online (user_id, ident, logged, o_position, o_name, o_misc)
+                'pgsql', 'sqlite' => 'INSERT INTO ::online (user_id, ident, logged, o_position, o_name, o_misc)
                     VALUES (?i:id, ?s:ident, ?i:logged, ?s:pos, ?s:name, ?i:misc)
-                    ON CONFLICT(user_id, ident) DO NOTHING',
+                    ON CONFLICT (user_id, ident) DO NOTHING',
 
                 default => 'INSERT INTO ::online (user_id, ident, logged, o_position, o_name, o_misc)
                     SELECT tmp.*

@@ -93,6 +93,9 @@ class Subscription extends Model
 
         if (! empty($this->forums)) {
             $query = match ($this->c->DB->getType()) {
+                'mysql' => 'INSERT IGNORE INTO ::forum_subscriptions (user_id, forum_id)
+                    VALUES (?i:uid, ?i:id)',
+
                 'pgsql', 'sqlite' => 'INSERT INTO ::forum_subscriptions (user_id, forum_id)
                     VALUES (?i:uid, ?i:id)
                     ON CONFLICT (user_id, forum_id) DO NOTHING',
@@ -116,6 +119,9 @@ class Subscription extends Model
 
         if (! empty($this->topics)) {
             $query = match ($this->c->DB->getType()) {
+                'mysql' => 'INSERT IGNORE INTO ::topic_subscriptions (user_id, topic_id)
+                    VALUES (?i:uid, ?i:id)',
+
                 'pgsql', 'sqlite' => 'INSERT INTO ::topic_subscriptions (user_id, topic_id)
                     VALUES (?i:uid, ?i:id)
                     ON CONFLICT (user_id, topic_id) DO NOTHING',

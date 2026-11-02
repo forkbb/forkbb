@@ -82,6 +82,9 @@ class Bookmark extends Model
 
         if (! empty($this->topics)) {
             $query = match ($this->c->DB->getType()) {
+                'mysql' => 'INSERT IGNORE INTO ::topic_bookmarks (user_id, topic_id)
+                    VALUES (?i:uid, ?i:id)',
+
                 'pgsql', 'sqlite' => 'INSERT INTO ::topic_bookmarks (user_id, topic_id)
                     VALUES (?i:uid, ?i:id)
                     ON CONFLICT (user_id, topic_id) DO NOTHING',

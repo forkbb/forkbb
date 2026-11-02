@@ -565,6 +565,9 @@ class Topic extends DataModel
                 && empty($this->mt_last_visit)
             ) {
                 $query = match ($this->c->DB->getType()) {
+                    'mysql' => 'INSERT IGNORE INTO ::mark_of_topic (uid, tid, mt_last_visit, mt_last_read)
+                        VALUES (?i:uid, ?i:tid, ?i:visit, ?i:read)',
+
                     'pgsql', 'sqlite' => 'INSERT INTO ::mark_of_topic (uid, tid, mt_last_visit, mt_last_read)
                         VALUES (?i:uid, ?i:tid, ?i:visit, ?i:read)
                         ON CONFLICT (uid, tid) DO NOTHING',

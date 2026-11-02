@@ -88,9 +88,9 @@ class Reactions extends Manager
                 'mysql' => 'INSERT IGNORE INTO ::reactions (pid, uid, reaction)
                     VALUES (?i:pid, ?i:uid, ?i:type)',
 
-                'sqlite', 'pgsql' => 'INSERT INTO ::reactions (pid, uid, reaction)
+                'pgsql', 'sqlite' => 'INSERT INTO ::reactions (pid, uid, reaction)
                     VALUES (?i:pid, ?i:uid, ?i:type)
-                    ON CONFLICT(pid, uid) DO NOTHING',
+                    ON CONFLICT (pid, uid) DO NOTHING',
 
                 default => 'INSERT INTO ::reactions (pid, uid, reaction)
                     SELECT tmp.*
