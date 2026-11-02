@@ -564,14 +564,20 @@ class Topic extends DataModel
                 empty($this->mt_last_read)
                 && empty($this->mt_last_visit)
             ) {
-                $query = 'INSERT INTO ::mark_of_topic (uid, tid, mt_last_visit, mt_last_read)
-                    SELECT tmp.*
-                    FROM (SELECT ?i:uid AS f1, ?i:tid AS f2, ?i:visit AS f3, ?i:read AS f4) AS tmp
-                    WHERE NOT EXISTS (
-                        SELECT 1
-                        FROM ::mark_of_topic
-                        WHERE uid=?i:uid AND tid=?i:tid
-                    )';
+                $query = match ($this->c->DB->getType()) {
+                    'pgsql', 'sqlite' => 'INSERT INTO ::mark_of_topic (uid, tid, mt_last_visit, mt_last_read)
+                        VALUES (?i:uid, ?i:tid, ?i:visit, ?i:read)
+                        ON CONFLICT (uid, tid) DO NOTHING',
+
+                    default => 'INSERT INTO ::mark_of_topic (uid, tid, mt_last_visit, mt_last_read)
+                        SELECT tmp.*
+                        FROM (SELECT ?i:uid AS f1, ?i:tid AS f2, ?i:visit AS f3, ?i:read AS f4) AS tmp
+                        WHERE NOT EXISTS (
+                            SELECT 1
+                            FROM ::mark_of_topic
+                            WHERE uid=?i:uid AND tid=?i:tid
+                        )',
+                };
 
             } else {
                 $query = 'UPDATE ::mark_of_topic

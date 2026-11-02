@@ -81,14 +81,20 @@ class Bookmark extends Model
         ];
 
         if (! empty($this->topics)) {
-            $query = 'INSERT INTO ::topic_bookmarks (user_id, topic_id)
-                SELECT tmp.*
-                FROM (SELECT ?i:uid AS f1, ?i:id AS f2) AS tmp
-                WHERE NOT EXISTS (
-                    SELECT 1
-                    FROM ::topic_bookmarks
-                    WHERE user_id=?i:uid AND topic_id=?i:id
-                )';
+            $query = match ($this->c->DB->getType()) {
+                'pgsql', 'sqlite' => 'INSERT INTO ::topic_bookmarks (user_id, topic_id)
+                    VALUES (?i:uid, ?i:id)
+                    ON CONFLICT (user_id, topic_id) DO NOTHING',
+
+                default => 'INSERT INTO ::topic_bookmarks (user_id, topic_id)
+                    SELECT tmp.*
+                    FROM (SELECT ?i:uid AS f1, ?i:id AS f2) AS tmp
+                    WHERE NOT EXISTS (
+                        SELECT 1
+                        FROM ::topic_bookmarks
+                        WHERE user_id=?i:uid AND topic_id=?i:id
+                    )',
+            };
 
             foreach ($this->topics as $id) {
                 $vars[':id'] = $id;
