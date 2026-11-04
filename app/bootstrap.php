@@ -90,9 +90,13 @@ $tpl = $c->View->rendering($page);
 if (
     null !== $tpl
     && 3 & $c->DEBUG
+    && false !== \strpos($tpl, '<!-- debuginfo -->')
 ) {
-    $debug = \rtrim($c->View->rendering($c->Debug->debug()));
-    $tpl   = \str_replace('<!-- debuginfo -->', $debug, $tpl);
+    $tpl = \str_replace(
+        '<!-- debuginfo -->',
+        \rtrim($c->View->rendering($c->Debug->debug())),
+        $tpl
+    );
 }
 
 exit($tpl ?? 0);
