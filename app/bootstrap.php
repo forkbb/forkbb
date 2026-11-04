@@ -78,6 +78,11 @@ if (null !== $page->nameTpl) {
 }
 
 if ($c->isInit('DB')) {
+    $event       = new Event('bootstrap:beforeDBDisconnect');
+    $event->page = $page;
+
+    $c->dispatcher->dispatch($event);
+
     if ($c->DB->inTransaction()) {
         $c->DB->commit();
     }
