@@ -3693,6 +3693,17 @@ body,
   background-color: #4285f4;
 }
 
+#fork .f-btn[name="vkid"] {
+  color: #0077FF;
+  background-color: #ffffff;
+}
+
+#fork .f-btn[name="vkid"]:focus,
+#fork .f-btn[name="vkid"]:hover {
+  color: #ffffff;
+  background-color: #0077FF;
+}
+
 /************/
 /* Анимация */
 /************/
