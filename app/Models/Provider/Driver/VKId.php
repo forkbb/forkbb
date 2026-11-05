@@ -60,7 +60,7 @@ class VKId extends Driver
         $this->c->Cookie->delete(self::VK_COOKIE);
 
         $params                  = parent::reqAccessTokenParams();
-        $params['code_verifier'] = \is_string($codeVerifier) ? $codeVerifier : '';
+        $params['code_verifier'] = \is_string($codeVerifier) ? \preg_replace('%[^\w-]%', '', $codeVerifier) : '';
         $params['state']         = $type . '_' . $this->c->Csrf->createHash($this->origName, ['ip' => $this->c->user->ip, 'type' => $type]);
 
         if (\is_string($deviceId)) {
