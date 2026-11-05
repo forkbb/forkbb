@@ -1827,6 +1827,30 @@ class Update extends Admin
 
         $config->save();
 
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'shared=>providers=>drivers=>vkid',
+            '\\ForkBB\\Models\\Provider\\Driver\\VKId::class'
+        );
+
+        $coreConfig->save();
+
+        $vars = [
+            ':name' => 'vkid',
+            ':pos'  => 3,
+        ];
+        $query = match ($this->c->DB->getType()) {
+            'mysql' => 'INSERT IGNORE INTO ::providers (pr_name, pr_pos)
+                VALUES (?s:name, ?i:pos)',
+
+            'pgsql', 'sqlite' => 'INSERT INTO ::providers (pr_name, pr_pos)
+                    VALUES (?s:name, ?i:pos)
+                    ON CONFLICT (pr_name) DO NOTHING',
+        };
+
+        $this->c->DB->exec($query, $vars);
+
         return null;
     }
 }

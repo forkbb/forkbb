@@ -42,6 +42,9 @@ msgstr "Yandex"
 msgid "google"
 msgstr "Google"
 
+msgid "vkid"
+msgstr "VK Id"
+
 msgid "Callback label"
 msgstr "Callback URI"
 

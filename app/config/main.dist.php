@@ -206,6 +206,7 @@ return [
                 'github' => \ForkBB\Models\Provider\Driver\GitHub::class,
                 'yandex' => \ForkBB\Models\Provider\Driver\Yandex::class,
                 'google' => \ForkBB\Models\Provider\Driver\Google::class,
+                'vkid'   => \ForkBB\Models\Provider\Driver\VKId::class,
             ],
         ],
         'providerUser'  => \ForkBB\Models\ProviderUser\ProviderUser::class,

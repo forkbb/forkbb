@@ -30,6 +30,9 @@ abstract class Driver extends Model
     protected string $userURL;
     protected string $scope;
 
+    protected array $rawAuthData;
+    protected array $rawTokenData;
+
     public function __construct(protected string $client_id, protected string $client_secret, Container $c)
     {
         parent::__construct($c);
@@ -78,6 +81,20 @@ abstract class Driver extends Model
     }
 
     /**
+     * Возвращает параметры для ссылки авторизации
+     */
+    protected function linkAuthParams(string $type): array
+    {
+        return [
+            'response_type' => 'code',
+            'scope'         => $this->scope,
+            'state'         => $type . '_' . $this->c->Csrf->createHash($this->origName, ['ip' => $this->c->user->ip, 'type' => $type]),
+            'client_id'     => $this->client_id,
+            'redirect_uri'  => $this->linkCallback,
+        ];
+    }
+
+    /**
      * Формирует ссылку авторизации на сервере провайдера
      */
     public function linkAuth(string $type): string
@@ -89,15 +106,7 @@ abstract class Driver extends Model
             throw new InvalidArgumentException('Invalid characters in type');
         }
 
-        $params = [
-            'response_type' => 'code',
-            'scope'         => $this->scope,
-            'state'         => $type . '_' . $this->c->Csrf->createHash($this->origName, ['ip' => $this->c->user->ip, 'type' => $type]),
-            'client_id'     => $this->client_id,
-            'redirect_uri'  => $this->linkCallback,
-        ];
-
-        return $this->authURL . '?' . \http_build_query(\array_filter($params));
+        return $this->authURL . '?' . \http_build_query(\array_filter($this->linkAuthParams($type)));
     }
 
     /**
@@ -120,6 +129,7 @@ abstract class Driver extends Model
     /**
      * Проверяет ответ сервера провайдера после авторизации пользователя
      * Запоминает code
+     * Запоминает необработанные данные ответа в rawAuthData
      */
     public function verifyAuth(): bool
     {
@@ -147,15 +157,31 @@ abstract class Driver extends Model
             return false;
         }
 
-        $this->code = $data['code'];
+        $this->code        = $data['code'];
+        $this->rawAuthData = $data;
 
         return true;
+    }
+
+    /**
+     * Возвращает данные формы для запроса токена
+     */
+    protected function reqAccessTokenParams(): array
+    {
+        return [
+            'grant_type'    => 'authorization_code',
+            'client_id'     => $this->client_id,
+            'client_secret' => $this->client_secret,
+            'code'          => $this->code,
+            'redirect_uri'  => $this->linkCallback,
+        ];
     }
 
     /**
      * Запрашивает access token на основе code
      * Проверяет ответ
      * Запоминает access token
+     * Запоминает необработанные данные ответа в rawTokenData
      */
     public function reqAccessToken(): bool
     {
@@ -165,19 +191,14 @@ abstract class Driver extends Model
             'header' => [
                 'Accept: application/json',
             ],
-            'form_params' => [
-                'grant_type'    => 'authorization_code',
-                'client_id'     => $this->client_id,
-                'client_secret' => $this->client_secret,
-                'code'          => $this->code,
-                'redirect_uri'  => $this->linkCallback,
-            ],
+            'form_params' => $this->reqAccessTokenParams(),
         ];
 
         $response = $this->request('POST', $this->tokenURL, $options);
 
         if (isset($response['access_token'])) {
             $this->access_token = $response['access_token'];
+            $this->rawTokenData = $response;
 
             return true;
 
