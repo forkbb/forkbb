@@ -19,7 +19,7 @@ class VKId extends Driver
 
     protected string $origName   = 'vkid';
     protected string $authURL    = 'https://id.vk.ru/authorize';
-    protected string $formAction = 'https://id.vk.ru/authorize';
+    protected string $formAction = 'https://id.vk.ru/authorize https://id.vk.ru/auth';
     protected string $tokenURL   = 'https://id.vk.ru/oauth2/auth';
     protected string $userURL    = 'https://id.vk.ru/oauth2/user_info';
     protected string $scope      = ''; // 'vkid.personal_info email'; // разрешает не передавать
@@ -68,6 +68,30 @@ class VKId extends Driver
         }
 
         return $params;
+    }
+
+    /**
+     * Запрашивает access token на основе code
+     * Проверяет ответ
+     * Запоминает access token
+     * Запоминает необработанные данные ответа в rawTokenData
+     */
+    public function reqAccessToken(): bool
+    {
+        if (false === parent::reqAccessToken()) {
+            return false;
+
+        } elseif (
+            ! \is_string($this->rawTokenData['state'] ?? null)
+            || ! $this->verifyState($this->rawTokenData['state'])
+        ) {
+            $this->error = 'State error';
+
+            return false;
+
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -172,9 +196,9 @@ class VKId extends Driver
      */
     protected function getuserGender(): int
     {
-        return match ((string) ($this->userInfo['sex'] ?? '')) {
-            '1'     => FORK_GEN_FEM,
-            '2'     => FORK_GEN_MAN,
+        return match ($this->userInfo['sex'] ?? 0) {
+            2       => FORK_GEN_MAN,
+            1       => FORK_GEN_FEM,
             default => FORK_GEN_NOT,
         };
     }
