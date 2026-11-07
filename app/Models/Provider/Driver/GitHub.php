@@ -15,6 +15,8 @@ use RuntimeException;
 
 class GitHub extends Driver
 {
+    protected bool $usePKCE = true;
+
     protected string $origName   = 'github';
     protected string $authURL    = 'https://github.com/login/oauth/authorize';
     protected string $formAction = 'https://github.com/login';
