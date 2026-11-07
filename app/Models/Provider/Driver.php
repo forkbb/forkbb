@@ -187,6 +187,16 @@ abstract class Driver extends Model
     }
 
     /**
+     * Возвращает список заголовков для запроса токена
+     */
+    protected function reqAccessTokenHeader(): array
+    {
+        return [
+            'Accept: application/json',
+        ];
+    }
+
+    /**
      * Возвращает данные формы для запроса токена
      */
     protected function reqAccessTokenParams(): array
@@ -228,9 +238,7 @@ abstract class Driver extends Model
         $this->access_token = '';
 
         $options = [
-            'header' => [
-                'Accept: application/json',
-            ],
+            'header'      => $this->reqAccessTokenHeader(),
             'form_params' => $this->reqAccessTokenParams(),
         ];
 
