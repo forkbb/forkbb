@@ -15,7 +15,7 @@ use RuntimeException;
 
 class VKId extends Driver
 {
-    const VK_COOKIE = 'vkid_code_verifier';
+    protected bool $usePKCE = true;
 
     protected string $origName   = 'vkid';
     protected string $authURL    = 'https://id.vk.ru/authorize';
@@ -25,43 +25,15 @@ class VKId extends Driver
     protected string $scope      = ''; // 'vkid.personal_info email'; // разрешает не передавать
 
     /**
-     * Вычисляет code_challenge.
-     */
-    protected function codeChallengeS256(string $verifier): string
-    {
-        return \rtrim(\strtr(\base64_encode(\hash('sha256', $verifier, true)), '+/', '-_'), '=');
-    }
-
-    /**
-     * Возвращает параметры для ссылки авторизации
-     */
-    protected function linkAuthParams(string $type): array
-    {
-        $codeVerifier = $this->c->Secury->randomPass(64);
-
-        $this->c->Cookie->set(self::VK_COOKIE, $codeVerifier);
-
-        $params                          = parent::linkAuthParams($type);
-        $params['code_challenge']        = $this->codeChallengeS256($codeVerifier);
-        $params['code_challenge_method'] = 'S256';
-
-        return $params;
-    }
-
-    /**
      * Возвращает данные формы для запроса токена
      */
     protected function reqAccessTokenParams(): array
     {
-        $deviceId     = $this->rawAuthData['device_id'] ?? null;
-        $codeVerifier = $this->c->Cookie->get(self::VK_COOKIE);
-        $type         = $this->stateType;
+        $deviceId        = $this->rawAuthData['device_id'] ?? null;
+        $type            = $this->stateType;
 
-        $this->c->Cookie->delete(self::VK_COOKIE);
-
-        $params                  = parent::reqAccessTokenParams();
-        $params['code_verifier'] = \is_string($codeVerifier) ? \preg_replace('%[^\w-]%', '', $codeVerifier) : '';
-        $params['state']         = $type . '_' . $this->c->Csrf->createHash($this->origName, ['ip' => $this->c->user->ip, 'type' => $type]);
+        $params          = parent::reqAccessTokenParams();
+        $params['state'] = $type . '_' . $this->c->Csrf->createHash($this->origName, ['ip' => $this->c->user->ip, 'type' => $type]);
 
         if (\is_string($deviceId)) {
             $params['device_id'] = $deviceId;

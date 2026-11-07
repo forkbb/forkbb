@@ -18,10 +18,14 @@ use RuntimeException;
 
 abstract class Driver extends Model
 {
+    const COOKIE_FOR_CODE = 'code_verifier';
+
     /**
      * Ключ модели для контейнера
      */
     protected string $cKey = 'Provider';
+
+    protected bool $usePKCE = false;
 
     protected string $origName;
     protected string $authURL;
@@ -81,17 +85,36 @@ abstract class Driver extends Model
     }
 
     /**
+     * Вычисляет code_challenge.
+     */
+    protected function codeChallengeS256(string $verifier): string
+    {
+        return \rtrim(\strtr(\base64_encode(\hash('sha256', $verifier, true)), '+/', '-_'), '=');
+    }
+
+    /**
      * Возвращает параметры для ссылки авторизации
      */
     protected function linkAuthParams(string $type): array
     {
-        return [
+        $params = [
             'response_type' => 'code',
             'scope'         => $this->scope,
             'state'         => $type . '_' . $this->c->Csrf->createHash($this->origName, ['ip' => $this->c->user->ip, 'type' => $type]),
             'client_id'     => $this->client_id,
             'redirect_uri'  => $this->linkCallback,
         ];
+
+        if (true === $this->usePKCE) {
+            $codeVerifier = $this->c->Secury->randomPass(64);
+
+            $this->c->Cookie->set(self::COOKIE_FOR_CODE, $codeVerifier);
+
+            $params['code_challenge']        = $this->codeChallengeS256($codeVerifier);
+            $params['code_challenge_method'] = 'S256';
+        }
+
+        return $params;
     }
 
     /**
@@ -168,13 +191,30 @@ abstract class Driver extends Model
      */
     protected function reqAccessTokenParams(): array
     {
-        return [
+        $params = [
             'grant_type'    => 'authorization_code',
             'client_id'     => $this->client_id,
             'client_secret' => $this->client_secret,
             'code'          => $this->code,
             'redirect_uri'  => $this->linkCallback,
         ];
+
+        if (true === $this->usePKCE) {
+            $codeVerifier = $this->c->Cookie->get(self::COOKIE_FOR_CODE);
+
+            if (empty($codeVerifier)) {
+                throw new RuntimeException('PKCE code verifier not found in cookie');
+
+            } elseif (! \is_string($codeVerifier)) {
+                throw new RuntimeException('PKCE code verifier not are string');
+            }
+
+            $this->c->Cookie->delete(self::COOKIE_FOR_CODE);
+
+            $params['code_verifier'] = \preg_replace('%[^\w-]%', '', $codeVerifier);
+        }
+
+        return $params;
     }
 
     /**
