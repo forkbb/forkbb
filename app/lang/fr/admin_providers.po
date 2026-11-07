@@ -82,7 +82,7 @@ msgid "Provider response error: %s"
 msgstr "Echec.<br>Réponse du fournisseur: %s."
 
 msgid "State error"
-msgstr "Erreur dans les paramètres."
+msgstr "Erreur dans les paramètres. Votre adresse IP a peut-être changé."
 
 msgid "Token error: %s"
 msgstr "Echec de la recupération d’un jeton d’accès: %s."

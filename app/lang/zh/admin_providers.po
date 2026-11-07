@@ -82,7 +82,7 @@ msgid "Provider response error: %s"
 msgstr "失败。<br>提供商响应：%s。"
 
 msgid "State error"
-msgstr "状态参数错误。"
+msgstr "状态参数错误。您的 IP 地址可能已发生变化。"
 
 msgid "Token error: %s"
 msgstr "访问令牌请求失败：%s。"

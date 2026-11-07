@@ -82,7 +82,7 @@ msgid "Provider response error: %s"
 msgstr "Failed.<br>Provider response: %s."
 
 msgid "State error"
-msgstr "Error in state parameter."
+msgstr "Error in state parameter. Your IP address may have changed."
 
 msgid "Token error: %s"
 msgstr "Access token request failed: %s."
