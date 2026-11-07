@@ -1853,4 +1853,36 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.99 to rev.100
+     */
+    protected function stageNumber99(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'shared=>providers=>drivers=>telegram',
+            '\\ForkBB\\Models\\Provider\\Driver\\Telegram::class'
+        );
+
+        $coreConfig->save();
+
+        $vars = [
+            ':name' => 'telegram',
+            ':pos'  => 4,
+        ];
+        $query = match ($this->c->DB->getType()) {
+            'mysql' => 'INSERT IGNORE INTO ::providers (pr_name, pr_pos)
+                VALUES (?s:name, ?i:pos)',
+
+            'pgsql', 'sqlite' => 'INSERT INTO ::providers (pr_name, pr_pos)
+                    VALUES (?s:name, ?i:pos)
+                    ON CONFLICT (pr_name) DO NOTHING',
+        };
+
+        $this->c->DB->exec($query, $vars);
+
+        return null;
+    }
 }

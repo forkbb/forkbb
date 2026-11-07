@@ -45,6 +45,9 @@ msgstr "Google"
 msgid "vkid"
 msgstr "VK Id"
 
+msgid "telegram"
+msgstr "Telegram"
+
 msgid "Callback label"
 msgstr "URI перенаправления"
 

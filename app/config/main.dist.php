@@ -203,10 +203,11 @@ return [
         'providers'     => [
             'class'   => \ForkBB\Models\Provider\Providers::class,
             'drivers' => [
-                'github' => \ForkBB\Models\Provider\Driver\GitHub::class,
-                'yandex' => \ForkBB\Models\Provider\Driver\Yandex::class,
-                'google' => \ForkBB\Models\Provider\Driver\Google::class,
-                'vkid'   => \ForkBB\Models\Provider\Driver\VKId::class,
+                'github'   => \ForkBB\Models\Provider\Driver\GitHub::class,
+                'yandex'   => \ForkBB\Models\Provider\Driver\Yandex::class,
+                'google'   => \ForkBB\Models\Provider\Driver\Google::class,
+                'vkid'     => \ForkBB\Models\Provider\Driver\VKId::class,
+                'telegram' => \ForkBB\Models\Provider\Driver\Telegram::class,
             ],
         ],
         'providerUser'  => \ForkBB\Models\ProviderUser\ProviderUser::class,

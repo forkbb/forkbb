@@ -3704,6 +3704,17 @@ body,
   background-color: #0077FF;
 }
 
+#fork .f-btn[name="telegram"] {
+  color: #FFFFFF;
+  background-color: #54A9EB;
+}
+
+#fork .f-btn[name="telegram"]:focus,
+#fork .f-btn[name="telegram"]:hover {
+  color: #ffffff;
+  background-color: #4797D6;
+}
+
 /************/
 /* Анимация */
 /************/

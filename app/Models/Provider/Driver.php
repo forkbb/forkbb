@@ -89,7 +89,7 @@ abstract class Driver extends Model
      */
     protected function codeChallengeS256(string $verifier): string
     {
-        return \rtrim(\strtr(\base64_encode(\hash('sha256', $verifier, true)), '+/', '-_'), '=');
+        return $this->base64UrlEncode(\hash('sha256', $verifier, true));
     }
 
     /**
@@ -356,4 +356,99 @@ abstract class Driver extends Model
      * Возвращает пол пользователя (от провайдера)
      */
     abstract protected function getuserGender(): int;
+
+    /**
+     * Кодирует строку в base64Url
+     */
+    protected function base64UrlEncode(string $data): string
+    {
+        return \rtrim(\strtr(\base64_encode($data), '+/', '-_'), '=');
+    }
+
+    /**
+     * Декодирует строку из base64Url
+     */
+    protected function base64UrlDecode(string $data): string|false
+    {
+        return \base64_decode(\strtr($data, '-_', '+/'));
+    }
+
+    /**
+     * Декодирует JWT (id_token)
+     * ATTENTION!!!
+     * Метод не проверяет подпись!
+     */
+    protected function decodeJWT(string $jwt): array|false
+    {
+        $date = $this->decodeJWThidden($jwt);
+
+        if (\is_array($date)) {
+            return $date;
+
+        } else {
+            $this->c->Log->error("oAuth JWT: {$date}", ['user' => $this->c->user->fLog(), 'JWT' => $jwt]);
+
+            return false;
+        }
+    }
+
+    private function decodeJWThidden(string $jwt): array|string
+    {
+        $tokenParts = \explode('.', $jwt);
+
+        if (3 !== \count($tokenParts)) {
+            return 'There aren\'t 3 parts';
+        }
+
+        //$signature = $tokenParts[2];
+
+        $data = $this->base64UrlDecode($tokenParts[0]);
+
+        if (
+            empty($data)
+            || ! \is_array($header = \json_decode($data, true, 10, \JSON_THROW_ON_ERROR))
+            || ! isset($header['typ'])
+            || 'JWT' !== $header['typ']
+        ) {
+            return 'Wrong header';
+        }
+
+        $data = $this->base64UrlDecode($tokenParts[1]);
+
+        if (
+            empty($data)
+            || ! \is_array($payload = \json_decode($data, true, 10, \JSON_THROW_ON_ERROR))
+        ) {
+            return 'Wrong payloadr';
+
+        } elseif (empty($payload['sub'])) {
+            return 'The user identifier \'sub\' is empty';
+
+        } elseif (
+            empty($payload['iat'])
+            || (
+                \is_int($payload['iat'])
+                && $payload['iat'] > \time()
+            )
+        ) {
+            return 'The ID token issuance time is incorrect';
+
+        } elseif (
+            empty($payload['exp'])
+            || (
+                \is_int($payload['exp'])
+                && $payload['exp'] < \time()
+            )
+        ) {
+            return 'The ID token has expired';
+
+        } elseif (
+            empty($payload['aud'])
+            || $payload['aud'] !== $this->client_id
+        ) {
+            return 'The \'aud\' field does not match the client identifier (client_id)';
+        }
+
+        return $payload;
+    }
 }
