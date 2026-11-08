@@ -15,6 +15,8 @@ use RuntimeException;
 
 class Yandex extends Driver
 {
+    protected bool $usePKCE = true;
+
     protected string $origName   = 'yandex';
     protected string $authURL    = 'https://oauth.yandex.ru/authorize';
     protected string $formAction = 'https://oauth.yandex.ru/authorize https://passport.yandex.ru';
