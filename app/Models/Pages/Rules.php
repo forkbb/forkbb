@@ -21,7 +21,7 @@ class Rules extends Page
     public function view(): Page
     {
         $this->identifier   = 'rules';
-        $this->fIndex       = self::FI_RULES;
+//        $this->fIndex       = self::FI_RULES;
         $this->nameTpl      = 'rules';
         $this->onlinePos    = 'rules';
         $this->onlineDetail = null;
@@ -93,5 +93,26 @@ class Rules extends Page
                 ],
             ],
         ];
+    }
+
+    /**
+     * Подготавливает данные для шаблона
+     */
+    public function privacyView(): Page
+    {
+        $this->identifier   = 'privacy';
+        $this->nameTpl      = 'privacy';
+        $this->onlinePos    = 'privacy';
+        $this->onlineDetail = null;
+        $this->canonical    = $this->c->Router->link('Privacy');
+        $this->crumbs       = $this->crumbs(
+            [
+                $this->c->Router->link('Privacy'),
+                'Privacy policy',
+            ]
+        );
+        $this->privacy      = $this->config->o_privacy_message;
+
+        return $this;
     }
 }

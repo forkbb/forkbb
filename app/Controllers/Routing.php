@@ -175,7 +175,7 @@ class Routing
                 $r->add(
                     $r::GET,
                     '/privacy_policy',
-                    'Privacy:view',
+                    'Rules:privacyView',
                     'Privacy'
                 );
             }

@@ -19,7 +19,7 @@ abstract class Page extends Model
 {
     const FI_INDEX  = 'index';
     const FI_USERS  = 'userlist';
-    const FI_RULES  = 'rules';
+//    const FI_RULES  = 'rules';
     const FI_SRCH   = 'search';
     const FI_REG    = 'register';
     const FI_LOGIN  = 'login';
