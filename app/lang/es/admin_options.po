@@ -322,13 +322,25 @@ msgid "Use rules label"
 msgstr "Normas del foro de usuarios"
 
 msgid "Use rules help"
-msgstr "Cuando está habilitado, los usuarios deben aceptar un conjunto de reglas al registrarse (ingrese el texto a continuación). Las reglas siempre estarán disponibles a través de un enlace en la tabla de navegación en la parte superior de cada página."
+msgstr "Cuando está habilitado, los usuarios deben aceptar un conjunto de reglas al registrarse (ingrese el texto a continuación). The rules will always be available through a link at the bottom of the page."
 
 msgid "Rules label"
 msgstr "Ingresa tus reglas aquí (HTML)"
 
 msgid "Rules help"
-msgstr "Aquí puedes ingresar cualquier regla u otra información que el usuario deba revisar y aceptar al registrarse. Si habilitó las reglas anteriores, debe ingresar algo aquí; de lo contrario, se deshabilitará."
+msgstr "Si habilitó las reglas anteriores, debe ingresar algo aquí; de lo contrario, se deshabilitará."
+
+msgid "Use privacy label"
+msgstr "Privacy Policy"
+
+msgid "Use privacy help"
+msgstr "When enabled, users must agree to privacy policy when registering (enter text below). The policy will always be available through a link at the bottom of the page."
+
+msgid "Privacy label"
+msgstr "Enter your privacy policy (HTML)"
+
+msgid "Privacy help"
+msgstr "If you enabled privacy above you have to enter something here, otherwise it will be disabled."
 
 msgid "E-mail default label"
 msgstr "Configuración de correo electrónico predeterminada"

@@ -322,13 +322,25 @@ msgid "Use rules label"
 msgstr "User forum rules"
 
 msgid "Use rules help"
-msgstr "When enabled, users must agree to a set of rules when registering (enter text below). The rules will always be available through a link in the navigation table at the top of every page."
+msgstr "When enabled, users must agree to a set of rules when registering (enter text below). The rules will always be available through a link at the bottom of the page."
 
 msgid "Rules label"
 msgstr "Enter your rules here (HTML)"
 
 msgid "Rules help"
-msgstr "Here you can enter any rules or other information that the user must review and accept when registering. If you enabled rules above you have to enter something here, otherwise it will be disabled."
+msgstr "If you enabled rules above you have to enter something here, otherwise it will be disabled."
+
+msgid "Use privacy label"
+msgstr "Privacy Policy"
+
+msgid "Use privacy help"
+msgstr "When enabled, users must agree to privacy policy when registering (enter text below). The policy will always be available through a link at the bottom of the page."
+
+msgid "Privacy label"
+msgstr "Enter your privacy policy (HTML)"
+
+msgid "Privacy help"
+msgstr "If you enabled privacy above you have to enter something here, otherwise it will be disabled."
 
 msgid "E-mail default label"
 msgstr "Default email setting"

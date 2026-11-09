@@ -106,6 +106,8 @@ class Options extends Admin
                     'b_regs_report'           => 'required|integer|in:0,1',
                     'b_rules'                 => 'required|integer|in:0,1|check_empty:o_rules_message',
                     'o_rules_message'         => 'exist|string:trim|max:65000 bytes|html',
+                    'b_privacy'               => 'required|integer|in:0,1|check_empty:o_privacy_message',
+                    'o_privacy_message'       => 'exist|string:trim|max:65000 bytes|html',
                     'i_default_email_setting' => 'required|integer|in:0,1,2',
                     'b_announcement'          => 'required|integer|in:0,1|check_empty:o_announcement_message',
                     'o_announcement_message'  => 'exist|string:trim|max:65000 bytes|html',
@@ -947,6 +949,18 @@ class Options extends Admin
                     'value' => __('Configure providers'),
                     'href'  => $this->c->Router->link('AdminProviders'),
                 ],
+                'i_default_email_setting' => [
+                    'class'   => ['block'],
+                    'type'    => 'radio',
+                    'value'   => $config->i_default_email_setting,
+                    'values'  => [
+                        0 => __('Display e-mail label'),
+                        1 => __('Hide allow form label'),
+                        2 => __('Hide both label'),
+                    ],
+                    'caption' => 'E-mail default label',
+                    'help'    => 'E-mail default help',
+                ],
                 'b_rules' => [
                     'type'    => 'radio',
                     'value'   => $config->b_rules,
@@ -960,17 +974,18 @@ class Options extends Admin
                     'caption' => 'Rules label',
                     'help'    => 'Rules help',
                 ],
-                'i_default_email_setting' => [
-                    'class'   => ['block'],
+                'b_privacy' => [
                     'type'    => 'radio',
-                    'value'   => $config->i_default_email_setting,
-                    'values'  => [
-                        0 => __('Display e-mail label'),
-                        1 => __('Hide allow form label'),
-                        2 => __('Hide both label'),
-                    ],
-                    'caption' => 'E-mail default label',
-                    'help'    => 'E-mail default help',
+                    'value'   => $config->b_privacy,
+                    'values'  => $yn,
+                    'caption' => 'Use privacy label',
+                    'help'    => 'Use privacy help',
+                ],
+                'o_privacy_message' => [
+                    'type'    => 'textarea',
+                    'value'   => $config->o_privacy_message,
+                    'caption' => 'Privacy label',
+                    'help'    => 'Privacy help',
                 ],
             ],
         ];

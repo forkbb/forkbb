@@ -253,6 +253,12 @@ msgstr "Rules"
 msgid "Board rules"
 msgstr "Board rules"
 
+msgid "Privacy"
+msgstr "Privacy"
+
+msgid "Privacy policy"
+msgstr "Privacy policy"
+
 msgid "Search"
 msgstr "Search"
 

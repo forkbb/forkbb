@@ -170,6 +170,16 @@ class Routing
                 );
             }
 
+            // Политика конфиденциальности
+            if (1 === $config->b_privacy) {
+                $r->add(
+                    $r::GET,
+                    '/privacy_policy',
+                    'Privacy:view',
+                    'Privacy'
+                );
+            }
+
             // поиск
             if (1 === $user->g_search) {
                 $r->add(

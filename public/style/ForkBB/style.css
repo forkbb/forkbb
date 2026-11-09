@@ -1074,10 +1074,17 @@ body,
   justify-content: space-between;
   flex-wrap: wrap;
   position: relative;
+  padding: 0.625rem;
+  gap: 0.312rem;
 }
 
-#fork-footer-in > div {
-  padding: 0.625rem;
+#fork #fork-footer-in-links {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3125rem;
+  font-size: 0.75rem;
+  justify-content: end;
 }
 
 /*************************/

@@ -322,13 +322,25 @@ msgid "Use rules label"
 msgstr "使用论坛规则"
 
 msgid "Use rules help"
-msgstr "启用后，用户注册时必须同意一套规则（在下面输入文本）。规则将始终通过页面顶部导航表中的链接提供访问。"
+msgstr "启用后，用户注册时必须同意一套规则（在下面输入文本）。The rules will always be available through a link at the bottom of the page."
 
 msgid "Rules label"
 msgstr "在此输入您的规则（HTML）"
 
 msgid "Rules help"
-msgstr "在这里您可以输入用户注册时必须查看和接受的任何规则或其他信息。如果您在上面启用了规则，您必须在这里输入内容，否则它将被禁用。"
+msgstr "如果您在上面启用了规则，您必须在这里输入内容，否则它将被禁用。"
+
+msgid "Use privacy label"
+msgstr "Privacy Policy"
+
+msgid "Use privacy help"
+msgstr "When enabled, users must agree to privacy policy when registering (enter text below). The policy will always be available through a link at the bottom of the page."
+
+msgid "Privacy label"
+msgstr "Enter your privacy policy (HTML)"
+
+msgid "Privacy help"
+msgstr "If you enabled privacy above you have to enter something here, otherwise it will be disabled."
 
 msgid "E-mail default label"
 msgstr "默认邮箱设置"

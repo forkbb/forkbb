@@ -1674,6 +1674,8 @@ class Install extends Admin
             'o_announcement_message'  => __('Announcement '),
             'b_rules'                 => 0,
             'o_rules_message'         => __('Rules '),
+            'b_privacy'               => 0,
+            'o_privacy_message'       => '',
             'b_maintenance'           => 0,
             'o_maintenance_message'   => __('Maintenance message '),
             'i_feed_type'             => 2,

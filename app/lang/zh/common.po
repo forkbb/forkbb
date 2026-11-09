@@ -253,6 +253,12 @@ msgstr "规则"
 msgid "Board rules"
 msgstr "论坛规则"
 
+msgid "Privacy"
+msgstr "隐私"
+
+msgid "Privacy policy"
+msgstr "隐私政策"
+
 msgid "Search"
 msgstr "搜索"
 

@@ -103,12 +103,53 @@ abstract class Page extends Model
         }
 
         $this->boardNavigation();
+        $this->boardFooterLinks();
         $this->iswevMessages();
 
         $event       = new Event('Models\Page:prepare:after');
         $event->page = $this;
 
         $this->c->dispatcher->dispatch($event);
+    }
+
+    /**
+     * Задает массив ссылок для футера
+     */
+    protected function boardFooterLinks(): void
+    {
+        $r     = $this->c->Router;
+        $links = [];
+
+        if (1 === $this->user->g_read_board) {
+            if (
+                1 === $this->config->b_rules
+                && (
+                    ! $this->user->isGuest
+                    || 1 === $this->config->b_regs_allow
+                )
+            ) {
+                $links['rules'] = [
+                    $r->link('Rules'),
+                    'Rules',
+                    'Board rules',
+                ];
+            }
+
+            if (1 === $this->config->b_privacy) {
+                $links['privacy'] = [
+                    $r->link('Privacy'),
+                    'Privacy',
+                    'Privacy policy',
+                ];
+            }
+        }
+
+        $event        = new Event('Models\Page:boardFooterLinks:after');
+        $event->links = $links;
+
+        $this->c->dispatcher->dispatch($event);
+
+        $this->fFooterLinks = $event->links;
     }
 
     /**
@@ -133,20 +174,6 @@ abstract class Page extends Model
                     $r->link('Userlist'),
                     'User list',
                     'List of users',
-                ];
-            }
-
-            if (
-                1 === $this->config->b_rules
-                && (
-                    ! $this->user->isGuest
-                    || 1 === $this->config->b_regs_allow
-                )
-            ) {
-                $navGen[self::FI_RULES] = [
-                    $r->link('Rules'),
-                    'Rules',
-                    'Board rules',
                 ];
             }
 

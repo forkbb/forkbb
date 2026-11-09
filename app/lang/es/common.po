@@ -253,6 +253,12 @@ msgstr "Normas"
 msgid "Board rules"
 msgstr "Normas del foro"
 
+msgid "Privacy"
+msgstr "Privacidad"
+
+msgid "Privacy policy"
+msgstr "Política de privacidad"
+
 msgid "Search"
 msgstr "Buscar"
 

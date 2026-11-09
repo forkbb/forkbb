@@ -1859,6 +1859,13 @@ class Update extends Admin
      */
     protected function stageNumber99(array $args): ?int
     {
+        $config = $this->c->config;
+
+        $config->b_privacy         ??= 0;
+        $config->o_privacy_message ??= '';
+
+        $config->save();
+
         $coreConfig = new CoreConfig($this->configFile);
 
         $coreConfig->add(
