@@ -41,3 +41,6 @@ msgstr "Por favor, introduce una dirección de correo electrónico válida. Se u
 
 msgid "Error welcom mail"
 msgstr "Al enviar el correo electrónico hubo un error. Utilice el formulario de restablecimiento de contraseña para activar su cuenta o comuníquese con el administrador del foro en <a href=\"mailto:%1$s\">%1$s</a>."
+
+msgid "Agree and privacy %s"
+msgstr "Acepto las normas y la <a href="%s">política de privacidad</a>"

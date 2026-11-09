@@ -41,3 +41,6 @@ msgstr "请输入有效的电子邮件地址。该地址将用于激活您的账
 
 msgid "Error welcom mail"
 msgstr "发送邮件时出现错误。请使用密码重置表单来激活您的账号，或联系论坛管理员：<a href="mailto:%1$s">%1$s</a>。"
+
+msgid "Agree and privacy %s"
+msgstr "我同意相关规则及<a href="%s">隐私政策</a>"

@@ -28,7 +28,7 @@ class Rules extends Page
         $this->canonical    = $this->c->Router->link('Rules');
         $this->crumbs       = $this->crumbs(
             [
-                $this->c->Router->link('Rules'),
+                $this->canonical,
                 'Forum rules',
             ]
         );
@@ -54,7 +54,7 @@ class Rules extends Page
         $this->crumbs       = $this->crumbs(
             'Forum rules',
             [
-                $this->c->Router->link('Register'),
+                $this->canonical,
                 'Register',
             ]
         );
@@ -80,7 +80,9 @@ class Rules extends Page
                     'fields' => [
                         'agree' => [
                             'type'    => 'checkbox',
-                            'label'   => 'Agree',
+                            'label'   => 1 === $this->config->b_privacy
+                                ? ['Agree and privacy %s', $this->c->Router->link('Privacy')]
+                                : 'Agree',
                             'value'   => $this->c->Csrf->create('Register'),
                         ],
                     ],
@@ -107,7 +109,7 @@ class Rules extends Page
         $this->canonical    = $this->c->Router->link('Privacy');
         $this->crumbs       = $this->crumbs(
             [
-                $this->c->Router->link('Privacy'),
+                $this->canonical,
                 'Privacy policy',
             ]
         );

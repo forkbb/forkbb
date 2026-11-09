@@ -256,7 +256,7 @@ msgid "Board rules"
 msgstr "Правила форума"
 
 msgid "Privacy"
-msgstr "Конфиденц."
+msgstr "Политика"
 
 msgid "Privacy policy"
 msgstr "Политика конфиденциальности"

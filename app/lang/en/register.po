@@ -25,7 +25,7 @@ msgid "Reg cancel"
 msgstr "You did not agree with the rules of this board."
 
 msgid "Agree"
-msgstr "Agree"
+msgstr "I agree"
 
 msgid "Reg email"
 msgstr "Thank you for registering. A letter with a link to activate your account was sent to the specified address. If it doesn't arrive you can contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."
@@ -41,3 +41,6 @@ msgstr "Please enter a valid email address. It will be used to activate your acc
 
 msgid "Error welcom mail"
 msgstr "When sending email there was an error. Please use the passphrase reset form for activate your account or contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."
+
+msgid "Agree and privacy %s"
+msgstr "I agree to the rules and the <a href="%s">privacy policy</a>"

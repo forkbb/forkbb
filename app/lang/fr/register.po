@@ -41,3 +41,6 @@ msgstr "Veuillez entrer une adresse mail valide. Celle ci sera utilisée pour ac
 
 msgid "Error welcom mail"
 msgstr "Erreur lors de l’envoi du mail. Utilisez le lien de redéfinition d’un nouveau mot de passe pour activer votre compte, ou contactez l’administrateur à <a href=\"mailto:%1$s\">%1$s</a>."
+
+msgid "Agree and privacy %s"
+msgstr "J'accepte les règles et la <a href="%s">politique de confidentialité</a>"
