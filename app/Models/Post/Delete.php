@@ -105,13 +105,13 @@ class Delete extends Action
                 ':users' => $uidsToGuest,
             ];
             $query = 'UPDATE ::posts
-                SET poster_id=0
+                SET poster=CONCAT(\'_Deleted_\', poster_id), poster_id=0
                 WHERE poster_id IN (?ai:users)';
 
             $this->c->DB->exec($query, $vars);
 
             $query = 'UPDATE ::posts
-                SET editor_id=0
+                SET editor=CONCAT(\'_Deleted_\', editor_id), editor_id=0
                 WHERE editor_id IN (?ai:users)';
 
             $this->c->DB->exec($query, $vars);
@@ -145,7 +145,7 @@ class Delete extends Action
             $this->c->DB->exec($query, $vars);
 
             $query = 'UPDATE ::posts
-                SET editor_id=0
+                SET editor=CONCAT(\'_Deleted_\', editor_id), editor_id=0
                 WHERE editor_id IN (?ai:users)';
 
             $this->c->DB->exec($query, $vars);
