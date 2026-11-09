@@ -134,6 +134,26 @@ class Routing
             );
         }
 
+        // правила
+        if (1 === $config->b_rules) {
+            $r->add(
+                $r::GET,
+                '/rules',
+                'Rules:view',
+                'Rules'
+            );
+        }
+
+        // Политика конфиденциальности
+        if (1 === $config->b_privacy) {
+            $r->add(
+                $r::GET,
+                '/privacy_policy',
+                'Rules:privacyView',
+                'Privacy'
+            );
+        }
+
         // просмотр разрешен
         if (1 === $user->g_read_board) {
             // главная
@@ -153,32 +173,6 @@ class Routing
                 '/index.html',
                 'Redirect:toIndex'
             );
-
-            // правила
-            if (
-                1 === $config->b_rules
-                && (
-                    ! $user->isGuest
-                    || 1 === $config->b_regs_allow
-                )
-            ) {
-                $r->add(
-                    $r::GET,
-                    '/rules',
-                    'Rules:view',
-                    'Rules'
-                );
-            }
-
-            // Политика конфиденциальности
-            if (1 === $config->b_privacy) {
-                $r->add(
-                    $r::GET,
-                    '/privacy_policy',
-                    'Rules:privacyView',
-                    'Privacy'
-                );
-            }
 
             // поиск
             if (1 === $user->g_search) {

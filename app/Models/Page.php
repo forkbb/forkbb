@@ -120,28 +120,20 @@ abstract class Page extends Model
         $r     = $this->c->Router;
         $links = [];
 
-        if (1 === $this->user->g_read_board) {
-            if (
-                1 === $this->config->b_rules
-                && (
-                    ! $this->user->isGuest
-                    || 1 === $this->config->b_regs_allow
-                )
-            ) {
-                $links['rules'] = [
-                    $r->link('Rules'),
-                    'Rules',
-                    'Board rules',
-                ];
-            }
+        if (1 === $this->config->b_rules) {
+            $links['rules'] = [
+                $r->link('Rules'),
+                'Rules',
+                'Board rules',
+            ];
+        }
 
-            if (1 === $this->config->b_privacy) {
-                $links['privacy'] = [
-                    $r->link('Privacy'),
-                    'Privacy',
-                    'Privacy policy',
-                ];
-            }
+        if (1 === $this->config->b_privacy) {
+            $links['privacy'] = [
+                $r->link('Privacy'),
+                'Privacy',
+                'Privacy policy',
+            ];
         }
 
         $event        = new Event('Models\Page:boardFooterLinks:after');
