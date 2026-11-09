@@ -149,6 +149,7 @@
 @if ($p->fFooterLinks)
         <div id="fork-footer-in-links">
     @foreach ($p->fFooterLinks as $key => $val)
+          <span class="f-footer-link-space">|</span>
           <a id="fork-footer-link-{{ $key }}" class="f-footer-link" href="{{ $val[0] }}" @if ($val[2]) title="{{ __($val[2]) }}" @endif>
             <span class="f-footer-link-span">{!! __($val[1]) !!}</span>
           </a>
