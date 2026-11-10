@@ -120,7 +120,7 @@ class Routing
             $r->add(
                 $r::GET,
                 '/reglog/callback/{name}',
-                'RegLog:callback',
+                '~RegLog:callback',
                 'RegLogCallback'
             );
         }
