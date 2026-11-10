@@ -703,10 +703,6 @@ body,
   content: "\f0c0";
 }
 
-#fork-nav-rules .f-menu-a::before {
-  content: "\f05a";
-}
-
 #fork-nav-search > .f-menu-a::before {
   content: "\f002";
 }
@@ -3667,59 +3663,31 @@ body,
 /****************/
 /* Кнопки OAuth */
 /****************/
-#fork .f-btn[name="github"] {
-  color: #24292f;
-  background-color: #ffffff;
+#fork .f-btn-oauth::before {
+  display: inline-block;
+  font-family: "fab";
+  font-weight: 400;
+  padding-inline-end: 0.625rem;
 }
 
-#fork .f-btn[name="github"]:focus,
-#fork .f-btn[name="github"]:hover {
-  color: #ffffff;
-  background-color: #24292f;
+#fork .f-bth-github::before {
+  content: "\f09b";
 }
 
-#fork .f-btn[name="yandex"] {
-  color: #fc3f1d;
-  background-color: #ffffff;
+#fork .f-bth-yandex::before {
+  content: "\f413";
 }
 
-#fork .f-btn[name="yandex"]:focus,
-#fork .f-btn[name="yandex"]:hover {
-  color: #ffffff;
-  background-color: #fc3f1d;
+#fork .f-bth-google::before {
+  content: "\f1a0";
 }
 
-#fork .f-btn[name="google"] {
-  color: #4285f4;
-  background-color: #ffffff;
+#fork .f-bth-vkid::before {
+  content: "\f189";
 }
 
-#fork .f-btn[name="google"]:focus,
-#fork .f-btn[name="google"]:hover {
-  color: #ffffff;
-  background-color: #4285f4;
-}
-
-#fork .f-btn[name="vkid"] {
-  color: #0077FF;
-  background-color: #ffffff;
-}
-
-#fork .f-btn[name="vkid"]:focus,
-#fork .f-btn[name="vkid"]:hover {
-  color: #ffffff;
-  background-color: #0077FF;
-}
-
-#fork .f-btn[name="telegram"] {
-  color: #FFFFFF;
-  background-color: #54A9EB;
-}
-
-#fork .f-btn[name="telegram"]:focus,
-#fork .f-btn[name="telegram"]:hover {
-  color: #ffffff;
-  background-color: #4797D6;
+#fork .f-bth-telegram::before {
+  content: "\f2c6";
 }
 
 /************/

@@ -43,6 +43,7 @@ trait RegLogTrait
         foreach ($list as $name => $formAction) {
             $btns[$name] = [
                 'type'  => 'submit',
+                'class' => ['f-btn-oauth', "f-bth-{$name}"],
                 'value' => __([$message, __($name)]),
             ];
 
