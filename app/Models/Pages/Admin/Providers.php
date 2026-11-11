@@ -95,6 +95,7 @@ class Providers extends Admin
             $fields = [];
             $fields["name-{$provider->name}"] = [
                 'class'   => ['name', 'provider'],
+                'elclass' => ['f-btn-oauth', "f-bth-{$provider->name}"],
                 'type'    => 'btn',
                 'value'   => __($provider->name),
                 'caption' => 'Provider label',
