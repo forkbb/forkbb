@@ -89,7 +89,7 @@
                             @endforeach
                             @break
                         @case ('btn')
-                <a id="id-{{ $key }}" class="f-btn f-ybtn @if ($cur['disabled']) f-disabled @endif" href="{{ $cur['href'] }}" title="{{ $cur['title'] or $cur['value'] }}" @if ($cur['disabled']) tabindex="-1" @endif>{{ $cur['value'] }}</a>
+                <a id="id-{{ $key }}" @class(['f-btn', 'f-ybtn', [$cur['elclass'] ?? null], 'f-disabled' => ($cur['disabled'] ?? null)]) href="{{ $cur['href'] }}" title="{{ $cur['title'] or $cur['value'] }}" @if ($cur['disabled']) tabindex="-1" @endif>{{ $cur['value'] }}</a>
                             @break
                         @case ('link')
                 <a id="id-{{ $key }}" class="f-link" href="{{ $cur['href'] }}" @if ($cur['rel']) rel="{{ $cur['rel'] }}" @endif title="{{ $cur['title'] or $cur['value'] }}">{{ $cur['value'] }}</a>
