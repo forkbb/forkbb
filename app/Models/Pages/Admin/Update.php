@@ -1872,13 +1872,13 @@ class Update extends Admin
             'shared=>providers=>drivers=>telegram',
             '\\ForkBB\\Models\\Provider\\Driver\\Telegram::class'
         );
+        $coreConfig->add(
+            'shared=>providers=>drivers=>discord',
+            '\\ForkBB\\Models\\Provider\\Driver\\Discord::class'
+        );
 
         $coreConfig->save();
 
-        $vars = [
-            ':name' => 'telegram',
-            ':pos'  => 4,
-        ];
         $query = match ($this->c->DB->getType()) {
             'mysql' => 'INSERT IGNORE INTO ::providers (pr_name, pr_pos)
                 VALUES (?s:name, ?i:pos)',
@@ -1887,8 +1887,20 @@ class Update extends Admin
                     VALUES (?s:name, ?i:pos)
                     ON CONFLICT (pr_name) DO NOTHING',
         };
+        $data = [
+            [
+                ':name' => 'telegram',
+                ':pos'  => 4,
+            ],
+            [
+                ':name' => 'discord',
+                ':pos'  => 5,
+            ],
+        ];
 
-        $this->c->DB->exec($query, $vars);
+        foreach ($data as $vars) {
+            $this->c->DB->exec($query, $vars);
+        }
 
         return null;
     }

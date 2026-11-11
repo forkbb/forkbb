@@ -48,6 +48,9 @@ msgstr "VK Id"
 msgid "telegram"
 msgstr "Telegram"
 
+msgid "discord"
+msgstr "Discord"
+
 msgid "Callback label"
 msgstr "Callback URI"
 

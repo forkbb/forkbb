@@ -3690,6 +3690,10 @@ body,
   content: "\f2c6";
 }
 
+#fork .f-bth-discord::before {
+  content: "\f392";
+}
+
 /************/
 /* Анимация */
 /************/

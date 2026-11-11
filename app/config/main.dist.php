@@ -208,6 +208,7 @@ return [
                 'google'   => \ForkBB\Models\Provider\Driver\Google::class,
                 'vkid'     => \ForkBB\Models\Provider\Driver\VKId::class,
                 'telegram' => \ForkBB\Models\Provider\Driver\Telegram::class,
+                'discord'  => \ForkBB\Models\Provider\Driver\Discord::class,
             ],
         ],
         'providerUser'  => \ForkBB\Models\ProviderUser\ProviderUser::class,
