@@ -571,16 +571,16 @@ msgid "Telebot subhead"
 msgstr "Telegram bot"
 
 msgid "Telegram bot username label"
-msgstr "Username"
+msgstr "Nom d'utilisateur"
 
 msgid "Telegram bot username help"
-msgstr "Ends with <b>bot</b> or <b>_bot</b>. <b>Do not</b> need to enter the character <b>@</b> at the beginning."
+msgstr "Finit par <b>bot</b> ou <b>_bot</b>. <b>Ne pas</b> entrer le caractère <b>@</b> au début."
 
 msgid "Telegram bot token label"
-msgstr "Token"
+msgstr "Jeton"
 
 msgid "Telegram bot token help"
-msgstr "It was given to you by <b>@BotFather</b> when you registered the bot."
+msgstr "Ce jeton (ou token) vous a été confié par <b>@BotFather</b> quand vous avez enregistré le bot."
 
 msgid "Telegram bot token change help"
-msgstr "Check this if you want to change or delete the currently stored token."
+msgstr "Cochez si vous souhaitez changer ou effacer le jeton actuellement stocké."

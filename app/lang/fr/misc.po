@@ -311,7 +311,7 @@ msgid "Solution removed"
 msgstr "La solution a été supprimée."
 
 msgid "Bookmark redirect"
-msgstr "The topic has been added to your bookmarks."
+msgstr "La discussion a été ajoutée à vos marque-pages."
 
 msgid "Unbookmark redirect"
-msgstr "The topic has been removed from your bookmarks."
+msgstr "La discussion a été retirée de vos marque-pages."

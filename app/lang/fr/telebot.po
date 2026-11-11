@@ -16,7 +16,7 @@ msgid "Telegram bot options"
 msgstr "Options du bot Telegram"
 
 msgid "Status"
-msgstr "Status"
+msgstr "Statut"
 
 msgid "Bot is connected"
 msgstr "Le bot est connecté"

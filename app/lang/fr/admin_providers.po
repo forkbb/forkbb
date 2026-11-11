@@ -43,7 +43,7 @@ msgid "google"
 msgstr "Google"
 
 msgid "vkid"
-msgstr "VK Id"
+msgstr "identifiant VK"
 
 msgid "telegram"
 msgstr "Telegram"
