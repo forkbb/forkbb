@@ -73,11 +73,12 @@ class OAuth extends Profile
             $value        = __($cur['name']);
             $title        = $value . " ({$cur['userId']})";
             $fields[$key] = [
-                'type'  => 'btn',
-                'class' => ['oauth-acc-btn'],
-                'value' => $value,
-                'title' => $title,
-                'href'  => $this->c->Router->link('EditUserOAuthAction', $args),
+                'type'    => 'btn',
+                'class'   => ['oauth-acc-btn'],
+                'elclass' => ['f-btn-oauth', "f-bth-{$cur['name']}"],
+                'value'   => $value,
+                'title'   => $title,
+                'href'    => $this->c->Router->link('EditUserOAuthAction', $args),
             ];
         }
 
