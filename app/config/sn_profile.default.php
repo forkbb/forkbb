@@ -17,7 +17,7 @@ return [
     'flickr' => [
         'title' => 'Flickr',
         'urls' => [
-            'flickr\.com/(?:people|photos)/([a-zA-Z0-9@-]+)/' => 'https://www.flickr.com/people/$1/',
+            'flickr\.com/(?:people|photos)/([a-zA-Z0-9@\-]+)/' => 'https://www.flickr.com/people/$1/',
         ],
     ],
     'github' => [
@@ -29,7 +29,8 @@ return [
     'mastodon' => [
         'title' => 'Mastodon',
         'urls'  => [
-            'mastodon\.social/@([a-z0-9_.]+)' => 'https://mastodon.social/@$1',
+            'mastodon\.(social|xyz|uno|be|cr|nu|au|nl|sg|scot|ie|ml|de|la|me\.uk|com\.br|africa|berlin|wien|energy|bida\.im|pub\.solar|vlaanderen|world|gamedev\.place|sdf.org)/@([a-zA-Z0-9_.]+(?:@[a-z0-9_\-]+(?:\.[a-z0-9_\-]+)*)?)' => 'https://mastodon.$1/@$2',
+            'mstdn\.(ca|party|plus|jp|social|business|dk|animexx\.de)/@([a-zA-Z0-9_.]+(?:@[a-z0-9_\-]+(?:\.[a-z0-9_\-]+)*)?)' => 'https://mstdn.$1/@$2',
         ],
     ],
     'reddit' => [
@@ -55,6 +56,13 @@ return [
         'title' => 'TikTok',
         'urls'  => [
             'tiktok\.com/@([a-z0-9_.]+)' => 'https://www.tiktok.com/@$1',
+        ],
+    ],
+    'facebook' => [
+        'title' => 'Facebook',
+        'urls'  => [
+            'facebook\.com/profile\.php\?id=(\d+)' => 'https://www.facebook.com/profile.php?id=$1',
+            'facebook\.com/(?!profile\.php)([a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*)' => 'https://www.facebook.com/$1',
         ],
     ],
 

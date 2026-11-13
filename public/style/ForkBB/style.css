@@ -2041,6 +2041,10 @@ body,
   content: "\f2c6";
 }
 
+.f-sn-facebook .f-psfont::before {
+  content: "\f09a";
+}
+
 .f-sn-tiktok .f-psfont::before {
   content: "\e07b";
 }
