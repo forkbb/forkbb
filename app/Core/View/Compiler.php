@@ -203,20 +203,34 @@ EOD;
     }
 
     /**
+     * Заменяет @iteration на имя переменной php
+     */
+    protected function replIteration(string $expression): string
+    {
+        return \preg_replace('%(?<!\w)@iteration\b%', "\$__iter{$this->shortID}_{$this->loopsCounter}", $expression);
+    }
+
+    /**
      * @if()
      */
     protected function compileIf(string $expression): string
     {
         if (\preg_match('%^\(\s*(\!\s*)?(\$[\w>-]+\[(?:\$?\w+|[\'"]\w+[\'"])\])\s*\)$%', $expression, $matches)) {
             if (empty($matches[1])) {
-                return "<?php if (! empty{$expression}): ?>";
+                $r = $this->replIteration($expression);
+
+                return "<?php if (! empty{$r}): ?>";
 
             } else {
-                return "<?php if (empty({$matches[2]})): ?>";
+                $r = $this->replIteration($matches[2]);
+
+                return "<?php if (empty({$r})): ?>";
             }
 
         } else {
-            return "<?php if {$expression}: ?>";
+            $r = $this->replIteration($expression);
+
+            return "<?php if {$r}: ?>";
         }
     }
 
