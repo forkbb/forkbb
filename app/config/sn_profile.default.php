@@ -49,13 +49,13 @@ return [
     'telegram' => [
         'title' => 'Telegram',
         'urls'  => [
-            't\.me/([a-z0-9_]+)' => 'https://t.me/$1',
+            't\.me/([a-zA-Z0-9_]+)' => 'https://t.me/$1',
         ],
     ],
     'tiktok' => [
         'title' => 'TikTok',
         'urls'  => [
-            'tiktok\.com/@([a-z0-9_.]+)' => 'https://www.tiktok.com/@$1',
+            'tiktok\.com/@([a-zA-Z0-9_.]+)' => 'https://www.tiktok.com/@$1',
         ],
     ],
     'facebook' => [
@@ -63,6 +63,18 @@ return [
         'urls'  => [
             'facebook\.com/profile\.php\?id=(\d+)' => 'https://www.facebook.com/profile.php?id=$1',
             'facebook\.com/(?!profile\.php)([a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*)' => 'https://www.facebook.com/$1',
+        ],
+    ],
+    'vk' => [
+        'title' => 'VKontakte',
+        'urls'  => [
+            'vk.ru/(id\d+|[a-z0-9_.]{5,32})' => 'https://vk.ru/$1',
+        ],
+    ],
+    'x' => [
+        'title' => 'X',
+        'urls'  => [
+            'x.com/([a-zA-Z0-9_]+)' => 'https://x.com/$1',
         ],
     ],
 

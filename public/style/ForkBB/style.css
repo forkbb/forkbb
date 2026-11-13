@@ -2045,6 +2045,14 @@ body,
   content: "\f09a";
 }
 
+.f-sn-vk .f-psfont::before {
+  content: "\f189";
+}
+
+.f-sn-x .f-psfont::before {
+  content: "\e61b";
+}
+
 .f-sn-tiktok .f-psfont::before {
   content: "\e07b";
 }
