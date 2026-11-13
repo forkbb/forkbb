@@ -531,7 +531,8 @@ class Edit extends Profile
                 $f = "sn_profile{$i}";
 
                 if ($this->curUser->$f) {
-                    list(, , $v) = \explode("\n", $this->curUser->$f, 3);
+                    $v = \explode("\n", $this->curUser->$f, 3);
+                    $v = $v[2] ?? $this->curUser->$f;
 
                 } else {
                     $v = '';
