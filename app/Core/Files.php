@@ -945,9 +945,8 @@ class Files
         if (\is_string($value)) {
             if (! \preg_match('%^([^a-z]+)([a-z]+)?$%i', \trim($value), $matches)) {
                 throw new InvalidArgumentException('Expected string indicating the amount of information');
-            }
 
-            if (! \is_numeric($matches[1])) {
+            } elseif (! \is_numeric($matches[1])) {
                 throw new InvalidArgumentException('String does not contain number');
             }
 
@@ -1035,9 +1034,8 @@ class Files
             || ! \is_readable($path)
         ) {
             return $default;
-        }
 
-        if (\function_exists('\\mime_content_type')) {
+        } elseif (\function_exists('\\mime_content_type')) {
             return \mime_content_type($path) ?: $default;
 
         } else {
@@ -1056,9 +1054,8 @@ class Files
             $this->error = 'Expected file description array';
 
             return false;
-        }
 
-        if (\is_array($file['tmp_name'])) {
+        } elseif (\is_array($file['tmp_name'])) {
             if (\count($file['tmp_name']) > $this->maxMultiple) {
                 $this->error = 'Lots of files to upload';
 
@@ -1124,15 +1121,13 @@ class Files
             };
 
             return null;
-        }
 
-        if ($this->isBadPath($file['tmp_name'])) {
+        } elseif ($this->isBadPath($file['tmp_name'])) {
             $this->error = 'Bad path to tmp file';
 
             return null;
-        }
 
-        if (
+        } elseif (
             $isUploaded
             && ! \is_uploaded_file($file['tmp_name'])
         ) {
