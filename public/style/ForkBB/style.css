@@ -2049,6 +2049,10 @@ body,
   content: "\f189";
 }
 
+.f-sn-ok .f-psfont::before {
+  content: "\f263";
+}
+
 .f-sn-x .f-psfont::before {
   content: "\e61b";
 }

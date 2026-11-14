@@ -42,8 +42,8 @@ return [
     'stackoverflow' => [
         'title' => 'StackOverflow',
         'urls'  => [
-            'stackoverflow\.com/users/([0-9]+)/([^,\\/+:\s]+)' => 'https://stackoverflow.com/users/$1/$2',
-            'ru\.stackoverflow\.com/users/([0-9]+)/([^,\\/+:\s]+)' => 'https://ru.stackoverflow.com/users/$1/$2',
+            'stackoverflow\.com/users/((?:[0-9]+/)?[\p{L}\p{N}-]+)' => 'https://stackoverflow.com/users/$1',
+            'ru\.stackoverflow\.com/users/((?:[0-9]+/)?[\p{L}\p{N}-]+)' => 'https://ru.stackoverflow.com/users/$1',
         ],
     ],
     'telegram' => [
@@ -68,13 +68,19 @@ return [
     'vk' => [
         'title' => 'VKontakte',
         'urls'  => [
-            'vk.ru/(id\d+|[a-z0-9_.]{5,32})' => 'https://vk.ru/$1',
+            'vk\.ru/(id\d+|[a-z0-9_.]{5,32})' => 'https://vk.ru/$1',
         ],
     ],
     'x' => [
         'title' => 'X',
         'urls'  => [
-            'x.com/([a-zA-Z0-9_]+)' => 'https://x.com/$1',
+            'x\.com/([a-zA-Z0-9_]+)' => 'https://x.com/$1',
+        ],
+    ],
+    'ok' => [
+        'title' => 'OK',
+        'urls'  => [
+            'ok\.ru/profile/(\d+)' => 'https://ok.ru/profile/$1',
         ],
     ],
 
