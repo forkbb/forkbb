@@ -113,3 +113,9 @@ msgstr "Autre:"
 
 msgid "Community"
 msgstr "Communauté"
+
+msgid "Queues label"
+msgstr "Files d'attente"
+
+msgid "Emails: %s"
+msgstr "Courriels: <b>%s</b> pcs."

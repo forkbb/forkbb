@@ -20,6 +20,14 @@
     @endif
               </dd>
             </dl>
+    @if (null !== $p->mailQueueCount)
+            <dl>
+              <dt>{!! __('Queues label') !!}</dt>
+              <dd>
+                {!! __(['Emails: %s', num($p->mailQueueCount)]) !!}
+              </dd>
+            </dl>
+    @endif
             <dl>
               <dt>{!! __('Database label') !!}</dt>
               <dd>

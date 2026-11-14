@@ -113,3 +113,9 @@ msgstr "其他："
 
 msgid "Community"
 msgstr "社区"
+
+msgid "Queues label"
+msgstr "队列"
+
+msgid "Emails: %s"
+msgstr "电子邮件：<b>%s</b> 件。"

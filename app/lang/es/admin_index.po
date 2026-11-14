@@ -113,3 +113,9 @@ msgstr "Otros:"
 
 msgid "Community"
 msgstr "Comunidad"
+
+msgid "Queues label"
+msgstr "Colas"
+
+msgid "Emails: %s"
+msgstr "Correos electrónicos: <b>%s</b> pcs."

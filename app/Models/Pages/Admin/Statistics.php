@@ -177,6 +177,13 @@ class Statistics extends Admin
             $this->linkAcc     = null;
         }
 
+        if (1 === $this->c->config->b_email_use_cron) {
+            $this->mailQueueCount = \count($this->c->MailQueue->getIdList());
+
+        } else {
+            $this->mailQueueCount = null;
+        }
+
         return $this;
     }
 }

@@ -113,3 +113,9 @@ msgstr "Дополнительные данные:"
 
 msgid "Community"
 msgstr "Форум"
+
+msgid "Queues label"
+msgstr "Очереди"
+
+msgid "Emails: %s"
+msgstr "Письма: <b>%s</b> шт."
