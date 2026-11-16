@@ -584,3 +584,9 @@ msgstr "Ce jeton (ou token) vous a été confié par <b>@BotFather</b> quand vou
 
 msgid "Telegram bot token change help"
 msgstr "Cochez si vous souhaitez changer ou effacer le jeton actuellement stocké."
+
+msgid "Cron for telebot label"
+msgstr "Utilisation de  Cron"
+
+msgid "Cron for telebot help"
+msgstr "<b>ATTENTION!!!</b> Avant d'activer, ajouter la tache au planificateur de taches (cron or analogue), qui lancera &apos;<code>php cli.php send_telegram</code>&apos; chaque minute."

@@ -138,6 +138,7 @@ class Options extends Admin
                     'b_notifications_tele'    => 'required|integer|in:0,1',
                     's_tele_username'         => 'exist|string:trim,empty|min:5|max:32|regex:%^\w+bot$%',
                     's_tele_token'            => 'exist|string:trim,empty|max:255|regex:%^[\w:-]+$%|check_tele',
+                    'b_tele_use_cron'         => 'required|integer|in:0,1',
                     'changeTeleToken'         => 'checkbox',
                 ])->addAliases([
                 ])->addArguments([
@@ -708,6 +709,13 @@ class Options extends Admin
                     'type'    => 'checkbox',
                     'caption' => '',
                     'label'   => 'Telegram bot token change help',
+                ],
+                'b_tele_use_cron' => [
+                    'type'    => 'radio',
+                    'value'   => $config->b_tele_use_cron,
+                    'values'  => $yn,
+                    'caption' => 'Cron for telebot label',
+                    'help'    => 'Cron for telebot help',
                 ],
             ],
         ];
