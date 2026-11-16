@@ -20,11 +20,12 @@
     @endif
               </dd>
             </dl>
-    @if (null !== $p->mailQueueCount)
+    @if (null !== $p->mailQueueCount || null !== $p->telebotQueueCount)
             <dl>
               <dt>{!! __('Queues label') !!}</dt>
               <dd>
-                {!! __(['Emails: %s', num($p->mailQueueCount)]) !!}
+                {!! __(['Email: %s', num($p->mailQueueCount)]) !!}
+                <br>{!! __(['Telegram: %s', num($p->telebotQueueCount)]) !!}
               </dd>
             </dl>
     @endif

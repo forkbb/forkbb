@@ -117,5 +117,8 @@ msgstr "Communauté"
 msgid "Queues label"
 msgstr "Files d'attente"
 
-msgid "Emails: %s"
-msgstr "Courriels: <b>%s</b> pcs."
+msgid "Email: %s"
+msgstr "E-mail: <b>%s</b>"
+
+msgid "Telegram: %s"
+msgstr "Telegram: <b>%s</b>"

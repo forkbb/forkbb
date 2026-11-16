@@ -184,6 +184,13 @@ class Statistics extends Admin
             $this->mailQueueCount = null;
         }
 
+        if (1 === $this->c->config->b_tele_use_cron) {
+            $this->telebotQueueCount = \count($this->c->telebotQueue->getIdList());
+
+        } else {
+            $this->telebotQueueCount = null;
+        }
+
         return $this;
     }
 }

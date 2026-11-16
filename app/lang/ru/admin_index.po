@@ -117,5 +117,8 @@ msgstr "Форум"
 msgid "Queues label"
 msgstr "Очереди"
 
-msgid "Emails: %s"
-msgstr "Письма: <b>%s</b> шт."
+msgid "Email: %s"
+msgstr "Эл. почта: <b>%s</b>"
+
+msgid "Telegram: %s"
+msgstr "Telegram: <b>%s</b>"
