@@ -1748,6 +1748,7 @@ class Install extends Admin
             's_tele_token'            => '',
             's_tele_secret'           => '',
             'b_challenge_page'        => 0,
+            'b_tele_use_cron'         => 0,
         ];
 
         foreach ($forkConfig as $name => $value) {

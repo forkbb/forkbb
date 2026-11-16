@@ -13,6 +13,9 @@
 !/app/cache/mail/lock.file
 /app/cache/polls/*
 !/app/cache/polls/
+/app/cache/telegram/*
+!/app/cache/telegram/
+!/app/cache/telegram/lock.file
 /app/log/*
 !/app/log/
 /ext/*

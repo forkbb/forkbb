@@ -217,6 +217,10 @@ return [
         'reactions'     => \ForkBB\Models\Reaction\Reactions::class,
         'notifications' => \ForkBB\Models\Notification\Notifications::class,
         'telebot'       => \ForkBB\Models\Telebot\Telebot::class,
+        'telebotQueue'  => [
+            'class' => \ForkBB\Models\Telebot\FileQueue::class,
+            'path'  => '%DIR_CACHE%/telegram',
+        ],
 
         'Csrf' => [
             'class'   => \ForkBB\Core\Csrf::class,

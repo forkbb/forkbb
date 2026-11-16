@@ -1863,6 +1863,7 @@ class Update extends Admin
 
         $config->b_privacy         ??= 0;
         $config->o_privacy_message ??= '';
+        $config->b_tele_use_cron   ??= 0;
 
         $config->save();
 
@@ -1875,6 +1876,14 @@ class Update extends Admin
         $coreConfig->add(
             'shared=>providers=>drivers=>discord',
             '\\ForkBB\\Models\\Provider\\Driver\\Discord::class'
+        );
+        $coreConfig->add(
+            'shared=>telebotQueue',
+            [
+                'class' => '\\ForkBB\\Models\\Telebot\\FileQueue::class',
+                'path'  => '\'%DIR_CACHE%/telegram\'',
+            ],
+            'telebot'
         );
 
         $coreConfig->save();

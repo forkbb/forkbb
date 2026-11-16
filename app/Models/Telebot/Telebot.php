@@ -133,10 +133,18 @@ class Telebot extends Model
     /**
      * Отправляет(?) текст $text в чат $chatId
      */
-    public function sendMessage(int $chatId, string $text): bool
+    public function sendMessage(int $chatId, string $text): null|true|array
     {
-        $text  = \strip_tags($text, ['b', 'i', 'u', 's', 'code', 'pre', 'a']);
-        $resp  = $this->httpClient->post(
+        if (
+            true !== FORK_CLI
+            && 1 === $this->c->config->b_tele_use_cron
+            && true === $this->telebotQueue->push($chatId, $text)
+        ) {
+            return true;
+        }
+
+        $text = \strip_tags($text, ['b', 'i', 'u', 's', 'code', 'pre', 'a']);
+        $resp = $this->httpClient->post(
             'sendMessage',
             [
                 'form_params' => [
@@ -146,13 +154,14 @@ class Telebot extends Model
                 ],
             ]
         );
+        $code = $resp['httpCode'] ?? 'NULL'
 
-        $this->c->Log->debug('Telegram ->', [
+        $this->c->Log->debug("Telegram -> {$code}", [
             'response' => $resp,
             'headers'  => false,
         ]);
 
-        return true;
+        return $resp;
     }
 
     protected function gethttpClient(): HTTPClient

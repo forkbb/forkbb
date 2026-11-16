@@ -32,7 +32,7 @@ $errorHandler = new ErrorHandlerCli();
 
 if (\is_file(__DIR__ . '/config/main.php')) {
     $c = new Container(include __DIR__ . '/config/main.php');
-    $a = ['test', 'send_mail', 'delete_unused_files'];
+    $a = ['test', 'send_mail', 'delete_unused_files', 'send_telegram'];
 } elseif (\is_file(__DIR__ . '/config/install.php')) {
     $c = new Container(include __DIR__ . '/config/install.php');
     $a = ['install'];
@@ -177,7 +177,6 @@ switch ($command) {
         }
 
         break;
-
     /**
      * Удаление не используемых в сообщениях и ЛС загруженных файлов
      * php cli.php delete_unused_files [--log=1]
@@ -191,6 +190,34 @@ switch ($command) {
 
         if (! empty($arguments['log'])) {
             $c->Log->debug("CLI delete_unused_files. Files deleted: {$count}", [
+                'time'    => \number_format(\microtime(true) - FORK_START, 3, '.', ''),
+                'headers' => false,
+            ]);
+        }
+
+        break;
+    /**
+     * Отправка уведомлений в telegram из очереди
+     * php cli.php send_telegram [--log={1|2}]
+     *
+     * --log=1 - пишет в лог, если есть выполненные задания или скрипт не смог получить эксклюзивную блокировку
+     * --log=2 - пишет в лог в любом случае
+     */
+    case 'send_telegram':
+        $c->user = $c->users->create(['id' => 0, 'group_id' => FORK_GROUP_GUEST]);
+        $result  = $c->telebotQueue->execute();
+
+        if (
+            ! empty($arguments['log'])
+            && (
+                '2' == $arguments['log']
+                || (
+                    '1' == $arguments['log']
+                    && 0 !== $result
+                )
+            )
+        ) {
+            $c->Log->debug('CLI send_telegram. Tasks completed: ' . (false === $result ? 'false' : $result), [
                 'time'    => \number_format(\microtime(true) - FORK_START, 3, '.', ''),
                 'headers' => false,
             ]);
