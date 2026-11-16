@@ -138,7 +138,7 @@ class Telebot extends Model
         if (
             true !== FORK_CLI
             && 1 === $this->c->config->b_tele_use_cron
-            && true === $this->telebotQueue->push($chatId, $text)
+            && true === $this->c->telebotQueue->push($chatId, $text)
         ) {
             return true;
         }
@@ -154,7 +154,7 @@ class Telebot extends Model
                 ],
             ]
         );
-        $code = $resp['httpCode'] ?? 'NULL'
+        $code = $resp['httpCode'] ?? 'NULL';
 
         $this->c->Log->debug("Telegram -> {$code}", [
             'response' => $resp,

@@ -46,7 +46,7 @@ class FileQueue
     /**
      * Добавляет элемент в очередь
      */
-    protected function push(int $chatId, string $text): bool
+    public function push(int $chatId, string $text): bool
     {
         do {
             $file = $this->path . '/job' . \str_replace('.', '', (string) \microtime(true)) . "_{$chatId}.data";
@@ -69,7 +69,7 @@ class FileQueue
             return false;
         }
 
-        $end   = FORK_START + \min(60, (int) (\ini_get('max_execution_time') ?: 30)) - 5;
+        $end   = FORK_START + 55; //\min(60, (int) (\ini_get('max_execution_time') ?: 30)) - 5; В CLI max_execution_time возвращает 0
         $count = 0;
         $stage = 0;
         $sleep = 0;
@@ -103,7 +103,7 @@ class FileQueue
                 case 1:
                     if (empty($list)) {
                         $stage = 0;
-                        $sleep = 20 - \time() + $point
+                        $sleep = 20 - \time() + $point;
 
                     } else {
                         $files = \array_pop($list);
