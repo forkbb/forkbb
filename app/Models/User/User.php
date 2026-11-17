@@ -14,6 +14,7 @@ use ForkBB\Core\Container;
 use ForkBB\Models\DataModel;
 use ForkBB\Models\Model;
 use ForkBB\Models\Forum\Forum;
+use ForkBB\Models\Notification\Notifications;
 use ForkBB\Models\Post\Post;
 use RuntimeException;
 use function \ForkBB\__;
@@ -30,13 +31,16 @@ class User extends DataModel
         parent::__construct($container);
 
         $this->zDepend = [
-            'group_id'      => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'isBanByName', 'link', 'linkEmail'],
-            'id'            => ['isGuest', 'link', 'online', 'linkEmail'],
-            'last_visit'    => ['currentVisit'],
-            'signature'     => ['isSignature'],
-            'email'         => ['email_normal', 'linkEmail'],
-            'username'      => ['username_normal'],
-            'email_setting' => ['linkEmail'],
+            'group_id'         => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'isBanByName', 'link', 'linkEmail', 'subscrPossible'],
+            'id'               => ['isGuest', 'link', 'online', 'linkEmail', 'subscrPossible'],
+            'last_visit'       => ['currentVisit'],
+            'signature'        => ['isSignature'],
+            'email'            => ['email_normal', 'linkEmail'],
+            'username'         => ['username_normal'],
+            'email_setting'    => ['linkEmail'],
+            'email_confirmed'  => ['subscrPossible'],
+            'ntfy_subscr'      => ['subscrPossible'],
+            'telegram_chat_id' => ['subscrPossible'],
         ];
     }
 
@@ -407,5 +411,23 @@ class User extends DataModel
         } else {
             return '';
         }
+    }
+
+    /**
+     * Для пользователя возможна подписка, но не точно
+     */
+    protected function getsubscrPossible(): bool
+    {
+        return ! $this->isGuest
+            && ! $this->isUnverified
+            && (
+                1 === $this->email_confirmed
+                || (
+                    1 === $this->c->config->b_notifications
+                    && 1 === $this->c->config->b_notifications_tele
+                    && $this->ntfy_subscr & Notifications::TELE
+                    && ! empty($this->telegram_chat_id)
+                )
+            );
     }
 }
