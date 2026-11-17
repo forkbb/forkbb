@@ -505,16 +505,16 @@ class Post extends Page
 
         } else {
             $this->c->search->index($post);
+        }
 
-            if ($createTopic) {
-                if (1 === $this->config->b_forum_subscriptions) { // ????
-                    $this->c->subscriptions->send($post, $topic);
-                }
+        if ($createTopic) {
+            if (1 === $this->config->b_forum_subscriptions) { // ????
+                $this->c->subscriptions->send($post, $topic);
+            }
 
-            } else {
-                if (1 === $this->config->b_topic_subscriptions) { // ????
-                    $this->c->subscriptions->send($post);
-                }
+        } else {
+            if (1 === $this->config->b_topic_subscriptions) { // ????
+                $this->c->subscriptions->send($post);
             }
         }
 
