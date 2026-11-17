@@ -69,6 +69,10 @@ class FileQueue
             return false;
         }
 
+        $delayMass = 0.035;
+        $delayBtwn = 20;
+        $delayE500 = 10;
+
         $end   = FORK_START + 55; //\min(60, (int) (\ini_get('max_execution_time') ?: 30)) - 5; В CLI max_execution_time возвращает 0
         $count = 0;
         $stage = 0;
@@ -91,7 +95,7 @@ class FileQueue
                     $list = $this->groupByChats($this->getIdList());
 
                     if (empty($list)) {
-                        $sleep = 20;
+                        $sleep = $delayBtwn;
                     } else {
                         $list  = \array_reverse($list, true);
                         $stage = 1;
@@ -103,7 +107,11 @@ class FileQueue
                 case 1:
                     if (empty($list)) {
                         $stage = 0;
-                        $sleep = 20 - \time() + $point;
+                        $sleep = $delayBtwn - \time() + $point;
+
+                        if ($sleep < $delayMass) {
+                            $sleep = $delayMass;
+                        }
 
                     } else {
                         $files = \array_pop($list);
@@ -155,17 +163,17 @@ class FileQueue
                         }
 
                         $stage = 1;
-                        $sleep = 0.035;
+                        $sleep = $delayMass;
 
                     } elseif (429 === $result['httpCode']) {
                         $sleep = $result['json']['parameters']['retry_after'] ?? 5;
 
                     } elseif ($result['httpCode'] > 500) {
-                        $sleep = 10;
+                        $sleep = $delayE500;
 
                     } else {
                         $stage = 1;
-                        $sleep = 0.035;
+                        $sleep = $delayMass;
                     }
 
                     break;
