@@ -276,7 +276,7 @@ trait PostFormTrait
                 if (
                     ! $preMod
                     && 1 === $this->config->b_topic_subscriptions
-                    && 1 === $this->user->email_confirmed
+                    && true === $this->user->subscrPossible
                 ) {
                     $subscribed = ! $first && $model->is_subscribed;
 
