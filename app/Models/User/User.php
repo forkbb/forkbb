@@ -39,8 +39,8 @@ class User extends DataModel
             'username'         => ['username_normal'],
             'email_setting'    => ['linkEmail'],
             'email_confirmed'  => ['subscrPossible'],
-            'ntfy_subscr'      => ['subscrPossible'],
-            'telegram_chat_id' => ['subscrPossible'],
+            'ntfy_subscr'      => ['subscrPossible', 'subscrPossibleTele'],
+            'telegram_chat_id' => ['subscrPossible', 'subscrPossibleTele'],
         ];
     }
 
@@ -414,6 +414,17 @@ class User extends DataModel
     }
 
     /**
+     * Для пользователя возможна подписка, но не точно, через telegram
+     */
+    protected function getsubscrPossibleTele(): bool
+    {
+        return 1 === $this->c->config->b_notifications
+            && 1 === $this->c->config->b_notifications_tele
+            && $this->ntfy_subscr & Notifications::TELE
+            && ! empty($this->telegram_chat_id);
+    }
+
+    /**
      * Для пользователя возможна подписка, но не точно
      */
     protected function getsubscrPossible(): bool
@@ -422,12 +433,7 @@ class User extends DataModel
             && ! $this->isUnverified
             && (
                 1 === $this->email_confirmed
-                || (
-                    1 === $this->c->config->b_notifications
-                    && 1 === $this->c->config->b_notifications_tele
-                    && $this->ntfy_subscr & Notifications::TELE
-                    && ! empty($this->telegram_chat_id)
-                )
+                || true === $this->subscrPossibleTele
             );
     }
 }
