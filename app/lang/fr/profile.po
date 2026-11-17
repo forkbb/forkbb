@@ -437,3 +437,6 @@ msgstr "Notifier quand cité/mentionné"
 
 msgid "Notify about new PM"
 msgstr "Notify about new PM"
+
+msgid "Subscrs via notifications"
+msgstr "Subscriptions via notifications"

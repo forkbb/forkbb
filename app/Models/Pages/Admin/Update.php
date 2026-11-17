@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '8.2.0';
     const REV_MIN_FOR_UPDATE         = 97;
-    const LATEST_REV_WITH_DB_CHANGES = 98;
+    const LATEST_REV_WITH_DB_CHANGES = 100;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
     const CONFIG_FILE                = 'main.php';
@@ -1910,6 +1910,8 @@ class Update extends Admin
         foreach ($data as $vars) {
             $this->c->DB->exec($query, $vars);
         }
+
+        $this->c->DB->addField('::users', 'ntfy_subscr', 'TINYINT UNSIGNED', false, 0);
 
         return null;
     }

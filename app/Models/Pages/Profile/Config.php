@@ -408,6 +408,21 @@ class Config extends Profile
             ],
         ];
 
+        if ($this->rules->configureSearch) {
+            $form['sets']['search'] = [
+                'legend' => 'Search options',
+                'class'  => ['data-edit'],
+                'fields' => [
+                    'search_config' => [
+                        'type'  => 'link',
+                        'value' => __('Set up search'),
+                        'title' => __('Set up search'),
+                        'href'  => $this->c->Router->link('EditUserSearch', $args),
+                    ],
+                ],
+            ];
+        }
+
         if ($this->rules->viewSubscription) { // ???? модераторы?
             $form['sets']['subscriptions'] = [
                 'legend' => 'Subscription options',
@@ -431,21 +446,6 @@ class Config extends Profile
             ];
         }
 
-        if ($this->rules->configureSearch) {
-            $form['sets']['search'] = [
-                'legend' => 'Search options',
-                'class'  => ['data-edit'],
-                'fields' => [
-                    'search_config' => [
-                        'type'  => 'link',
-                        'value' => __('Set up search'),
-                        'title' => __('Set up search'),
-                        'href'  => $this->c->Router->link('EditUserSearch', $args),
-                    ],
-                ],
-            ];
-        }
-
         if (1 === $this->config->b_notifications) {
             $form['sets']['notifications'] = [
                 'legend' => 'Notification options',
@@ -460,6 +460,11 @@ class Config extends Profile
                         'type'    => 'multi-checkbox',
                         'list'    => $this->getNotificationCheckbox($this->curUser->ntfy_pm ?? 0, Notifications::ALL ^ Notifications::PM),
                         'caption' => 'Notify about new PM',
+                    ],
+                    'ntfy_subscr' => [
+                        'type'    => 'multi-checkbox',
+                        'list'    => $this->getNotificationCheckbox($this->curUser->ntfy_subscr ?? 0, Notifications::ALL ^ (Notifications::PM | Notifications::EMAIL)),
+                        'caption' => 'Subscrs via notifications',
                     ],
                 ],
             ];
