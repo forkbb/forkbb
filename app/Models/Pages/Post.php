@@ -514,7 +514,7 @@ class Post extends Page
 
         } else {
             if (1 === $this->config->b_topic_subscriptions) { // ????
-                $this->c->subscriptions->send($post);
+                $this->c->subscriptions->send($merge ? $lastPost : $post);
             }
         }
 
