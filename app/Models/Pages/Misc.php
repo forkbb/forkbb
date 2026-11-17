@@ -77,13 +77,14 @@ class Misc extends Page
         $this->c->Lang->load('misc');
 
         if ('subscribe' === $args['type']) {
-            if (! $this->user->email_confirmed) {
+            if (true === $this->user->subscrPossible) {
+                $this->c->subscriptions->subscribe($this->user, $forum);
+
+                $message = 'Subscribe redirect';
+
+            } else {
                 return $this->confirmMessage();
             }
-
-            $this->c->subscriptions->subscribe($this->user, $forum);
-
-            $message = 'Subscribe redirect';
 
         } else {
             $this->c->subscriptions->unsubscribe($this->user, $forum);
@@ -112,13 +113,14 @@ class Misc extends Page
         $this->c->Lang->load('misc');
 
         if ('subscribe' === $args['type']) {
-            if (! $this->user->email_confirmed) {
+            if (true === $this->user->subscrPossible) {
+                $this->c->subscriptions->subscribe($this->user, $topic);
+
+                $message = 'Subscribe redirect';
+
+            } else {
                 return $this->confirmMessage();
             }
-
-            $this->c->subscriptions->subscribe($this->user, $topic);
-
-            $message = 'Subscribe redirect';
 
         } else {
             $this->c->subscriptions->unsubscribe($this->user, $topic);
