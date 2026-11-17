@@ -284,7 +284,7 @@ trait PostValidatorTrait
             && ! $about
             && ! $pm
             && 1 === $this->config->b_topic_subscriptions
-            && $this->user->email_confirmed
+            && 1 === $this->user->email_confirmed
         ) {
             $ruleSubscribe = 'checkbox';
 

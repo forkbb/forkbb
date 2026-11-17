@@ -79,7 +79,7 @@ class Profile extends Rules
     protected function getconfirmEmail(): bool
     {
         return $this->my
-            && ! $this->curUser->email_confirmed;
+            && 1 !== $this->curUser->email_confirmed;
     }
 
     protected function getsendPM(): bool

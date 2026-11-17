@@ -440,7 +440,7 @@ class View extends Profile
 
         if ($this->rules->viewOEmail) {
             $fields['open-email'] = [
-                'class'   => $this->curUser->email_confirmed ? ['pline', 'confirmed'] : ['pline', 'unconfirmed'],
+                'class'   => 1 === $this->curUser->email_confirmed ? ['pline', 'confirmed'] : ['pline', 'unconfirmed'],
                 'type'    => 2 === $this->curUser->email_setting ? 'str' : 'link',
                 'caption' => 'Email info',
                 'value'   => $this->curUser->censorEmail,
