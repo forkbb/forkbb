@@ -118,6 +118,7 @@ class Config extends Profile
             if (1 === $this->config->b_notifications) {
                 $tmp1 = [];
                 $tmp2 = [];
+                $tmp3 = [];
 
                 if (1 === $this->config->b_notifications_pm) {
                     $tmp1[] = Notifications::PM;
@@ -131,6 +132,7 @@ class Config extends Profile
                 if (1 === $this->config->b_notifications_tele) {
                     $tmp1[] = Notifications::TELE;
                     $tmp2[] = Notifications::TELE;
+                    $tmp3[] = Notifications::TELE;
                 }
 
                 $v = $this->c->Validator
@@ -139,11 +141,15 @@ class Config extends Profile
                         'ntfy_name_post.*' => 'integer|in:' . \implode(',', $tmp1),
                         'ntfy_pm'          => 'array',
                         'ntfy_pm.*'        => 'integer|in:' . \implode(',', $tmp2),
+                        'ntfy_subscr'      => 'array',
+                        'ntfy_subscr.*'    => 'integer|in:' . \implode(',', $tmp3),
                     ])->addAliases([
                         'ntfy_name_post'   => 'Notify if I in post',
                         'ntfy_name_post.*' => 'Notify if I in post',
                         'ntfy_pm'          => 'Notify about new PM',
                         'ntfy_pm.*'        => 'Notify about new PM',
+                        'ntfy_subscr'      => 'Subscrs via notifications',
+                        'ntfy_subscr.*'    => 'Subscrs via notifications',
                     ]);
             }
 
@@ -164,6 +170,7 @@ class Config extends Profile
                 if (1 === $this->config->b_notifications) {
                     $data['ntfy_name_post'] = \array_sum($data['ntfy_name_post'] ?? []);
                     $data['ntfy_pm']        = \array_sum($data['ntfy_pm'] ?? []);
+                    $data['ntfy_subscr']    = \array_sum($data['ntfy_subscr'] ?? []);
                 }
 
                 if (! empty($data['delete_telebot'])) {
