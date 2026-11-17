@@ -15,6 +15,7 @@ use ForkBB\Models\Forum\Forum;
 use ForkBB\Models\Notification\Notification;
 use ForkBB\Models\Notification\NotificationAboutNicknameMentions;
 use ForkBB\Models\Notification\NotificationAboutNewPM;
+use ForkBB\Models\Notification\NotificationAboutSubscription;
 use ForkBB\Models\PM\Cnst;
 use ForkBB\Models\PM\PTopic;
 use ForkBB\Models\Post\Post;
@@ -48,6 +49,32 @@ class Notifications extends Model
         $this->permRF[$key] ??= $this->listFM[$gid]->get($fid) instanceof Forum;
 
         return $this->permRF[$key];
+    }
+
+    /**
+     * Создает уведомление для подписки
+     */
+    public function notifyAboutSubscription(Post $post, bool $newTopic, array $nUsers): void
+    {
+        try {
+            foreach ($nUsers as $user) {
+                $notification = new NotificationAboutSubscription($this->c);
+
+                if (true === $notification->init([
+                    'user' => $user,
+                    'post' => $post,
+                    'new'  => $newTopic,
+                ])) {
+                    $this->add($notification);
+                }
+            }
+
+        } catch (MailException $e) {
+            $this->c->Log->error('Notifications: notifyAboutSubscription, MailException', [
+                'exception' => $e,
+                'headers'   => false,
+            ]);
+        }
     }
 
     /**

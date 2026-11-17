@@ -37,7 +37,7 @@ class Send extends Method
                     ':tid'  => $topic->id,
                     ':prev' => $this->c->posts->previousPost($post, false),
                 ];
-                $query = 'SELECT u.id, u.username, u.group_id, u.email, u.email_confirmed, u.notify_with_post, u.language
+                $query = 'SELECT u.id, u.username, u.group_id, u.email, u.email_confirmed, u.notify_with_post, u.language, u.ntfy_subscr, u.telegram_chat_id
                     FROM ::users AS u
                     INNER JOIN ::topic_subscriptions AS s ON u.id=s.user_id
                     LEFT JOIN ::online AS o ON u.id=o.user_id
@@ -53,7 +53,7 @@ class Send extends Method
                     ':uid' => $this->c->user->id,
                     ':fid' => $forum->id,
                 ];
-                $query = 'SELECT u.id, u.username, u.group_id, u.email, u.email_confirmed, u.notify_with_post, u.language
+                $query = 'SELECT u.id, u.username, u.group_id, u.email, u.email_confirmed, u.notify_with_post, u.language, u.ntfy_subscr, u.telegram_chat_id
                     FROM ::users AS u
                     INNER JOIN ::forum_subscriptions AS s ON u.id=s.user_id
                     WHERE s.forum_id=?i:fid AND u.id!=?i:uid';
@@ -63,6 +63,7 @@ class Send extends Method
             $grPerm = [
                 $this->c->user->group_id => true,
             ];
+            $nUsers = [];
 
             $stmt = $this->c->DB->query($query, $vars);
 
@@ -70,7 +71,7 @@ class Send extends Method
                 $user = $this->c->users->create($row);
 
                 if (
-                    1 !== $user->email_confirmed
+                    false === $user->subscrPossible
                     || $this->c->bans->banFromName($user->username) > 0
                     || $this->c->Online->isOnline($user)
                 ) {
@@ -80,6 +81,14 @@ class Send extends Method
                 $grPerm[$user->group_id] ??= $this->c->ForumManager->init($user->group_id)->get($forum->id) instanceof Forum;
 
                 if (! $grPerm[$user->group_id]) {
+                    continue;
+
+                } elseif (true === $user->subscrPossibleTele) {
+                    $nUsers[] = $user;
+
+                    continue;
+
+                } elseif (1 !== $user->email_confirmed) {
                     continue;
                 }
 
@@ -92,6 +101,10 @@ class Send extends Method
 
                 $type                                       = 1 === $user->notify_with_post ? 'full' : 'short';
                 $data[$user->language][$type][$user->email] = $user->username;
+            }
+
+            if (! empty($nUsers)) {
+                $this->c->notifications->notifyAboutSubscription($post, $newTopic, $nUsers);
             }
 
             foreach ($data as $lang => $dataLang) {
