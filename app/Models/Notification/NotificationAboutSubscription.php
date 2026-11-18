@@ -39,77 +39,9 @@ class NotificationAboutSubscription extends Notification
             return false;
         }
 
-        $this->c->Lang->load('common', $user->language);
-
-        $topic = $post->parent;
-        $forum = $topic->parent;
-
-        if ($newTopic) {
-            $tplName = 'new_topic.tpl';
-            $tplData = [
-                'forumName'       => $forum->name,
-                'poster'          => $topic->poster,
-                'topicSubject'    => $topic->name,
-                'topicLink'       => $topic->link,
-                'unsubscribeLink' => $forum->link,
-                'button'          => __('Unsubscribe'),
-            ];
-
-        } else {
-            $tplName = 'new_reply.tpl';
-            $tplData = [
-                'forumName'       => $forum->name,
-                'replier'         => $post->poster,
-                'topicSubject'    => $topic->name,
-                'postLink'        => $post->link,
-                'unsubscribeLink' => $topic->link,
-                'button'          => __('Unsubscribe'),
-            ];
-        }
-
-        $file = \rtrim($this->c->DIR_LANG, '\\/') . "/{$user->language}/mail/{$tplName}";
-
-        if (! \is_file($file)) {
-            throw new MailException("The template isn't found ({$file}).");
-        }
-
-        $tpl = \trim(\file_get_contents($file));
-        $tpl = \preg_replace('%[\n\r]+[^\n\r]*?{!fMailer!}.*+$%s', '', $tpl);
-
-        foreach ($tplData as $key => $val) {
-            $tpl = \str_replace('{!' . $key . '!}', (string) $val, $tpl);
-        }
-
-        if (false !== \strpos($tpl, '{{')) {
-            foreach ($data as $key => $val) {
-                $tpl = \str_replace('{{' . $key . '}}', e((string) $val), $tpl);
-            }
-        }
-
-        if (! \preg_match('%^(.+?)(?:\r\n\r\n|\n\n|\r\r)(.+)$%s', $tpl, $matches)) {
-            throw new MailException("Unknown format template ({$file}).");
-        }
-
-        $subject = null;
-
-        foreach (\preg_split('%\r\n|\n|\r%', $matches[1]) as $line) {
-            list($type, $value) = \array_map('\\trim', \explode(':', $line, 2));
-
-            if ('' == $value) {
-                throw new MailException("Empty template header: {$type}.");
-
-            } elseif ('Subject' === $type) {
-                $subject = $value;
-            }
-        }
-
-        if (null === $subject) {
-            throw new MailException('No template header.');
-        }
-
-        $this->subject   = $subject;
-        $this->message   = \trim($matches[2]);
         $this->user      = $user;
+        $this->post      = $post;
+        $this->newTopic  = $newTopic;
         $this->localRule = ($user->ntfy_subscr ?? 0) & self::BITS;
 
         return true;
@@ -117,11 +49,16 @@ class NotificationAboutSubscription extends Notification
 
     public function title(): array|string
     {
-        return $this->subject;
+        return $this->newTopic ? 'New topic' : 'New post';
     }
 
     public function text(): array|string
     {
-        return $this->message;
+        return [
+            'Topic %1$s Post %2$s User %3$s',
+            $this->post->parent->name,
+            $this->newTopic ? $this->post->parent->link : $this->post->link,
+            $this->post->user->username
+        ];
     }
 }
