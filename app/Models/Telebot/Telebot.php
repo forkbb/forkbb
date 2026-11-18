@@ -143,6 +143,7 @@ class Telebot extends Model
             return true;
         }
 
+        $text = \str_replace('<br>', "\n", $text);
         $text = \strip_tags($text, ['b', 'i', 'u', 's', 'code', 'pre', 'a']);
         $resp = $this->httpClient->post(
             'sendMessage',

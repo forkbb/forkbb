@@ -143,7 +143,7 @@ class FileQueue
                             $delete[] = $file;
 
                         } elseif ($chatId === $data['chat_id']) {
-                            $text     .= "\n\n---\n\n" . $data['text'];
+                            $text     .= "\n\n- - -\n\n" . $data['text'];
                             $delete[]  = $file;
                         }
                     }
