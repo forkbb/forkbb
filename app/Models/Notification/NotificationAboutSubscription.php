@@ -20,8 +20,8 @@ class NotificationAboutSubscription extends Notification
 {
     const BITS = Notifications::ALL ^ (Notifications::PM | Notifications::EMAIL);
 
-    protected string $subject;
-    protected string $message;
+    protected Post $post;
+    protected bool $newTopic;
 
     public function init(array $data): bool
     {
