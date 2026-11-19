@@ -385,10 +385,13 @@ class Post extends Page
             $this->c->topics->insert($topic);
         }
 
+        $prevPosted = null;
+
         // попытка объеденить новое сообщение с крайним в теме
         if ($merge) {
-            $lastPost  = $this->c->posts->load($topic->last_post_id, $topic->id);
-            $newLength = \mb_strlen($lastPost->message . $v->message, 'UTF-8');
+            $lastPost   = $this->c->posts->load($topic->last_post_id, $topic->id);
+            $prevPosted = $lastPost->posted;
+            $newLength  = \mb_strlen($lastPost->message . $v->message, 'UTF-8');
 
             if ($newLength < $this->c->MAX_POST_SIZE - 100) {
                 $lastPost->message   = $lastPost->message . "\n[after=" . ($now - $topic->last_post) . "]\n" . $v->message; //????
@@ -514,7 +517,7 @@ class Post extends Page
 
         } else {
             if (1 === $this->config->b_topic_subscriptions) { // ????
-                $this->c->subscriptions->send($merge ? $lastPost : $post);
+                $this->c->subscriptions->send($merge ? $lastPost : $post, $prevPosted);
             }
         }
 

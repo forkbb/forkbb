@@ -21,29 +21,12 @@ class Send extends Method
 {
     /**
      * Рассылает письма по подпискам для новых тем/ответов
+     * Через $topic иожет быть передано время публикации пред. сообщения
      */
-    public function send(Post $post, ?Topic $topic = null)
+    public function send(Post $post, null|int|Topic $topic = null)
     {
         try {
-            if (null === $topic) {
-                $newTopic     = false;
-                $tplNameFull  = 'new_reply_full.tpl';
-                $tplNameShort = 'new_reply.tpl';
-                $topic        = $post->parent;
-                $forum        = $topic->parent;
-
-                $vars = [
-                    ':uid'  => $this->c->user->id,
-                    ':tid'  => $topic->id,
-                    ':prev' => $this->c->posts->previousPost($post, false),
-                ];
-                $query = 'SELECT u.id, u.username, u.group_id, u.email, u.email_confirmed, u.notify_with_post, u.language, u.ntfy_subscr, u.telegram_chat_id
-                    FROM ::users AS u
-                    INNER JOIN ::topic_subscriptions AS s ON u.id=s.user_id
-                    LEFT JOIN ::online AS o ON u.id=o.user_id
-                    WHERE s.topic_id=?i:tid AND u.id!=?i:uid AND COALESCE(o.logged, u.last_visit)>?i:prev';
-
-            } else {
+            if ($topic instanceof Topic) {
                 $newTopic     = true;
                 $tplNameFull  = 'new_topic_full.tpl';
                 $tplNameShort = 'new_topic.tpl';
@@ -59,6 +42,25 @@ class Send extends Method
                     INNER JOIN ::forum_subscriptions AS s ON u.id=s.user_id
                     LEFT JOIN ::online AS o ON u.id=o.user_id
                     WHERE s.forum_id=?i:fid AND u.id!=?i:uid AND COALESCE(o.logged, u.last_visit)>?i:prev';
+
+            } else {
+                $prev         = \is_int($topic) ? $topic : null;
+                $newTopic     = false;
+                $tplNameFull  = 'new_reply_full.tpl';
+                $tplNameShort = 'new_reply.tpl';
+                $topic        = $post->parent;
+                $forum        = $topic->parent;
+
+                $vars = [
+                    ':uid'  => $this->c->user->id,
+                    ':tid'  => $topic->id,
+                    ':prev' => $prev ?? $this->c->posts->previousPost($post, false),
+                ];
+                $query = 'SELECT u.id, u.username, u.group_id, u.email, u.email_confirmed, u.notify_with_post, u.language, u.ntfy_subscr, u.telegram_chat_id
+                    FROM ::users AS u
+                    INNER JOIN ::topic_subscriptions AS s ON u.id=s.user_id
+                    LEFT JOIN ::online AS o ON u.id=o.user_id
+                    WHERE s.topic_id=?i:tid AND u.id!=?i:uid AND COALESCE(o.logged, u.last_visit)>?i:prev';
             }
 
             $data   = [];
