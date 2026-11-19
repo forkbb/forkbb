@@ -302,15 +302,18 @@ class Mail
             throw new MailException("The template isn't found ({$file}).");
         }
 
-        $tpl = \trim(\file_get_contents($file));
+        $tpl  = \trim(\file_get_contents($file));
+        $data = \array_map(function ($v) {
+            return \preg_replace('%({[{!])(?=[a-zA-Z\d])%', '$1 ', (string) $v);
+        }, $data);
 
         foreach ($data as $key => $val) {
-            $tpl = \str_replace('{!' . $key . '!}', (string) $val, $tpl);
+            $tpl = \str_replace('{!' . $key . '!}', $val, $tpl);
         }
 
         if (false !== \strpos($tpl, '{{')) {
             foreach ($data as $key => $val) {
-                $tpl = \str_replace('{{' . $key . '}}', e((string) $val), $tpl);
+                $tpl = \str_replace('{{' . $key . '}}', e($val), $tpl);
             }
         }
 
