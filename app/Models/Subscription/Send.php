@@ -50,13 +50,15 @@ class Send extends Method
                 $forum        = $topic->parent;
 
                 $vars = [
-                    ':uid' => $this->c->user->id,
-                    ':fid' => $forum->id,
+                    ':uid'  => $this->c->user->id,
+                    ':fid'  => $forum->id,
+                    ':prev' => \time() - 1209600, // 60 * 60 * 24 * 14
                 ];
                 $query = 'SELECT u.id, u.username, u.group_id, u.email, u.email_confirmed, u.notify_with_post, u.language, u.ntfy_subscr, u.telegram_chat_id
                     FROM ::users AS u
                     INNER JOIN ::forum_subscriptions AS s ON u.id=s.user_id
-                    WHERE s.forum_id=?i:fid AND u.id!=?i:uid';
+                    LEFT JOIN ::online AS o ON u.id=o.user_id
+                    WHERE s.forum_id=?i:fid AND u.id!=?i:uid AND COALESCE(o.logged, u.last_visit)>?i:prev';
             }
 
             $data   = [];
