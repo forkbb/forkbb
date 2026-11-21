@@ -174,6 +174,7 @@ class Send extends Method
             }
 
             $this->c->Lang->load('common', $this->c->user->language);
+
         } catch (MailException $e) {
             $this->c->Log->error('Subscription: MailException', [
                 'exception' => $e,

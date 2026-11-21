@@ -777,6 +777,7 @@ class Mail
         if (\is_resource($this->connect)) {
             try {
                 $this->smtpData('QUIT', null);
+
             } catch (MailException $e) {
                 //????
             }

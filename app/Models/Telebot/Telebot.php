@@ -10,12 +10,9 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\Telebot;
 
-use ForkBB\Core\Container;
 use ForkBB\Core\HTTPClient;
 use ForkBB\Models\Model;
 use ForkBB\Models\User\User;
-use PDO;
-use RuntimeException;
 
 class Telebot extends Model
 {

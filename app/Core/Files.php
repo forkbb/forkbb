@@ -1185,6 +1185,7 @@ class Files
 
         try {
             $result = new $className($file['tmp_name'], $name, $ext, $this);
+
         } catch (FileException $e) {
             $this->error = $e->getMessage();
 
