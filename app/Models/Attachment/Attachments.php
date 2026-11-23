@@ -154,9 +154,8 @@ class Attachments extends Model
             }
 
         } else {
-            $ids     = \array_keys($attInPost);
             $vars    = [
-                ':ids' => $ids,
+                ':ids' => \array_keys($attInPost),
             ];
             $query   = 'SELECT id, path FROM ::attachments WHERE id IN (?ai:ids)';
             $attInDB = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_KEY_PAIR);
@@ -178,7 +177,7 @@ class Attachments extends Model
             }
 
             if (! empty($attInPost)) {
-                $this->c->Log->warning("Attachments Sync Unknown paths id={$id}", [
+                $this->c->Log->warning('Attachments Sync Unknown paths ids', [
                     'user'       => $this->c->user->fLog(),
                     '$attInPost' => $attInPost,
                 ]);
