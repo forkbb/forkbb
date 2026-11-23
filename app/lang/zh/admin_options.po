@@ -295,7 +295,7 @@ msgid "SMTP SSL label"
 msgstr "使用SSL加密SMTP"
 
 msgid "SMTP SSL help"
-msgstr "使用SSL加密SMTP服务器连接。仅在SMTP服务器要求且PHP版本支持SSL时使用。TLS必须设为<b>否</b>。"
+msgstr "使用SSL加密SMTP服务器连接。仅在SMTP服务器要求且PHP版本支持SSL时使用。"
 
 msgid "Registration subhead"
 msgstr "注册设置"

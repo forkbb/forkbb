@@ -295,7 +295,7 @@ msgid "SMTP SSL label"
 msgstr "SMTP через SSL"
 
 msgid "SMTP SSL help"
-msgstr "Шифровать соединение с сервером SMTP через SSL. Включать только если сервер SMTP требует этого и ваша версия PHP поддерживает SSL. Для TLS должно быть установлено значение <b>Нет</b>."
+msgstr "Шифровать соединение с сервером SMTP через SSL. Включать только если сервер SMTP требует этого и ваша версия PHP поддерживает SSL."
 
 msgid "Registration subhead"
 msgstr "Регистрация"

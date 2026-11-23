@@ -295,7 +295,7 @@ msgid "SMTP SSL label"
 msgstr "Encrypt SMTP using SSL"
 
 msgid "SMTP SSL help"
-msgstr "Encrypts the connection to the SMTP server using SSL. Should only be used if your SMTP server requires it and your version of PHP supports SSL. TLS must be set to <b>No</b>."
+msgstr "Encrypts the connection to the SMTP server using SSL. Should only be used if your SMTP server requires it and your version of PHP supports SSL."
 
 msgid "Registration subhead"
 msgstr "Registration"
